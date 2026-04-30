@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         中兴路由器(ZTE) 增强
+// @name         中兴路由器(ZTE)增强
 // @namespace    http://tampermonkey.net/
 // @version      5
 // @description  QQ群 680464365
