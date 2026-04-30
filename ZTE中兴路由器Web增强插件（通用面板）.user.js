@@ -16,6 +16,19 @@
 (function() {
     'use strict';
 
+    function escapeHTML(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>'"]/g, function(match) {
+            return {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[match];
+        });
+    }
+
     // ======== [0] 用户极客环境变量配置区 ========
     const CONFIG = {
         calcMode: 1, // 1: 上行/下行倍数模式, 0: 上行占总和比例模式
@@ -469,10 +482,10 @@
                 let dev = parseInstance(inst);
                 if (!dev.MACAddress) return;
 
-                let mac = dev.MACAddress.toLowerCase();
-                let ip = dev.IPAddress || '';
+                let mac = escapeHTML(dev.MACAddress.toLowerCase());
+                let ip = escapeHTML(dev.IPAddress || '');
                 // 核心修复点 2：优先读取中文 AliasName，不存在则降级 HostName
-                let name = dev.AliasName || dev.HostName || '未知设备';
+                let name = escapeHTML(dev.AliasName || dev.HostName || '未知设备');
                 let iface = dev.Interface || '';
 
                 let itemHtml = `
