@@ -537,7 +537,7 @@
                 </div>
             `;
         } catch (e) {
-            overlay.innerHTML = `<div style="padding: 20px; color: red;">数据渲染失败: ${e.message}</div>`;
+            overlay.innerHTML = `<div style="padding: 20px; color: red;">数据渲染失败: ${escapeHtml(e.message)}</div>`;
         }
     }
 
