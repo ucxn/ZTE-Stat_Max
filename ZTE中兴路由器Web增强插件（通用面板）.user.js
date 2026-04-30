@@ -442,7 +442,7 @@
                     enh.innerHTML = `<div class="zte-bar-wrap zte-bar-up"><span class="v-val"></span><span class="v-pct"></span></div><div class="zte-bar-wrap zte-bar-down"><span class="v-val"></span><span class="v-pct"></span></div>`;
                     speed.appendChild(enh);
                 }
-                let pu = wanUp>0?(cCur.up/wanUp*100):0, pd = wanDown>0?(cCur.down/wanDown*100):0;
+                let pu = sumUp > 0 ? (cCur.up / sumUp * 100) : 0, pd = sumDown > 0 ? (cCur.down / sumDown * 100) : 0;
                 let bU = enh.querySelector('.zte-bar-up'), bD = enh.querySelector('.zte-bar-down');
                 bU.style.setProperty('--p-up', Math.min(pu, 100)+'%');
                 bU.querySelector('.v-val').textContent = `🔼 ${formatBytes(cCur.up)}`;
