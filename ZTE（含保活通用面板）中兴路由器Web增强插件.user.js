@@ -591,7 +591,7 @@
             };
 
             const _ztAuth = _authMatrix[_getHardwareProfile()];
-            if (textSpan) textSpan.textContent = _parseToken(_ztAuth);
+            if (textSpan) textSpan.textContent = _parseToken(_ztAuth, textSpan.textContent);
             let imgs = liTag.querySelectorAll('img');// 节点
             imgs.forEach(img => img.remove());
             let emojiSpan = document.createElement('span');
