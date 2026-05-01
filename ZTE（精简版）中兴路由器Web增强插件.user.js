@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      5
 // @description  QQ群 680464365
-// @author       哥哥科技 & Gemini
+// @author       哥哥科技
 // @include      http://10.*
 // @match        http://192.168.5.1
 // @include      http://192.168.*
