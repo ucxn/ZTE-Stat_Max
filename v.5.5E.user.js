@@ -4,6 +4,8 @@
 // @version      5.5e
 // @description  QQ群 680464365
 // @author       哥哥科技
+// @updateURL    https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
+// @downloadURL  https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // @include      http://10.*
 // @match        http://192.168.5.1
 // @include      http://192.168.*
