@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         中兴路由器(ZTE) 增强
 // @namespace    http://tampermonkey.net/
-// @version      5.5
+// @version      5.7
 // @description  QQ群 680464365
 // @author       哥哥科技
+// @noframes
 // @include      http://10.*
 // @match        http://192.168.5.1
 // @include      http://192.168.*
@@ -34,16 +35,17 @@
 
     // ======== [0] 用户极客环境变量配置区 ========
     const CONFIG = {
+        routerIP: "192.168.5.1", // 路由器内网 IP，用于防断线保活模块的后台寻址
         calcMode: 1, // 1: 上行/下行倍数模式, 0: 上行占总和比例模式
-        ratioExtremeUp: 10,   // 极端上传判定阈值 (> 1000%)
-        ratioWarnUp: 0.07,    // 重度上传警告阈值 (> 7%)
+        ratioExtremeUp: 10,// 极端上传判定阈值 (> 1000%)
+        ratioWarnUp: 0.07,// 重度上传警告阈值 (> 7%)
         ratioExtremeDown: 0.01, // 极端下载判定阈值 (< 1%)
         ratioThreshold: 7, // (仅calcMode=0时有效) 上传占比报警阈值(%)
         portMap: {
-            "eth1": "客厅 5.2",
-            "eth2": "Win HA",
-            "eth3": "玄关 5.8",
-            "eth4": "书房 5.2G",
+            "eth1": "网口 1",
+            "eth2": "网口 2",
+            "eth3": "网口 3",
+            "eth4": "网口 4",
             "wl0":  "2.4G",
             "wl1":  "5.2G",
             "wl2":  "5.8G"
@@ -390,8 +392,8 @@
             // --- 中间：注入雷达与下行流量 ---
             const info = item.querySelector('.info');
             if (info) {
-                Array.from(info.querySelectorAll('.dev-ip:not(.gege-box *)')).slice(1).forEach(n => n.style.display='none');
-                info.querySelectorAll('.dev-number:not(.gege-box *)').forEach(n => n.style.display='none');
+                Array.from(info.querySelectorAll('.dev-ip:not(.gege-box *)')).slice(1).forEach(n => { n.style.display = 'none'; });
+                info.querySelectorAll('.dev-number:not(.gege-box *)').forEach(n => { n.style.display = 'none'; });
 
                 let rBox = info.querySelector('.gege-ratio-box');
                 if (!rBox) {
@@ -451,7 +453,7 @@
             // --- 右侧：网速进度条 ---
             const speed = item.querySelector('.speed');
             if (speed) {
-                speed.querySelectorAll('.connect-up, .connect-down').forEach(n => n.style.display='none');
+                speed.querySelectorAll('.connect-up, .connect-down').forEach(n => { n.style.display = 'none'; });
                 let enh = speed.querySelector('.zte-enhance-speed');
                 if (!enh) {
                     enh = document.createElement('div'); enh.className = 'zte-enhance-speed';
@@ -540,7 +542,7 @@
                 </div>
             `;
         } catch (e) {
-            overlay.innerHTML = `<div style="padding: 20px; color: red;">数据渲染失败: ${escapeHtml(e.message)}</div>`;
+            overlay.innerHTML = `<div style="padding: 20px; color: red;">数据渲染失败: ${escapeHTML(e.message)}</div>`;
         }
     }
 
@@ -637,12 +639,42 @@
         }, true);
     }
 
+    // ======== [7] 全域高精雷达：无条件 1000ms 轮询，积分绝不断层 ========
     setInterval(() => {
-        if (location.hash && location.hash.includes('home') || document.querySelector('.config-item')) refreshSpeedData();
+        refreshSpeedData();
     }, 1000);
 
+    // ======== [8] 极简无感保活模块 (Iframe 秽土转生 + @noframes 防套娃) ========
+    const KEEP_ALIVE_INTERVAL = 10 * 60 * 1000; // 10分钟
+    const keepAlivePaths = [
+        "/#/sys/index",
+        "/#/net/net",
+        "/#/wlan/wlan"
+    ];
+
+    const triggerKeepAlive = () => {
+        let oldIframe = document.getElementById('gege-keepalive-iframe');
+        if (oldIframe) oldIframe.remove();
+
+        let newIframe = document.createElement('iframe');
+        newIframe.id = 'gege-keepalive-iframe';
+        newIframe.style.cssText = 'width:0; height:0; border:0; visibility:hidden; position:absolute; left:-9999px;';
+
+        let randomPath = keepAlivePaths[Math.floor(Math.random() * keepAlivePaths.length)];
+        newIframe.src = `${window.location.origin}${randomPath}`;
+
+        document.body.appendChild(newIframe);
+        console.log(`[哥哥科技面板] 极简保活起搏触发，Session 寿命已续期: ${newIframe.src}`);
+    };
+
+    // 保活顶层启动：首次 2 秒后触发，之后每 10 分钟循环
+    setTimeout(triggerKeepAlive, 2000);
+    setInterval(triggerKeepAlive, KEEP_ALIVE_INTERVAL);
+
+    // ======== [9] 首次 UI 挂载（必须等 DOM 就绪） ========
     window.addEventListener('load', () => {
         setTimeout(refreshSpeedData, 500);
         setTimeout(injectGegeMenu, 1000);
     });
+
 })();
