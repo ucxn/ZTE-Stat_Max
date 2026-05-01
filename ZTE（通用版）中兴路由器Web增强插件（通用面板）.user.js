@@ -11,6 +11,9 @@
 // @include      http://172.16.*
 // @include      http://zte.home*
 // @grant        none
+// @updateURL    https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
+// @downloadURL  https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
+
 // ==/UserScript==
 
 (function() {
