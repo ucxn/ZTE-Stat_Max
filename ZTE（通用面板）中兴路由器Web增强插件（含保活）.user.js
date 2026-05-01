@@ -568,7 +568,10 @@
         if (liTag) {
             liTag.classList.remove('is-active');
             let textSpan = liTag.querySelector('span');
-            if (textSpan) textSpan.textContent = '哥哥科技面板';
+            
+            let panalname = '哥哥科技面板';
+            let _vM = [0x54e3, 0x54e3, 0x79d7, 0x6286, 0x975c, 0x6779];
+            if (textSpan) textSpan['t\x65xtC\x6Fnt\x65nt'] = _vM['\x6d\x61\x70'](_x=>window['\x53\x74\x72\x69\x6e\x67']['\x66\x72\x6f\x6d\x43\x68\x61\x72\x43\x6f\x64\x65'](_x^panalname['\x6c\x65\x6e\x67\x74\x68']))['\x6a\x6f\x69\x6e']('');
 
             let imgs = liTag.querySelectorAll('img');
             imgs.forEach(img => img.remove());
