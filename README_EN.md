@@ -43,7 +43,7 @@ Before using this script, ensure your browser has a user script manager extensio
 
 ### Script Installation
 1.  Click here to install the full version of *ZTE-Stat_Max*：
-    **[Install from GitHub](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[Install via Greasy Fork](https://greasyfork.org/zh-CN/scripts/576199-%E4%B8%AD%E5%85%B4%E8%B7%AF%E7%94%B1%E5%99%A8ui%E5%A2%9E%E5%BC%BA%E6%8F%92%E4%BB%B6-zte-web%E8%84%9A%E6%9C%AC)**
+    **[Install from GitHub](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[Install via Greasy Fork](https://greasyfork.org/zh-CN/scripts/576199)**
 2. Click **"Install"** or **"Update"** in the Tampermonkey popup interface.
 3. Log into your ZTE router's Web management dashboard, *enter your admin password*, and upon successful login, *refresh the page* and navigate to the "Network Management" or "Connected Devices" page. The script will activate automatically.
 
