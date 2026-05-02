@@ -1,8 +1,8 @@
 # ZTE-Stat_Max
 
-[![Version](https://img.shields.io/badge/version-5.7-orange.svg)](https://github.com/YourName/ZTE-Dashboard_Max)
+[![Version](https://img.shields.io/badge/version-5.7.3-orange.svg)](https://github.com/YourName/ZTE-Dashboard_Max)
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
-[![Platform](https://img.shields.io/badge/platform-Tampermonkey-green.svg)](https://www.tampermonkey.net/)
+[![Platform](https://img.shields.io/badge/platform-TamperMonkey-green.svg)](https://www.tampermonkey.net/)
 
 **English** | [简体中文](README.md)
 
