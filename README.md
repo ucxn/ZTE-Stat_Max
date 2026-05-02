@@ -1,12 +1,12 @@
 # ZTE-Stat_Max
 
-[![Version](https://img.shields.io/badge/version-5.7-orange.svg)](https://github.com/YourName/ZTE-Dashboard_Max)
+[![Version](https://img.shields.io/badge/version-5.7.3-orange.svg)](https://github.com/YourName/ZTE-Dashboard_Max)
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
-[![Platform](https://img.shields.io/badge/platform-Tampermonkey-green.svg)](https://www.tampermonkey.net/)
+[![Platform](https://img.shields.io/badge/platform-篡改猴-green.svg)](https://www.tampermonkey.net/)
 
 [English](README_EN.md) | **简体中文**
 
-**ZTE-Stat_Max** 是一款专为中兴（ZTE）路由器 Web 管理后台设计的 Tampermonkey 增强脚本。
+**ZTE-Stat_Max** 是一款专为中兴（ZTE）路由器 Web 管理后台设计的 Tampermonkey（油猴） 增强脚本。
 
 本脚本通过接管原生 Vue 框架的底层 XML API 数据流，在不破坏官方原有拓扑与结构的前提下，重构了“组网管理”与“接入设备”页面的 UI 布局。引入了梯形积分算法、异常流量雷达以及双轨制流量对齐显示，为网络工程人员和进阶玩家提供。
 
