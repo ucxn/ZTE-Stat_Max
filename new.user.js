@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         中兴路由器(ZTE) 增强
 // @namespace    http://tampermonkey.net/
-// @version      5.7.3
+// @version      5.8
 // @description  QQ群 680464365
 // @author       哥哥科技
 // @noframes
@@ -105,7 +105,13 @@
         if (bytes >= 1048576) return (bytes / 1048576).toFixed(3) + ' | ' + (bytesOff / 1048576).toFixed(3) + ' MiB';
         if (bytes >= 1024) return (bytes / 1024).toFixed(2) + ' | ' + (bytesOff / 1024).toFixed(2) + ' KiB';
         return Math.round(bytes) + ' | ' + Math.round(bytesOff) + ' B';
-    }
+    } // 需求 2.2：区间流量单字母简写引擎 (放弃对齐换取空间)
+    function formatShortVolume(bits) {
+        let bytes = bits / 8;
+        if (bytes >= 1073741824) return (bytes / 1073741824).toFixed(1) + 'G';
+        if (bytes >= 1048576) return (bytes / 1048576).toFixed(1) + 'M';
+        if (bytes >= 1024) return (bytes / 1024).toFixed(0) + 'K';
+        return Math.round(bytes) + 'B';}
 
     // 核心修复点 1：使用相邻节点配对遍历，防范因缺少 ParaValue 标签导致的数组下标错位错乱
     function normalizeMac(mac) {
@@ -308,9 +314,29 @@
                 State.wanUpTraffic += ((State.wanUpSpeed + curWanUp) / 2) * dt;
                 State.wanDownTraffic += ((State.wanDownSpeed + curWanDown) / 2) * dt;
                 for (let mac in clientsInfo) {
-                    if (!State.clients[mac]) State.clients[mac] = { upSpeed: 0, downSpeed: 0, upTraffic: 0, downTraffic: 0 };
+                    if (!State.clients[mac]) {
+                        // 初始化时，立刻将当前路由器的真实总流量设定为基准线
+                        State.clients[mac] = {
+                            upSpeed: 0, downSpeed: 0, upTraffic: 0, downTraffic: 0,
+                            upBaseline: clientsInfo[mac].upTp, downBaseline: clientsInfo[mac].downTp,
+                            lastUpTp: clientsInfo[mac].upTp, lastDownTp: clientsInfo[mac].downTp
+                        };
+                    }
                     let cS = State.clients[mac];
                     let cC = clientsInfo[mac];
+
+                    // 需求 2.3：负数基线防回流机制 (核心物理法则：只要当前值掉底，立刻吃掉区间差额转为负数基线)
+                    if (cC.upTp < cS.lastUpTp) {
+                        let intervalUp = cS.lastUpTp - cS.upBaseline;
+                        cS.upBaseline = cC.upTp - intervalUp;
+                    }
+                    if (cC.downTp < cS.lastDownTp) {
+                        let intervalDown = cS.lastDownTp - cS.downBaseline;
+                        cS.downBaseline = cC.downTp - intervalDown;
+                    }
+                    cS.lastUpTp = cC.upTp;
+                    cS.lastDownTp = cC.downTp;
+
                     cS.upTraffic += ((cS.upSpeed + cC.up) / 2) * dt;
                     cS.downTraffic += ((cS.downSpeed + cC.down) / 2) * dt;
                     cS.upSpeed = cC.up; cS.downSpeed = cC.down;
@@ -335,6 +361,20 @@
     // ======== [4] 渲染层 (完美对齐逻辑) ========
 
     function renderUI(wanUp, wanDown, sumUp, sumDown, lanUpVol, lanDownVol, clientsInfo) {
+        // [新增] 预先计算官方高精流量的全局统计值 (供后续所有计算做分母使用)
+        let totalIntUp = 0, totalIntDown = 0;
+        let totalAbsUp = 0, totalAbsDown = 0;
+        for (let m in clientsInfo) {
+            let cC = clientsInfo[m];
+            let cState = State.clients[m];
+            let baseU = cState ? (cState.upBaseline || 0) : 0;
+            let baseD = cState ? (cState.downBaseline || 0) : 0;
+            totalIntUp += Math.max(0, (cC.upTp || 0) - baseU);
+            totalIntDown += Math.max(0, (cC.downTp || 0) - baseD);
+            totalAbsUp += (cC.upTp || 0);
+            totalAbsDown += (cC.downTp || 0);
+        }
+
         // 看板渲染
         let main = document.querySelector('.el-table') || document.querySelector('.config-item')?.closest('div') || document.querySelector('.main-content');
         if (main) {
@@ -354,9 +394,14 @@
                         <div class="geek-right-box">实时占比：<span class="c-up" id="gb-perc-up"></span> | <span class="c-down" id="gb-perc-down"></span></div>
                     </div>
                     <div class="geek-row">
-                        <span class="geek-label">高精流量统计</span>
+                        <span class="geek-label">LAN：</span>
                         <div class="geek-val-box"><span class="c-up geek-fixed-width" id="gb-lan-up-vol"></span><span class="c-down geek-fixed-width" id="gb-lan-down-vol"></span></div>
                         <div class="geek-right-box">WAN：<span class="c-up" id="gb-wan-up-vol"></span> | <span class="c-down" id="gb-wan-down-vol"></span></div>
+                    </div>
+                    <div class="geek-row">
+                        <span class="geek-label">高精流量统计 -></span>
+                        <div class="geek-val-box"><span class="c-up geek-fixed-width" id="gb-int-up-vol"></span><span class="c-down geek-fixed-width" id="gb-int-down-vol"></span></div>
+                        <div class="geek-right-box" style="color: #666;">当前总计：<span class="c-up" id="gb-abs-up-vol"></span> | <span class="c-down" id="gb-abs-down-vol"></span></div>
                     </div>`;
 
                 // 核心修复点：将面板严丝合缝地插入到"有线设备"标题下方，消除外部插入导致的灰底断层
@@ -382,6 +427,10 @@
             document.getElementById('gb-lan-down-vol').textContent = `🔽 ${formatVolume(lanDownVol)}`;
             document.getElementById('gb-wan-up-vol').textContent = `🔼 ${formatVolume(State.wanUpTraffic)}`;
             document.getElementById('gb-wan-down-vol').textContent = `🔽 ${formatVolume(State.wanDownTraffic)}`;
+            document.getElementById('gb-int-up-vol').textContent = `🔼 ${formatVolume(totalIntUp)}`;
+            document.getElementById('gb-int-down-vol').textContent = `🔽 ${formatVolume(totalIntDown)}`;
+            document.getElementById('gb-abs-up-vol').textContent = `🔼 ${formatVolume(totalAbsUp)}`;
+            document.getElementById('gb-abs-down-vol').textContent = `🔽 ${formatVolume(totalAbsDown)}`;
         }
 
         const deviceItems = document.querySelectorAll('.config-item');
@@ -438,7 +487,8 @@
                     box.innerHTML = `<div class="t-row c-up"><span>↑ <span class="v-vol"></span></span><span class="v-pct"></span></div><div class="zte-thin-bar"><div class="zte-thin-bar-inner up"></div></div>`;
                     devIntro.appendChild(box);
                 }
-                let p = State.wanUpTraffic>0?((cS.upTraffic/State.wanUpTraffic)*100).toFixed(1):0.0;
+                // 需求：分子为官方区间增量，分母为全网官方区间增量代数和 (匿名计算，防作用域污染)
+                let p = totalIntUp > 0 ? ((Math.max(0, cCur.upTp - (cS.upBaseline || 0)) / totalIntUp) * 100).toFixed(1) : 0.0;
                 box.querySelector('.v-vol').textContent = formatVolumeDual(cS.upTraffic, cCur.upTp);
                 box.querySelector('.v-pct').textContent = p + '%';
                 box.querySelector('.zte-thin-bar-inner').style.width = Math.min(p, 100) + '%';
@@ -453,20 +503,21 @@
                 let rBox = info.querySelector('.gege-ratio-box');
                 if (!rBox) {
                     rBox = document.createElement('div'); rBox.className = 'gege-ratio-box';
-                    rBox.innerHTML = `<div class="gege-ratio-top"><span class="v-port"></span><span class="v-rt-pct"></span></div><div class="gege-ratio-bar"><div class="gege-ratio-bar-inner"></div></div>`;
+                    // 需求 2.2: 在左侧网口和右侧比例之间，嵌入区间流量显示区 (使用 Consolas 和黑线保证极客感)
+                    rBox.innerHTML = `<div class="gege-ratio-top"><span class="v-port"></span><span class="v-interval" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 12.5px; opacity: 0.75; letter-spacing: 0.5px;"><span class="c-up"></span><span style="color:#666; margin:0 3px;">，</span><span class="c-down"></span></span><span class="v-rt-pct"></span></div><div class="gege-ratio-bar"><div class="gege-ratio-bar-inner"></div></div>`;
                     info.appendChild(rBox);
                 }
 
-                // 物理进度条比例 (严守旧版公式)
-                let totalV = cS.upTraffic + cS.downTraffic;
-                let barRatio = totalV > 0 ? (cS.upTraffic/totalV*100) : 0;
+                // 进度条比例 (严守旧版公式)
+                let totalV = cCur.upTp + cCur.downTp;
+                let barRatio = totalV > 0 ? (cCur.upTp / totalV * 100) : 0;
 
-                // PCDN 雷达文本逻辑 (双模式适配)
+                // P2P 雷达文本逻辑 (双模式适配)
                 let textContent = "";
                 let textColor = "#0059fa";
 
                 if (CONFIG.calcMode === 1) {
-                    let ratio = cS.downTraffic > 0 ? (cS.upTraffic / cS.downTraffic) : (cS.upTraffic > 0 ? Infinity : 0);
+                    let ratio = cCur.downTp > 0 ? (cCur.upTp / cCur.downTp) : (cCur.upTp > 0 ? Infinity : 0);
                     if (ratio > CONFIG.ratioExtremeUp) {
                         textColor = '#ff4c00';
                         textContent = (ratio === Infinity ? '∞' : ratio.toFixed(2)) + '⚠️';
@@ -478,7 +529,7 @@
                         textContent = (ratio * 100).toFixed(1) + '%';
                     } else {
                         textColor = '#0059fa';
-                        let revRatio = cS.upTraffic > 0 ? (cS.downTraffic / cS.upTraffic) : (cS.downTraffic > 0 ? Infinity : 0);
+                        let revRatio = cCur.upTp > 0 ? (cCur.downTp / cCur.upTp) : (cCur.downTp > 0 ? Infinity : 0);
                         textContent = (revRatio === Infinity ? '∞' : revRatio.toFixed(1)) + 'x';
                     }
                 } else {
@@ -487,6 +538,13 @@
                 }
 
                 rBox.querySelector('.v-port').textContent = CONFIG.portMap[cCur.interface] || cCur.interface || "未知";
+
+                // 渲染区间流量 (用当前官方值减去你的神级负数基线)
+                let intUp = Math.max(0, cCur.upTp - (cS.upBaseline || 0));
+                let intDown = Math.max(0, cCur.downTp - (cS.downBaseline || 0));
+                rBox.querySelector('.v-interval .c-up').textContent = '' + formatShortVolume(intUp);
+                rBox.querySelector('.v-interval .c-down').textContent = '' + formatShortVolume(intDown);
+
                 let rtPct = rBox.querySelector('.v-rt-pct');
                 rtPct.textContent = textContent;
                 rtPct.style.color = textColor;
@@ -498,7 +556,8 @@
                     dBox.innerHTML = `<div class="t-row c-down"><span>↓ <span class="v-vol"></span></span><span class="v-pct"></span></div><div class="zte-thin-bar"><div class="zte-thin-bar-inner down"></div></div>`;
                     info.appendChild(dBox);
                 }
-                let dp = State.wanDownTraffic>0?((cS.downTraffic/State.wanDownTraffic)*100).toFixed(1):0.0;
+                // 需求：分子为官方区间增量，分母为全网官方区间增量代数和
+                let dp = totalIntDown > 0 ? ((Math.max(0, cCur.downTp - (cS.downBaseline || 0)) / totalIntDown) * 100).toFixed(1) : 0.0;
                 // 启用双轨制锚定渲染
                 dBox.querySelector('.v-vol').textContent = formatVolumeDual(cS.downTraffic, cCur.downTp);
                 dBox.querySelector('.v-pct').textContent = dp + '%';
