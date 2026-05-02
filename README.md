@@ -44,7 +44,9 @@
 * **[Violentmonkey](https://violentmonkey.github.io/)**
 
 ### 脚本安装
-1.  点击此处安装全面版脚本：**[安装 ZTE-Stat_Max](https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.js)**
+1.  点击此处安装全面版ZTE-Stat_Max：
+
+    **[从GitHub安装](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[从GreasyFork安装](https://greasyfork.org/zh-CN/scripts/576199-%E4%B8%AD%E5%85%B4%E8%B7%AF%E7%94%B1%E5%99%A8ui%E5%A2%9E%E5%BC%BA%E6%8F%92%E4%BB%B6-zte-web%E8%84%9A%E6%9C%AC)**
 2.  在弹出的 Tampermonkey 界面中点击 **“安装”** 或 **“更新”**。
 3.  登录您的中兴路由器 Web 管理后台，*输入管理员密码*，登录成功后 *刷新网页* ,进入“组网管理”或“接入设备”页面，脚本将自动生效。
 
