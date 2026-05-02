@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         中兴路由器(ZTE) 增强
 // @namespace    http://tampermonkey.net/
-// @version      5.7
+// @version      5.7.3
 // @description  QQ群 680464365
 // @author       哥哥科技
 // @noframes
@@ -108,16 +108,26 @@
     }
 
     // 核心修复点 1：使用相邻节点配对遍历，防范因缺少 ParaValue 标签导致的数组下标错位错乱
+    function normalizeMac(mac) {
+        if (!mac) return '';
+        return mac.toLowerCase().replace(/-/g, ':').replace(/\s/g, '');
+    }
+
     function parseInstance(instanceNode) {
-        let obj = {};
+        let obj = Object.create(null); // 防止原型链污染
         let children = instanceNode.children;
-        for(let i = 0; i < children.length; i++) {
+        for (let i = 0; i < children.length; i++) {
             if (children[i].tagName === "ParaName") {
                 let key = children[i].textContent;
                 let val = "";
-                if (i + 1 < children.length && children[i + 1].tagName === "ParaValue") {
-                    val = children[i + 1].textContent;
-                    i++; // 跳过紧接的 ParaValue
+                let j = i + 1;
+                while (j < children.length && children[j].tagName !== "ParaName") {
+                    if (children[j].tagName === "ParaValue") {
+                        val = children[j].textContent;
+                        i = j; // 游标直接跳跃到值的位置，提升遍历性能
+                        break;
+                    }
+                    j++;
                 }
                 obj[key] = val;
             }
@@ -250,6 +260,10 @@
                 fetch(`/?_type=vueData&_tag=vue_client_data&_=${timestamp}`)
             ]);
 
+            if (!wanRes.ok || !clientRes.ok) {
+                console.warn("[哥哥科技] API 请求异常，跳过本次积分更新", wanRes.status, clientRes.status);
+                return;}
+            // 如果路由器抽风返回了非 200 的状态码（比如掉线、重启），直接放弃这秒的更新，防止脏数据污染积分
             const wanXml = parser.parseFromString(await wanRes.text(), "text/xml");
             const clientXml = parser.parseFromString(await clientRes.text(), "text/xml");
 
@@ -267,7 +281,7 @@
             clientNodes.forEach(node => {
                 let dev = parseInstance(node);
                 if (dev.MACAddress) {
-                    let mac = dev.MACAddress.toLowerCase();
+                    let mac = normalizeMac(dev.MACAddress);
                     let up = speedToBps(dev.UpRate);
                     let down = speedToBps(dev.DownRate);
                     // 同步捕获官方底层累积流量 (单位转为 bits 以统一基准)
@@ -278,6 +292,15 @@
                     curSumDown += down;
                 }
             });
+
+            let currentDeviceCount = Object.keys(clientsInfo).length;
+            let renderedDeviceCount = document.querySelectorAll('.gege-list-item').length;
+            let overlay = document.getElementById('gege-global-overlay');
+
+            // 仅当面板处于打开状态，且发现设备数量对不上时，才触发一次重建
+            if (overlay && overlay.style.display === 'block' && currentDeviceCount !== renderedDeviceCount) {
+                console.log(`[哥哥科技] 检测到设备数：面板 ${renderedDeviceCount} 台变动 → 真实 ${currentDeviceCount} 台，触发无感热重载`);
+                buildVirtualDOM(overlay);} // 积分和局部渲染，安全防止脏数据，DOM就绪和正常跑解耦
 
             // 梯形积分
             if (State.lastTime !== 0) {
@@ -337,12 +360,15 @@
                     </div>`;
 
                 // 核心修复点：将面板严丝合缝地插入到"有线设备"标题下方，消除外部插入导致的灰底断层
-                let wiredTitle = Array.from(document.querySelectorAll('.config-title')).find(el => el.textContent.includes('有线设备'));
+                // 修复：优先在当前处于最顶层的环境（Overlay 优先，否则全局 Document）中寻找挂载点
+                let activeContainer = document.getElementById('gege-global-overlay');
+                if (!activeContainer || activeContainer.style.display === 'none') {
+                    activeContainer = document;} // 面板没开，以官方全局为主
+                let wiredTitle = Array.from(activeContainer.querySelectorAll('.config-title')).find(el => el.textContent.includes('有线设备'));
                 if (wiredTitle) {
                     wiredTitle.parentNode.insertBefore(board, wiredTitle.nextSibling);
                 } else if (main) {
-                    main.parentNode.insertBefore(board, main);
-                }
+                    main.parentNode.insertBefore(board, main);}
             }
             document.getElementById('gb-wan-up-bps').textContent = `🔼 ${formatBps(wanUp)}`;
             document.getElementById('gb-wan-down-bps').textContent = `🔽 ${formatBps(wanDown)}`;
@@ -360,16 +386,45 @@
 
         const deviceItems = document.querySelectorAll('.config-item');
         deviceItems.forEach(item => {
-            let mac = item.getAttribute('data-gege-mac');
-            if (!mac) {
-                const macNodes = Array.from(item.querySelectorAll('.dev-number'));
-                const originalMacNode = macNodes.find(n => n.textContent.includes('MAC'));
-                if (originalMacNode) {
-                    const macMatch = originalMacNode.textContent.match(/([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})/);
-                    if (macMatch) { mac = macMatch[0].toLowerCase(); item.setAttribute('data-gege-mac', mac); }
+            // 1. 先尝试从 DOM 中抓取最真实的、实时的 MAC
+            let freshMac = null;
+            const macNodes = Array.from(item.querySelectorAll('.dev-number'));
+            const originalMacNode = macNodes.find(n => n.textContent.includes('MAC'));
+
+            if (originalMacNode) {
+                const macMatch = originalMacNode.textContent.match(/([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})/);
+                if (macMatch) {
+                    // 抓到了！立刻用 Fix 1 的工具清洗它
+                    freshMac = normalizeMac(macMatch[0]);
                 }
             }
-            if (!mac) return;
+
+            // 2. 状态校验与更新
+            let cachedMac = item.getAttribute('data-gege-mac');
+            let finalMac = null;
+
+            if (freshMac) {
+                // 如果能抓到真实的 MAC，永远以真实 MAC 为准，并覆盖旧缓存
+                finalMac = freshMac;
+                if (cachedMac !== freshMac) {
+                    item.setAttribute('data-gege-mac', freshMac);
+                }
+            } else {
+                // 如果当前 DOM 抓不到真实 MAC（设备隐藏了或暂未加载）绝对不能信任旧的 data-gege-mac 缓存！必须清空它！
+                finalMac = null;
+                item.removeAttribute('data-gege-mac');
+            }
+
+            // 3. 终极断头台：一旦没拿到合法 MAC，立刻物理拔除旧 UI 元素（我们上一轮的共识）
+            if (!finalMac) {
+                item.querySelector('.gege-up-box')?.remove();
+                item.querySelector('.gege-ratio-box')?.remove();
+                item.querySelector('.gege-down-box')?.remove();
+                item.querySelector('.zte-enhance-speed')?.remove();
+                return; // 结束这个异常设备的渲染
+            }
+            // 桥接变量：把洗干净的 finalMac 交还给 mac，这样你后面的代码就全都不用改了！
+            let mac = finalMac;
 
             const cCur = clientsInfo[mac] || { up: 0, down: 0, interface: "", upTp: 0, downTp: 0 };
             const cS = State.clients[mac] || { upTraffic: 0, downTraffic: 0 };
@@ -487,7 +542,7 @@
                 let dev = parseInstance(inst);
                 if (!dev.MACAddress) return;
 
-                let mac = escapeHTML(dev.MACAddress.toLowerCase());
+                let mac = escapeHTML(normalizeMac(dev.MACAddress));
                 let ip = escapeHTML(dev.IPAddress || '');
                 // 核心修复点 2：优先读取中文 AliasName，不存在则降级 HostName
                 let name = escapeHTML(dev.AliasName || dev.HostName || '未知设备');
@@ -673,7 +728,8 @@
 
     const triggerKeepAlive = () => {
         let oldIframe = document.getElementById('gege-keepalive-iframe');
-        if (oldIframe) oldIframe.remove();
+        if (oldIframe) {oldIframe.src = 'about:blank'; // 【新增】瞬间切断内部发出的未决请求，清空宿主内存
+                        oldIframe.remove();}
 
         let newIframe = document.createElement('iframe');
         newIframe.id = 'gege-keepalive-iframe';
