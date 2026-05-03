@@ -1,6 +1,6 @@
 # ZTE-Stat_Max
 
-[![Version](https://img.shields.io/badge/version-5.7.3-orange.svg)](https://github.com/YourName/ZTE-Dashboard_Max)
+[![Version](https://img.shields.io/badge/version-5.8.0-orange.svg)](https://github.com/ucxn/ZTE_Stat_Max)
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![Platform](https://img.shields.io/badge/platform-TamperMonkey-green.svg)](https://www.tampermonkey.net/)
 
@@ -78,6 +78,12 @@ const CONFIG = {
 * This script is a pure frontend DOM injection and data reorganization tool. It does not involve modifying the ZTE router's underlying firmware.
 
 Utilizing the Tampermonkey environment, the script makes concurrent requests to the router's `vue_home_device_data_no_update_sess` and `vue_client_data` APIs. To eliminate the lag caused by the official frontend's polling refresh, the script internally implements an independent timer via `performance.now()`, deriving highly accurate instantaneous traffic data. All UI modifications are executed via DOM Mutation on top of the original page's CSS framework, ensuring a native feel and seamless compatibility.
+
+## 🔗 友链 (Symlinks)
+
+[![Anti P2P Steal](https://img.shields.io/badge/GitHub-Ban--PCDN__Anti--P2P-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
+
+
 
 ## 📄 License
 
