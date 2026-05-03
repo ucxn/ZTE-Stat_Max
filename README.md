@@ -53,15 +53,15 @@
 > [!IMPORTANT]
  *备用唤醒入口*：若不生效，请检查**左侧工具边栏导航**，找到 **🚀 哥哥科技面板** 点开进行使用，效果基本一致。<br> 请确保 **篡改猴** 插件运行正常！！也就是 浏览器 拓展图标这里，正常显示数字！允许用户脚本注入教程如下图。
 
-## 🔗 友情链接 (Symlinks)
+### 🔗 Symlinks 友情链接
 
 [![打击PCDN偷上行](https://img.shields.io/badge/GitHub-打击PCDN偷上行-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
+
+## ⚙️ 个性化配置 (Configuration)
 
 > [!TIP]
 > 若脚本仍未生效，请使用如下教程：
 ![图文教程](./assets/Install.png)
-
-## ⚙️ 个性化配置 (Configuration)
 
 脚本顶部暴露了全局环境变量 `CONFIG` 对象，支持用户根据自身网络环境进行微调：
 
