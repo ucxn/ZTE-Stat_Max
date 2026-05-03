@@ -49,12 +49,17 @@
     **[从GitHub安装](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[从GreasyFork安装](https://greasyfork.org/zh-CN/scripts/576199)**
 2.  在弹出的 Tampermonkey 界面中点击 **“安装”** 或 **“更新”**。
 3.  登录您的中兴路由器 Web 管理后台，*输入管理员密码*，登录成功后 *刷新网页* ,进入“组网管理”界面，脚本将自动生效。
-
-    若不生效，请检查**左侧工具边栏导航**，找到“🚀 哥哥科技面板”，点开进行使用，效果基本一致。
+    
+> [!IMPORTANT]
+ *备用唤醒入口*：若不生效，请检查**左侧工具边栏导航**，找到 **🚀 哥哥科技面板** 点开进行使用，效果基本一致。
 
 ## 🔗 友情链接 (Symlinks)
 
 [![打击PCDN偷上行](https://img.shields.io/badge/GitHub-打击PCDN偷上行-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
+
+> [!TIP]
+> 若脚本仍未生效，请使用如下教程：
+![图文教程](./assets/Install.png)
 
 ## ⚙️ 个性化配置 (Configuration)
 
