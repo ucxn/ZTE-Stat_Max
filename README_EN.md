@@ -1,6 +1,6 @@
 # ZTE-Stat_Max
 
-[![Version](https://img.shields.io/badge/version-5.8.0-orange.svg)](https://github.com/ucxn/ZTE_Stat_Max)
+[![Version](https://img.shields.io/badge/version-5.8.0-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![Platform](https://img.shields.io/badge/platform-TamperMonkey-green.svg)](https://www.tampermonkey.net/)
 
@@ -28,11 +28,9 @@ While the official Web dashboard is stable, its UX design for data visualization
   * Employs a forced bottom-alignment system based on Flexbox, fixing height discrepancies caused by CSS grids.
   * Trace-less injection. Does not break the native Vue state machine, ensuring browser rendering performance.
 
-## 📸 Screenshots
+## 🔗 Symlinks
 
-| Xiaomi Reference | ZTE Original | Enhanced Version |
-| :---: | :---: | :---: |
-| ![Xiaomi Reference](./assets/Mi.png) | ![ZTE Original](./assets/ZTE.png) | ![Enhanced Version](./assets/me.png) |
+[![Anti P2P Steal](https://img.shields.io/badge/GitHub-Ban--PCDN__Anti--P2P-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
 
 ## 🚀 Installation Guide
 
@@ -46,6 +44,20 @@ Before using this script, ensure your browser has a user script manager extensio
     **[Install from GitHub](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[Install via Greasy Fork](https://greasyfork.org/zh-CN/scripts/576199)**
 2. Click **"Install"** or **"Update"** in the Tampermonkey popup interface.
 3. Log into your ZTE router's Web management dashboard, *enter your admin password*, and upon successful login, *refresh the page* and navigate to the "Network Management" or "Connected Devices" page. The script will activate automatically.
+
+
+> [!IMPORTANT]
+> **Alternative Wake-up Entry**: If it isn't working, please check the **left sidebar navigation**, find the **🚀 哥哥科技面板（BroTech Panel）**, and click to open it; the functionality is essentially the same.<br> Please ensure the **Tampermonkey** extension is running correctly!! Specifically, the extension icon in your browser should be displaying a number! The tutorial for allowing userscript injection is shown in the image below.
+ 
+> [!TIP]
+> If the script is still not taking effect, please refer to the following tutorial:
+> ![Graphic Tutorial](./assets/Install.png)
+
+## 📸 Screenshots
+
+| Xiaomi Reference | ZTE Original | Enhanced Version |
+| :---: | :---: | :---: |
+| ![Xiaomi Reference](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjkxNTcyLCJwdXIiOiJibG9iX2lkIn19--a48da4038f2514b01b5c33bbc8839d5b924a3853/Mi.png) | ![ZTE Original](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjkxNTcyLCJwdXIiOiJibG9iX2lkIn19--a48da4038f2514b01b5c33bbc8839d5b924a3853/ZTE.png) | ![Enhanced Version](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjkxNTcyLCJwdXIiOiJibG9iX2lkIn19--a48da4038f2514b01b5c33bbc8839d5b924a3853/me.png) |
 
 ## ⚙️ Configuration
 
@@ -78,12 +90,6 @@ const CONFIG = {
 * This script is a pure frontend DOM injection and data reorganization tool. It does not involve modifying the ZTE router's underlying firmware.
 
 Utilizing the Tampermonkey environment, the script makes concurrent requests to the router's `vue_home_device_data_no_update_sess` and `vue_client_data` APIs. To eliminate the lag caused by the official frontend's polling refresh, the script internally implements an independent timer via `performance.now()`, deriving highly accurate instantaneous traffic data. All UI modifications are executed via DOM Mutation on top of the original page's CSS framework, ensuring a native feel and seamless compatibility.
-
-## 🔗 Symlinks
-
-[![Anti P2P Steal](https://img.shields.io/badge/GitHub-Ban--PCDN__Anti--P2P-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
-
-
 
 ## 📄 License
 
