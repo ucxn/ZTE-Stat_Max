@@ -79,7 +79,7 @@ const CONFIG = {
 
 Utilizing the Tampermonkey environment, the script makes concurrent requests to the router's `vue_home_device_data_no_update_sess` and `vue_client_data` APIs. To eliminate the lag caused by the official frontend's polling refresh, the script internally implements an independent timer via `performance.now()`, deriving highly accurate instantaneous traffic data. All UI modifications are executed via DOM Mutation on top of the original page's CSS framework, ensuring a native feel and seamless compatibility.
 
-## 🔗 友链 (Symlinks)
+## 🔗 Symlinks
 
 [![Anti P2P Steal](https://img.shields.io/badge/GitHub-Ban--PCDN__Anti--P2P-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
 
