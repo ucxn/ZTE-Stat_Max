@@ -38,6 +38,7 @@ While the official Web dashboard is stable, its UX design for data visualization
 Before using this script, ensure your browser has a user script manager extension installed, such as:
 * **[Tampermonkey](https://www.tampermonkey.net/)** (Recommended, supports Chrome, Edge, Firefox, Safari)
 * **[Violentmonkey](https://violentmonkey.github.io/)**
+* **[Greasemonkey](https://www.greasespot.net/)**
 
 ### Script Installation
 1.  Click here to install the full version of *ZTE-Stat_Max*：
