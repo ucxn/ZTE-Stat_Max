@@ -40,9 +40,9 @@
 
 ### 环境要求
 在使用本脚本之前，请确保您的浏览器已安装用户脚本管理器扩展，例如：
-* **[Tampermonkey（篡改猴）](https://www.tampermonkey.net/)** (推荐, 支持 Chrome, Edge, Firefox, Safari)
-* **[Violentmonkey（暴力猴）](https://violentmonkey.github.io/)**
-* **[Greasemonkey（油猴子）](https://www.greasespot.net/)**
+* **篡改猴   [Tampermonkey](https://www.tampermonkey.net/)**  (推荐, 支持 Chrome, Edge, Firefox, Safari)
+* **暴力猴   [Violentmonkey](https://violentmonkey.github.io/)**
+* **油猴子   [Greasemonkey](https://www.greasespot.net/)**
 
 ### 脚本安装
 1.  点击此处安装全面版ZTE-Stat_Max：
