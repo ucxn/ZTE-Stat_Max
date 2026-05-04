@@ -370,18 +370,18 @@
                 } else if (main) {
                     main.parentNode.insertBefore(board, main);}
             }
-            document.getElementById('gb-wan-up-bps').textContent = `🔼 ${formatBps(wanUp)}`;
-            document.getElementById('gb-wan-down-bps').textContent = `🔽 ${formatBps(wanDown)}`;
-            document.getElementById('gb-wan-up-bytes').textContent = `🔼 ${formatBytes(wanUp)}`;
-            document.getElementById('gb-wan-down-bytes').textContent = `🔽 ${formatBytes(wanDown)}`;
-            document.getElementById('gb-lan-up-bps').textContent = `🔼 ${formatBps(sumUp)}`;
-            document.getElementById('gb-lan-down-bps').textContent = `🔽 ${formatBps(sumDown)}`;
-            document.getElementById('gb-perc-up').textContent = `🔼 ${wanUp>0?((sumUp/wanUp)*100).toFixed(1):0.0}%`;
-            document.getElementById('gb-perc-down').textContent = `🔽 ${wanDown>0?((sumDown/wanDown)*100).toFixed(1):0.0}%`;
-            document.getElementById('gb-lan-up-vol').textContent = `🔼 ${formatVolume(lanUpVol)}`;
-            document.getElementById('gb-lan-down-vol').textContent = `🔽 ${formatVolume(lanDownVol)}`;
-            document.getElementById('gb-wan-up-vol').textContent = `🔼 ${formatVolume(State.wanUpTraffic)}`;
-            document.getElementById('gb-wan-down-vol').textContent = `🔽 ${formatVolume(State.wanDownTraffic)}`;
+            board.querySelector('gb-wan-up-bps').textContent = `🔼 ${formatBps(wanUp)}`;
+            board.querySelector('gb-wan-down-bps').textContent = `🔽 ${formatBps(wanDown)}`;
+            board.querySelector('gb-wan-up-bytes').textContent = `🔼 ${formatBytes(wanUp)}`;
+            board.querySelector('gb-wan-down-bytes').textContent = `🔽 ${formatBytes(wanDown)}`;
+            board.querySelector('gb-lan-up-bps').textContent = `🔼 ${formatBps(sumUp)}`;
+            board.querySelector('gb-lan-down-bps').textContent = `🔽 ${formatBps(sumDown)}`;
+            board.querySelector('gb-perc-up').textContent = `🔼 ${wanUp>0?((sumUp/wanUp)*100).toFixed(1):0.0}%`;
+            board.querySelector('gb-perc-down').textContent = `🔽 ${wanDown>0?((sumDown/wanDown)*100).toFixed(1):0.0}%`;
+            board.querySelector('gb-lan-up-vol').textContent = `🔼 ${formatVolume(lanUpVol)}`;
+            board.querySelector('gb-lan-down-vol').textContent = `🔽 ${formatVolume(lanDownVol)}`;
+            board.querySelector('gb-wan-up-vol').textContent = `🔼 ${formatVolume(State.wanUpTraffic)}`;
+            board.querySelector('gb-wan-down-vol').textContent = `🔽 ${formatVolume(State.wanDownTraffic)}`;
         }
 
         const deviceItems = document.querySelectorAll('.config-item');
