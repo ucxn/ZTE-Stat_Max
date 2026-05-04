@@ -47,8 +47,10 @@
 1.  点击此处安装全面版ZTE-Stat_Max：
 
     **[从GitHub安装](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[从GreasyFork安装](https://greasyfork.org/zh-CN/scripts/576199)**
-2.  在弹出的 Tampermonkey 界面中点击 **“安装”** 或 **“更新”**。
-3.  登录您的中兴路由器 Web 管理后台，*输入管理员密码*，登录成功后 *刷新网页* ,进入“组网管理”界面，脚本将自动生效。
+
+    **[从OpenUserJS安装（推荐:无需科学上网）](https://openuserjs.org/scripts/%E5%93%A5%E5%93%A5%E7%A7%91%E6%8A%80/%E4%B8%AD%E5%85%B4%E8%B7%AF%E7%94%B1%E5%99%A8(ZTE)_%E5%A2%9E%E5%BC%BA)**
+3.  在弹出的 Tampermonkey 界面中点击 **“安装”** 或 **“更新”**。
+4.  登录您的中兴路由器 Web 管理后台，*输入管理员密码*，登录成功后 *刷新网页* ,进入“组网管理”界面，脚本将自动生效。
     
 > [!IMPORTANT]
  *备用唤醒入口*：若不生效，请检查**左侧工具边栏导航**，找到 **🚀 哥哥科技面板** 点开进行使用，效果基本一致。<br><br>请确保 **篡改猴** 插件运行正常！！也就是 浏览器 拓展图标这里，正常显示数字！允许用户脚本注入教程如下图。
