@@ -1,20 +1,16 @@
 // ==UserScript==
-// @name         中兴路由器(ZTE) 增强
+// @name         中兴路由器(ZTE) 增强【读档版】
 // @namespace    http://tampermonkey.net/
-// @version      5.8
+// @version      5.8.1.0
 // @description  QQ群 680464365
+// @description:en https://github.com/ucxn/ZTE-Stat_Max
 // @author       哥哥科技
 // @noframes
 // @include      http://10.*
 // @match        http://192.168.5.1
-// @include      http://192.168.*
-// @include      https://192.168.*
-// @include      http://172.16.*
-// @include      http://zte.home*
+// @match        http://zte.home*
 // @grant        none
-// @updateURL    https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
-// @downloadURL  https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
-
+// @license      GPL-3.0-or-later
 // ==/UserScript==
 
 (function() {
@@ -85,15 +81,15 @@
     function formatBytes(bps) {
         let bytesPerSec = bps / 8;
         if (bytesPerSec >= 1048576) return (bytesPerSec / 1048576).toFixed(3) + ' MiB/s';
-        if (bytesPerSec >= 1024) return (bytesPerSec / 1024).toFixed(3) + ' KiB/s';
+        if (bytesPerSec >= 1024) return (bytesPerSec / 1024).toFixed(2) + ' KiB/s';
         return Math.round(bytesPerSec) + ' B/s';
     }
 
     function formatVolume(bits) {
         let bytes = bits / 8;
         if (bytes >= 1073741824) return (bytes / 1073741824).toFixed(3) + ' GiB';
-        if (bytes >= 1048576) return (bytes / 1048576).toFixed(3) + ' MiB';
-        if (bytes >= 1024) return (bytes / 1024).toFixed(2) + ' KiB';
+        if (bytes >= 1048576) return (bytes / 1048576).toFixed(2) + ' MiB';
+        if (bytes >= 1024) return (bytes / 1024).toFixed(1) + ' KiB';
         return Math.round(bytes) + ' B';
     }
 
@@ -101,17 +97,19 @@
     function formatVolumeDual(bitsIntegral, bitsOfficial) {
         let bytes = bitsIntegral / 8;
         let bytesOff = bitsOfficial / 8;
-        if (bytes >= 1073741824) return (bytes / 1073741824).toFixed(4) + ' | ' + (bytesOff / 1073741824).toFixed(4) + ' GiB';
-        if (bytes >= 1048576) return (bytes / 1048576).toFixed(3) + ' | ' + (bytesOff / 1048576).toFixed(3) + ' MiB';
-        if (bytes >= 1024) return (bytes / 1024).toFixed(2) + ' | ' + (bytesOff / 1024).toFixed(2) + ' KiB';
-        return Math.round(bytes) + ' | ' + Math.round(bytesOff) + ' B';
-    } // 需求 2.2：区间流量单字母简写引擎 (放弃对齐换取空间)
+        if (bytes >= 1073741824) return (bytes / 1073741824).toFixed(3) + ' | ' + (bytesOff / 1073741824).toFixed(4) + ' GiB';
+        if (bytes >= 1048576) return (bytes / 1048576).toFixed(2) + ' | ' + (bytesOff / 1048576).toFixed(3) + ' MiB';
+        if (bytes >= 1024) return (bytes / 1024).toFixed(2) + ' | ' + (bytesOff / 1024).toFixed(1) + ' KiB';
+        return Math.round(bytes) + ' | ' + Math.round(bytesOff) + ' B';}
+
+    // 需求 2.2：区间流量单字母简写引擎 (放弃对齐换取空间)
     function formatShortVolume(bits) {
         let bytes = bits / 8;
-        if (bytes >= 1073741824) return (bytes / 1073741824).toFixed(1) + 'G';
-        if (bytes >= 1048576) return (bytes / 1048576).toFixed(1) + 'M';
-        if (bytes >= 1024) return (bytes / 1024).toFixed(0) + 'K';
-        return Math.round(bytes) + 'B';}
+        if (bytes >= 1073741824) return (bytes / 1073741824).toFixed(3) + 'G';
+        if (bytes >= 1048576) return (bytes / 1048576).toFixed(2) + 'M';
+        if (bytes >= 1024) return (bytes / 1024).toFixed(1) + 'K';
+        return Math.round(bytes) + 'B';
+    }
 
     // 核心修复点 1：使用相邻节点配对遍历，防范因缺少 ParaValue 标签导致的数组下标错位错乱
     function normalizeMac(mac) {
@@ -194,7 +192,7 @@
         .zte-bar-up::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; z-index: -1; background: rgba(255, 76, 0, 0.12); width: var(--p-up, 0%); transition: width 0.5s; }
         .zte-bar-down::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; z-index: -1; background: rgba(0, 89, 250, 0.12); width: var(--p-down, 0%); transition: width 0.5s; }
 
-        /* 面板UI重构：彻底消灭变色龙现象，完美复刻官方白底圆角灰相框 */
+        /* 面板UI重构：消灭变色龙现象，复刻官方白底圆角灰相框 */
         #config-list.gege-list-container {
             background-color: #ffffff !important;
             border-radius: 8px !important;
@@ -226,7 +224,7 @@
             margin-bottom: 5px !important;
         }
 
-        /* 内部设备条目背景改透明，彻底根除灰白相间的问题 */
+        /* 内部设备条目背景改透明，解决灰白相间的问题 */
         .gege-list-item {
             background-color: transparent !important;
             border-bottom: 1px solid #f0f0f0 !important;
@@ -251,7 +249,7 @@
     `;
     document.head.appendChild(style);
 
-    // ======== [3] 核心拉取引擎 (1000ms 高频采样) ========
+    // ======== [3] 核心拉取引擎 (采样) ========
 
     async function refreshSpeedData() {
         if (isFetching) return;
@@ -299,14 +297,17 @@
                 }
             });
 
-            let currentDeviceCount = Object.keys(clientsInfo).length;
-            let renderedDeviceCount = document.querySelectorAll('.gege-list-item').length;
+            // [Fix 2] MAC Fingerprint Logic: Replace simple count comparison
+            let currentMacFingerprint = Object.keys(clientsInfo).sort().join(',');
             let overlay = document.getElementById('gege-global-overlay');
+            let oldMacFingerprint = overlay ? (overlay.getAttribute('data-mac-fingerprint') || '') : '';
 
-            // 仅当面板处于打开状态，且发现设备数量对不上时，才触发一次重建
-            if (overlay && overlay.style.display === 'block' && currentDeviceCount !== renderedDeviceCount) {
-                console.log(`[哥哥科技] 检测到设备数：面板 ${renderedDeviceCount} 台变动 → 真实 ${currentDeviceCount} 台，触发无感热重载`);
-                buildVirtualDOM(overlay);} // 积分和局部渲染，安全防止脏数据，DOM就绪和正常跑解耦
+            // Trigger reload only when physical topology actually changes
+            if (overlay && overlay.style.display === 'block' && currentMacFingerprint !== oldMacFingerprint) {
+                console.log(`[Gege Tech] Network topology changed, hot reloading...`);
+                overlay.setAttribute('data-mac-fingerprint', currentMacFingerprint);
+                buildVirtualDOM(overlay);
+            }
 
             // 梯形积分
             if (State.lastTime !== 0) {
@@ -315,13 +316,14 @@
                 State.wanDownTraffic += ((State.wanDownSpeed + curWanDown) / 2) * dt;
                 for (let mac in clientsInfo) {
                     if (!State.clients[mac]) {
-                        // 初始化时，立刻将当前路由器的真实总流量设定为基准线
                         State.clients[mac] = {
                             upSpeed: 0, downSpeed: 0, upTraffic: 0, downTraffic: 0,
-                            upBaseline: clientsInfo[mac].upTp, downBaseline: clientsInfo[mac].downTp,
+                            // [Fix 1] Snapshot Mode: Initialize baseline to 0 to inherit router history
+                            upBaseline: 0, downBaseline: 0,
                             lastUpTp: clientsInfo[mac].upTp, lastDownTp: clientsInfo[mac].downTp
                         };
                     }
+
                     let cS = State.clients[mac];
                     let cC = clientsInfo[mac];
 
@@ -415,22 +417,23 @@
                 } else if (main) {
                     main.parentNode.insertBefore(board, main);}
             }
-            document.getElementById('gb-wan-up-bps').textContent = `🔼 ${formatBps(wanUp)}`;
-            document.getElementById('gb-wan-down-bps').textContent = `🔽 ${formatBps(wanDown)}`;
-            document.getElementById('gb-wan-up-bytes').textContent = `🔼 ${formatBytes(wanUp)}`;
-            document.getElementById('gb-wan-down-bytes').textContent = `🔽 ${formatBytes(wanDown)}`;
-            document.getElementById('gb-lan-up-bps').textContent = `🔼 ${formatBps(sumUp)}`;
-            document.getElementById('gb-lan-down-bps').textContent = `🔽 ${formatBps(sumDown)}`;
-            document.getElementById('gb-perc-up').textContent = `🔼 ${wanUp>0?((sumUp/wanUp)*100).toFixed(1):0.0}%`;
-            document.getElementById('gb-perc-down').textContent = `🔽 ${wanDown>0?((sumDown/wanDown)*100).toFixed(1):0.0}%`;
-            document.getElementById('gb-lan-up-vol').textContent = `🔼 ${formatVolume(lanUpVol)}`;
-            document.getElementById('gb-lan-down-vol').textContent = `🔽 ${formatVolume(lanDownVol)}`;
-            document.getElementById('gb-wan-up-vol').textContent = `🔼 ${formatVolume(State.wanUpTraffic)}`;
-            document.getElementById('gb-wan-down-vol').textContent = `🔽 ${formatVolume(State.wanDownTraffic)}`;
-            document.getElementById('gb-int-up-vol').textContent = `🔼 ${formatVolume(totalIntUp)}`;
-            document.getElementById('gb-int-down-vol').textContent = `🔽 ${formatVolume(totalIntDown)}`;
-            document.getElementById('gb-abs-up-vol').textContent = `🔼 ${formatVolume(totalAbsUp)}`;
-            document.getElementById('gb-abs-down-vol').textContent = `🔽 ${formatVolume(totalAbsDown)}`;
+            // [Fix 3] Scoped UI Updates: Use board.querySelector instead of global document
+            board.querySelector('#gb-wan-up-bps').textContent = `🔼 ${formatBps(wanUp)}`;
+            board.querySelector('#gb-wan-down-bps').textContent = `🔽 ${formatBps(wanDown)}`;
+            board.querySelector('#gb-wan-up-bytes').textContent = `🔼 ${formatBytes(wanUp)}`;
+            board.querySelector('#gb-wan-down-bytes').textContent = `🔽 ${formatBytes(wanDown)}`;
+            board.querySelector('#gb-lan-up-bps').textContent = `🔼 ${formatBps(sumUp)}`;
+            board.querySelector('#gb-lan-down-bps').textContent = `🔽 ${formatBps(sumDown)}`;
+            board.querySelector('#gb-perc-up').textContent = `🔼 ${wanUp>0?((sumUp/wanUp)*100).toFixed(1):0.0}%`;
+            board.querySelector('#gb-perc-down').textContent = `🔽 ${wanDown>0?((sumDown/wanDown)*100).toFixed(1):0.0}%`;
+            board.querySelector('#gb-lan-up-vol').textContent = `🔼 ${formatVolume(lanUpVol)}`;
+            board.querySelector('#gb-lan-down-vol').textContent = `🔽 ${formatVolume(lanDownVol)}`;
+            board.querySelector('#gb-wan-up-vol').textContent = `🔼 ${formatVolume(State.wanUpTraffic)}`;
+            board.querySelector('#gb-wan-down-vol').textContent = `🔽 ${formatVolume(State.wanDownTraffic)}`;
+            board.querySelector('#gb-int-up-vol').textContent = `🔼 ${formatVolume(totalIntUp)}`;
+            board.querySelector('#gb-int-down-vol').textContent = `🔽 ${formatVolume(totalIntDown)}`;
+            board.querySelector('#gb-abs-up-vol').textContent = `🔼 ${formatVolume(totalAbsUp)}`;
+            board.querySelector('#gb-abs-down-vol').textContent = `🔽 ${formatVolume(totalAbsDown)}`;
         }
 
         const deviceItems = document.querySelectorAll('.config-item');
@@ -488,7 +491,7 @@
                     devIntro.appendChild(box);
                 }
                 // 需求：分子为官方区间增量，分母为全网官方区间增量代数和 (匿名计算，防作用域污染)
-                let p = totalIntUp > 0 ? ((Math.max(0, cCur.upTp - (cS.upBaseline || 0)) / totalIntUp) * 100).toFixed(1) : 0.0;
+                let p = totalAbsUp > 0 ? ((cCur.upTp || 0) / totalAbsUp * 100).toFixed(1) : 0.0;
                 box.querySelector('.v-vol').textContent = formatVolumeDual(cS.upTraffic, cCur.upTp);
                 box.querySelector('.v-pct').textContent = p + '%';
                 box.querySelector('.zte-thin-bar-inner').style.width = Math.min(p, 100) + '%';
@@ -508,16 +511,18 @@
                     info.appendChild(rBox);
                 }
 
+                let intUp = Math.max(0, cCur.upTp - (cS.upBaseline || 0));
+                let intDown = Math.max(0, cCur.downTp - (cS.downBaseline || 0));
                 // 进度条比例 (严守旧版公式)
-                let totalV = cCur.upTp + cCur.downTp;
-                let barRatio = totalV > 0 ? (cCur.upTp / totalV * 100) : 0;
+                let totalV = intUp + intDown;
+                let barRatio = totalV > 0 ? (intUp / totalV * 100) : 0;
 
                 // P2P 雷达文本逻辑 (双模式适配)
                 let textContent = "";
                 let textColor = "#0059fa";
 
                 if (CONFIG.calcMode === 1) {
-                    let ratio = cCur.downTp > 0 ? (cCur.upTp / cCur.downTp) : (cCur.upTp > 0 ? Infinity : 0);
+                    let ratio = intDown > 0 ? (intUp / intDown) : (intUp > 0 ? Infinity : 0);
                     if (ratio > CONFIG.ratioExtremeUp) {
                         textColor = '#ff4c00';
                         textContent = (ratio === Infinity ? '∞' : ratio.toFixed(2)) + '⚠️';
@@ -529,7 +534,7 @@
                         textContent = (ratio * 100).toFixed(1) + '%';
                     } else {
                         textColor = '#0059fa';
-                        let revRatio = cCur.upTp > 0 ? (cCur.downTp / cCur.upTp) : (cCur.downTp > 0 ? Infinity : 0);
+                        let revRatio = intUp > 0 ? (intDown / intUp) : (intDown > 0 ? Infinity : 0);
                         textContent = (revRatio === Infinity ? '∞' : revRatio.toFixed(1)) + 'x';
                     }
                 } else {
@@ -540,8 +545,6 @@
                 rBox.querySelector('.v-port').textContent = CONFIG.portMap[cCur.interface] || cCur.interface || "未知";
 
                 // 渲染区间流量 (用当前官方值减去你的神级负数基线)
-                let intUp = Math.max(0, cCur.upTp - (cS.upBaseline || 0));
-                let intDown = Math.max(0, cCur.downTp - (cS.downBaseline || 0));
                 rBox.querySelector('.v-interval .c-up').textContent = '' + formatShortVolume(intUp);
                 rBox.querySelector('.v-interval .c-down').textContent = '' + formatShortVolume(intDown);
 
@@ -556,8 +559,8 @@
                     dBox.innerHTML = `<div class="t-row c-down"><span>↓ <span class="v-vol"></span></span><span class="v-pct"></span></div><div class="zte-thin-bar"><div class="zte-thin-bar-inner down"></div></div>`;
                     info.appendChild(dBox);
                 }
-                // 需求：分子为官方区间增量，分母为全网官方区间增量代数和
-                let dp = totalIntDown > 0 ? ((Math.max(0, cCur.downTp - (cS.downBaseline || 0)) / totalIntDown) * 100).toFixed(1) : 0.0;
+                // 【重构下行赛跑条】分子：单次绝对值；分母：全家单次绝对值总和
+                let dp = totalAbsDown > 0 ? ((cCur.downTp || 0) / totalAbsDown * 100).toFixed(1) : 0.0;
                 // 启用双轨制锚定渲染
                 dBox.querySelector('.v-vol').textContent = formatVolumeDual(cS.downTraffic, cCur.downTp);
                 dBox.querySelector('.v-pct').textContent = dp + '%';
