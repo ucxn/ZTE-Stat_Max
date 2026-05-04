@@ -1,6 +1,5 @@
 // ==UserScript==
 // @name         中兴路由器(ZTE) 增强【读档版】
-// @namespace    http://tampermonkey.net/
 // @version      5.8.1.0
 // @description  QQ群 680464365
 // @description:en https://github.com/ucxn/ZTE-Stat_Max
