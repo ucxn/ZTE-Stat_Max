@@ -42,6 +42,7 @@
 在使用本脚本之前，请确保您的浏览器已安装用户脚本管理器扩展，例如：
 * **[Tampermonkey](https://www.tampermonkey.net/)** (推荐, 支持 Chrome, Edge, Firefox, Safari)
 * **[Violentmonkey](https://violentmonkey.github.io/)**
+* **[Greasemonkey](https://www.greasespot.net/)**
 
 ### 脚本安装
 1.  点击此处安装全面版ZTE-Stat_Max：
