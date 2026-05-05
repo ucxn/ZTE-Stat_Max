@@ -57,10 +57,8 @@
  *备用唤醒入口*：若不生效，请检查**左侧工具边栏导航**，找到 **🚀 哥哥科技面板** 点开进行使用，效果基本一致。<br><br>请确保 **篡改猴** 插件运行正常！！也就是 浏览器 拓展图标这里，正常显示数字！允许用户脚本注入教程如下图。
 
 #### 🔗 Symlinks 友情链接
-[![打击PCDN偷上行](https://img.shields.io/badge/GitHub-打击PCDN偷上行-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
-
-[![中兴路由器接入HACS集成](https://img.shields.io/badge/GitHub-ZTE路由器HACS集成-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/FaltFishL/ZTE_monitor_HA)
-
+[![ZTE HACS](https://img.shields.io/badge/HACS-ZTE路由器集成-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://github.com/FaltFishL/ZTE_monitor_HA)
+[![Anti PCDN](https://img.shields.io/badge/Network-打击PCDN偷上行-FF4C00?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
 
 ## ⚙️ 个性化配置 (Configuration)
 
