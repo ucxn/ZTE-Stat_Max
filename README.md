@@ -59,6 +59,9 @@
 #### 🔗 Symlinks 友情链接
 [![打击PCDN偷上行](https://img.shields.io/badge/GitHub-打击PCDN偷上行-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
 
+[![中兴路由器接入HACS集成](https://img.shields.io/badge/GitHub-中心路由器HACS集成-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/FaltFishL/ZTE_monitor_HA)
+
+
 ## ⚙️ 个性化配置 (Configuration)
 
 > [!TIP]
