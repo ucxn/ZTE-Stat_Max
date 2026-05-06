@@ -1,6 +1,6 @@
 # ZTE-Stat_Max
 
-[![Version](https://img.shields.io/badge/version-5.8.2-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
+[![Version](https://img.shields.io/badge/version-5.8.9-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![Platform](https://img.shields.io/badge/platform-篡改猴-green.svg)](https://www.tampermonkey.net/)
 
@@ -35,6 +35,9 @@
 | :---: | :---: | :---: |
 | ![小米插件](./assets/Mi.png) | ![原生界面](./assets/ZTE.png) | ![增强界面](./assets/me.png) |
 
+<a href="https://www.bilibili.com/video/BVxxxxxxx" target="_blank">
+  <img src="https://img.shields.io/badge/Bilibili-观看演示视频-FF8EB3?style=for-the-badge&logo=bilibili&logoColor=white" height="72">
+</a>
 
 ## 🚀 安装指南 (Installation)
 
