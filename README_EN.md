@@ -1,6 +1,6 @@
 # ZTE-Stat_Max
 
-[![Version](https://img.shields.io/badge/version-5.8.2-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
+[![Version](https://img.shields.io/badge/version-5.8.9-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![Platform](https://img.shields.io/badge/platform-TamperMonkey-green.svg)](https://www.tampermonkey.net/)
 
@@ -32,7 +32,13 @@ While the official Web dashboard is stable, its UX design for data visualization
 
 [![Anti P2P Steal](https://img.shields.io/badge/GitHub-Ban--PCDN__Anti--P2P-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
 
+[![ZTE HACS](https://img.shields.io/badge/HACS-ZTE%20Home%20Assistant-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://github.com/FaltFishL/ZTE_monitor_HA)
+
 ## 🚀 Installation Guide
+
+<a href="https://www.bilibili.com/video/BVxxxxxxx" target="_blank">
+  <img src="https://img.shields.io/badge/Bilibili-Video-FF8EB3?style=for-the-badge&logo=bilibili&logoColor=white" height="72">
+</a>
 
 ### Requirements
 Before using this script, ensure your browser has a user script manager extension installed, such as:
