@@ -7,7 +7,7 @@
 **English** | [简体中文](README.md)
 
 **ZTE-Stat_Max** is a Tampermonkey enhancement script specifically designed for the ZTE router Web UI management dashboard.
-### [Quick Install (Click)](https://github.com/ucxn/ZTE-Stat_Max/edit/main/README_EN.md#script-installation)
+### [Quick Install OnLine (Click)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/README_EN.md#script-installation)
 
 By taking over the underlying XML API data stream of the native Vue framework, this script reconstructs the UI layout of the "Network Management" and "Connected Devices" pages without breaking the official topology and structure. It introduces trapezoidal integration algorithms, an abnormal traffic radar, and a dual-track traffic alignment display, providing an dashboard for network engineers and power users.
 
