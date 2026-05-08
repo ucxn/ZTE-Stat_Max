@@ -1,10 +1,13 @@
 # ZTE-Stat_Max
 
-[![Version](https://img.shields.io/badge/version-5.8.9-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
+[![Version](https://img.shields.io/badge/version-5.9.6-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![Platform](https://img.shields.io/badge/platform-篡改猴-green.svg)](https://www.tampermonkey.net/)
 
 [English](README_EN.md) | **简体中文**
+
+## [点击一键安装](https://github.com/ucxn/ZTE-Stat_Max/blob/main/README.md#%E8%84%9A%E6%9C%AC%E5%AE%89%E8%A3%85)
+[**国内用户**](https://scriptcat.org/zh-CN/script-show-page/6194)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[海外用户](https://greasyfork.org/en/scripts/576199)**
 
 **ZTE-Stat_Max** 是一款专为中兴（ZTE）路由器 Web 管理后台设计的 “油猴” 增强脚本。
 
@@ -50,9 +53,9 @@
 ### 脚本安装
 1.  点击此处安装全面版ZTE-Stat_Max：
 
-    **[从GitHub安装](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[从GreasyFork安装](https://greasyfork.org/zh-CN/scripts/576199)**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[从OpenUserJS安装](https://openuserjs.org/scripts/%E5%93%A5%E5%93%A5%E7%A7%91%E6%8A%80/%E4%B8%AD%E5%85%B4%E8%B7%AF%E7%94%B1%E5%99%A8(ZTE)_%E5%A2%9E%E5%BC%BA)**
+    [从GitHub安装](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[从GreasyFork安装](https://greasyfork.org/zh-CN/scripts/576199)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[从OpenUserJS安装](https://openuserjs.org/scripts/%E5%93%A5%E5%93%A5%E7%A7%91%E6%8A%80/%E4%B8%AD%E5%85%B4%E8%B7%AF%E7%94%B1%E5%99%A8(ZTE)_%E5%A2%9E%E5%BC%BA)
 
-    **[通过 ScriptCat 脚本猫 安装（直连推荐：无需科学上网）](https://scriptcat.org/zh-CN/script-show-page/6194)**
+    [通过 ScriptCat 脚本猫 安装（直连推荐：无需科学上网、**自动更新**）](https://scriptcat.org/zh-CN/script-show-page/6194)
     
 3.  在弹出的 Tampermonkey 界面中点击 **“安装”** 或 **“更新”**。
 4.  登录您的中兴路由器 Web 管理后台，*输入管理员密码*，登录成功后 *刷新网页* ,进入“组网管理”界面，脚本将自动生效。
