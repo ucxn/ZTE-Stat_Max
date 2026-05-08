@@ -2,7 +2,7 @@
 // @name         中兴路由器(ZTE) 增强
 // @name:en      ZTE-Stat_Max
 // @namespace    ucxn
-// @version      5.9.7
+// @version      5.9.6
 // @description  QQ群 680464365 【B站 https://b23.tv/BV1PtR7B8ECC】
 // @description:en https://github.com/ucxn/ZTE-Stat_Max
 // @author       哥哥科技
