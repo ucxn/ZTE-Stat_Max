@@ -1,12 +1,13 @@
 # ZTE-Stat_Max
 
-[![Version](https://img.shields.io/badge/version-5.8.9-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
+[![Version](https://img.shields.io/badge/version-5.9.6-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![Platform](https://img.shields.io/badge/platform-TamperMonkey-green.svg)](https://www.tampermonkey.net/)
 
 **English** | [简体中文](README.md)
 
 **ZTE-Stat_Max** is a Tampermonkey enhancement script specifically designed for the ZTE router Web UI management dashboard.
+### [Quick Install (Click)](https://github.com/ucxn/ZTE-Stat_Max/edit/main/README_EN.md#script-installation)
 
 By taking over the underlying XML API data stream of the native Vue framework, this script reconstructs the UI layout of the "Network Management" and "Connected Devices" pages without breaking the official topology and structure. It introduces trapezoidal integration algorithms, an abnormal traffic radar, and a dual-track traffic alignment display, providing an dashboard for network engineers and power users.
 
@@ -31,7 +32,6 @@ While the official Web dashboard is stable, its UX design for data visualization
 ## 🔗 Symlinks
 
 [![Anti P2P Steal](https://img.shields.io/badge/GitHub-Ban--PCDN__Anti--P2P-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
-
 [![ZTE HACS](https://img.shields.io/badge/HACS-ZTE%20Home%20Assistant-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://github.com/FaltFishL/ZTE_monitor_HA)
 
 ## 🚀 Installation Guide
@@ -48,13 +48,17 @@ Before using this script, ensure your browser has a user script manager extensio
 
 ### Script Installation
 1.  Click here to install the full version of *ZTE-Stat_Max*：
+   
     **[Install from GitHub](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[Install via Greasy Fork](https://greasyfork.org/zh-CN/scripts/576199)**
-2. Click **"Install"** or **"Update"** in the Tampermonkey popup interface.
-3. Log into your ZTE router's Web management dashboard, *enter your admin password*, and upon successful login, *refresh the page* and navigate to the "Network Management" or "Connected Devices" page. The script will activate automatically.
+
+    [*Install from **ScriptCat*** (Popular in China)](https://scriptcat.org/zh-CN/script-show-page/6194)
+    
+3. Click **"Install"** or **"Update"** in the Tampermonkey popup interface.
+4. Log into your ZTE router's Web management dashboard, *enter your admin password*, and upon successful login, *refresh the page* and navigate to the "Network Management" or "Connected Devices" page. The script will activate automatically.
 
 
 > [!IMPORTANT]
-> **Alternative Wake-up Entry**: If it isn't working, please check the **left sidebar navigation**, find the **🚀 哥哥科技面板（BroTech Panel）**, and click to open it; the functionality is essentially the same.<br> Please ensure the **Tampermonkey** extension is running correctly!! Specifically, the extension icon in your browser should be displaying a number! The tutorial for allowing userscript injection is shown in the image below.
+> **Alternative Wake-up Entry**: If it isn't working, please check the **left sidebar navigation**, find the **🚀 哥哥科技面板（BroTech Panel）**, and click to open it; the functionality is essentially the same.<br> <br> Please ensure the **Tampermonkey** extension is running correctly!! Specifically, the extension icon in your browser should be displaying a number! The tutorial for allowing userscript injection is shown in the image below.
  
 > [!TIP]
 > If the script is still not taking effect, please refer to the following tutorial:
