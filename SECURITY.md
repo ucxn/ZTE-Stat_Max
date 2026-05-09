@@ -1,4 +1,4 @@
-# 哥哥科技 (Gege Tech) 安全与隐私策略
+# 哥哥科技安全隐私策略
 # Security Policy for ZTE-Stat_Max
 
 感谢您对“中兴路由器增强脚本 (ZTE-Stat_Max)”项目的关注！
