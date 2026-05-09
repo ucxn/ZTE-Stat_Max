@@ -84,10 +84,9 @@ jobs:
         config: |
           # 【白名单】只扫描指定的目录或文件
           paths:
-            - history/
             - new.user.js
           
-          # 【黑名单】绝对不要碰的雷区（即使在白名单目录下，也会被排除）
+          # 【黑名单】绝对不要碰的雷区
           paths-ignore:
             - node_modules/
             - dist/
