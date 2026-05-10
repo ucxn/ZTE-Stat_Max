@@ -1,12 +1,12 @@
 # ZTE-Stat_Max
 
-[![Version](https://img.shields.io/badge/version-5.9.6-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
+[![Version](https://img.shields.io/badge/version-5.9.8-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![Platform](https://img.shields.io/badge/platform-篡改猴-green.svg)](https://www.tampermonkey.net/)
 
 [English](README_EN.md) | **简体中文**
 
-## [点击一键安装](https://github.com/ucxn/ZTE-Stat_Max/blob/main/README.md#%E8%84%9A%E6%9C%AC%E5%AE%89%E8%A3%85)
+## [点击一键安装](https://github.com/ucxn/ZTE-Stat_Max#%E8%84%9A%E6%9C%AC%E5%AE%89%E8%A3%85)
 [**国内用户**](https://scriptcat.org/zh-CN/script-show-page/6194)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[海外用户](https://greasyfork.org/en/scripts/576199)**
 
 **ZTE-Stat_Max** 是一款专为中兴（ZTE）路由器 Web 管理后台设计的 “油猴” 增强脚本。
