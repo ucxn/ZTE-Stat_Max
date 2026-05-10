@@ -3,7 +3,7 @@
 // @name:en      ZTE-Stat_Max
 // @namespace    ucxn
 // @version      5.9.8
-// @description  QQ群 680464365 【B站 https://b23.tv/BV1PtR7B8ECC】
+// @description  QQ群 680464365
 // @description:en https://github.com/ucxn/ZTE-Stat_Max
 // @author       哥哥科技
 // @noframes
@@ -13,7 +13,7 @@
 // @grant        none
 // @license      GPL-3.0-or-later
 // @include      http://172.16.*
-// @updateURL    https://update.greasyfork.org/scripts/576199/%E4%B8%AD%E5%85%B4%E8%B7%AF%E7%94%B1%E5%99%A8%28ZTE%29%20%E5%A2%9E%E5%BC%BA.meta.js
+// @updateURL    https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // @downloadURL  https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 
 // ==/UserScript==
