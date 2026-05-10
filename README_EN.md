@@ -1,13 +1,13 @@
 # ZTE-Stat_Max
 
-[![Version](https://img.shields.io/badge/version-5.9.6-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
+[![Version](https://img.shields.io/badge/version-5.9.8-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![Platform](https://img.shields.io/badge/platform-TamperMonkey-green.svg)](https://www.tampermonkey.net/)
 
 **English** | [简体中文](README.md)
 
-**ZTE-Stat_Max** is a Tampermonkey enhancement script specifically designed for the ZTE router Web UI management dashboard.
-### [Quick Install OnLine (Click)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/README_EN.md#script-installation)
+**ZTE-Stat_Max** is a Xmonkey enhancement script specifically designed for the ZTE router Web UI management dashboard.
+### [Quick Install OnLine (Click)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/README_EN.md#-installation-guide)
 
 By taking over the underlying XML API data stream of the native Vue framework, this script reconstructs the UI layout of the "Network Management" and "Connected Devices" pages without breaking the official topology and structure. It introduces trapezoidal integration algorithms, an abnormal traffic radar, and a dual-track traffic alignment display, providing an dashboard for network engineers and power users.
 
@@ -36,7 +36,7 @@ While the official Web dashboard is stable, its UX design for data visualization
 
 ## 🚀 Installation Guide
 
-<a href="https://www.bilibili.com/video/BVxxxxxxx" target="_blank">
+<a href="https://www.bilibili.com/video/BV1PtR7B8ECC" target="_blank">
   <img src="https://img.shields.io/badge/Bilibili-Video-FF8EB3?style=for-the-badge&logo=bilibili&logoColor=white" height="72">
 </a>
 
