@@ -7,6 +7,7 @@
 // @description:en https://github.com/ucxn/ZTE-Stat_Max
 // @author       哥哥科技 space.bilibili.com/501430041
 // @noframes
+// @icon         https://scriptcat.org/api/v2/resource/image/cRkcAvu6aH90bpAa
 // @include      http://10.*.*.*
 // @match        http://192.168.*.*
 // @match        http://zte.home*
@@ -15,6 +16,7 @@
 // @license      GPL-3.0-or-later
 // @updateURL    https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // @downloadURL  https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
+
 // ==/UserScript==
 
 (function() {
@@ -38,7 +40,7 @@
         ratioWarnUp: 0.07,// 重度上传警告阈值 (> 7%)
         ratioExtremeDown: 0.01, // 极端下载判定阈值 (< 1%)
         ratioThreshold: 7, // (仅calcMode=0时有效) 上传占比报警阈值(%)
-        readSaveData: 1,// 【开关切换】 1: 读档模式(继承本次历史量) | 0: 新局模式(从打开网页此刻归零重新计流)
+        readSaveData: 0,// 【开关切换】 1: 读档模式(继承本次历史量) | 0: 新局模式(从打开网页此刻归零重新计流)
         portMap: {
             "eth1": "网口 1",
             "eth2": "网口 2",
