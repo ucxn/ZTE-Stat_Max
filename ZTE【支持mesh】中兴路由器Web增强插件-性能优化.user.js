@@ -7,6 +7,7 @@
 // @description:en https://github.com/ucxn/ZTE-Stat_Max
 // @author       哥哥科技
 // @noframes
+// @icon         https://scriptcat.org/api/v2/resource/image/cRkcAvu6aH90bpAa
 // @include      http://10.*.*.*
 // @match        http://192.168.*.*
 // @match        http://zte.home*
