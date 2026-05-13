@@ -7,7 +7,7 @@
 [English](README_EN.md) | **简体中文**
 
 ## [点击一键安装](https://github.com/ucxn/ZTE-Stat_Max#%E8%84%9A%E6%9C%AC%E5%AE%89%E8%A3%85)
-[**国内用户**](https://scriptcat.org/zh-CN/script-show-page/6194)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[海外用户](https://greasyfork.org/en/scripts/576199)**
+[**国内用户**](https://scriptcat.org/zh-CN/script-show-page/6194)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[国际用户](https://greasyfork.org/en/scripts/576199)**
 
 **ZTE-Stat_Max**，作者：*哥哥科技*！是一款专为中兴（ZTE）路由器 Web 管理后台设计的 “油猴” 增强脚本。
 
