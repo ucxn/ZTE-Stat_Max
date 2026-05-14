@@ -1,21 +1,21 @@
 // ==UserScript==
-// @name         中兴路由器(ZTE) 增强
-// @name:en      ZTE-Stat_Max
-// @namespace    ucxn
-// @version      5.9.8
-// @description  QQ群 680464365
-// @description:en https://github.com/ucxn/ZTE-Stat_Max
-// @author       哥哥科技
+// @name            中兴路由器(ZTE) 增强
+// @name:en         ZTE-Stat_Max
+// @namespace       ucxn
+// @version         5.9.8
+// @description     QQ群 680464365
+// @description:en  https://github.com/ucxn/ZTE-Stat_Max
+// @author          哥哥科技
 // @noframes
-// @icon         https://scriptcat.org/api/v2/resource/image/cRkcAvu6aH90bpAa
-// @include      http://10.*.*.*
-// @match        http://192.168.*.*
-// @match        http://zte.home*
-// @grant        none
-// @license      GPL-3.0-or-later
-// @include      http://172.16.*
-// @updateURL    https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
-// @downloadURL  https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
+// @icon            https://scriptcat.org/api/v2/resource/image/cRkcAvu6aH90bpAa
+// @include         http://10.*.*.*
+// @include         http://192.168.*.*
+// @match           http://zte.home*
+// @grant           none
+// @license         GPL-3.0-or-later
+// @include         http://172.16.*
+// @updateURL       https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
+// @downloadURL     https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 
 // ==/UserScript==
 
