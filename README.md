@@ -111,3 +111,5 @@ const CONFIG = {
 
 ---
 *Authored by 哥哥科技*
+
+[![Star History](https://api.star-history.com/svg?repos=ucxn/ZTE-Stat_Max&type=Date)](https://star-history.com/#ucxn/ZTE-Stat_Max&Date)
