@@ -60,8 +60,8 @@ Before using this script, ensure your browser has a user script manager extensio
 > [!IMPORTANT]
 > **Alternative Wake-up Entry**: If it isn't working, please check the **left sidebar navigation**, find the **🚀 哥哥科技面板（BroTech Panel）**, and click to open it; the functionality is essentially the same.<br> <br> Please ensure the **Tampermonkey** extension is running correctly!! Specifically, the extension icon in your browser should be displaying a number! The tutorial for allowing userscript injection is shown in the image below.
 
-> [!TIP]
-> **Via browser on mobile Script/Plugin features DOESN'T WORK?** 
+> [!NOTE]
+> **Via Browser** (Mobile): Script/Plugin features *DON'T WORK* ?
 > <details>
 > <summary>👉 Click here to view the solution</summary>
 > <br>Due to limitations in Via Browser's rendering engine behavior, the default `document-idle` injection timing may fail to work properly.<br>
