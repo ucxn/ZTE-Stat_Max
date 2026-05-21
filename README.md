@@ -75,7 +75,7 @@
 ## ⚙️ 个性化配置 (Configuration)
 
 > [!TIP]
-> **移动端  Via 浏览器 脚本/插件 功能无法生效？**
+> 移动端  **Via** 浏览器 脚本/插件 *功能无法生效*？
 > <details>
 > <summary>👉 点此展开查看解决办法</summary>
 > <br>由于 Via 浏览器的内核机制限制，默认的 `document-idle` 无法成功注入。<br>
