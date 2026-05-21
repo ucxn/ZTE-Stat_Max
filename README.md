@@ -64,6 +64,10 @@
 > [!IMPORTANT]
  *备用唤醒入口*：若不生效，请检查**左侧工具边栏导航**，找到 **🚀 哥哥科技面板** 点开进行使用，效果基本一致。<br><br>请确保 **篡改猴** 插件运行正常！！也就是 浏览器 拓展图标这里，正常显示数字！允许用户脚本注入教程如下图。
 
+> [!TIP]
+> 若脚本仍未生效，请使用如下教程：
+![图文教程](./assets/Install.png)
+
 #### 🔗 Symlinks 友情链接
 [![ZTE HACS](https://img.shields.io/badge/HACS-ZTE路由器集成-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://github.com/FaltFishL/ZTE_monitor_HA)
 [![Anti PCDN](https://img.shields.io/badge/Network-打击PCDN偷上行-FF4C00?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
@@ -71,8 +75,15 @@
 ## ⚙️ 个性化配置 (Configuration)
 
 > [!TIP]
-> 若脚本仍未生效，请使用如下教程：
-![图文教程](./assets/Install.png)
+> **移动端  Via 浏览器 脚本/插件 功能无法生效？**
+> <details>
+> <summary>👉 点此展开查看解决办法</summary>
+> <br>由于 Via 浏览器的内核机制限制，默认的 `document-idle` 无法成功注入。<br>
+> <br>请进入 Via 的脚本管理界面，将运行时期修改为 `document-start`或`document-end` 均可。<br>
+> 
+> ![操作截图](./assets/Via_20260521-175540.png)
+> </details>
+
 
 脚本顶部暴露了全局环境变量 `CONFIG` 对象，支持用户根据自身网络环境进行微调：
 
