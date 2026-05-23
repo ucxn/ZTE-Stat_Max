@@ -26,7 +26,7 @@
 (function() {
     'use strict';
 
-    console.log("🚀 哥哥科技 V5.9.8 终极引擎已装载...");
+    console.log("🚀 哥哥科技 V5.9.9 终极引擎已装载...");
 
     function escapeHTML(str) {
         if (!str) return '';
@@ -45,7 +45,7 @@
         ratioExtremeDown: 0.01, // 极端下载判定阈值 (< 1%)
         ratioThreshold: 7, // (仅calcMode=0时有效) 上传占比报警阈值(%)
         readSaveData: 1,// 【开关切换】 1: 读档模式(继承本次历史量) | 0: 新局模式(从打开网页此刻归零重新计流)
-        lanRefreshInterval: 30, // 【新增】LAN口刷新时间(秒)，用于精准补偿0到唤醒时的瞬时流量
+        lanRefreshInterval: 5, // 【新增】LAN口刷新时间(秒)，用于精准补偿0到唤醒时的瞬时流量
         portMap: {
             "eth1": "网口 1",
             "eth2": "网口 2",
