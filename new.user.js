@@ -12,6 +12,10 @@
 // @include         http://192.168.*.*
 // @match           http://zte.home*
 // @include         http://172.16.*
+// @include         https://10.*.*.*
+// @include         https://192.168.*.*
+// @match           https://zte.home*
+// @include         https://172.16.*
 // @grant           none
 // @license         GPL-3.0-or-later
 // @updateURL       https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
