@@ -1,6 +1,6 @@
 # ZTE-Stat_Max by 哥哥科技
 
-[![Version](https://img.shields.io/badge/version-5.9.8-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
+[![Version](https://img.shields.io/badge/version-5.9.9d-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)&nbsp;&emsp;
 [![Platform](https://img.shields.io/badge/platform-Web--JS-green.svg)](https://scriptcat.org/zh-CN)
 
