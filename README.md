@@ -32,6 +32,7 @@
   * DOM 原地突变（Mutation）渲染时，自动覆写敏感的 MAC 地址与 IPv6 临时地址，确保在录屏、截屏及分享网络状态时的安全。
   * 基于 Flexbox 的强制底部对齐系统，修复栅格导致的高度差问题。
   * 无痕注入，不破坏原生 Vue 状态机，保障浏览器运行性能。
+* **:rainbow: 事件驱动**：优化微积分算法，避免采样时间不对齐或相位差导致误算流量面积。以网络速率变化为采样区间基准。
 
 ## 📸 界面预览 (Screenshots)
 
@@ -54,9 +55,9 @@
 ### 脚本安装
 1.  点击此处安装全面版ZTE-Stat_Max：
 
-    [从GitHub安装](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[从GreasyFork安装](https://greasyfork.org/zh-CN/scripts/576199)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[从OpenUserJS安装](https://openuserjs.org/scripts/%E5%93%A5%E5%93%A5%E7%A7%91%E6%8A%80/%E4%B8%AD%E5%85%B4%E8%B7%AF%E7%94%B1%E5%99%A8(ZTE)_%E5%A2%9E%E5%BC%BA)
+    [从GitHub安装](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[从GreasyFork安装](https://greasyfork.org/zh-CN/scripts/576199)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[从OpenUserJS自动更新](https://openuserjs.org/scripts/%E5%93%A5%E5%93%A5%E7%A7%91%E6%8A%80/%E4%B8%AD%E5%85%B4%E8%B7%AF%E7%94%B1%E5%99%A8(ZTE)_%E5%A2%9E%E5%BC%BA)
 
-    [通过 ScriptCat 脚本猫 安装（直连推荐：无需科学上网、**更新推送**）](https://scriptcat.org/zh-CN/script-show-page/6194)
+    [通过 ScriptCat 脚本猫 安装（直连推荐：**无需科学上网**）](https://scriptcat.org/zh-CN/script-show-page/6194)更新推送
     
 3.  在弹出的 Tampermonkey 界面中点击 **“安装”** 或 **“更新”**。
 4.  登录您的中兴路由器 Web 管理后台，*输入管理员密码*，登录成功后 *刷新网页* ,进入“组网管理”界面，脚本将自动生效。

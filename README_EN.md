@@ -28,6 +28,7 @@ While the official Web dashboard is stable, its UX design for data visualization
   * Automatically masks sensitive MAC addresses and temporary IPv6 addresses during in-place DOM mutation rendering, ensuring safety when screen recording, capturing, or sharing network status.
   * Employs a forced bottom-alignment system based on Flexbox, fixing height discrepancies caused by CSS grids.
   * Trace-less injection. Does not break the native Vue state machine, ensuring browser rendering performance.
+* **:rainbow: Event-driven**: Optimises the integration algorithm to prevent miscalculations of flow area caused by misaligned sampling times or phase differences. Uses changes in network speed as the basis for the sampling interval.
 
 ## 🔗 Symlinks
 
