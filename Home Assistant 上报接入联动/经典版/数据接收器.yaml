@@ -1,0 +1,15 @@
+alias: "[GBNPA] 数据接收器"
+description: 接收脚本猫的 10 分钟快照，并派发给 Python 脚本解析
+triggers:
+  - allowed_methods:
+      - POST
+    local_only: true
+    webhook_id: gbnpa_router_webhook
+    trigger: webhook
+conditions: []
+actions:
+  - data:
+      payload: "{{ trigger.json }}"
+    action: python_script.gbnpa_router_sync
+mode: queued
+max: 10
