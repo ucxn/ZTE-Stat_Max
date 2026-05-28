@@ -1,0 +1,13 @@
+alias: "[GBNPA] 路由器高频数据切除"
+description: 每天凌晨 3:00 强行切除 30 天前的路由器原始数据，蹭 4:12 的底层 VACUUM 释放硬盘
+triggers:
+  - at: "03:00:00"
+    trigger: time
+conditions: []
+actions:
+  - data:
+      keep_days: 30
+      entity_globs:
+        - sensor.gbnpa_*
+    action: recorder.purge_entities
+mode: single
