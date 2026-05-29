@@ -1,8 +1,10 @@
 # ZTE-Stat_Max by Brother Tech
 
-[![Version](https://img.shields.io/badge/version-5.9.9g-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
-[![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
-[![Platform](https://img.shields.io/badge/platform-TamperMonkey-green.svg)](https://www.tampermonkey.net/)
+[![Version](https://img.shields.io/badge/version-5.9.9d-orange.svg?logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
+[![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg?logo=gnu&logoColor=white)](https://www.gnu.org/licenses/gpl-3.0.html)
+
+[![Platform](https://img.shields.io/badge/platform-Web--JS-green.svg?logo=javascript&logoColor=white)](https://scriptcat.org/zh-CN)&nbsp;&emsp;
+[![Integration](https://img.shields.io/badge/Integration-Home_Assistant-41BDF5.svg?logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max/releases?q=ha-&expanded=true)
 
 **English** | [简体中文](README.md)
 

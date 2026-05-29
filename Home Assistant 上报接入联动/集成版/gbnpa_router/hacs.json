@@ -1,9 +1,0 @@
-{
-  "name": "哥哥科技 ZTE HA 集成",
-  "render_readme": true,
-  "filename": "gbnpa_router",
-  "zip_release": false,
-  "homeassistant": "2024.0.0",
-  "country": ["CN"],
-  "iot_class": "Local Push"
-}
