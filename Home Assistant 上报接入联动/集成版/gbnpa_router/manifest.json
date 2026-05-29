@@ -1,0 +1,16 @@
+{
+  "domain": "gbnpa_router",
+  "name": "哥哥科技 态势感知中枢",
+  "codeowners": "@哥哥科技",
+  "documentation": "https://github.com/ucxn/ZTE-Stat_Max",
+  "issue_tracker": "https://www.bilibili.com/video/BV1PtR7B8ECC",
+  "dependencies": ["webhook"],
+  "requirements": [],
+  "version": "1.0.0",
+  "iot_class": "local_push",
+  "config_flow": true,
+  "integration_type": "hub",
+  "single_config_entry": true,
+  "after_dependencies": ["network", "http"],
+  "loggers": ["custom_components.gbnpa_router"]
+}
