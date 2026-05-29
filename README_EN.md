@@ -1,12 +1,13 @@
 # ZTE-Stat_Max by Brother Tech
 
-[![Version](https://img.shields.io/badge/version-5.9.9d-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
+[![Version](https://img.shields.io/badge/version-5.9.9g-orange.svg)](https://github.com/ucxn/ZTE-Stat_Max)
 [![License: GPL 3.0](https://img.shields.io/badge/License-GPL_3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![Platform](https://img.shields.io/badge/platform-TamperMonkey-green.svg)](https://www.tampermonkey.net/)
 
 **English** | [简体中文](README.md)
 
-**ZTE-Stat_Max** (Author:*Brother Tech*/*哥哥科技*) is a Xmonkey enhancement script specifically designed for the ZTE router Web UI management dashboard.
+**ZTE-Stat_Max** (Author:*Brother Tech*/*哥哥科技*) is a Xmonkey enhancement script specifically designed for the ZTE router Web UI management dashboard, now coupled with a dedicated **Home Assistant integration** for smart home automation.
+
 ### [Quick Install OnLine (Click)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/README_EN.md#-installation-guide)
 
 By taking over the underlying XML API data stream of the native Vue framework, this script reconstructs the UI layout of the "Network Management" and "Connected Devices" pages without breaking the official topology and structure. It introduces trapezoidal integration algorithms, an abnormal traffic radar, and a dual-track traffic alignment display, providing an dashboard for network engineers and power users.
@@ -17,6 +18,7 @@ While the official Web dashboard is stable, its UX design for data visualization
 
 ## ✨ Features
 
+* **🏠 Home Assistant Integration**: Works seamlessly with the dedicated Brother Tech hub integration to push real-time status updates via Webhooks. This gracefully bypasses the single-session limitation of the native Web UI, enabling stable, concurrent multi-terminal concurrent monitoring. See the brother project: [ZTE-Stat_HA](https://github.com/ucxn/ZTE-Stat_HA).
 * **Traffic & Ratio Statistics**: Tracks the uplink and downlink traffic of individual devices separately, allowing you to view real-time traffic ratio rates and up/down proportions.
 * **Abnormal Upload Monitoring**: Detects up/down ratios and visually flags abnormal uploads, combating PCDN / P2P bandwidth theft.
 * **Precise Unit Conversion**: Strictly differentiates between network transmission rates and storage capacity. Supports both 1000/1024 base systems and displays in Mbps / GiB.
@@ -33,7 +35,9 @@ While the official Web dashboard is stable, its UX design for data visualization
 ## 🔗 Symlinks
 
 [![Anti P2P Steal](https://img.shields.io/badge/GitHub-Ban--PCDN__Anti--P2P-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
-[![ZTE HACS](https://img.shields.io/badge/HACS-ZTE%20Home%20Assistant-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://github.com/FaltFishL/ZTE_monitor_HA)
+[![ZTE HACS](https://img.shields.io/badge/HACS-ZTE%20Stat%20HA-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)
+&nbsp;Other: [![ZTE HACS](https://img.shields.io/badge/ZTE__Monitor__HA-grey?style=flat)](https://github.com/FaltFishL/ZTE_monitor_HA)
+
 
 ## 🚀 Installation Guide
 

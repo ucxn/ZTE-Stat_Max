@@ -6,7 +6,7 @@
 
 [English](README_EN.md) | **简体中文**
 
-**ZTE-Stat_Max**是一款专为中兴（ZTE）路由器 Web 管理后台设计的 “油猴” 增强脚本插件，作者：*哥哥科技* ！
+**ZTE-Stat_Max**是一款专为中兴路由器 Web 管理后台设计的 “油猴” 增强脚本插件 + HA 全屋智能家居接入集成，作者：*哥哥科技* ！
 
 本程序通过接管原生 Vue 框架的底层 XML API 数据流，在不破坏官方原有拓扑与结构的前提下，重构了“组网管理”与“接入设备”页面的 UI 布局。引入了梯形积分算法、异常流量雷达以及双轨制流量对齐显示，为网络工程人员和进阶玩家提供。
 
@@ -20,6 +20,7 @@
 
 ## ✨ 功能特性 (Features)
 
+* **🏠 联动 Home Assistant**：搭配专属的 哥哥科技 中枢集成，支持通过 Webhook 将状态实时推送到 HACS 插件。避免Web只能单端接入，实现多端并发观测。详见兄弟项目：[ZTE-Stat_HA](github.com/ucxn/ZTE-Stat_HA)
 * **流量与占比统计**：分别统计单设备的上下行流量，实时查看流量占比速率及上下行比值。
 * **异常上传监控**：支持检测上下行比例，直观标记异常上传，打击 PCDN / P2P 偷跑上行。
 * **精准单位换算**：严格区分网络传输速率与存储容量，支持 1000/1024 双进制，支持 Mbps / GiB 显示。
@@ -80,7 +81,9 @@
 ![图文教程](./assets/Install.png)
 
 #### 🔗 Symlinks 友情链接
-[![ZTE HACS](https://img.shields.io/badge/HACS-ZTE路由器集成-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://github.com/FaltFishL/ZTE_monitor_HA)
+
+[![ZTE HACS](https://img.shields.io/badge/官方-Stat__HA路由器集成-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://github.com/FaltFishL/ZTE_monitor_HA)
+&nbsp;第三方: [![ZTE HACS](https://img.shields.io/badge/Monitor__HA-grey?style=flat)](https://github.com/FaltFishL/ZTE_monitor_HA)
 [![Anti PCDN](https://img.shields.io/badge/Network-打击PCDN偷上行-FF4C00?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
 
 ## ⚙️ 个性化配置 (Configuration)
