@@ -83,7 +83,7 @@
 
 #### 🔗 Symlinks 友情链接
 
-[![ZTE HACS](https://img.shields.io/badge/官方-Stat__HA路由器集成-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://github.com/FaltFishL/ZTE_monitor_HA)
+[![ZTE HACS](https://img.shields.io/badge/官方-Stat__HA路由器集成-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)
 &nbsp;第三方: [![ZTE HACS](https://img.shields.io/badge/Monitor__HA-grey?style=flat)](https://github.com/FaltFishL/ZTE_monitor_HA)
 [![Anti PCDN](https://img.shields.io/badge/Network-打击PCDN偷上行-FF4C00?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
 

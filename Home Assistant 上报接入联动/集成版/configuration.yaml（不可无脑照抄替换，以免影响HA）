@@ -1,0 +1,17 @@
+# 增加exclude:    entities:   即可，不可无脑照抄替换！
+# Loads default set of integrations. Do not remove.
+default_config:
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+recorder:
+  purge_keep_days: 72000
+  commit_interval: 600
+  auto_purge: false
+  exclude:
+    entities:
+      - sensor.gbnpa_global_time_str
+supervisor_panel:
