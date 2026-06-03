@@ -910,7 +910,7 @@ ${hW.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div></
           window.gegeHiddenDevices = nHD;
           lT = `<ajax_response_xml_root><OBJ_CLIENTS_ID>${iI}</OBJ_CLIENTS_ID></ajax_response_xml_root>`;
           let mM = lT.match(/<ParaName>MACAddress<\/ParaName><ParaValue>([^<]+)<\/ParaValue>/g) || [];
-          lF = mM.map(mx => mx.replace(/<[^>]+>/g, '')).sort().join('|');
+          lF = mM.map(mx => mx.replace(/[<>]/g, '')).sort().join('|');
           cDC = dC;
         }
       }
@@ -919,7 +919,7 @@ ${hW.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div></
         lT = await lR.text();
         if (lT.includes('<OBJ_CLIENTS_ID>')) {
           let mM = lT.match(/<ParaName>MACAddress<\/ParaName><ParaValue>([^<]+)<\/ParaValue>/g) || [];
-          lF = mM.map(m => m.replace(/<[^>]+>/g, '')).sort().join('|');
+          lF = mM.map(m => m.replace(/[<>]/g, '')).sort().join('|');
         }
       }
       if (cDC !== window.gegeLastDevCount || lF !== window.gegeLastLanFingerprint) {
