@@ -45,7 +45,7 @@
 
   // ======== [0] 用户极客环境变量配置区 ========
   const CONFIG = {
-    readSaveData: 1, // 【历史记录】 1: 从路由器后台读档 | 0: 新局模式 | 2: 从本地长期历史读档
+    readSaveData: 2, // 【历史记录】 1: 从路由器后台读档 | 0: 新局模式 | 2: 从本地长期历史读档
     forceMeshMode: 1, // 【Mesh探测模式】0: 官方拓扑驱动 | 1: n秒智能等待(默认) | 2: 强制大包抓取(专治阉割、不出数据)
     uiLayout: 1, // 【面板拓扑结构】 0: 经典版 | 1: 详细紧凑版(驾驶舱美学) | 2: 详细平铺版(报表流美学)
     injectMode: 1, // 【UI注入模式】 0: 原生侧边栏(1min)| 1: 优先，10秒悬浮舱(D)| 2: 联动模式| 3：强制模式
@@ -295,6 +295,13 @@ const W_APIS = [
           }
         }
       }
+      if (iD) {
+        for (let m in S.cls) if (!cI[m]) {
+          S.cls[m].intUp += S.cls[m].upR * (n - S.cls[m].lUT) * 0.0005;
+          S.cls[m].intDn += S.cls[m].dnR * (n - S.cls[m].lUT) * 0.0005;
+          S.cls[m].upR = S.cls[m].dnR = 0;
+        }
+      }
       if (ol && ol.style.display === 'block' && (iD || !ol.querySelector('.gege-list-item'))) {
         bVD(ol, cX);
         window.gegeRenderedMacs = new Set(
@@ -321,7 +328,7 @@ const W_APIS = [
           intUp: spD ? (spD.integral_up || 0) : 0, intDn: spD ? (spD.integral_down || 0) : 0,
           uB: CONFIG.readSaveData === 1 ? 0 : (spD ? cC.offUp - (spD.up || 0) : cC.offUp), 
           dB: CONFIG.readSaveData === 1 ? 0 : (spD ? cC.offDn - (spD.down || 0) : cC.offDn),
-          lU: cC.offUp, lD: cC.offDn, aR: !1, dpU: 0, dpD: 0,
+          lU: cC.offUp, lD: cC.offDn, aR: 0, dpU: 0, dpD: 0,
           oU: cC.offUp, oD: cC.offDn, hU: [], hD: [] // 真实流量
         };
         let cS = S.cls[m],
@@ -336,17 +343,20 @@ const W_APIS = [
             cS.dB += dD;
             cS.dpD = cS.lD;
           }
-          cS.aR = !0;
+          cS.aR = 3;
         }
-        else if (cS.aR) {
+        else if (cS.aR === 3) {
           if (dD > 2516582400 || dU > 671088640 || (cS.dpD && dD >= cS.dpD) || (cS.dpU && dU >= cS.dpU)) {
             cS.uB += dU;
             cS.dB += dD;
-            cS.aR = !1;
+            cS.aR = 2;
             cS.dpU = 0;
             cS.dpD = 0;
           }
         }
+       else if (cS.aR > 0) { cS.aR--; }
+        if (cS.aR === 2 || (cS.aR == 1 && cC.upRate > 1e8) || cC.upRate > 6e8) { cSU -= cC.upRate; cC.upRate = 0; }
+        if (cS.aR === 2 || (cS.aR == 1 && cC.dnRate > 1e8) || cC.dnRate > 24e8) { cSD -= cC.dnRate; cC.dnRate = 0; }
         if (cS.lOS !== cC.onSec) {
           cS.onS = cC.onSec;
           cS.lOS = cC.onSec;

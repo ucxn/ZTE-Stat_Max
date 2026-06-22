@@ -2,7 +2,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         5.9.9Gz0
+// @version         5.9.9.o
 // @description     哥哥科技 QQ群 680464365
 // @description:en  https://github.com/ucxn/ZTE-Stat_Max
 // @author          哥哥科技 space.bilibili.com/501430041
@@ -24,6 +24,7 @@
 // @run-at          document-start
 // @updateURL       https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // @downloadURL     https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
+
 // ==/UserScript==
 
 (function () {
@@ -296,6 +297,13 @@ const W_APIS = [
           }
         }
       }
+      if (iD) {
+        for (let m in S.cls) if (!cI[m]) {
+          S.cls[m].intUp += S.cls[m].upR * (n - S.cls[m].lUT) * 0.0005;
+          S.cls[m].intDn += S.cls[m].dnR * (n - S.cls[m].lUT) * 0.0005;
+          S.cls[m].upR = S.cls[m].dnR = 0;
+        }
+      }
       if (ol && ol.style.display === 'block' && (iD || !ol.querySelector('.gege-list-item'))) {
         bVD(ol, cX);
         window.gegeRenderedMacs = new Set(
@@ -322,7 +330,7 @@ const W_APIS = [
           intUp: spD ? (spD.integral_up || 0) : 0, intDn: spD ? (spD.integral_down || 0) : 0,
           uB: CONFIG.readSaveData === 1 ? 0 : (spD ? cC.offUp - (spD.up || 0) : cC.offUp), 
           dB: CONFIG.readSaveData === 1 ? 0 : (spD ? cC.offDn - (spD.down || 0) : cC.offDn),
-          lU: cC.offUp, lD: cC.offDn, aR: !1, dpU: 0, dpD: 0,
+          lU: cC.offUp, lD: cC.offDn, aR: 0, dpU: 0, dpD: 0,
           oU: cC.offUp, oD: cC.offDn, hU: [], hD: [] // 真实流量
         };
         let cS = S.cls[m],
@@ -337,17 +345,20 @@ const W_APIS = [
             cS.dB += dD;
             cS.dpD = cS.lD;
           }
-          cS.aR = !0;
+          cS.aR = 3;
         }
-        else if (cS.aR) {
+        else if (cS.aR === 3) {
           if (dD > 2516582400 || dU > 671088640 || (cS.dpD && dD >= cS.dpD) || (cS.dpU && dU >= cS.dpU)) {
             cS.uB += dU;
             cS.dB += dD;
-            cS.aR = !1;
+            cS.aR = 2;
             cS.dpU = 0;
             cS.dpD = 0;
           }
         }
+       else if (cS.aR > 0) { cS.aR--; }
+        if (cS.aR === 2 || (cS.aR == 1 && cC.upRate > 1e8) || cC.upRate > 6e8) { cSU -= cC.upRate; cC.upRate = 0; }
+        if (cS.aR === 2 || (cS.aR == 1 && cC.dnRate > 1e8) || cC.dnRate > 24e8) { cSD -= cC.dnRate; cC.dnRate = 0; }
         if (cS.lOS !== cC.onSec) {
           cS.onS = cC.onSec;
           cS.lOS = cC.onSec;

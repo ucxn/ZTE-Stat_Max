@@ -269,6 +269,13 @@
           }
         }
       }
+      if (iD) {
+        for (let m in S.cls) if (!cI[m]) {
+          S.cls[m].intUp += S.cls[m].upR * (n - S.cls[m].lUT) * 0.0005;
+          S.cls[m].intDn += S.cls[m].dnR * (n - S.cls[m].lUT) * 0.0005;
+          S.cls[m].upR = S.cls[m].dnR = 0;
+        }
+      }
       if (ol && ol.style.display === 'block' && (iD || !ol.querySelector('.gege-list-item'))) {
         bVD(ol, cX);
         window.gegeRenderedMacs = new Set(
@@ -291,7 +298,7 @@
         S.cls[m] ??= {
           upR: cC.upRate, dnR: cC.dnRate, lUT: n, intUp: 0, intDn: 0,
           uB: CONFIG.readSaveData === 1 ? 0 : cC.offUp, dB: CONFIG.readSaveData === 1 ? 0 : cC.offDn,
-          lU: cC.offUp, lD: cC.offDn, aR: !1, dpU: 0, dpD: 0
+          lU: cC.offUp, lD: cC.offDn, aR: 0, dpU: 0, dpD: 0
         };
         let cS = S.cls[m],
           dU = cC.offUp - cS.lU,
@@ -305,17 +312,20 @@
             cS.dB += dD;
             cS.dpD = cS.lD;
           }
-          cS.aR = !0;
+          cS.aR = 3;
         }
-        else if (cS.aR) {
+        else if (cS.aR === 3) {
           if (dD > 2516582400 || dU > 671088640 || (cS.dpD && dD >= cS.dpD) || (cS.dpU && dU >= cS.dpU)) {
             cS.uB += dU;
             cS.dB += dD;
-            cS.aR = !1;
+            cS.aR = 2;
             cS.dpU = 0;
             cS.dpD = 0;
           }
         }
+        else if (cS.aR > 0) { cS.aR--; }
+        if (cS.aR === 2 || (cS.aR == 1 && cC.upRate > 6e7) || cC.upRate > 3e8) { cSU -= cC.upRate; cC.upRate = 0; }
+        if (cS.aR === 2 || (cS.aR == 1 && cC.dnRate > 1e8) || cC.dnRate > 25e8) { cSD -= cC.dnRate; cC.dnRate = 0; }
         if (cS.lOS !== cC.onSec) {
           cS.onS = cC.onSec;
           cS.lOS = cC.onSec;
