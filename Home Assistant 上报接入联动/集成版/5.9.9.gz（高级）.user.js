@@ -21,6 +21,7 @@
 // @grant           GM_getValue
 // @storageName     GBNPA_Storage
 // @license         AGPL-3.0-or-later
+// @grant           unsafeWindow
 // @updateURL       https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // @downloadURL     https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // ==/UserScript==
@@ -91,8 +92,8 @@ const W_APIS = [
   let gWDn = (wI, k) => s2b(wI[k]);
   let isF = !1,
     lCxt = null;
-  const oOp = XMLHttpRequest.prototype.open;
-  XMLHttpRequest.prototype.open = function () {
+  const oOp = unsafeWindow.XMLHttpRequest.prototype.open;
+  unsafeWindow.XMLHttpRequest.prototype.open = function () {
     this.
     addEventListener('load', function () {
       try {
