@@ -2,7 +2,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         5.9.9.gz0
+// @version         5.9.9.gz
 // @description     哥哥科技 QQ群 680464365
 // @description:en  https://github.com/ucxn/ZTE-Stat_Max
 // @author          哥哥科技 space.bilibili.com/501430041
@@ -395,8 +395,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
       abD = 0,
       curHpU = 0,
       curHpD = 0,
-      tot_cU = 0,
-      cln = {};
+      tot_cU = 0;
     for (let k in S.cls) {
       let s = S.cls[k], cC = cI[k];
       let cU = Math.max(0, (s.lU || 0) - (s.uB || 0));
@@ -416,20 +415,23 @@ const calcStageRatio = (W, L_int, L_hp) => {
       abU += CONFIG.readSaveData === 2 ? sessU : (cC ? (cC.offUp || 0) : (s.lU || 0));
       abD += CONFIG.readSaveData === 2 ? sessD : (cC ? (cC.offDn || 0) : (s.lD || 0));
       s.hU.push(cC ? cC.upRate : 0); if (s.hU.length > 30) s.hU.shift();
-      s.hD.push(cC ? cC.dnRate : 0); if (s.hD.length > 30) s.hD.shift();
-      cln[k] = {
-        up: cU,
-        down: cD,
-        integral_up: s.intUp || 0,
-        integral_down: s.intDn || 0,
-        status: s.aR ? "off" : (CONFIG.portMap[cC?.iface] || cC?.iface || "未知接口"),
-        name: cC?.name || k,
-        ip: cC?.ip || "",
-        raw_up: cC?.offUp || 0,
-        raw_down: cC?.offDn || 0
-      };
+      s.hD.push(cC ? cC.dnRate : 0); if (s.hD.length > 30) s.hD.shift();  
     }
-    if (typeof GM_setValue !== 'undefined') {
+    if (typeof GM_setValue !== 'undefined' && S.rTick === 1) {
+      let cln = {};
+      for (let k in S.cls) {
+            let s = S.cls[k], cC = cI[k];
+            cln[k] = {
+                up: Math.max(0, (s.lU || 0) - (s.uB || 0)),
+                down: Math.max(0, (s.lD || 0) - (s.dB || 0)),
+                integral_up: s.intUp || 0,
+                integral_down: s.intDn || 0,
+                status: s.aR ? "off" : (CONFIG.portMap[cC?.iface] || cC?.iface || "未知接口"),
+                name: cC?.name || k,
+                ip: cC?.ip || "",
+                raw_up: cC?.offUp || 0,
+                raw_down: cC?.offDn || 0
+            };}
       try {
         GM_setValue('ha_snapshot', {
           timestamp: Date.now(),
@@ -457,6 +459,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
             S.cRT = `<span style="font-weight: bold;"><span class="c-up">${fR(rU)}</span>，<span class="c-down">${fR(rD)}</span></span>`;
         } else {
             let rUp = calcStageRatio((Phys.tU + S.wTotUp) / ((Phys.tU > 0) + (S.wTotUp > 0)) || 0, LUp, hpU), rDn = calcStageRatio((Phys.tD + S.wTotDn) / ((Phys.tD > 0) + (S.wTotDn > 0)) || 0, LDn, hpD);
+            if (document.getElementById('gb-ratio-display')) document.getElementById('gb-ratio-display').innerHTML = S.cRT;
             S.cRT = `<span style="font-weight: bold;"><span style="color: ${rUp > 1.5 ? '#ff4c00' : (rUp > 1.15 ? '#FF9800' : '#4CAF50')};">${(rUp * 100).toFixed(2)}%</span>，<span style="color: ${rDn > 1.5 ? '#ff4c00' : (rDn > 1.15 ? '#FF9800' : '#4CAF50')};">${(rDn * 100).toFixed(2)}%</span></span>`;
         }
     }
@@ -511,6 +514,23 @@ const calcStageRatio = (W, L_int, L_hp) => {
       if (mn && bd.parentNode !== mn.parentNode) mn.parentNode.insertBefore(bd, mn);
     }
     requestAnimationFrame(() => {
+    if (!S.oDC || S._domRebuilt) {
+        S.oDC = Object.create(null);
+        if (!iPO) {
+          let aI = aC.getElementsByClassName('config-item');
+          for (let n of aI) {
+            let mN = n.getElementsByClassName('dev-number')[0], mM = mN ? mN.textContent.match(/([a-fA-F0-9]{2}[:-]){5}[a-fA-F0-9]{2}/) : null;
+            if (mM) S.oDC[mM[0].toLowerCase().replace(/-/g, ':')] = n;
+          }
+        } else {
+          let gI = aC.getElementsByClassName('gege-list-item');
+          for (let n of gI) {
+            let m = n.getAttribute('data-gege-mac');
+            if (m) S.oDC[m] = n;
+          }
+        }
+        S._domRebuilt = false;
+    }
     let oDC = Object.create(null);
     if (!iPO) {
       const M_RX = /([a-fA-F0-9]{2}[:-]){5}[a-fA-F0-9]{2}/;
@@ -531,7 +551,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
       }
     }
       if (bd.parentNode) {
-        let aW2U = S.hasW2 ? S.w2U : (CONFIG.lanPortMode === 1 ? Phys.wU : undefined), aW2D = S.hasW2 ? S.w2D : (CONFIG.lanPortMode === 1 ? Phys.wD : undefined), aW2TU = S.hasW2 ? S.w2TotUp : (CONFIG.lanPortMode === 1 ? Phys.tU : undefined), aW2TD = S.hasW2 ? S.w2TotDn : (CONFIG.lanPortMode === 1 ? Phys.tD : undefined);
+        let aW2U = S.hasW2 ? S.w2U : undefined,aW2D = S.hasW2 ? S.w2D : undefined,aW2TU = S.hasW2 ? S.w2TotUp : undefined,aW2TD = S.hasW2 ? S.w2TotDn : undefined;
         bd.querySelector('#gb-wan-up-bytes').textContent = `🔼 ${fBy(wU + (aW2U||0))}`;
         bd.querySelector('#gb-wan-down-bytes').textContent = `🔽 ${fBy(wD + (aW2D||0))}`;
         bd.querySelector('#gb-wan-up-bps').textContent = `🔼 ${fB(wU)}`;
@@ -556,19 +576,19 @@ const calcStageRatio = (W, L_int, L_hp) => {
                 bd.querySelector('#gb-pwan-tot-up').textContent = '🔼 ' + fV(aW2TU); 
                 bd.querySelector('#gb-pwan-tot-down').textContent = '🔽 ' + fV(aW2TD); 
                 if (bd.querySelector('#gb-pwan-zero-up')) {
-                    bd.querySelector('#gb-pwan-zero-up').textContent = !Phys.zEU ? '' : fSV(Phys.zEU);
-                    bd.querySelector('#gb-pwan-zero-down').textContent = !Phys.zED ? '' : fSV(Phys.zED);
-                    bd.querySelector('#gb-pwan-zero-up-cnt').textContent = Phys.zEUC || 0;
-                    bd.querySelector('#gb-pwan-zero-down-cnt').textContent = Phys.zEDC || 0;
+                    let isPhysTakeover = CONFIG.lanPortMode === 1 && !S.hasW2;
+                    bd.querySelector('#gb-pwan-zero-up').textContent = (isPhysTakeover && Phys.zEU) ? fSV(Phys.zEU) : '';
+                    bd.querySelector('#gb-pwan-zero-down').textContent = (isPhysTakeover && Phys.zED) ? fSV(Phys.zED) : '';
+                    bd.querySelector('#gb-pwan-zero-up-cnt').textContent = (isPhysTakeover && Phys.zEUC) ? Phys.zEUC : 0;
+                    bd.querySelector('#gb-pwan-zero-down-cnt').textContent = (isPhysTakeover && Phys.zEDC) ? Phys.zEDC : 0;
                 }
             }
-        } else {
+        } else if (CONFIG.lanPortMode !== 1 || Phys.wU === undefined) {
             if (pb) pb.style.display = 'none'; if (pv) pv.style.display = 'none';
         }
         if (bd.querySelector('#gb-ratio-display')) {
           bd.querySelector('#gb-cur-up-vol').textContent = `🔼 ${fV(curHpU)}`;
           bd.querySelector('#gb-cur-down-vol').textContent = `🔽 ${fV(curHpD)}`;
-          bd.querySelector('#gb-ratio-display').innerHTML = S.cRT;
           if (bd.querySelector('#gb-wan-zero-up')) {
               bd.querySelector('#gb-wan-zero-up').textContent = !S.wZEU ? '' : fSV(S.wZEU);
               bd.querySelector('#gb-wan-zero-down').textContent = !S.wZED ? '' : fSV(S.wZED);
@@ -588,8 +608,8 @@ const calcStageRatio = (W, L_int, L_hp) => {
               cS = S.cls[m] || { intUp: 0, intDn: 0, onS: 0 };
         
         let cache = it._gege || (it._gege = {});
-        let hqU = cln[m] ? cln[m].up : 0;
-        let hqD = cln[m] ? cln[m].down : 0;
+        let hqU = Math.max(0, (cS.lU || 0) - (cS.uB || 0));
+        let hqD = Math.max(0, (cS.lD || 0) - (cS.dB || 0));
         let tN = cache.timeNode ??= it.querySelector('.gege-online-time');
         if (tN && cS.onS > 0) tN.textContent = `在线：${fOT(cS.onS)}`;
         
@@ -717,8 +737,8 @@ const calcStageRatio = (W, L_int, L_hp) => {
       requestAnimationFrame(() => {
         ol.innerHTML = `<div style="padding: 20px; max-width: 1580px; margin: 0 auto; min-height: 100%;"><div id="gege-board-anchor"></div><div id="config-list" class="config-list gege-list-container"><div class="gege-section"><div class="config-title">有线设备${(window.gegeHiddenDevices && Object.keys(window.gegeHiddenDevices).length > 0) ? '<span style="color: #ff4c00; font-size: 13px; font-weight: normal; margin-left: 10px; font-family: Consolas;">(哥哥科技：智能Mesh适配)</span>' : ''}</div>${hW.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.8GHz':'5.2GHz'}）</div>${h52.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.2GHz':'5.8GHz'}）</div>${h58.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（2.4GHz）</div>${h2.join('')||'<div class="gege-empty-state">没有连接设备</div>'}
         </div><div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed #eee; text-align: center; font-family: Consolas, 'Microsoft YaHei', sans-serif;"><div style="font-size: 11.5px; color: #777; font-style: italic; margin-bottom: 8px;">“在一个文明社会，干净的、不被监视与吸血的网络，是我们每个人的基本权利。”</div><div style="font-size: 10.5px; color: #999; line-height: 1.3; margin-bottom: 8px;">本交互式程序基于 GNU Affero GPL v3.0 协议开源，按“原样 (AS IS)”提供，不对其适用性、稳定性、精密度或任何商业场景合规性作任何明示或暗示的担保。<br>根据 AGPL-3.0 第 5(d) 及 7(b) 条规定，基于本程序的任何修改均不得移除或篡改本界面的署名与法律声明。保留此界面是使用本软件代码的合法性的前置条件。
-        </div><div style="font-size: 12px; color: #555;"><a href="https://github.com/ucxn/ZTE-Stat_Max" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">ZTE-Stat_Max 增强组件</a> <span title="构建时间：2026-06.23 21时&#10;架构设计：哥哥科技 BroTech&#10;Bilibili UID：501430041&#10;QQ群：680464365" style="cursor:help; border-bottom:1px dotted #ccc; font-family:Consolas;">5.9.9o</span> | Copyright &copy; 2026 <a href="https://www.bilibili.com/video/BV1PtR7B8ECC" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">哥哥科技</a> (BroTech)<span style="color: #888; font-weight: normal;"> | All Rights Reserved</span>&emsp;&nbsp;<a href="https://scriptcat.org/zh-CN/script-show-page/6194" target="_blank" style="color: #666; text-decoration: none;">点此分享</a></div></div></div></div>`;
-      });}
+        </div><div style="font-size: 12px; color: #555;"><a href="https://github.com/ucxn/ZTE-Stat_Max" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">ZTE-Stat_Max 增强组件</a> <span title="构建时间：2026-06.23 23时&#10;架构设计：哥哥科技 BroTech&#10;Bilibili UID：501430041&#10;QQ群：680464365" style="cursor:help; border-bottom:1px dotted #ccc; font-family:Consolas;">5.9.9.R</span> | Copyright &copy; 2026 <a href="https://www.bilibili.com/video/BV1PtR7B8ECC" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">哥哥科技</a> (BroTech)<span style="color: #888; font-weight: normal;"> | All Rights Reserved</span>&emsp;&nbsp;<a href="https://scriptcat.org/zh-CN/script-show-page/6194" target="_blank" style="color: #666; text-decoration: none;">点此分享</a></div></div></div></div>`;
+      S._domRebuilt = true;});}
     catch (e) {
       requestAnimationFrame(() => {
         ol.innerHTML = `<div style="padding: 20px; color: red;">数据渲染失败: ${escapeHTML(e.message)}</div>`;
@@ -939,8 +959,8 @@ async function fPP() {
 
       if (CONFIG.lanPortMode === 1 && !S.hasW2 && Phys.wU !== undefined) {
         let pb = document.getElementById('gb-pwan-bps-container'), pv = document.getElementById('gb-pwan-vol-container');
-        if(pb) { pb.style.display = 'inline'; document.getElementById('gb-pwan-bps-up').textContent = ' ' + fB(Phys.wU); document.getElementById('gb-pwan-bps-down').textContent = ' ' + fB(Phys.wD); }
-        if(pv) { pv.style.display = 'inline'; document.getElementById('gb-pwan-tot-up').textContent = ' ' + fV(Phys.tU); document.getElementById('gb-pwan-tot-down').textContent = ' ' + fV(Phys.tD); }
+        if(pb) { pb.style.display = 'inline'; document.getElementById('gb-pwan-bps-up').textContent = '🔼 ' + fB(Phys.wU); document.getElementById('gb-pwan-bps-down').textContent = '🔽 ' + fB(Phys.wD); }
+        if(pv) { pv.style.display = 'flex'; document.getElementById('gb-pwan-tot-up').textContent = '🔼 ' + fV(Phys.tU); document.getElementById('gb-pwan-tot-down').textContent = '🔽 ' + fV(Phys.tD); }
       }
     } catch (e) {console.warn(e)}
   }
