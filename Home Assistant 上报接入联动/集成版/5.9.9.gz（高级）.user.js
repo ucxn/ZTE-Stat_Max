@@ -28,24 +28,16 @@
 (function () {
   'use strict';
 
-  console.log("🚀 哥哥科技 V5.9.9 终极引擎已装载...");
+  console.log("🚀 哥哥科技 V5.9.9 引擎已装载...");
 
+  const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
   function escapeHTML(str) {
-    if (!str) return '';
-    return String(str).replace(/[&<>'"]/g, function (match) {
-      return {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        "'": '&#39;',
-        '"': '&quot;'
-      } [match];
-    });
+    return str ? String(str).replace(/[&<>'"]/g, m => ESC_MAP[m]) : '';
   }
 
   // ======== [0] 用户极客环境变量配置区 ========
   const CONFIG = {
-    readSaveData: 2, // 【历史记录】 1: 从路由器后台读档 | 0: 新局模式 | 2: 从本地长期历史读档
+    readSaveData: 1, // 【历史记录】 1: 从路由器后台读档 | 0: 新局模式 | 2: 从本地长期历史读档
     forceMeshMode: 1, // 【Mesh探测模式】0: 官方拓扑驱动 | 1: n秒智能等待(默认) | 2: 强制大包抓取(专治阉割、不出数据)
     uiLayout: 1, // 【面板拓扑结构】 0: 经典版 | 1: 详细紧凑版(驾驶舱美学) | 2: 详细平铺版(报表流美学)
     injectMode: 1, // 【UI注入模式】 0: 原生侧边栏(1min)| 1: 优先，10秒悬浮舱(D)| 2: 联动模式| 3：强制模式
@@ -98,7 +90,6 @@ const W_APIS = [
   let gWUp = (wI, k) => s2b(wI[k]);
   let gWDn = (wI, k) => s2b(wI[k]);
   let isF = !1,
-    pr = new DOMParser(),
     lCxt = null;
   const oOp = XMLHttpRequest.prototype.open;
   XMLHttpRequest.prototype.open = function () {
@@ -126,12 +117,12 @@ const W_APIS = [
  function s2b(speedStr) {
         if (!speedStr) return 0;
         let val = parseFloat(speedStr);
-        if (isNaN(val)) return 0;
-        let upperStr = speedStr.toUpperCase();
-        if (upperStr.includes('M')) return val * 1e6;
-        if (upperStr.includes('K')) return val * 1e3;
-        if (upperStr.includes('G')) return val * 1e9;
-    return val;}
+        if (val !== val) return 0;
+        if (speedStr.includes('M') || speedStr.includes('m')) return val * 1e6;
+        if (speedStr.includes('K') || speedStr.includes('k')) return val * 1e3;
+        if (speedStr.includes('G') || speedStr.includes('g')) return val * 1e9;
+        return val;
+ }
 
   function fB(bps) {
         if (bps > 1e9) return `${Math.round(bps * 1e-6)} Mbit/s`;
@@ -139,15 +130,15 @@ const W_APIS = [
         if (bps > 1e3) return `${(bps * 1e-3).toFixed(1)} Kbps`;
         return `${Math.round(bps)} bps`;
     }
-
+const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]', '[1]'];
   function fBy(bps) {
         if (bps === 0) return '0  B';
-        if (bps > 8388608) return `${(bps / 8388608).toFixed(2)} MiB/s`;
+        if (bps > 8388608) return `${(bps * 1.1920928955078125e-7).toFixed(2)} MiB/s`;
         return bps < 8700
             ? ((bps * 0.001 | 0) === bps * 0.001
-                ? `${['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]', '[1]'][bps * 0.001]} KB/s`
+                 ? `${F_ARR[bps * 0.001]} KB/s`
                 : `${(bps * 0.000125).toFixed(2)} KB/s`)
-            : `${(bps / 8192).toFixed(1)} KB/s`;
+            : `${(bps * 0.0001220703125).toFixed(1)} KB/s`;
     }
 
   function fV(bits) {
@@ -173,42 +164,37 @@ const W_APIS = [
     return `${Math.round(bits / 8)}B`;}
 
   function fOT(totalSec) {
-		totalSec = Math.floor(totalSec);
+		totalSec = totalSec | 0;
         if (totalSec < 0) return "";
-		const d = Math.floor(totalSec / 86400);
+		const d = (totalSec / 86400) | 0;
 		let r = totalSec - d * 86400;
-		const h = Math.floor(r / 3600);
+		const h = (r / 3600) | 0;
 		r = r - h * 3600;
-		const m = Math.floor(r / 60);
+		const m = (r / 60) | 0;
 		const s = r - m * 60;
         return d > 0 
         ? `${d}天${h}时${m}分${s}秒` 
         : `${h}小时${m}分${s}秒`;}
 
   function nM(m) {
-    return m ? m.toLowerCase().replace(/-/g, ':').replace(/\s/g, '') : '';
+    return m ? m.trim().toLowerCase().replaceAll('-', ':') : '';
   }
 
-  function pI(n) {
-    let o = Object.create(null),
-      c = n.children;
-    for (let i = 0; i < c.length; i++) {
-      if (c[i].tagName === "ParaName") {
-        let k = c[i].textContent,
-          v = "",
-          j = i + 1;
-        while (j < c.length && c[j].tagName !== "ParaName") {
-          if (c[j].tagName === "ParaValue") {
-            v = c[j].textContent;
-            i = j;
-            break;
-          }
-          j++;
-        }
-        o[k] = v;
+  function parseXml(xmlStr, tag) {
+    if (!xmlStr) return [];
+    let list = [], m = xmlStr.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`));
+    if (!m) return list;
+    let instRx = /<Instance>([\s\S]*?)<\/Instance>/g, pRx = /<ParaName>([^<]+)<\/ParaName>\s*<ParaValue>([^<]*)<\/ParaValue>/g, im;
+    while ((im = instRx.exec(m[1])) !== null) {
+      let o = Object.create(null), pm;
+      while ((pm = pRx.exec(im[1])) !== null) {
+        o[pm[1]] = pm[2].replaceAll('&#32;', ' ')
+                .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+                .replace(/&quot;/g, '"').replace(/&apos;/g, "'");
       }
+      list.push(o);
     }
-    return o;
+    return list;
   }
   const st = document.createElement('style');
   st.innerHTML = `.config-item{
@@ -237,10 +223,8 @@ const W_APIS = [
       }
       window.__gLWT = wT; window.__gLWT_t = n; // 保障解耦模式全局缓存不丢失
       
-      let wX = pr.parseFromString(wT, "text/xml");
-      let cX = lCxt ? pr.parseFromString(lCxt, "text/xml") : null;
       let c = W_APIS[S.fI] || {};
-      const bIN = c.n ? wX.querySelector(`${c.n} Instance`) : null, wI = bIN ? pI(bIN) : {};
+      const wI = c.n ? parseXml(wT, c.n)[0] || {} : {};
       
       S.hasW2 = wI[c.wE] === '1';
       let cWU = gWUp(wI, c.uK), cWD = gWDn(wI, c.dK), cI = Object.create(null);
@@ -257,9 +241,7 @@ const W_APIS = [
       }
       let cSU = 0,
         cSD = 0;
-      (cX?.querySelectorAll("OBJ_CLIENTS_ID Instance") || []).forEach(nd => {
-        let d = pI(
-          nd);
+      parseXml(lCxt, "OBJ_CLIENTS_ID").forEach(d => {
         if (d.MACAddress) {
           let m = nM(d.MACAddress),
             u = s2b(d.UpRate),
@@ -303,7 +285,7 @@ const W_APIS = [
         }
       }
       if (ol && ol.style.display === 'block' && (iD || !ol.querySelector('.gege-list-item'))) {
-        bVD(ol, cX);
+        bVD(ol);
         window.gegeRenderedMacs = new Set(
           cM);
         window.gegeForceUIRedraw = !1;
@@ -414,8 +396,8 @@ const calcStageRatio = (W, L_int, L_hp) => {
       curHpD = 0,
       tot_cU = 0,
       cln = {};
-    for (const [k, s] of Object.entries(S.cls)) {
-      let cC = cI[k];
+    for (let k in S.cls) {
+      let s = S.cls[k], cC = cI[k];
       let cU = Math.max(0, (s.lU || 0) - (s.uB || 0));
       let cD = Math.max(0, (s.lD || 0) - (s.dB || 0));
       let sessU = Math.max(0, (s.lU || 0) - (s.oU || 0));
@@ -533,7 +515,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
       const M_RX = /([a-fA-F0-9]{2}[:-]){5}[a-fA-F0-9]{2}/;
       let aI = aC.querySelectorAll('.config-item');
       for (let n of aI) {
-        let mN = n.querySelector('.dev-number'),
+        let mN = n.getElementsByClassName('dev-number')[0],
           mM = mN ? mN.textContent.match(M_RX) : null;
         if (mM) {
           oDC[mM[0].toLowerCase().replace(/-/g, ':')] = n;
@@ -541,7 +523,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
       }
     }
     else {
-      let gI = aC.querySelectorAll('.gege-list-item');
+      let gI = aC.getElementsByClassName('gege-list-item');
       for (let n of gI) {
         let m = n.getAttribute('data-gege-mac');
         if (m) oDC[m] = n;
@@ -594,7 +576,11 @@ const calcStageRatio = (W, L_int, L_hp) => {
           }
         }
       }
-            for (let m in cI) {
+      const inv_tot_cU = tot_cU > 0 ? 100 / tot_cU : 0;
+      const inv_tOD = tOD > 0 ? 100 / tOD : 0;
+      const inv_sU = sU > 0 ? 100 / sU : 0;
+      const inv_sD = sD > 0 ? 100 / sD : 0;
+      for (let m in cI) {
         let it = oDC[m];
         if (!it) continue;
         const cC = cI[m] || { upRate: 0, dnRate: 0, iface: "", offUp: 0, offDn: 0 },
@@ -615,7 +601,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
             dI.appendChild(bx);
             cache.upBox = bx;
           }
-          let p = tot_cU > 0 ? (hqU * 100 / tot_cU) : 0;
+          let p = hqU * inv_tot_cU;
           (cache.upVol ??= bx.querySelector('.v-vol')).textContent = fVD(cS.intUp, cC.offUp);
           (cache.upPct ??= bx.querySelector('.v-pct')).textContent = p.toFixed(1) + '%';
           (cache.upBar ??= bx.querySelector('.zte-thin-bar-inner')).style.width = Math.min(p, 100) + '%';
@@ -672,7 +658,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
             inf.appendChild(dBx);
             cache.dBox = dBx;
           }
-          let dp = tOD > 0 ? ((cC.offDn || 0) * 100 / tOD) : 0;
+          let dp = (cC.offDn || 0) * inv_tOD;
           (cache.dBoxVol ??= dBx.querySelector('.v-vol')).textContent = fVD(cS.intDn, cC.offDn);
           (cache.dBoxPct ??= dBx.querySelector('.v-pct')).textContent = dp.toFixed(1) + '%';
           (cache.dBoxBar ??= dBx.querySelector('.zte-thin-bar-inner')).style.width = Math.min(dp, 100) + '%';
@@ -688,14 +674,16 @@ const calcStageRatio = (W, L_int, L_hp) => {
             sp.appendChild(enh);
             cache.enh = enh;
           }
-          let pu = sU > 0 ? (cC.upRate * 100 / sU) : 0,
-              pd = sD > 0 ? (cC.dnRate * 100 / sD) : 0,
+          let pu = cC.upRate * inv_sU,
+              pd = cC.dnRate * inv_sD,
               bU = cache.bU ??= enh.querySelector('.zte-bar-up'),
               bD = cache.bD ??= enh.querySelector('.zte-bar-down');
           
           const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
-          let clU = Math.max(...cS.hU, (S.aWu * 0.1) || 0, 512000);
-          let clD = Math.max(...cS.hD, (S.aWd / 8) || 0);
+          let clU = (S.aWu * 0.1) || 0; if (clU < 512000) clU = 512000;
+          for (let i = 0; i < cS.hU.length; i++) { if (cS.hU[i] > clU) clU = cS.hU[i]; }
+          let clD = (S.aWd * 0.125) || 0;
+          for (let i = 0; i < cS.hD.length; i++) { if (cS.hD[i] > clD) clD = cS.hD[i]; }
           (cache.bUSpk ??= bU.querySelector('.v-spark')).textContent = cS.hU.slice(-15).map(v => SPRK[v <= 0 ? 0 : Math.min(7, Math.ceil((v / clU) * 7))]).join('');
           (cache.bDSpk ??= bD.querySelector('.v-spark')).textContent = cS.hD.slice(-15).map(v => SPRK[v <= 0 ? 0 : Math.min(7, Math.ceil((v / clD) * 7))]).join('');
 
@@ -710,17 +698,13 @@ const calcStageRatio = (W, L_int, L_hp) => {
       }
     });
   }
-  async function bVD(ol, cX) {
+  async function bVD(ol) {
     try {
-      let h2 = [],
-        h52 = [],
-        h58 = [],
-        hW = [];
-      (cX?.querySelectorAll("OBJ_CLIENTS_ID Instance") || []).forEach(i => {
-        let d = pI(i);
+      let h2 = [], h52 = [], h58 = [], hW = [];
+      parseXml(lCxt, "OBJ_CLIENTS_ID").forEach(d => {
         if (!d.MACAddress) return;
         let m = nM(d.MACAddress),
-          tS = fOT(parseInt(d.OnlineDuration || d.OnlineTime || d.LeaseTime || 0)),
+          tS = fOT(+(d.OnlineDuration || d.OnlineTime || d.LeaseTime || 0)),
           ifc = d.Interface || '',
           htm = `<div class="col-md-12 col-xs-12 config-item gege-list-item" data-gege-mac="${m}"><div class="config-item-box" style="display: flex; align-items: stretch;"><div class="col-md-5 col-xs-7 logo" style="width: 33%; display: flex; flex-direction: row; align-items: center;"><div class="dev-logo" style="width: 50px; height: 50px; min-width: 50px; margin-right: 15px; background: url('/jquery/static/img/home/unknown_computer.png') 0% 0% / 50px no-repeat; display: inline-block;"></div><div class="dev-intro" style="flex: 1; display: flex; flex-direction: column; justify-content: flex-start; min-height: 100px;">
 <div class="dev-name" style="font-weight: bold; color: #333; font-size: 14px;">${escapeHTML(d.AliasName || d.HostName || '未知设备')}</div><div class="gege-online-time" style="color: #999; font-size: 12px; font-family: Consolas; margin-top: 4px;">${tS?'在线：'+tS:''}</div></div></div><div class="col-md-4 col-xs-5 info" style="width: 27%; display: flex; flex-direction: column; padding: 0 10px; border-right: 1px solid #eee;"><div class="dev-ip" style="color: #666; font-family: Consolas;">${escapeHTML(d.IPAddress || '')}</div><div class="dev-number grey" style="color: #999; font-size: 12px; font-family: Consolas;">MAC：${m}</div></div><div class="col-md-3 col-xs-12 speed" style="width: 40%; display: flex; flex-direction: column; justify-content: center; padding: 0 10px;"></div></div></div>`;
@@ -732,7 +716,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
       requestAnimationFrame(() => {
         ol.innerHTML = `<div style="padding: 20px; max-width: 1580px; margin: 0 auto; min-height: 100%;"><div id="gege-board-anchor"></div><div id="config-list" class="config-list gege-list-container"><div class="gege-section"><div class="config-title">有线设备${(window.gegeHiddenDevices && Object.keys(window.gegeHiddenDevices).length > 0) ? '<span style="color: #ff4c00; font-size: 13px; font-weight: normal; margin-left: 10px; font-family: Consolas;">(哥哥科技：智能Mesh适配)</span>' : ''}</div>${hW.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.8GHz':'5.2GHz'}）</div>${h52.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.2GHz':'5.8GHz'}）</div>${h58.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（2.4GHz）</div>${h2.join('')||'<div class="gege-empty-state">没有连接设备</div>'}
         </div><div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed #eee; text-align: center; font-family: Consolas, 'Microsoft YaHei', sans-serif;"><div style="font-size: 11.5px; color: #777; font-style: italic; margin-bottom: 8px;">“在一个文明社会，干净的、不被监视与吸血的网络，是我们每个人的基本权利。”</div><div style="font-size: 10.5px; color: #999; line-height: 1.3; margin-bottom: 8px;">本交互式程序基于 GNU Affero GPL v3.0 协议开源，按“原样 (AS IS)”提供，不对其适用性、稳定性、精密度或任何商业场景合规性作任何明示或暗示的担保。<br>根据 AGPL-3.0 第 5(d) 及 7(b) 条规定，基于本程序的任何修改均不得移除或篡改本界面的署名与法律声明。保留此界面是使用本软件代码的合法性的前置条件。
-        </div><div style="font-size: 12px; color: #555;"><a href="https://github.com/ucxn/ZTE-Stat_Max" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">ZTE-Stat_Max 增强组件</a> Copyright &copy; 2026 <a href="https://www.bilibili.com/video/BV1PtR7B8ECC" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">哥哥科技</a> (BroTech)<span style="color: #888; font-weight: normal;"> | All Rights Reserved</span>&emsp;&nbsp;<a href="https://scriptcat.org/zh-CN/script-show-page/6194" target="_blank" style="color: #666; text-decoration: none;">点此分享</a></div></div></div></div>`;
+        </div><div style="font-size: 12px; color: #555;"><a href="https://github.com/ucxn/ZTE-Stat_Max" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">ZTE-Stat_Max 增强组件</a> <span title="构建时间：2026-06.23 21时&#10;架构设计：哥哥科技 BroTech&#10;Bilibili UID：501430041&#10;QQ群：680464365" style="cursor:help; border-bottom:1px dotted #ccc; font-family:Consolas;">5.9.9o</span> | Copyright &copy; 2026 <a href="https://www.bilibili.com/video/BV1PtR7B8ECC" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">哥哥科技</a> (BroTech)<span style="color: #888; font-weight: normal;"> | All Rights Reserved</span>&emsp;&nbsp;<a href="https://scriptcat.org/zh-CN/script-show-page/6194" target="_blank" style="color: #666; text-decoration: none;">点此分享</a></div></div></div></div>`;
       });}
     catch (e) {
       requestAnimationFrame(() => {
@@ -810,7 +794,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
       if (!S.is5G_149 && /<ParaName>ChannelInUsed<\/ParaName><ParaValue>(149|1[5-9]\d)<\/ParaValue>/.test(t)) {
             S.is5G_149 = !0;
             document.getElementById('gege-global-overlay')?.style.display === 'block' && 
-            bVD(document.getElementById('gege-global-overlay'), lCxt ? pr.parseFromString(lCxt, "text/xml") : null);
+            bVD(document.getElementById('gege-global-overlay'));
         }}).catch(e => {console.warn("[哥哥科技] 5.8G彩蛋探测异常:", e);});
       if (CONFIG.forceMeshMode === 1) {
         setTimeout(() => {
@@ -834,7 +818,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
         }, 8500);
       }
     }
-    bVD(o, lCxt ? pr.parseFromString(lCxt, "text/xml") : null).then(() => {
+    bVD(o).then(() => {
       if (window.gegeBActivated) eBET();
       else rSD();
     });
@@ -908,21 +892,19 @@ const calcStageRatio = (W, L_int, L_hp) => {
     }, !0);
   }
   window.gegePortTimer = null;
-  async function fPP() {
+async function fPP() {
     if (document.getElementById('gege-global-overlay')?.style.display !== 'block') return;
     try {
       let r = await fetch(`/?_type=vueData&_tag=vue_internet_ethport_data&_=${Date.now()}`);
       if (!r.ok) return;
-      let x = pr.parseFromString(await r.text(), "text/xml"), n = performance.now();
+      let txt = await r.text(), n = performance.now();
       if (!Phys._pM) { // 终生只解析一次字典，零 GC
         Phys._pM = {};
-        x.querySelectorAll("OBJ_ETHPORT_INFO_ID Instance").forEach(i => {
-          let d = pI(i);
+        parseXml(txt, "OBJ_ETHPORT_INFO_ID").forEach(d => {
           if (d._InstID) { Phys._pM[d._InstID] = d.EthPortAliasName || d._InstID; if (d.WanType === '1' || d.EthPortAliasName === 'ETH_WAN') Phys._wID = d._InstID; }
         });
       }
-      x.querySelectorAll("OBJ_ETHPORT_STATE_ID Instance").forEach(i => {
-        let d = pI(i);
+      parseXml(txt, "OBJ_ETHPORT_STATE_ID").forEach(d => {
         if (d._InstID && d.EthPortStatus === '0') {
           let u = s2b(d.EthPortSendRate), dn = s2b(d.EthPortRecvRate);
           if (d._InstID === Phys._wID) {
@@ -956,8 +938,8 @@ const calcStageRatio = (W, L_int, L_hp) => {
 
       if (CONFIG.lanPortMode === 1 && !S.hasW2 && Phys.wU !== undefined) {
         let pb = document.getElementById('gb-pwan-bps-container'), pv = document.getElementById('gb-pwan-vol-container');
-        if(pb) { pb.style.display = 'inline'; document.getElementById('gb-pwan-bps-up').textContent = '🔼 ' + fB(Phys.wU); document.getElementById('gb-pwan-bps-down').textContent = '🔽 ' + fB(Phys.wD); }
-        if(pv) { pv.style.display = 'inline'; document.getElementById('gb-pwan-tot-up').textContent = '🔼 ' + fV(Phys.tU); document.getElementById('gb-pwan-tot-down').textContent = '🔽 ' + fV(Phys.tD); }
+        if(pb) { pb.style.display = 'inline'; document.getElementById('gb-pwan-bps-up').textContent = ' ' + fB(Phys.wU); document.getElementById('gb-pwan-bps-down').textContent = ' ' + fB(Phys.wD); }
+        if(pv) { pv.style.display = 'inline'; document.getElementById('gb-pwan-tot-up').textContent = ' ' + fV(Phys.tU); document.getElementById('gb-pwan-tot-down').textContent = ' ' + fV(Phys.tD); }
       }
     } catch (e) {console.warn(e)}
   }
@@ -972,11 +954,9 @@ const calcStageRatio = (W, L_int, L_hp) => {
   window.gegeMasterTimer = null;
   window.triggerGegeMeshSniper = async function () {
     try {
-      const liR = await fetch(`/?_type=vueData&_tag=localnet_lan_info_lua&_=${Date.now()}`),
-        liX = pr.parseFromString(await liR.text(), "text/xml");
+      const liR = await fetch(`/?_type=vueData&_tag=localnet_lan_info_lua&_=${Date.now()}`);
       let nHD = {};
-      liX.querySelectorAll("OBJ_LAN_INFO_ID Instance").forEach(inst => {
-        let d = pI(inst);
+      parseXml(await liR.text(), "OBJ_LAN_INFO_ID").forEach(d => {
         if (d.DevMeshType === '3' && d.Active === '1' && d.MACAddress) {
           let m = nM(d.MACAddress),
             bN = d.DevName || d.HostName || d.DisplayedPictureName || d.AliasName || "Mesh设备",
@@ -1032,13 +1012,13 @@ const calcStageRatio = (W, L_int, L_hp) => {
         wT = await gWT();
         wST = performance.now();
         let c = W_APIS[S.fI] || {}; // 读取锁定的字典结构
-        let bN = c.n ? pr.parseFromString(wT, "text/xml").querySelector(`${c.n} Instance`) : null;
-        cDC = parseInt((bN ? pI(bN) : {})[c.cK] || -1) || -1;
+        let wI = c.n ? parseXml(wT, c.n)[0] || {} : {};
+        cDC = +((wI)[c.cK] || -1) || -1;
         try {
             const wR = await fetch(`/?_type=vueData&_tag=vue_home_device_data_no_update_sess&IF_OP=refresh&_=${ts}`);
             if (wR.ok) {
                 wT = await wR.text();
-                cDC = parseInt(pI(pr.parseFromString(wT, "text/xml").querySelector("OBJ_HOME_BASICINFO_ID Instance") || {}).AccessDevNum || -1) || -1;
+                cDC = +(parseXml(wT, "OBJ_HOME_BASICINFO_ID")[0]?.AccessDevNum || -1) || -1;
             }
         } catch(e) {console.warn(e)}
         wST = performance.now();
@@ -1048,12 +1028,10 @@ const calcStageRatio = (W, L_int, L_hp) => {
       if (CONFIG.forceMeshMode === 2) {
         const liR = await fetch(`/?_type=vueData&_tag=localnet_lan_info_lua&_=${ts}`);
         if (liR.ok) {
-          const liX = pr.parseFromString(await liR.text(), "text/xml");
-          let iI = "",
+          let iI_arr = "",
             nHD = {},
             dC = 0;
-          liX.querySelectorAll("OBJ_LAN_INFO_ID Instance").forEach(inst => {
-            let d = pI(inst);
+          parseXml(await liR.text(), "OBJ_LAN_INFO_ID").forEach(d => {
             if (d.MACAddress && d.MACAddress !== "00:00:00:00:00:00") {
               dC++;
               let m = nM(d.MACAddress),
@@ -1070,12 +1048,12 @@ const calcStageRatio = (W, L_int, L_hp) => {
                   dR = `${d.DownloadSpeed||0}Kbps`,
                   uT = (+d.BytesSend || 0) * 0.001,
                   dT = (+d.BytesReceived || 0) * 0.001,
-                  oS = parseInt(d.OnlineTime || d.OnlineTimes || 0);
-              iI += `<Instance><ParaName>MACAddress</ParaName><ParaValue>${escapeHTML(m)}</ParaValue><ParaName>IPAddress</ParaName><ParaValue>${d.IPAddress||""}</ParaValue><ParaName>AliasName</ParaName><ParaValue>${escapeHTML(bN)}</ParaValue><ParaName>HostName</ParaName><ParaValue>${escapeHTML(bN)}</ParaValue><ParaName>Interface</ParaName><ParaValue>${escapeHTML(bI)}</ParaValue><ParaName>UpRate</ParaName><ParaValue>${uR}</ParaValue><ParaName>DownRate</ParaName><ParaValue>${dR}</ParaValue><ParaName>UpThroughput</ParaName><ParaValue>${uT}</ParaValue><ParaName>DownThroughput</ParaName><ParaValue>${dT}</ParaValue><ParaName>OnlineDuration</ParaName><ParaValue>${oS}</ParaValue></Instance>`;
+                  oS = +(d.OnlineTime || d.OnlineTimes || 0);
+              iI_arr.push(`<Instance><ParaName>MACAddress</ParaName><ParaValue>${escapeHTML(m)}</ParaValue><ParaName>IPAddress</ParaName><ParaValue>${d.IPAddress||""}</ParaValue><ParaName>AliasName</ParaName><ParaValue>${escapeHTML(bN)}</ParaValue><ParaName>HostName</ParaName><ParaValue>${escapeHTML(bN)}</ParaValue><ParaName>Interface</ParaName><ParaValue>${escapeHTML(bI)}</ParaValue><ParaName>UpRate</ParaName><ParaValue>${uR}</ParaValue><ParaName>DownRate</ParaName><ParaValue>${dR}</ParaValue><ParaName>UpThroughput</ParaName><ParaValue>${uT}</ParaValue><ParaName>DownThroughput</ParaName><ParaValue>${dT}</ParaValue><ParaName>OnlineDuration</ParaName><ParaValue>${oS}</ParaValue></Instance>`);
             }
           });
           window.gegeHiddenDevices = nHD;
-          lT = `<ajax_response_xml_root><OBJ_CLIENTS_ID>${iI}</OBJ_CLIENTS_ID></ajax_response_xml_root>`;
+          lT = `<ajax_response_xml_root><OBJ_CLIENTS_ID>${iI_arr.join('')}</OBJ_CLIENTS_ID></ajax_response_xml_root>`;
           let mM = lT.match(/<ParaName>MACAddress<\/ParaName><ParaValue>([^<]+)<\/ParaValue>/g) || [];
           lF = mM.map(mx => mx.replace(/[<>]/g, '')).sort().join('|');
           cDC = dC;
@@ -1097,7 +1075,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
             const tR = await fetch(`/?_type=vueData&_tag=vue_topo_data&_=${ts}`);
             if (tR.ok) {
               let tJ = JSON.parse(await tR.text());
-              mDC = tJ.agentlay1?.reduce((s, a) => s + (parseInt(a.accdevCount) || 0), 0) || 0;
+              mDC = tJ.agentlay1?.reduce((s, a) => s + (+(a.accdevCount) || 0), 0) || 0;
             }
           } catch(e) {console.warn(`[哥哥科技] Mesh狙击失败`, e.message);}
           if (mDC !== window.gegeLastMeshDevCount) {
@@ -1118,24 +1096,23 @@ const calcStageRatio = (W, L_int, L_hp) => {
       if (CONFIG.forceMeshMode !== 2) {
         let hM = Object.keys(window.gegeHiddenDevices ?? {});
         if (hM.length > 0) {
-          let iI = "";
+          let iI_arr = [];
           for (let m of hM) {
             try {
               const mt = window.gegeHiddenDevices[m] || {};
               if (!mt || !mt.origMac) continue;
               const sR = await fetch(`/?_type=vueData&_tag=localnet_lan_detailinfo_lua&MACAddress=${encodeURIComponent(mt.origMac||m)}&_=${Date.now()}`);
               if (!sR.ok) continue;
-              const sI = pr.parseFromString(await sR.text(), "text/xml").querySelector("OBJ_LANINFO_BYMAC Instance");
-              if (sI) {
-                let sD = pI(sI);
-                iI += `<Instance><ParaName>MACAddress</ParaName><ParaValue>${escapeHTML(m)}</ParaValue><ParaName>IPAddress</ParaName><ParaValue>${sD.IPAddress||""}</ParaValue><ParaName>AliasName</ParaName><ParaValue>${escapeHTML(mt.name)}</ParaValue><ParaName>HostName</ParaName><ParaValue>${escapeHTML(mt.name)}</ParaValue><ParaName>Interface</ParaName><ParaValue>${escapeHTML(mt.iface)}</ParaValue><ParaName>UpRate</ParaName><ParaValue>${sD.UploadSpeed||0}Kbps</ParaValue><ParaName>DownRate</ParaName><ParaValue>${sD.DownloadSpeed||0}Kbps</ParaValue><ParaName>UpThroughput</ParaName><ParaValue>${(+sD.BytesSend || 0) * 0.001}</ParaValue><ParaName>DownThroughput</ParaName><ParaValue>${(+sD.BytesReceived || 0) * 0.001}</ParaValue><ParaName>OnlineDuration</ParaName><ParaValue>${parseInt(sD.OnlineTimes || 0)}</ParaValue></Instance>`;
+              let sD = parseXml(await sR.text(), "OBJ_LANINFO_BYMAC")[0];
+              if (sD) {
+                iI_arr.push(`<Instance><ParaName>MACAddress</ParaName><ParaValue>${escapeHTML(m)}</ParaValue><ParaName>IPAddress</ParaName><ParaValue>${sD.IPAddress||""}</ParaValue><ParaName>AliasName</ParaName><ParaValue>${escapeHTML(mt.name)}</ParaValue><ParaName>HostName</ParaName><ParaValue>${escapeHTML(mt.name)}</ParaValue><ParaName>Interface</ParaName><ParaValue>${escapeHTML(mt.iface)}</ParaValue><ParaName>UpRate</ParaName><ParaValue>${sD.UploadSpeed||0}Kbps</ParaValue><ParaName>DownRate</ParaName><ParaValue>${sD.DownloadSpeed||0}Kbps</ParaValue><ParaName>UpThroughput</ParaName><ParaValue>${(+sD.BytesSend || 0) * 0.001}</ParaValue><ParaName>DownThroughput</ParaName><ParaValue>${(+sD.BytesReceived || 0) * 0.001}</ParaValue><ParaName>OnlineDuration</ParaName><ParaValue>${+(sD.OnlineTimes || 0)}</ParaValue></Instance>`);
               }
             }
             catch (e) {
               console.warn(`[哥哥科技] Mesh狙击失败(MAC:${m})`, e.message);
             }
           }
-          if (iI !== "") lT = lT.replace('</OBJ_CLIENTS_ID>', `${iI}</OBJ_CLIENTS_ID>`);
+          if (iI_arr.length) lT = lT.replace('</OBJ_CLIENTS_ID>', `${iI_arr.join('')}</OBJ_CLIENTS_ID>`);
         }
       }
       if (lT.includes('<OBJ_CLIENTS_ID>')) lCxt = lT;
