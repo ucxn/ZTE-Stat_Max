@@ -190,8 +190,9 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       let o = Object.create(null), pm;
       while ((pm = pRx.exec(im[1])) !== null) {
         o[pm[1]] = pm[2].replaceAll('&#32;', ' ')
-                .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-                .replace(/&quot;/g, '"').replace(/&apos;/g, "'");
+                .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+                .replace(/&quot;/g, '"').replace(/&apos;/g, "'")
+                .replace(/&amp;/g, '&');
       }
       list.push(o);
     }
