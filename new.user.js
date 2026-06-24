@@ -516,19 +516,6 @@ const calcStageRatio = (W, L_int, L_hp) => {
     requestAnimationFrame(() => {
     if (!S.oDC || S._domRebuilt) {
         S.oDC = Object.create(null);
-        if (!iPO) {
-          let aI = aC.getElementsByClassName('config-item');
-          for (let n of aI) {
-            let mN = n.getElementsByClassName('dev-number')[0], mM = mN ? mN.textContent.match(/([a-fA-F0-9]{2}[:-]){5}[a-fA-F0-9]{2}/) : null;
-            if (mM) S.oDC[mM[0].toLowerCase().replace(/-/g, ':')] = n;
-          }
-        } else {
-          let gI = aC.getElementsByClassName('gege-list-item');
-          for (let n of gI) {
-            let m = n.getAttribute('data-gege-mac');
-            if (m) S.oDC[m] = n;
-          }
-        }
         S._domRebuilt = false;
     }
     let oDC = S.oDC;
