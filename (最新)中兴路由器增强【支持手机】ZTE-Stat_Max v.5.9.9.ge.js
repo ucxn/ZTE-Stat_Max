@@ -530,7 +530,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
         }
         S._domRebuilt = false;
     }
-    let oDC = Object.create(null);
+    let oDC = S.oDC;
     if (!iPO) {
       const M_RX = /([a-fA-F0-9]{2}[:-]){5}[a-fA-F0-9]{2}/;
       let aI = aC.querySelectorAll('.config-item');
