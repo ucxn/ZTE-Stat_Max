@@ -2,7 +2,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         5.9.9.i
+// @version         5.9.9.R
 // @description     哥哥科技 QQ群 680464365
 // @description:en  https://github.com/ucxn/ZTE-Stat_Max
 // @author          哥哥科技 space.bilibili.com/501430041
@@ -1048,7 +1048,7 @@ async function fPP() {
       if (CONFIG.forceMeshMode === 2) {
         const liR = await fetch(`/?_type=vueData&_tag=localnet_lan_info_lua&_=${ts}`);
         if (liR.ok) {
-          let iI_arr = "",
+          let iI_arr = [],
             nHD = {},
             dC = 0;
           parseXml(await liR.text(), "OBJ_LAN_INFO_ID").forEach(d => {
