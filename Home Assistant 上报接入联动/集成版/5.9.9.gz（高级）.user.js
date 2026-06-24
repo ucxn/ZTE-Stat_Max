@@ -1049,7 +1049,7 @@ async function fPP() {
       if (CONFIG.forceMeshMode === 2) {
         const liR = await fetch(`/?_type=vueData&_tag=localnet_lan_info_lua&_=${ts}`);
         if (liR.ok) {
-          let iI_arr = "",
+          let iI_arr = [],
             nHD = {},
             dC = 0;
           parseXml(await liR.text(), "OBJ_LAN_INFO_ID").forEach(d => {
