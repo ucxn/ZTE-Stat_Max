@@ -183,6 +183,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
     return m ? m.trim().toLowerCase().replaceAll('-', ':') : '';
   }
 
+  const UNESC_MAP = { '&#32;': ' ', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&apos;': "'", '&amp;': '&' };
   function parseXml(xmlStr, tag) {
     if (!xmlStr) return [];
     let list = [], m = xmlStr.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`));
@@ -191,10 +192,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
     while ((im = instRx.exec(m[1])) !== null) {
       let o = Object.create(null), pm;
       while ((pm = pRx.exec(im[1])) !== null) {
-        o[pm[1]] = pm[2].replaceAll('&#32;', ' ')
-                .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-                .replace(/&quot;/g, '"').replace(/&apos;/g, "'")
-                .replace(/&amp;/g, '&');
+        o[pm[1]] = pm[2].replace(/&#32;|&lt;|&gt;|&quot;|&apos;|&amp;/g, m => UNESC_MAP[m]);
       }
       list.push(o);
     }
@@ -314,7 +312,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
           uB: CONFIG.readSaveData === 1 ? 0 : (spD ? cC.offUp - (spD.up || 0) : cC.offUp), 
           dB: CONFIG.readSaveData === 1 ? 0 : (spD ? cC.offDn - (spD.down || 0) : cC.offDn),
           lU: cC.offUp, lD: cC.offDn, aR: 0, dpU: 0, dpD: 0,
-          oU: cC.offUp, oD: cC.offDn, hU: [], hD: [] // 真实流量
+          oU: cC.offUp, oD: cC.offDn, hU: new Float64Array(32), hD: new Float64Array(32), hIdx: 0 // 真实流量
         };
         let cS = S.cls[m],
           dU = cC.offUp - cS.lU,
@@ -385,6 +383,16 @@ const calcStageRatio = (W, L_int, L_hp) => {
         return (Math.abs(L_int - W) < Math.abs(L_hp - W) ? L_int : L_hp) / W;
     }
   };
+const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
+      function getSpark(ringArr, headIdx, maxVal) {
+        let s = "";
+        for (let i = 15; i >= 0; i--) {
+          let v = ringArr[(headIdx - i) & 31];
+          s += SPRK[v <= 0 ? 0 : Math.min(7, Math.max(1, ((v / maxVal) * 7) | 0))];
+        }
+        return s;
+      }
+
   function rUI(wU, wD, sU, sD, cI) {
     let tOD = 0,
       LUp = 0,
@@ -414,8 +422,9 @@ const calcStageRatio = (W, L_int, L_hp) => {
       }
       abU += CONFIG.readSaveData === 2 ? sessU : (cC ? (cC.offUp || 0) : (s.lU || 0));
       abD += CONFIG.readSaveData === 2 ? sessD : (cC ? (cC.offDn || 0) : (s.lD || 0));
-      s.hU.push(cC ? cC.upRate : 0); if (s.hU.length > 30) s.hU.shift();
-      s.hD.push(cC ? cC.dnRate : 0); if (s.hD.length > 30) s.hD.shift();  
+      s.hIdx = (s.hIdx + 1) & 31;
+      s.hU[s.hIdx] = cC ? cC.upRate : 0;
+      s.hD[s.hIdx] = cC ? cC.dnRate : 0;
     }
     if (typeof GM_setValue !== 'undefined' && S.rTick === 1) {
       let cln = {};
@@ -685,13 +694,11 @@ const calcStageRatio = (W, L_int, L_hp) => {
               bU = cache.bU ??= enh.querySelector('.zte-bar-up'),
               bD = cache.bD ??= enh.querySelector('.zte-bar-down');
           
-          const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
           let clU = (S.aWu * 0.1) || 0; if (clU < 512000) clU = 512000;
-          for (let i = 0; i < cS.hU.length; i++) { if (cS.hU[i] > clU) clU = cS.hU[i]; }
           let clD = (S.aWd * 0.125) || 0;
-          for (let i = 0; i < cS.hD.length; i++) { if (cS.hD[i] > clD) clD = cS.hD[i]; }
-          (cache.bUSpk ??= bU.querySelector('.v-spark')).textContent = cS.hU.slice(-15).map(v => SPRK[v <= 0 ? 0 : Math.min(7, Math.ceil((v / clU) * 7))]).join('');
-          (cache.bDSpk ??= bD.querySelector('.v-spark')).textContent = cS.hD.slice(-15).map(v => SPRK[v <= 0 ? 0 : Math.min(7, Math.ceil((v / clD) * 7))]).join('');
+          for (let i = 0; i < 32; i++) { if (cS.hU[i] > clU) clU = cS.hU[i]; if (cS.hD[i] > clD) clD = cS.hD[i]; }
+          (cache.bUSpk ??= bU.querySelector('.v-spark')).textContent = getSpark(cS.hU, cS.hIdx, clU);
+          (cache.bDSpk ??= bD.querySelector('.v-spark')).textContent = getSpark(cS.hD, cS.hIdx, clD);
 
           bU.style.setProperty('--p-up', Math.min(pu, 100) + '%');
           (cache.bUVal ??= bU.querySelector('.v-val')).textContent = `🔼 ${fBy(cC.upRate)}`;
@@ -722,7 +729,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
       requestAnimationFrame(() => {
         ol.innerHTML = `<div style="padding: 20px; max-width: 1580px; margin: 0 auto; min-height: 100%;"><div id="gege-board-anchor"></div><div id="config-list" class="config-list gege-list-container"><div class="gege-section"><div class="config-title">有线设备${(window.gegeHiddenDevices && Object.keys(window.gegeHiddenDevices).length > 0) ? '<span style="color: #ff4c00; font-size: 13px; font-weight: normal; margin-left: 10px; font-family: Consolas;">(哥哥科技：智能Mesh适配)</span>' : ''}</div>${hW.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.8GHz':'5.2GHz'}）</div>${h52.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.2GHz':'5.8GHz'}）</div>${h58.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（2.4GHz）</div>${h2.join('')||'<div class="gege-empty-state">没有连接设备</div>'}
         </div><div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed #eee; text-align: center; font-family: Consolas, 'Microsoft YaHei', sans-serif;"><div style="font-size: 11.5px; color: #777; font-style: italic; margin-bottom: 8px;">“在一个文明社会，干净的、不被监视与吸血的网络，是我们每个人的基本权利。”</div><div style="font-size: 10.5px; color: #999; line-height: 1.3; margin-bottom: 8px;">本交互式程序基于 GNU Affero GPL v3.0 协议开源，按“原样 (AS IS)”提供，不对其适用性、稳定性、精密度或任何商业场景合规性作任何明示或暗示的担保。<br>根据 AGPL-3.0 第 5(d) 及 7(b) 条规定，基于本程序的任何修改均不得移除或篡改本界面的署名与法律声明。保留此界面是使用本软件代码的合法性的前置条件。
-        </div><div style="font-size: 12px; color: #555;"><a href="https://github.com/ucxn/ZTE-Stat_Max" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">ZTE-Stat_Max 增强组件</a> <span title="构建时间：2026-06.25 18时&#10;架构设计：哥哥科技 BroTech&#10;Bilibili UID：501430041&#10;QQ群：680464365" style="cursor:help; border-bottom:1px dotted #ccc; font-family:Consolas;">5.9.9.R</span> | Copyright &copy; 2026 <a href="https://www.bilibili.com/video/BV1PtR7B8ECC" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">哥哥科技</a> (BroTech)<span style="color: #888; font-weight: normal;"> | All Rights Reserved</span>&emsp;&nbsp;<a href="https://scriptcat.org/zh-CN/script-show-page/6194" target="_blank" style="color: #666; text-decoration: none;">点此分享</a></div></div></div></div>`;
+        </div><div style="font-size: 12px; color: #555;"><a href="https://github.com/ucxn/ZTE-Stat_Max" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">ZTE-Stat_Max 增强组件</a> <span title="构建时间：2026-06.25 22.5时&#10;架构设计：哥哥科技 BroTech&#10;Bilibili UID：501430041&#10;QQ群：680464365" style="cursor:help; border-bottom:1px dotted #ccc; font-family:Consolas;">5.9.9.T</span> | Copyright &copy; 2026 <a href="https://www.bilibili.com/video/BV1PtR7B8ECC" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">哥哥科技</a> (BroTech)<span style="color: #888; font-weight: normal;"> | All Rights Reserved</span>&emsp;&nbsp;<a href="https://scriptcat.org/zh-CN/script-show-page/6194" target="_blank" style="color: #666; text-decoration: none;">点此分享</a></div></div></div></div>`;
       S._domRebuilt = true;});}
     catch (e) {
       requestAnimationFrame(() => {
