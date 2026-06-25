@@ -2,7 +2,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         5.9.9.S
+// @version         5.9.9.T
 // @description     哥哥科技 QQ群 680464365
 // @description:en  https://github.com/ucxn/ZTE-Stat_Max
 // @author          哥哥科技 space.bilibili.com/501430041
@@ -183,6 +183,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
     return m ? m.trim().toLowerCase().replaceAll('-', ':') : '';
   }
 
+  const UNESC_MAP = { '&#32;': ' ', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&apos;': "'", '&amp;': '&' };
   function parseXml(xmlStr, tag) {
     if (!xmlStr) return [];
     let list = [], m = xmlStr.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`));
@@ -191,10 +192,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
     while ((im = instRx.exec(m[1])) !== null) {
       let o = Object.create(null), pm;
       while ((pm = pRx.exec(im[1])) !== null) {
-        o[pm[1]] = pm[2].replaceAll('&#32;', ' ')
-                .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-                .replace(/&quot;/g, '"').replace(/&apos;/g, "'")
-                .replace(/&amp;/g, '&');
+        o[pm[1]] = pm[2].replace(/&#32;|&lt;|&gt;|&quot;|&apos;|&amp;/g, m => UNESC_MAP[m]);
       }
       list.push(o);
     }
@@ -314,7 +312,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
           uB: CONFIG.readSaveData === 1 ? 0 : (spD ? cC.offUp - (spD.up || 0) : cC.offUp), 
           dB: CONFIG.readSaveData === 1 ? 0 : (spD ? cC.offDn - (spD.down || 0) : cC.offDn),
           lU: cC.offUp, lD: cC.offDn, aR: 0, dpU: 0, dpD: 0,
-          oU: cC.offUp, oD: cC.offDn, hU: [], hD: [] // 真实流量
+          oU: cC.offUp, oD: cC.offDn, hU: new Float64Array(32), hD: new Float64Array(32), hIdx: 0 // 真实流量
         };
         let cS = S.cls[m],
           dU = cC.offUp - cS.lU,
@@ -385,6 +383,16 @@ const calcStageRatio = (W, L_int, L_hp) => {
         return (Math.abs(L_int - W) < Math.abs(L_hp - W) ? L_int : L_hp) / W;
     }
   };
+const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
+      function getSpark(ringArr, headIdx, maxVal) {
+        let s = "";
+        for (let i = 15; i >= 0; i--) {
+          let v = ringArr[(headIdx - i) & 31];
+          s += SPRK[v <= 0 ? 0 : Math.min(7, Math.max(1, ((v / maxVal) * 7) | 0))];
+        }
+        return s;
+      }
+
   function rUI(wU, wD, sU, sD, cI) {
     let tOD = 0,
       LUp = 0,
@@ -414,8 +422,9 @@ const calcStageRatio = (W, L_int, L_hp) => {
       }
       abU += CONFIG.readSaveData === 2 ? sessU : (cC ? (cC.offUp || 0) : (s.lU || 0));
       abD += CONFIG.readSaveData === 2 ? sessD : (cC ? (cC.offDn || 0) : (s.lD || 0));
-      s.hU.push(cC ? cC.upRate : 0); if (s.hU.length > 30) s.hU.shift();
-      s.hD.push(cC ? cC.dnRate : 0); if (s.hD.length > 30) s.hD.shift();  
+      s.hIdx = (s.hIdx + 1) & 31;
+      s.hU[s.hIdx] = cC ? cC.upRate : 0;
+      s.hD[s.hIdx] = cC ? cC.dnRate : 0;
     }
     if (typeof GM_setValue !== 'undefined' && S.rTick === 1) {
       let cln = {};
@@ -685,13 +694,11 @@ const calcStageRatio = (W, L_int, L_hp) => {
               bU = cache.bU ??= enh.querySelector('.zte-bar-up'),
               bD = cache.bD ??= enh.querySelector('.zte-bar-down');
           
-          const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
           let clU = (S.aWu * 0.1) || 0; if (clU < 512000) clU = 512000;
-          for (let i = 0; i < cS.hU.length; i++) { if (cS.hU[i] > clU) clU = cS.hU[i]; }
           let clD = (S.aWd * 0.125) || 0;
-          for (let i = 0; i < cS.hD.length; i++) { if (cS.hD[i] > clD) clD = cS.hD[i]; }
-          (cache.bUSpk ??= bU.querySelector('.v-spark')).textContent = cS.hU.slice(-15).map(v => SPRK[v <= 0 ? 0 : Math.min(7, Math.ceil((v / clU) * 7))]).join('');
-          (cache.bDSpk ??= bD.querySelector('.v-spark')).textContent = cS.hD.slice(-15).map(v => SPRK[v <= 0 ? 0 : Math.min(7, Math.ceil((v / clD) * 7))]).join('');
+          for (let i = 0; i < 32; i++) { if (cS.hU[i] > clU) clU = cS.hU[i]; if (cS.hD[i] > clD) clD = cS.hD[i]; }
+          (cache.bUSpk ??= bU.querySelector('.v-spark')).textContent = getSpark(cS.hU, cS.hIdx, clU);
+          (cache.bDSpk ??= bD.querySelector('.v-spark')).textContent = getSpark(cS.hD, cS.hIdx, clD);
 
           bU.style.setProperty('--p-up', Math.min(pu, 100) + '%');
           (cache.bUVal ??= bU.querySelector('.v-val')).textContent = `🔼 ${fBy(cC.upRate)}`;
