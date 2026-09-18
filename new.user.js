@@ -306,6 +306,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       let lanNow = lCxtT ?? n,
         新LAN帧 = lCxtT === null || lCxtT !== lCxtProcessedT,
          lanDt = lCxtT !== null && lCxtProcessedT !== null && 新LAN帧 ? Math.min((lanNow - lCxtProcessedT) * .001, CONFIG.forceMeshMode & 2 ? 30 : CONFIG.lanRefreshInterval) : CONFIG.lanRefreshInterval;
+      let cWU, cWD, u2 = 0, d2 = 0, cI = Object.create(null);
       if (!wanCompat) {
         const wI = parseXml(wT, 'OBJ_HOME_BASICINFO_ID')[0] || {};
         S.hasW2 = wI.DualWANEnable === '1';
