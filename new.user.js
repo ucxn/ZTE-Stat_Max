@@ -305,7 +305,8 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       window.__gLWT = wT; window.__gLWT_t = n; // 保障解耦模式全局缓存不丢失
       let lanNow = lCxtT ?? n,
         新LAN帧 = lCxtT === null || lCxtT !== lCxtProcessedT,
-         lanDt = lCxtT !== null && lCxtProcessedT !== null && 新LAN帧 ? Math.min((lanNow - lCxtProcessedT) * .001, CONFIG.forceMeshMode & 2 ? 30 : CONFIG.lanRefreshInterval) : CONFIG.lanRefreshInterval;
+        lanDt = lCxtT !== null && lCxtProcessedT !== null && 新LAN帧 ? (lanNow - lCxtProcessedT) * .001 : CONFIG.lanRefreshInterval;
+      let cWU, cWD, u2 = 0, d2 = 0, cI = Object.create(null);
       if (!wanCompat) {
         const wI = parseXml(wT, 'OBJ_HOME_BASICINFO_ID')[0] || {};
         S.hasW2 = wI.DualWANEnable === '1';
@@ -489,26 +490,21 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
   }
 
   function buildCSV() {
-    const csvE = v => {
-      let s = String(v ?? '');
-      if (typeof v === 'string' && /^[\s]*[=+\-@]/.test(s)) s = "'" + s; // 防表格公式注入
-      return `"${s.replaceAll('"', '""')}"`; // RFC 4180：字段整体加引号，内部双引号翻倍
-    };
-    const csvRow = a => a.map(csvE).join(',');
     return ((sp, now, start) => '\uFEFF' + [
-      csvRow([`哥哥科技 硬路由 NPU 增强系列：专用组件 ${版本号} 生成`]),
-      csvRow([`统计周期：${new Date(start + CONFIG.时区补偿).toISOString().replace('T', ' ').slice(0, 19)} 至 ${new Date(now + CONFIG.时区补偿).toISOString().replace('T', ' ').slice(0, 19)} (UTC${CONFIG.时区补偿 > 0 ? '+' : ''}${CONFIG.时区补偿 / 3600000})${CONFIG.readSaveData === 1 ? ' （含路由器后台读档）' : ''}`]),
-      csvRow(['--- [全局统计] ---']),
-      csvRow(['WAN总上传(B)','WAN总下载(B)','高精全局上行(B)','高精全局下行(B)','LAN积分总上行(B)','LAN积分总下行(B)','本次在线总上行(B)','本次在线总下行(B)']),
-      csvRow([Math.round(sp.global?.wan_up||0),Math.round(sp.global?.wan_down||0),Math.round(sp.global?.lan_high_up||0),Math.round(sp.global?.lan_high_down||0),Math.round(sp.global?.lan_integral_up||0),Math.round(sp.global?.lan_integral_down||0),Math.round(sp.global?.lan_off_up||0),Math.round(sp.global?.lan_off_down||0)]),
-      '',
-      csvRow(['--- [设备明细] ---']),
-      csvRow(['设备名称','MAC地址','IP地址','状态/接口','高精上行','高精下行','积分上行','积分下行','官方上行','官方下行']),
-      ...Object.entries(sp.devices || {}).map(d => csvRow([d[1].name,d[0],d[1].ip,d[1].status,Math.round(d[1].up||0),Math.round(d[1].down||0),Math.round(d[1].integral_up||0),Math.round(d[1].integral_down||0),Math.round(d[1].raw_up||0),Math.round(d[1].raw_down||0)])),
-      '',
-      csvRow(['Bro-Stat@哥哥科技 https://space.bilibili.com/501430041']),
-      csvRow(['项目主页: https://github.com/ucxn/Bro-Stat']),
-      csvRow(['脚本下载: https://scriptcat.org/users/203510'])
+      `"哥哥科技 硬路由 NPU 增强系列：专用组件 ${版本号} 生成"`,
+      `"统计周期：${new Date(start + CONFIG.时区补偿).toISOString().replace('T', ' ').slice(0, 19)} 至 ${new Date(now + CONFIG.时区补偿).toISOString().replace('T', ' ').slice(0, 19)} (UTC${CONFIG.时区补偿 > 0 ? '+' : ''}${CONFIG.时区补偿 / 3600000})${CONFIG.readSaveData === 1 ? ' （含路由器后台读档）' : ''}"`,
+      `"--- [全局统计] ---"`,
+      `"WAN总上传(B)","WAN总下载(B)","高精全局上行(B)","高精全局下行(B)","LAN积分总上行(B)","LAN积分总下行(B)","本次在线总上行(B)","本次在线总下行(B)"`,
+      `"${Math.round(sp.global?.wan_up||0)}","${Math.round(sp.global?.wan_down||0)}","${Math.round(sp.global?.lan_high_up||0)}","${Math.round(sp.global?.lan_high_down||0)}","${Math.round(sp.global?.lan_integral_up||0)}","${Math.round(sp.global?.lan_integral_down||0)}","${Math.round(sp.global?.lan_off_up||0)}","${Math.round(sp.global?.lan_off_down||0)}"`,
+      ``,
+      `"--- [设备明细] ---"`,
+      `"设备名称","MAC地址","IP地址","状态/接口","高精上行","高精下行","积分上行","积分下行","官方上行","官方下行"`,
+      ...Object.entries(sp.devices || {}).map(d => `"${d[1].name}","${d[0]}","${d[1].ip}","${d[1].status}","${Math.round(d[1].up||0)}","${Math.round(d[1].down||0)}","${Math.round(d[1].integral_up||0)}","${Math.round(d[1].integral_down||0)}","${Math.round(d[1].raw_up||0)}","${Math.round(d[1].raw_down||0)}"`),
+      ``,
+      `"Bro-Stat@哥哥科技 https://space.bilibili.com/501430041"`,
+      `"项目主页: https://github.com/ucxn/Bro-Stat"`,
+      `"脚本下载: https://scriptcat.org/users/203510"`
+
     ].join('\r\n'))(
       S.cSnap || {}, 
       S.cSnap?.timestamp || Date.now(), 
@@ -1058,7 +1054,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
       requestAnimationFrame(() => {
         ol.innerHTML = `<div style="padding: 20px; max-width: 1580px; margin: 0 auto; min-height: 100%;"><div id="gege-board-anchor"></div><div id="config-list" class="config-list gege-list-container"><div class="gege-section"><div class="config-title">有线设备${(window.gegeHiddenDevices && Object.keys(window.gegeHiddenDevices).length > 0) ? `<span id="gege-mesh-badge" style="color: #ff4c00; font-size: 13px; font-weight: normal; margin-left: 10px; font-family: Consolas;">(哥哥科技：${ol.querySelector('#gege-mesh-badge')?.textContent === '(哥哥科技：Mesh全面适配)' || Object.values(window.gegeHiddenDevices).some(d => d?.mesh === false) ? 'Mesh全面适配' : '智能Mesh适配'})</span>` : ''}</div>${hW.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.8GHz':'5.2GHz'}）</div>${h52.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.2GHz':'5.8GHz'}）</div>${h58.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（2.4GHz）</div>${h2.join('')||'<div class="gege-empty-state">没有连接设备</div>'}
         </div><div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed #eee; text-align: center; font-family: Consolas, 'Microsoft YaHei', sans-serif;"><div style="font-size: 11.5px; color: #777; font-style: italic; margin-bottom: 8px;">“在一个文明社会，干净的、不被监视与吸血的网络，是我们每个人的基本权利。”</div><div style="font-size: 10.5px; color: #999; line-height: 1.3; margin-bottom: 8px;">本交互式程序基于 GNU Affero GPL v3.0 协议开源，按“原样 (AS IS)”提供，不对其适用性、稳定性、精密度或任何商业场景合规性作任何明示或暗示的担保。<a href="https://github.com/ucxn/ZTE-Stat_Max/blob/main/法律声明：「哥哥科技 」品牌使用政策.md" target="_blank" style="color: #777; text-decoration: underline;">查看许可证</a><br>根据 AGPL-3.0 第 5(d) 及 7(b) 条规定，基于本程序的任何修改均不得移除或篡改本界面的署名与法律声明。保留此界面是使用本软件代码的合法性的前置条件。
-        </div><div style="font-size: 12px; color: #555;"><a href="https://github.com/ucxn/ZTE-Stat_Max" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">ZTE-Stat_Max 增强组件</a> <span title="构建时间：2026-9.17 21:17&#10;架构设计：哥哥科技 BroTech&#10;Bilibili UID：501430041&#10;QQ群：680464365" style="cursor:help; border-bottom:1px dotted #ccc; font-family:Consolas;">${版本号}</span> | Copyright &copy; 2026 <a href="https://www.bilibili.com/video/BV1PtR7B8ECC" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">哥哥科技</a> (BroTech)<span style="color: #888; font-weight: normal;"> | All Rights Reserved</span>&emsp;&nbsp;<a href="https://scriptcat.org/zh-CN/script-show-page/6194" target="_blank" style="color: #666; text-decoration: none;">点此分享</a></div></div></div></div>`;
+        </div><div style="font-size: 12px; color: #555;"><a href="https://github.com/ucxn/ZTE-Stat_Max" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">ZTE-Stat_Max 增强组件</a> <span title="构建时间：2026-8.31 21:45&#10;架构设计：哥哥科技 BroTech&#10;Bilibili UID：501430041&#10;QQ群：680464365" style="cursor:help; border-bottom:1px dotted #ccc; font-family:Consolas;">${版本号}</span> | Copyright &copy; 2026 <a href="https://www.bilibili.com/video/BV1PtR7B8ECC" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">哥哥科技</a> (BroTech)<span style="color: #888; font-weight: normal;"> | All Rights Reserved</span>&emsp;&nbsp;<a href="https://scriptcat.org/zh-CN/script-show-page/6194" target="_blank" style="color: #666; text-decoration: none;">点此分享</a></div></div></div></div>`;
       S._domRebuilt = true;});}
     catch (e) {
       requestAnimationFrame(() => {
