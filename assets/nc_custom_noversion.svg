@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="122" height="20" role="img" aria-label="PolyForm NC">
+  <title>PolyForm NC</title>
+  <defs>
+    <linearGradient id="gDark" x2="0" y2="100%">
+      <stop offset="0" stop-color="#4b4b4b"/>
+      <stop offset="0.5" stop-color="#333"/>
+      <stop offset="1" stop-color="#1f1f1f"/>
+    </linearGradient>
+    <linearGradient id="gGreen" x2="0" y2="100%">
+      <stop offset="0" stop-color="#52d58c"/>
+      <stop offset="0.52" stop-color="#31bc71"/>
+      <stop offset="1" stop-color="#218b50"/>
+    </linearGradient>
+    <linearGradient id="shine" x2="0" y2="100%">
+      <stop offset="0" stop-color="#fff" stop-opacity=".32"/>
+      <stop offset="0.45" stop-color="#fff" stop-opacity=".08"/>
+      <stop offset="0.46" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".10"/>
+    </linearGradient>
+    <clipPath id="clip">
+      <rect width="122" height="20" rx="4"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#clip)">
+    <rect width="24" height="20" fill="url(#gDark)"/>
+    <rect x="24" width="98" height="20" fill="url(#gGreen)"/>
+    <rect width="122" height="20" fill="url(#shine)"/>
+  </g>
+
+  <g transform="translate(4 2)">
+    <rect width="15" height="15" rx="0.6" fill="#fff" opacity=".98"/>
+    <rect x="1" y="1" width="13" height="13" fill="#58d18d"/>
+    <polygon points="1,1 8,1 8,8" fill="#ffffff"/>
+    <rect x="8" y="1" width="6" height="13" fill="#32bf70"/>
+    <polygon points="1,14 8,14 8,8 14,14" fill="#1ba856" opacity=".95"/>
+  </g>
+
+  <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" font-size="11">
+    <text x="73" y="15" fill="#000" fill-opacity=".28">PolyForm NC</text>
+    <text x="73" y="14">PolyForm NC</text>
+  </g>
+</svg>

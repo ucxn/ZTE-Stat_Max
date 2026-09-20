@@ -1,10 +1,12 @@
 # ZTE-Stat_Max by Brother Tech
 
 [![Version](https://img.shields.io/badge/version-5.9.9.Y-orange.svg?logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
-[![License: AGPL 3.0](https://img.shields.io/badge/License-AGPL_3.0-blue.svg?logo=gnu&logoColor=white)](https://www.gnu.org/licenses/agpl-3.0.html)
+[![Platform](https://img.shields.io/badge/platform-Web-green.svg?logo=javascript&logoColor=white)](https://scriptcat.org/zh-CN)&nbsp;&emsp;
+[![Integration](https://img.shields.io/badge/集成-Home_Assistant-41BDF5.svg?logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)
 
-[![Platform](https://img.shields.io/badge/platform-Web--JS-green.svg?logo=javascript&logoColor=white)](https://scriptcat.org/zh-CN)&nbsp;&emsp;
-[![Integration](https://img.shields.io/badge/Integration-Home_Assistant-41BDF5.svg?logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)
+[![APL-1.0 · OSI Approved](https://img.shields.io/badge/APL--1.0-Open%20Source-3DA639?logo=opensourceinitiative&logoColor=white&labelColor=222222)](https://opensource.org/license/APL-1.0)&nbsp;&emsp;
+[![License: SUL-1.0](https://img.shields.io/badge/SUL-1.0-EA4B71.svg?logo=n8n&logoColor=white&labelColor=040506)](https://github.com/ucxn/Mi-Stat_Max/blob/main/LICENSE.md)&nbsp;&emsp;
+[![PolyForm Noncommercial 1.0.0](./assets/nc_custom_noversion.svg)](https://polyformproject.org/licenses/noncommercial/1.0.0/)
 
 **English** | [简体中文](README.md)
 
@@ -141,10 +143,6 @@ const CONFIG = {
 * This script is a pure frontend DOM injection and data reorganization tool. It does not involve modifying the ZTE router's underlying firmware.
 
 Utilizing the Tampermonkey environment, the script makes concurrent requests to the router's `vue_home_device_data_no_update_sess` and `vue_client_data` APIs. To eliminate the lag caused by the official frontend's polling refresh, the script internally implements an independent timer via `performance.now()`, deriving highly accurate instantaneous traffic data. All UI modifications are executed via DOM Mutation on top of the original page's CSS framework, ensuring a native feel and seamless compatibility.
-
-## 📄 License
-
-[GNU-Affero-GPL 3.0](https://www.gnu.org/licenses/agpl-3.0.html)
 
 ---
 *Authored by Brother Tech*

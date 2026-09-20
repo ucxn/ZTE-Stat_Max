@@ -1,9 +1,11 @@
 # ZTE-Stat_Max by 哥哥科技
 
 [![Version](https://img.shields.io/badge/version-5.9.9.Y-orange.svg?logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
-[![License: AGPL 3.0](https://img.shields.io/badge/License-AGPL_3.0-blue.svg?logo=gnu&logoColor=white)](https://www.gnu.org/licenses/agpl-3.0.html)&nbsp;&emsp;
 [![Platform](https://img.shields.io/badge/platform-Web-green.svg?logo=javascript&logoColor=white)](https://scriptcat.org/zh-CN)&nbsp;&emsp;
-[![Integration](https://img.shields.io/badge/集成-Home_Assistant-41BDF5.svg?logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)
+[![Integration](https://img.shields.io/badge/集成-Home_Assistant-41BDF5.svg?logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)&nbsp;&emsp;
+[![APL-1.0 · OSI Approved](https://img.shields.io/badge/APL--1.0-Open%20Source-3DA639?logo=opensourceinitiative&logoColor=white&labelColor=222222)](https://opensource.org/license/APL-1.0)&nbsp;&emsp;
+[![License: SUL-1.0](https://img.shields.io/badge/SUL-1.0-EA4B71.svg?logo=n8n&logoColor=white&labelColor=040506)](https://github.com/ucxn/Mi-Stat_Max/blob/main/LICENSE.md)&nbsp;&emsp;
+[![PolyForm Noncommercial 1.0.0](./assets/nc_custom_noversion.svg)](https://polyformproject.org/licenses/noncommercial/1.0.0/)
 
 [English](README_EN.md) | **简体中文**
 
@@ -131,12 +133,6 @@ const CONFIG = {
 
 * 本脚本属于纯前端 DOM 注入与数据重组工具，不涉及对中兴路由器底层固件的修改。
 脚本利用油猴环境，并发请求路由器的 `vue_home_device_data_no_update_sess` 和 `vue_client_data` 接口。为解决官方前端轮询刷新带来的滞后感，脚本内部通过 `performance.now()` 实现了独立的设定，从而推导出更为精准的瞬时流量数据。所有的 UI 修改均在原页面的 CSS 框架基础上通过Mutation完成，确保了界面的原生质感与兼容性。
-
-
-## 📄 协议 (License)
-
-[GNU-Affero GPL 3.0](https://www.gnu.org/licenses/agpl-3.0.html)
-
 ---
 *Authored by 哥哥科技*
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AAL
+// Copyright (c) 2026 哥哥科技
 package main
 
 import (
