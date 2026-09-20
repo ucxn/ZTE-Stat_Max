@@ -3,8 +3,8 @@
 [![Version](https://img.shields.io/badge/version-5.9.9.Y-orange.svg?logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
 [![Platform](https://img.shields.io/badge/platform-Web-green.svg?logo=javascript&logoColor=white)](https://scriptcat.org/zh-CN)&nbsp;&emsp;
 [![Integration](https://img.shields.io/badge/集成-Home_Assistant-41BDF5.svg?logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)&nbsp;&emsp;
-[![APL-1.0 · OSI Approved](https://img.shields.io/badge/APL--1.0-Open%20Source-3DA639?logo=opensourceinitiative&logoColor=white&labelColor=222222)](https://opensource.org/license/APL-1.0)&nbsp;&emsp;
-[![License: SUL-1.0](https://img.shields.io/badge/SUL-1.0-EA4B71.svg?logo=n8n&logoColor=white&labelColor=040506)](https://github.com/ucxn/Mi-Stat_Max/blob/main/LICENSE.md)&nbsp;&emsp;
+[![APL-1.0 · OSI Approved](https://img.shields.io/badge/APL--1.0-Open%20Source-3DA639?logo=opensourceinitiative&logoColor=white&labelColor=222222)](https://raw.githubusercontent.com/ucxn/ZTE-Stat_Max/refs/heads/main/LICENSE/License.txt)&nbsp;&emsp;
+[![License: SUL-1.0](https://img.shields.io/badge/SUL-1.0-EA4B71.svg?logo=n8n&logoColor=white&labelColor=040506)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/PolyForm-Noncommercial-1.0.0.md)&nbsp;&emsp;
 [![PolyForm Noncommercial 1.0.0](./assets/nc_custom_noversion.svg)](https://polyformproject.org/licenses/noncommercial/1.0.0/)
 
 [English](README_EN.md) | **简体中文**

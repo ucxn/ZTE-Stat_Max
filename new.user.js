@@ -34,7 +34,7 @@
 
   // ======== [0] 用户极客环境变量配置区 ========
   const CONFIG = {
-    readSaveData: 1, // 【历史记录】 1: 从路由器后台读档（继承基线） | 0: 新局模式 | 2: 从本地长期历史读档 [自动保存！] | 3: 启动时用后台临时值充当积分
+    readSaveData: 3, // 【历史记录】 1: 从路由器后台读档（继承基线） | 0: 新局模式 | 2: 从本地长期历史读档 [自动保存！] | 3: 启动时用后台临时值充当积分
     forceMeshMode: 1, // 【Mesh探测模式】0: 官方拓扑驱动 | 1: n秒智能等待(默认) | 2: 强制大包抓取(专治阉割、不出数据)[会改变LAN时率]
     uiLayout: 1, // 【面板拓扑结构】 0: 经典版 | 1: 详细紧凑版(驾驶舱美学) | 2: 详细平铺版(报表流美学)
     injectMode: 1, // 【UI注入模式】 0: 原生侧边栏(1min)| 1: 优先，10秒悬浮舱(D)| 2: 联动模式| 3：强制模式
@@ -524,7 +524,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       ...Object.entries(sp.devices || {}).map(d => csvRow([d[1].name,d[0],d[1].ip,d[1].status,Math.round(d[1].up||0),Math.round(d[1].down||0),Math.round(d[1].integral_up||0),Math.round(d[1].integral_down||0),Math.round(d[1].raw_up||0),Math.round(d[1].raw_down||0)])),
       '',
       csvRow(['Bro-Stat@哥哥科技 https://space.bilibili.com/501430041']),
-      csvRow(['项目主页: https://github.com/ucxn/Bro-Stat']),
+      csvRow(['项目主页: https://github.com/ucxn/ZTE-Stat_Max']),
       csvRow(['脚本下载: https://scriptcat.org/users/203510'])
     ].join('\r\n'))(
       S.cSnap || {}, 
