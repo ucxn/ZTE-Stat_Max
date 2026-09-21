@@ -15,11 +15,12 @@
 // @include         http://172.16.*
 // @include         https://192.168.*.*
 // @include         https://172.16.*
+// @include         /\/menu\/dashboard/
 // @exclude         *://*/cgi-bin/luci*
 // @grant           GM_setValue
 // @grant           GM_getValue
 // @storageName     GBNPA_Storage
-// @license         APL-1.0 OR SUL-1.0 AND PolyForm-Noncommercial-1.0.0
+// @license         LicenseRef-APL OR SUL-1.0 AND PolyForm-Noncommercial-1.0.0
 // @website         https://github.com/ucxn/ZTE-Stat_Max
 // @supportURL      https://b23.tv/BV1PtR7B8ECC
 // @run-at          document-start
@@ -216,10 +217,10 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
   function fBy(bps) {
         if (bps === 0) return '0  B';
         if (bps > 8388608) return `${(bps * 1.1920928955078125e-7).toFixed(2)} MiB/s`;
-        if (bps === 1) return '智能拦截中...';
-        if (bps === 2) return '漫游中...';
-        if (bps === 3) return '异常网速！';
-        return bps < 8700
+        if (bps === 1) return '智能拦截中...'; //中兴网页后台本身速率的分度值最高也只能精确到 100bits.
+        if (bps === 2) return '漫游中...'; //况且这里必须要保持一个正数来维持正常的微积分和避免错误0补偿
+        if (bps === 3) return '异常网速！'; //不要追求官僚教条的软工，有事在注释里说，不要污染执行的代码。
+        return bps < 8700 //或者8601.6，避免前期必须使用二进制1024-Based的导致破坏这个数据美感；频繁的单位切换也会增加人类仪表阅读负担，毕竟这是一个使用很多测控算法的程序。
             ? ((bps * 0.001 | 0) === bps * 0.001
                  ? `${F_ARR[bps * 0.001]} kB/s`
                 : `${(bps * 0.000125).toFixed(2)} kB/s`)
@@ -417,7 +418,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
           if (dU < 0 || dD < 0) {
             if (dU < 0) { cS.uB += dU; cS.oU += dU; cS.dpU = cS.lU; }
             if (dD < 0) { cS.dB += dD; cS.oD += dD; cS.dpD = cS.lD; }
-            cS.aR = 3;
+            cS.aR = 3; //前面已经讲过原因，不要跟我讲可复用性、特定特殊性，大不了我搞个3e-9不就不可能冲突了？
           }
           else if (cS.aR === 3) {
             if (dU > 0 || dD > 0) {

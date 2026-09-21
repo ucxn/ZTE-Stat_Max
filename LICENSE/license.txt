@@ -1,12 +1,5 @@
-**********************************************************************************************************************************************
-++ NON-COMMERCIAL, ACADEMIC AND PERSONAL uses of the LICENSED WORK are governed by the terms of the following Adaptive Public License      *
-                                                                                                                                             *
-++ For COMMERCIAL use, please contact the Initial Contributor at 175325443+ucxn@users.noreply.github.com. You may use the                                       *
-	PGP PUBLIC KEY BLOCK provided in PART 1 of this APL license to authenticate Initial Contributor.                                     *  
-**********************************************************************************************************************************************
-
 ADAPTIVE PUBLIC LICENSE
-Version 1.0
+175325443+ucxn@users.noreply.github.com
 
 THE LICENSED WORK IS PROVIDED UNDER THE TERMS OF THIS ADAPTIVE PUBLIC LICENSE ("LICENSE"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE LICENSED WORK CONSTITUTES RECIPIENT'S 
 ACCEPTANCE OF THIS LICENSE AND ITS TERMS, WHETHER OR NOT SUCH RECIPIENT READS THE TERMS OF THIS LICENSE. "LICENSED WORK" AND "RECIPIENT" ARE DEFINED BELOW.
@@ -115,7 +108,8 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 
     3.2. EXECUTABLE DISTRIBUTIONS OF THE LICENSED WORK.
     A Distributor may choose to distribute the Licensed Work, or any portion thereof, in Executable form (an "EXECUTABLE DISTRIBUTION") to any third party, under the terms of Section 2 
-	of this License, provided the Executable Distribution is made available under and accompanied by a copy of this License, AND provided at least ONE of the following conditions is fulfilled:
+	of this License, provided the Executable Distribution is made available under and accompanied by a copy of this License, AND is distributed at no more than the cost of physically
+	performing Executable Distribution, AND provided at least ONE of the following conditions is fulfilled:
         (a) The Executable Distribution must be accompanied by the Source Code for the Licensed Work making up the Executable Distribution, and the Source Code must be distributed on 
 		the same media as the Executable Distribution or using an Electronic Distribution Mechanism; or
         (b) The Executable Distribution must be accompanied with a written offer, valid for at least thirty six (36) months, to give any third party under the terms of this License, 
@@ -277,7 +271,7 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 
 9. GOVERNING LAW AND LEGAL ACTION.
     9.1. This License shall be governed by and construed in accordance with the laws of the Governing Jurisdiction assigned in Part 3 of Exhibit A, without regard to its conflict of law provisions. 
-		No party may bring a legal action under this License more than one year after the cause of the action arose. Each party waives its rights (if any) to a jury trial in any litigation 
+		No party may bring a legal action under this License more than Three (3) year after the cause of the action arose. Each party waives its rights (if any) to a jury trial in any litigation 
 		arising under this License. Note that if the Governing Jurisdiction is not assigned in Part 3 of Exhibit A, then the Governing Jurisdiction shall be the State of New York.
     9.2. The courts of the Governing Jurisdiction shall have jurisdiction, but not exclusive jurisdiction, to entertain and determine all disputes and claims, whether for specific performance, 
 		injunction, damages or otherwise, both at law and in equity, arising out of or in any way relating to this License, including without limitation, the legality, validity, existence 
@@ -305,14 +299,9 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 EXHIBIT A (to the Adaptive Public License)
 
     PART 1: INITIAL CONTRIBUTOR AND DESIGNATED WEB SITE
-    The Initial Contributor is: 	175325443+ucxn@users.noreply.github.com, 
-	
-    identification of Initial Contributor can be performed through OpenPGP certificates on 
-		http://www.hushmail.com/
-		http://keyserver.pgp.com/vkd/GetWelcomeScreen.event
-		http://pgp.mit.edu/
+    The Initial Contributor is: 	哥哥科技 
 
-    Address of Initial Contributor: 	SEND email with PGP-key for verification
+    Address of Initial Contributor: 175325443+ucxn@users.noreply.github.com,
 
     The Designated Web Site is: 	https://github.com/ucxn/ZTE-Stat_Max
       	
@@ -328,7 +317,7 @@ EXHIBIT A (to the Adaptive Public License)
 
     PART 4: THIRD PARTIES
     For the purposes of this License, "Third Party" has the definition set forth below in the ONE paragraph selected by the Initial Contributor from paragraphs A, B, C, D and E when the Initial 
-	Work is distributed or otherwise made available by the Initial Contributor. To select one of the following paragraphs, the Initial Contributor must place an "X" or "x" in the selection box 
+	Work is distributed or otherwise made available by the Initial Contributor. To select one of the following paragraphs, the Initial Contributor must place an "◯" or "✓" in the selection box 
 	alongside the one respective paragraph selected.
 
     SELECTION 	 
@@ -348,11 +337,6 @@ EXHIBIT A (to the Adaptive Public License)
 
     PART 5: NOTICE
 	THE LICENSED WORK IS PROVIDED UNDER THE TERMS OF THE ADAPTIVE PUBLIC LICENSE ("LICENSE") AS FIRST COMPLETED BY: 哥哥科技（Bro-Tech）, 
-as verified on http://www.hushmail.com/
-		http://keyserver.pgp.com/vkd/GetWelcomeScreen.event
-		http://pgp.mit.edu/
-and identified at:
-https://github.com/ucxn/ZTE-Stat_Max
  
 	ANY USE, PUBLIC DISPLAY, PUBLIC PERFORMANCE, REPRODUCTION OR DISTRIBUTION OF, OR PREPARATION OF DERIVATIVE WORKS BASED ON, THE LICENSED WORK CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS 
 	LICENSE AND ITS TERMS, WHETHER OR NOT SUCH RECIPIENT READS THE TERMS OF THE LICENSE. "LICENSED WORK" AND "RECIPIENT" ARE DEFINED IN THE LICENSE. A COPY OF THE LICENSE IS LOCATED IN THE 

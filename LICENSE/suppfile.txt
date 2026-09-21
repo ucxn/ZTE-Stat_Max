@@ -10,9 +10,7 @@ PART 2: ATTRIBUTION INFORMATION
 
 The following Attribution Information shall be prominently displayed as permitted by Section 3.10 of the Adaptive Public License 1.0:
 
-Copyright © 2026 哥哥科技 (Bro-Tech)
-
-哥哥科技 / 501430041
+Copyright © 2026 哥哥科技 (Bro-Tech) 501430041
 
 爱哥哥，也有个可爱的弟弟
 

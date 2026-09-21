@@ -16,6 +16,7 @@
 // @include         https://192.168.*.*
 // @match           https://zte.home*
 // @include         https://172.16.*
+// @exclude         *://*/cgi-bin/luci*
 // @run-at          document-end
 // @grant           GM_setValue
 // @storageName     GBNPA_Storage
