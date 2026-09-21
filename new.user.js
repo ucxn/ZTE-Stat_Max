@@ -3,11 +3,11 @@
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
 // @version         5.9.9.Z
-// @description     哥哥科技 QQ群 680464365
-// @description:en  https://github.com/ucxn/ZTE-Stat_Max
+// @description     一款针对中兴官方计数器和UI不区分上下行、流量数据不可靠、网页隐藏API等问题而诞生的测控“引擎”，一个庞大的循环流程程序；融合了哥哥的大量思想和算法，探索属于家庭网关的真相。
+// @description:en  Bro-Tech QQ群（Group） 680464365
 // @author          哥哥科技 space.bilibili.com/501430041
 // @noframes
-// @tag             路由器 中兴 网络 监控 统计 数据 可视化 极客 增强 UI HA 智能 定时 后台
+// @tag             哥哥科技 路由器 中兴 网络 监控 统计 数据 可视化 极客 增强 UI HA 智能 定时 后台 Measurement M&C Bro 宽带 流量 网速 算法 JS C WebHook 网页 浏览器 微积分 公网
 // @icon            https://scriptcat.org/api/v2/resource/image/PD6xhxddlUESIwAV
 // @include         /^https?:\/\/10(\.[0-9]{1,3}){3}(:\d+)?\/.*$/
 // @include         http://192.168.*.*

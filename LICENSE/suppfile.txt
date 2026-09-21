@@ -1,14 +1,14 @@
 SUPPLEMENT FILE
-Adaptive Public License 1.0
+
+Adaptive Public License of Bro-Tech
 
 PART 1: DESCRIPTION OF DISTRIBUTED MODIFICATIONS
 
 Each Subsequent Contributor must document the material changes made to the Licensed Work and the date of each such change. This information may be provided in the modified source code, a changelog, release notes, commit history, or another reasonably accessible record distributed with the Subsequent Work.
 
-
 PART 2: ATTRIBUTION INFORMATION
 
-The following Attribution Information shall be prominently displayed as permitted by Section 3.10 of the Adaptive Public License 1.0:
+The following Attribution Information shall be prominently displayed as permitted by Section 3.10 of the Adaptive Public License:
 
 Copyright © 2026 哥哥科技 (Bro-Tech) 501430041
 

@@ -2,7 +2,7 @@ Required Notice: Copyright © 2026 哥哥科技 (BroTech)
 
 Required Notice: https://github.com/ucxn/ZTE-Stat_Max
 
-所有的法律声明和许可以仓库中的实际License文件为准。<br>
+所有的法律声明和许可以仓库中的实际 'License' 文件为准。<br>
 您可以收取通常范围内交易双方认为合理的技术服务费，但是不得将本软件本身源码或可执行产物打包倒卖。<br>
 中兴官方可以直接集成该程序，但是必须保留署名；具体的方式可以商榷，我或将可对ZTE官方提供非常合理的许可。
 # License
