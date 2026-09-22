@@ -20,7 +20,7 @@
 // @grant           GM_setValue
 // @grant           GM_getValue
 // @storageName     GBNPA_Storage
-// @license         LicenseRef-APL OR SUL-1.0 AND PolyForm-Noncommercial-1.0.0
+// @license         LicenseRef-APL OR (SUL-1.0 AND PolyForm-Noncommercial-1.0.0)
 // @website         https://github.com/ucxn/ZTE-Stat_Max
 // @supportURL      https://b23.tv/BV1PtR7B8ECC
 // @run-at          document-start
@@ -88,7 +88,7 @@
     aWu: 0, aWd: 0, lwTU: 0, lwTD: 0, cSnap: null,
     lInstUp: 0, lInstDn: 0, lTotUp: 0, lTotDn: 0, lLT: undefined,
     总上行图: new Float64Array(8192), 总下行图: new Float64Array(8192), 总图点数: 0,
-    wMaxU: 0, wMaxD: 0, wMinU: Infinity, wMinD: Infinity, 图表拖: null, 图表待画: 0
+    wMaxU: 0, wMaxD: 0, wMinU: Infinity, wMinD: Infinity, 拖动图表: null, 图表待画: 0
   };
 const WAN_COMPAT = [
     // 兼容层只在标准 WAN 首次失败时探测；社区可继续追加旧固件接口。
@@ -99,7 +99,7 @@ const WAN_COMPAT = [
   ];
   let wanCompat = null;
   S.calcTime = (L) => {
-    S.Force_MS = (CONFIG.周期类型 === 'M' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth() + (L >= Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), CONFIG.周_天设置) ? 1 : 0), CONFIG.周_天设置) : (CONFIG.周期类型 === 'W' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), new Date(L).getUTCDate()) + ((CONFIG.周_天设置 - new Date(L).getUTCDay() > 0 ? CONFIG.周_天设置 - new Date(L).getUTCDay() : CONFIG.周_天设置 - new Date(L).getUTCDay() + 7) * 86400000) : (CONFIG.周期类型 === 'D' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), new Date(L).getUTCDate()) + CONFIG.周_天设置 * 86400000 : Infinity))) - CONFIG.时区补偿;
+    S.Force_MS = (CONFIG.周期类型 === 'M' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth() + (L >= Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), CONFIG.周_天设置) ? 1 : 0), CONFIG.周_天设置) : (CONFIG.周期类型 === 'W' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), new Date(L).getUTCDate()) + ((CONFIG.周_天设置 - new Date(L).getUTCDay() > 0 ? CONFIG.周_天设置 - new Date(L).getUTCDay() : CONFIG.周_天设置 - new Date(L).getUTCDay() + 7) * 86400000) : (CONFIG.周期类型 === 'D' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), new Date(L).getUTCDate()) + CONFIG.周_天设置 * 86400000 : Infinity))) - CONFIG.时区补偿;//这玩意本来就是个基础设施和艺术品，它的功能是非常明确的，不存在说后期还有频繁的维护需求。完全没有必要为了所谓的可读性而乱写或妥协。
     S.Warn_MS = S.Force_MS + CONFIG.报告时间 * 60000;
     S.Force_MS += CONFIG.自动导出 * 60000;
   };S.calcTime((typeof GM_getValue !== 'undefined' && GM_getValue('gege_reset_ms')) ? (GM_getValue('gege_reset_ms') + CONFIG.时区补偿) : Date.now() + CONFIG.时区补偿);
@@ -165,7 +165,7 @@ const WAN_COMPAT = [
     }
     return "";
   };
-  const 版本号 = (typeof GM_info !== 'undefined' && GM_info.script?.version) || '环境不支持获取版本号';
+  const 版本号 = (typeof GM_info !== 'undefined' && GM_info.script?.version) || '环境不支持获取版本号';// 虽然不喜欢废物变量，但是这里会使用两次或以上
   const Phys = { p: Object.create(null), wU: undefined, wD: undefined, tU: 0, tD: 0, lT: undefined, _pM: null, _wID: null };
   let gWUp = (wI, k) => s2b(wI[k]);
   let gWDn = (wI, k) => s2b(wI[k]);
@@ -243,7 +243,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
         if (bitsIntegral > 8192) return `${(bitsOfficial / 8192).toFixed(2)} | ${(bitsIntegral / 8192).toFixed(2)} KiB`;
         return `${Math.round(bitsOfficial / 8)} | ${Math.round(bitsIntegral / 8)} B`;}
 
-  function fSV(bits) {
+  function fSV(bits) { //要偷懒或者简洁易读，就完整一点，不要弄个挂MB实则1024又不正确、又高不成低不就的偷一半懒；GNU本身也支持这种单字母UI写法.
     if (bits >= 84607500288) return `${(bits / 8589934592).toPrecision(4)}G`;
 	if (bits > 8388608000) return `${Math.round(bits / 8388608)}M`;
     if (bits > 8388608) return `${(bits / 8388608).toPrecision(4)}M`;
@@ -261,7 +261,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
 		const s = r - m * 60;
         return d > 0 
         ? `${d}天${h}时${m}分${s}秒` 
-        : `${h}小时${m}分${s}秒`;}
+        : `${h}小时${m}分${s}秒`;} //跑过测试，这种写法实质性能较优
 
   function nM(m) {
     return m ? m.trim().toLowerCase().replaceAll('-', ':') : '';
@@ -508,11 +508,11 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
     const csvQ = s => `"${s.replaceAll('"', '""')}"`; // RFC 4180：字段整体加引号，内部双引号翻倍
     const csvE = v => {
       let s = String(v ?? '');
-      if (typeof v === 'string' && /^(?:\s*[=+\-@＝＋－＠]|[\t\r\n])/.test(s)) s = "'" + s; // 防表格公式注入（OWASP：=+-@/全角变体，及行首 Tab/CR/LF）
+      if (typeof v === 'string' && /^(?:\s*[=+\-@＝＋－＠]|[\t\r\n])/.test(s)) s = "'" + s;
       return csvQ(s);
     };
-    const csvRow = a => a.map(csvE).join(','); // 默认行：所有字符串都做公式防护（设备名等外部数据必须走这里）
-    const csvRowT = a => a.map(v => csvQ(String(v ?? ''))).join(','); // 仅限脚本自带的可信常量行（如 "--- [xx] ---" 分节标记），不加撇号
+    const csvRow = a => a.map(csvE).join(','); // 字符串公式防护
+    const csvRowT = a => a.map(v => csvQ(String(v ?? ''))).join(','); // 仅限脚本自带的可信常量行分节标记
     return ((sp, now, start) => '\uFEFF' + [
       csvRow([`哥哥科技 硬路由 NPU 增强系列：专用组件 ${版本号} 生成`]),
       csvRow([`统计周期：${new Date(start + CONFIG.时区补偿).toISOString().replace('T', ' ').slice(0, 19)} 至 ${new Date(now + CONFIG.时区补偿).toISOString().replace('T', ' ').slice(0, 19)} (UTC${CONFIG.时区补偿 > 0 ? '+' : ''}${CONFIG.时区补偿 / 3600000})${CONFIG.readSaveData === 1 ? ' （含路由器后台读档）' : ''}`]),
@@ -548,7 +548,7 @@ function doSettle(nowMs) {
     S.lLT = performance.now();
     for (let k in S.cls) { let s = S.cls[k]; s.intUp = s.intDn = 0; s.uB = s.oU = s.lU; s.dB = s.oD = s.lD; s.hU.fill(0); s.hD.fill(0); } // 内存原地清零底表
     document.getElementById('gb-w-bnr')?.remove(); // 预警横幅
-    S.calcTime(Math.max(nowMs, S.Force_MS - CONFIG.自动导出 * 60000 + 1000) + CONFIG.时区补偿); // 瞬间算出下月/下周新线
+    S.calcTime(Math.max(nowMs, S.Force_MS - CONFIG.自动导出 * 60000 + 1000) + CONFIG.时区补偿); // 瞬间算出下月/下周新判断线
     window.gegeForceUIRedraw = !0; // 重绘 UI
     setTimeout(() => { S._RST = !1; }, 2000); // 解开安全锁
   }
@@ -650,16 +650,16 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
         bd.appendChild(box);
         let bw = bd.clientWidth || 1800, mobile = window.innerWidth <= 768, w = mobile ? Math.max(180, Math.min(320, bw - 20)) : Math.max(320, Math.min(650, bw * .30));
         box.style.left = mobile ? '10px' : Math.max(520, bw * .52) + 'px'; box.style.top = '2px'; box.style.width = w + 'px'; box.style.height = (mobile ? 96 : 112) + 'px';
-        const 起手 = (e, 模式) => { e.preventDefault(); S.图表拖 = { 模式, x: e.clientX, y: e.clientY, l: box.offsetLeft, t: box.offsetTop, w: box.offsetWidth, h: box.offsetHeight }; box.setPointerCapture?.(e.pointerId); };
-        box.addEventListener('pointerdown', e => { if (!e.target.classList.contains('gege-chart-resize')) 起手(e, '拖'); });
-        box.querySelector('.gege-chart-resize').addEventListener('pointerdown', e => 起手(e, '缩'));
+        const 图表起手 = (e, 图表模式) => { e.preventDefault(); S.拖动图表 = { 图表模式, x: e.clientX, y: e.clientY, l: box.offsetLeft, t: box.offsetTop, w: box.offsetWidth, h: box.offsetHeight }; box.setPointerCapture?.(e.pointerId); };
+        box.addEventListener('pointerdown', e => { if (!e.target.classList.contains('gege-chart-resize')) 图表起手(e, '拖动中'); });
+        box.querySelector('.gege-chart-resize').addEventListener('pointerdown', e => 图表起手(e, '缩'));
         box.addEventListener('pointermove', e => {
-          let g = S.图表拖; if (!g) return;
-          if (g.模式 === '拖') { box.style.left = (g.l + e.clientX - g.x) + 'px'; box.style.top = (g.t + e.clientY - g.y) + 'px'; }
+          let g = S.拖动图表; if (!g) return;
+          if (g.图表模式 === '拖动中') { box.style.left = (g.l + e.clientX - g.x) + 'px'; box.style.top = (g.t + e.clientY - g.y) + 'px'; }
           else { box.style.width = Math.max(260, g.w + e.clientX - g.x) + 'px'; box.style.height = Math.max(88, g.h + e.clientY - g.y) + 'px'; }
           if (!S.图表待画) { S.图表待画 = 1; requestAnimationFrame(() => { S.图表待画 = 0; 画总速率图(bd); }); }
         });
-        box.addEventListener('pointerup', () => S.图表拖 = null); box.addEventListener('pointercancel', () => S.图表拖 = null); box.addEventListener('lostpointercapture', () => S.图表拖 = null);
+        box.addEventListener('pointerup', () => S.拖动图表 = null); box.addEventListener('pointercancel', () => S.拖动图表 = null); box.addEventListener('lostpointercapture', () => S.拖动图表 = null);
         return box;
       }
       function 画总速率图(bd) {
@@ -680,7 +680,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
         (box._gcUp ??= box.querySelector('[data-gc="up"]')).textContent = `发 ${n ? fBy(S.总上行图[li]) : fBy(0)}`;
         (box._gcDown ??= box.querySelector('[data-gc="down"]')).textContent = `收 ${n ? fBy(S.总下行图[li]) : fBy(0)}`;
         (box._gcExtra ??= box.querySelector('[data-gc="extra"]')).textContent = `均↑${fBy(au)} ↓${fBy(ad)}`;
-        const 画线 = (arr, col) => {
+        const DrawingTheLine = (arr, col) => {
           if (!n) return;
           x.strokeStyle = col; x.lineWidth = 2.4; x.beginPath();
           let bins = Math.max(1, Math.min(n, gw | 0)), first = !0;
@@ -696,7 +696,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
           }
           x.stroke();
         };
-        画线(S.总上行图, '#ff1b00'); 画线(S.总下行图, '#006400');
+        DrawingTheLine(S.总上行图, '#ff1b00'); DrawingTheLine(S.总下行图, '#006400');
       }
 
   function rUI(wU, wD, sU, sD, cI) {
@@ -730,7 +730,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
       s.hU[s.hIdx] = cC ? cC.upRate : 0;
       s.hD[s.hIdx] = cC ? cC.dnRate : 0;
 
-      /* 需要使用 HA 快速上线下线报告的用户，请删除该注释以启用该功能。
+      /* ⚠️ 需要使用 HA 快速上线下线报告的用户，请删除该注释以启用该功能。
       try {
         if (S.cSnap) {
           if (CONFIG.盲漫游 === 1) {
@@ -799,7 +799,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
             if (bd) {
                 let bn = document.createElement('div'); bn.id = 'gb-w-bnr';
                 bn.style.cssText = 'background:#fff3cd;color:#856404;padding:10px 15px;margin-bottom:10px;border-radius:6px;border-left:5px solid #ffc107;font-weight:bold;font-size:13px;display:flex;justify-content:space-between;align-items:center;width:100%;box-sizing:border-box;';
-                bn.innerHTML = `<span> 统计周期即将结束，流量将在跨越边界时自动清零备份。</span><button id="gb-f-btn" style="background:#ffc107;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-weight:bold;color:#333;">立即导出并清零</button>`;
+                bn.innerHTML = `<span> 统计周期即将结束，流量将在跨越执行时间时自动清零备份。</span><button id="gb-f-btn" style="background:#ffc107;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-weight:bold;color:#333;">立即导出并清零</button>`;
                 bd.insertBefore(bn, bd.firstChild);
                 document.getElementById('gb-f-btn').onclick = () => doSettle(Date.now());
             }
@@ -894,10 +894,6 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
       let oDC = S.oDC; 
       if (bd.parentNode) {
         let aW2U = S.hasW2 ? S.w2U : undefined,aW2D = S.hasW2 ? S.w2D : undefined,aW2TU = S.hasW2 ? S.w2TotUp : undefined,aW2TD = S.hasW2 ? S.w2TotDn : undefined;
-        bd.querySelector('#gb-wan-up-bytes').textContent = `🔼 ${fBy(wU + (aW2U||0))}`;
-        bd.querySelector('#gb-wan-down-bytes').textContent = `🔽 ${fBy(wD + (aW2D||0))}`;
-        bd.querySelector('#gb-wan-up-bps').textContent = `🔼 ${fB(wU)}`;
-        bd.querySelector('#gb-wan-down-bps').textContent = `🔽 ${fB(wD)}`;
         bd.querySelector('#gb-lan-up-bytes').textContent = `🔼 ${fB(sU)}`;
         bd.querySelector('#gb-lan-down-bytes').textContent = `🔽 ${fB(sD)}`;
         bd.querySelector('#gb-lan-up-vol').textContent = `🔼 ${fV(LUp)}`;
@@ -912,6 +908,10 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
         bd.querySelector('#gb-perc-down').textContent = `🔽 ${((sD * 100) / (Math.max(Phys.wD || 0, wD || 0) || Infinity) || 0).toFixed(1)}%`;
         let pb = bd.querySelector('#gb-pwan-bps-container'), pv = bd.querySelector('#gb-pwan-vol-container');
         if (aW2U !== undefined) {
+            bd.querySelector('#gb-wan-up-bytes').textContent = `🔼 ${fBy(wU + (aW2U||0))}`;
+            bd.querySelector('#gb-wan-down-bytes').textContent = `🔽 ${fBy(wD + (aW2D||0))}`;
+            bd.querySelector('#gb-wan-up-bps').textContent = `🔼 ${fB(wU)}`;
+            bd.querySelector('#gb-wan-down-bps').textContent = `🔽 ${fB(wD)}`;
             if (pb) { pb.style.display = 'inline'; bd.querySelector('#gb-pwan-bps-up').textContent = '🔼 ' + fB(aW2U); bd.querySelector('#gb-pwan-bps-down').textContent = '🔽 ' + fB(aW2D); }
             if (pv) { 
                 pv.style.display = 'flex'; 
@@ -926,7 +926,16 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
                 }
             }
         } else if (CONFIG.lanPortMode !== 1 || Phys.wU === undefined) {
+            bd.querySelector('#gb-wan-up-bytes').textContent = `🔼 ${fB(wU)}`;
+            bd.querySelector('#gb-wan-down-bytes').textContent = `🔽 ${fB(wD)}`;
+            bd.querySelector('#gb-wan-up-bps').textContent = `🔼 ${fBy(wU)}`;
+            bd.querySelector('#gb-wan-down-bps').textContent = `🔽 ${fBy(wD)}`;
             if (pb) pb.style.display = 'none'; if (pv) pv.style.display = 'none';
+        } else {
+            bd.querySelector('#gb-wan-up-bytes').textContent = `🔼 ${fBy(wU)}`;
+            bd.querySelector('#gb-wan-down-bytes').textContent = `🔽 ${fBy(wD)}`;
+            bd.querySelector('#gb-wan-up-bps').textContent = `🔼 ${fB(wU)}`;
+            bd.querySelector('#gb-wan-down-bps').textContent = `🔽 ${fB(wD)}`;
         }
         画总速率图(bd);
         if (bd.querySelector('#gb-ratio-display')) {
@@ -1154,11 +1163,11 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
           S.is5G_149 = !0;
           document.getElementById('gege-global-overlay')?.style.display === 'block' && bVD(document.getElementById('gege-global-overlay'));
         }
-      }).catch(e => { S.RSSI频率修正 = 20 * Math.log10(5220 / 2452); uRSSI(); console.warn("[哥哥科技] 无线信道彩蛋探测异常:", e); });
+      }).catch(e => { S.RSSI频率修正 = 20 * Math.log10(5220 / 2452); uRSSI(); console.warn("[哥哥科技] 无线信道彩蛋探测异常:", e); }); // 起到科普中国有5.2G和5.8G的作用，避免笼统的5GHz，哪怕用户的单个路由器不一定有三频功能。
       if (CONFIG.forceMeshMode === 1) {
         setTimeout(() => {
           if (window.gegeRenderedMacs.size === 0) {
-            console.log("⏱️ [哥哥科技] 17秒熔断生效：强制切入档位2");
+            console.log("⏱️ [哥哥科技] 超时熔断生效：强制切入档位2");
             CONFIG.forceMeshMode = 2;
             clearInterval(window.gegeMasterTimer);
             if (window.gegeLanTimer) clearInterval(window.gegeLanTimer);

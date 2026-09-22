@@ -39,7 +39,7 @@ return new Promise((resolve, reject) => {
     // =====================================================================
 
     // 2. 将快照推向 HA Webhook
-    const webhookUrl = "27.10.8.52/21:240e:520:1008:1314::/48～Reality";
+    const webhookUrl = "http://203.0.113.0/api/webhook/gbnpa_router_webhook";
 
     GM_xmlhttpRequest({
         method: "POST",
@@ -52,11 +52,11 @@ return new Promise((resolve, reject) => {
                 resolve("上报成功");
             } else {
                 console.error("[态势感知] HA 拒绝了请求", response.status);
-                reject(new CATRetryError("HA 服务端异常", 10)); // 10秒后系统底层自动重试！
+                reject(new CATRetryError("HA 服务端异常", 10));
             }
         },
         onerror: function(err) {
-            console.error("[态势感知] 物理网络断联，无法访问 HA");
+            console.error("[态势感知] 网络断联，无法访问 HA");
             reject(new CATRetryError("内网瘫痪", 10)); 
         }
     });

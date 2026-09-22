@@ -1,12 +1,25 @@
 // ==UserScript==
 // @name         态势感知探针 (HA Webhook)
 // @namespace    ucxn
-// @version      1.0.0
-// @description  后台静默运行，每10分钟定点收割路由数据并送往HA
+// @version      1.0.8
+// @description  后台静默运行，每10分钟定点旁路接收路由数据并送往HA
 // @author       哥哥科技
 // @background
 // @crontab      */10 * * * *
-// @match        10.3.1.1
+// @include      http*://192.168.*.1/*
+// @include      http*://192.168.*.254/*
+// @match        *://zte.home/*
+// @include      *://*/#/menu/dashboard
+// @include      *://*/*#router*
+// @include      *://*/*#networkMap*
+// @include      *://*/*#status*
+// @include      *://*/#/overview*
+// @include      *://*/#/status*
+// @include      *://*/#/home*
+// @include      *://*/index.asp*
+// @include      *://*/Advanced_*.asp*
+// @include      *://*/main.html*
+// @include      *://*/index.html*
 // @storageName  GBNPA_Storage
 // @grant        GM_getValue
 // @grant        GM_xmlhttpRequest
@@ -30,8 +43,8 @@ return new Promise((resolve, reject) => {
 
     if (snapshot.timestamp) snapshot.timestamp = Math.floor(snapshot.timestamp / 1000);
 
-    // 2. 将快照推向 HA Webhook
-    const webhookUrl = "27.10.8.52/21:240e:520:1008:1314::/48～Reality";
+    // 2. 将快照推向 HA Webhook ⚠️【请自行修改匹配】
+    const webhookUrl = "http://【27.10.8.52/21:240e:520:1008:1314::/48～Reality】/api/webhook/gbnpa_router_webhook"; // 占位符：公网地址优先于一切内网地址，哥哥科技拥有最终解释权。
 
     GM_xmlhttpRequest({
         method: "POST",

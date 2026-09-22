@@ -56,7 +56,16 @@ While the official Web dashboard is stable, its UX design for data visualization
   * Trace-less injection. Does not break the native Vue state machine, ensuring browser rendering performance.
 * **:rainbow: Event-driven**: Optimises the integration algorithm to prevent miscalculations of flow area caused by misaligned sampling times or phase differences. Uses changes in network speed as the basis for the sampling interval.
 
-## 🔗 Symlinks
+## ℹ️ Glossary & Terminology
+#### Mode Names
+Mode A: Relies on the official page's `Network Management`; Mode B1: The mainline, utilizing the custom-built `BroTech Panel`; Mode B2: Seamlessly auto-switches with B1, primarily targeting hidden Mesh and other devices by sending `Micro-requests` individually; The switch from A to B is irreversible: this is mainly to ensure consistency in the statistical time frequency and measurement standards.
+#### Glossary
+For details regarding the requested API endpoints, architecture descriptions, and more, please refer to the **Program Manual**: design intentions, term mapping, and interface explanations. For "anything you find confusing", you can mostly find the answers here: [Development History & Stories](发展史故事.md).
+#### Further Explanations
+For in-depth details regarding requested API endpoints, architectural descriptions, and more, please refer to the **Program Manual**.
+Whether you are looking for design intentions, vocabulary mappings, API breakdowns, or just answers to "anything that seems confusing," you will most likely find what you need here: [The History & Story](https://www.google.com/search?q=%25E5%258F%2591%25E5%25B1%2595%25E5%258F%25B2%25E6%2595%2585%25E4%25BA%258B.md&utm_source=gemini).
+
+#### 🔗 Symlinks
 
 [![Anti P2P Steal](https://img.shields.io/badge/GitHub-Ban--PCDN__Anti--P2P-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/Ban-PCDN_Anti-P2P)
 [![ZTE HACS](https://img.shields.io/badge/HACS-ZTE%20Stat%20HA-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)

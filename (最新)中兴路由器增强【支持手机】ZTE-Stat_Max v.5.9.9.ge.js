@@ -4,10 +4,10 @@
 // @namespace       ucxn
 // @version         5.9.9.Z
 // @description     哥哥科技 QQ群 680464365
-// @description:en  https://github.com/ucxn/ZTE-Stat_Max
-// @author          哥哥科技 space.bilibili.com/501430041
+// @description     一款针对中兴官方计数器和UI不区分上下行、流量数据不可靠、网页隐藏API等问题而诞生的测控“引擎”，一个庞大的循环流程程序；融合了哥哥的大量思想和算法，探索属于家庭网关的真相。
+// @description:en  Bro-Tech QQ群（Group） 680464365
 // @noframes
-// @tag             路由器 中兴 网络 监控 统计 数据 可视化 极客 增强 UI HA 智能 定时 后台
+// @tag             哥哥科技 路由器 中兴 网络 监控 统计 数据 可视化 极客 增强 UI HA 智能 定时 后台 Measurement M&C Bro 宽带 流量 网速 算法 JS C WebHook 网页 浏览器 微积分 公网
 // @website         https://github.com/ucxn/ZTE-Stat_Max
 // @supportURL      https://b23.tv/BV1PtR7B8ECC
 // @icon            https://scriptcat.org/api/v2/resource/image/cRkcAvu6aH90bpAa
@@ -17,12 +17,13 @@
 // @include         http://172.16.*
 // @include         https://192.168.*.*
 // @include         https://172.16.*
+// @include         /\/menu\/dashboard/
 // @exclude         *://*/cgi-bin/luci*
 // @grant           GM_setValue
 // @grant           GM_getValue
 // @storageName     GBNPA_Storage
 // @run-at          document-start
-// @license         APL-1.0 OR SUL-1.0 AND PolyForm-Noncommercial-1.0.0
+// @license         APL OR SUL-1.0 AND PolyForm-Noncommercial-1.0.0
 // @updateURL       https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // @downloadURL     https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // ==/UserScript==
@@ -87,7 +88,7 @@
     aWu: 0, aWd: 0, lwTU: 0, lwTD: 0, cSnap: null,
     lInstUp: 0, lInstDn: 0, lTotUp: 0, lTotDn: 0, lLT: undefined,
     总上行图: new Float64Array(8192), 总下行图: new Float64Array(8192), 总图点数: 0,
-    wMaxU: 0, wMaxD: 0, wMinU: Infinity, wMinD: Infinity, 图表拖: null, 图表待画: 0
+    wMaxU: 0, wMaxD: 0, wMinU: Infinity, wMinD: Infinity, 拖动图表: null, 图表待画: 0
   };
 const WAN_COMPAT = [
     // 兼容层只在标准 WAN 首次失败时探测；社区可继续追加旧固件接口。
@@ -98,7 +99,7 @@ const WAN_COMPAT = [
   ];
   let wanCompat = null;
   S.calcTime = (L) => {
-    S.Force_MS = (CONFIG.周期类型 === 'M' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth() + (L >= Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), CONFIG.周_天设置) ? 1 : 0), CONFIG.周_天设置) : (CONFIG.周期类型 === 'W' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), new Date(L).getUTCDate()) + ((CONFIG.周_天设置 - new Date(L).getUTCDay() > 0 ? CONFIG.周_天设置 - new Date(L).getUTCDay() : CONFIG.周_天设置 - new Date(L).getUTCDay() + 7) * 86400000) : (CONFIG.周期类型 === 'D' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), new Date(L).getUTCDate()) + CONFIG.周_天设置 * 86400000 : Infinity))) - CONFIG.时区补偿;
+    S.Force_MS = (CONFIG.周期类型 === 'M' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth() + (L >= Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), CONFIG.周_天设置) ? 1 : 0), CONFIG.周_天设置) : (CONFIG.周期类型 === 'W' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), new Date(L).getUTCDate()) + ((CONFIG.周_天设置 - new Date(L).getUTCDay() > 0 ? CONFIG.周_天设置 - new Date(L).getUTCDay() : CONFIG.周_天设置 - new Date(L).getUTCDay() + 7) * 86400000) : (CONFIG.周期类型 === 'D' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), new Date(L).getUTCDate()) + CONFIG.周_天设置 * 86400000 : Infinity))) - CONFIG.时区补偿;//这玩意本来就是个基础设施和艺术品，它的功能是非常明确的，不存在说后期还有频繁的维护需求。完全没有必要为了所谓的可读性而乱写或妥协。
     S.Warn_MS = S.Force_MS + CONFIG.报告时间 * 60000;
     S.Force_MS += CONFIG.自动导出 * 60000;
   };S.calcTime((typeof GM_getValue !== 'undefined' && GM_getValue('gege_reset_ms')) ? (GM_getValue('gege_reset_ms') + CONFIG.时区补偿) : Date.now() + CONFIG.时区补偿);
@@ -164,7 +165,7 @@ const WAN_COMPAT = [
     }
     return "";
   };
-  const 版本号 = (typeof GM_info !== 'undefined' && GM_info.script?.version) || '环境不支持获取版本号';
+  const 版本号 = (typeof GM_info !== 'undefined' && GM_info.script?.version) || '环境不支持获取版本号';// 虽然不喜欢废物变量，但是这里会使用两次或以上
   const Phys = { p: Object.create(null), wU: undefined, wD: undefined, tU: 0, tD: 0, lT: undefined, _pM: null, _wID: null };
   let gWUp = (wI, k) => s2b(wI[k]);
   let gWDn = (wI, k) => s2b(wI[k]);
@@ -216,10 +217,10 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
   function fBy(bps) {
         if (bps === 0) return '0  B';
         if (bps > 8388608) return `${(bps * 1.1920928955078125e-7).toFixed(2)} MiB/s`;
-        if (bps === 1) return '智能拦截中...';
-        if (bps === 2) return '漫游中...';
-        if (bps === 3) return '异常网速！';
-        return bps < 8700
+        if (bps === 1) return '智能拦截中...'; //中兴网页后台本身速率的分度值最高也只能精确到 100bits.
+        if (bps === 2) return '漫游中...'; //况且这里必须要保持一个正数来维持正常的微积分和避免错误0补偿
+        if (bps === 3) return '异常网速！'; //不要追求官僚教条的软工，有事在注释里说，不要污染执行的代码。
+        return bps < 8700 //或者8601.6，避免前期必须使用二进制1024-Based的导致破坏这个数据美感；频繁的单位切换也会增加人类仪表阅读负担，毕竟这是一个使用很多测控算法的程序。
             ? ((bps * 0.001 | 0) === bps * 0.001
                  ? `${F_ARR[bps * 0.001]} kB/s`
                 : `${(bps * 0.000125).toFixed(2)} kB/s`)
@@ -242,7 +243,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
         if (bitsIntegral > 8192) return `${(bitsOfficial / 8192).toFixed(2)} | ${(bitsIntegral / 8192).toFixed(2)} KiB`;
         return `${Math.round(bitsOfficial / 8)} | ${Math.round(bitsIntegral / 8)} B`;}
 
-  function fSV(bits) {
+  function fSV(bits) { //要偷懒或者简洁易读，就完整一点，不要弄个挂MB实则1024又不正确、又高不成低不就的偷一半懒；GNU本身也支持这种单字母UI写法.
     if (bits >= 84607500288) return `${(bits / 8589934592).toPrecision(4)}G`;
 	if (bits > 8388608000) return `${Math.round(bits / 8388608)}M`;
     if (bits > 8388608) return `${(bits / 8388608).toPrecision(4)}M`;
@@ -260,7 +261,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
 		const s = r - m * 60;
         return d > 0 
         ? `${d}天${h}时${m}分${s}秒` 
-        : `${h}小时${m}分${s}秒`;}
+        : `${h}小时${m}分${s}秒`;} //跑过测试，这种写法实质性能较优
 
   function nM(m) {
     return m ? m.trim().toLowerCase().replaceAll('-', ':') : '';
@@ -290,8 +291,8 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
     .geek-label{width:110px;color:#333;font-weight:bold;}.geek-val-box{flex:1;display:flex;gap:15px;margin-left:10px;}.geek-fixed-width{display:inline-block;width:120px;}.geek-right-box{text-align:right;min-width:220px;font-weight:bold;}.c-up{color:#ff4c00;}.c-down{color:#0059fa;}.gege-up-box,.gege-down-box{margin-top:auto!important;margin-bottom:0!important;width:95%;}.gege-ratio-box{margin-top:10px;width:95%;margin-bottom:5px;}.t-row{font-size:12px;font-weight:bold;margin-bottom:2px;display:flex;justify-content:space-between;font-family:Consolas;}.zte-thin-bar{width:100%;height:3px;background:rgba(0,0,0,0.05);border-radius:1.5px;overflow:hidden;}.zte-thin-bar-inner{height:100%;transition:width 0.5s ease-out;}.zte-thin-bar-inner.up{background:#ff4c00;}.zte-thin-bar-inner.down{background:#0059fa;}.gege-ratio-top{display:flex;justify-content:space-between;font-size:12px;font-weight:bold;margin-bottom:2px;}.gege-ratio-bar{width:100%;height:4px;background:#0059fa;border-radius:2px;overflow:hidden;}.gege-ratio-bar-inner{height:100%;background:#ff4c00;transition:width 0.5s ease-out;}.zte-enhance-speed{display:flex;flex-direction:column;gap:6px;width:100%;font-family:Consolas;}
     .zte-bar-wrap{position:relative;width:100%;border-radius:4px;border:1px solid;font-size:13px;font-weight:bold;overflow:hidden;padding:3px 8px;display:flex;justify-content:space-between;align-items:center;z-index:1;box-sizing:border-box;}.zte-bar-wrap span{font-size:inherit;font-weight:inherit;}.zte-bar-up{color:#ff4c00;border-color:rgba(255,76,0,0.3);}.zte-bar-down{color:#0059fa;border-color:rgba(0,89,250,0.3);}.zte-bar-up::before{content:'';position:absolute;left:0;top:0;bottom:0;z-index:-1;background:rgba(255,76,0,0.12);width:var(--p-up,0%);transition:width 0.5s;}.zte-bar-down::before{content:'';position:absolute;left:0;top:0;bottom:0;z-index:-1;background:rgba(0,89,250,0.12);width:var(--p-down,0%);transition:width 0.5s;}#config-list.gege-list-container{contain:content!important;background-color:#ffffff!important;border-radius:8px!important;border:1px solid #e0e0e0!important;padding:20px 30px!important;box-shadow:0 2px 10px rgba(0,0,0,0.02)!important;margin-top:10px!important;}.gege-section{margin-bottom:10px;}
     .gege-section:last-child{margin-bottom:0;}.gege-list-container .config-title{font-size:16px!important;font-weight:bold!important;color:#333!important;margin:15px 0 10px 0!important;padding-bottom:5px!important;}.gege-list-container .gege-section:first-child .config-title{margin-top:0!important;}.gege-empty-state{color:#999!important;font-size:14px!important;padding:0 0 15px 5px!important;border-bottom:1px solid #f0f0f0!important;margin-bottom:5px!important;}.gege-list-item{background-color:transparent!important;border-bottom:1px solid #f0f0f0!important;padding:15px 10px!important;margin-bottom:0!important;border-radius:0!important;}
-    .gege-list-item:last-child{border-bottom:none!important;}#zte-geek-board{contain:content;background-color:transparent!important;border-left:4px solid #0059fa!important;border-radius:0!important;padding:5px 0 5px 15px!important;margin:10px 0 15px 0!important;box-shadow:none!important;border-bottom:1px solid #f0f0f0!important;font-size:14px;display:flex;flex-direction:column;gap:6px;padding-bottom:15px!important;}#gege-global-overlay #zte-geek-board.geek-frozen-pane{position:sticky!important;top:0px!important;z-index:100!important;background-color:#f3f4f5!important;margin-top:0!important;padding-top:15px!important;box-shadow:0 10px 15px -3px rgba(0,0,0,0.05)!important;border-radius:0 0 8px 8px!important;}.gege-pin{cursor:pointer;font-size:11px;filter:grayscale(100%);opacity:0.5;transition:transform 0.2s;margin-left:2px;}
-    .gege-pin.active{filter:none;opacity:1;transform:scale(1.1);}#gege-global-overlay{position:fixed;top:0;right:0;bottom:0;background:#f3f4f5;z-index:9999;overflow-y:auto;padding-bottom:50px;left:0;transition:left 0.3s ease;}@media (min-width: 1025px) and (orientation: landscape){#gege-global-overlay{left:max(15%, 240px);}}@media (max-width: 768px){.geek-right-box:has(#gb-wan-zero-up),.geek-right-box:has(#gb-cur-up-vol){display:none!important}.gege-list-item{padding:12px 10px!important}.config-item-box{position:relative!important;flex-direction:column!important;padding-bottom:0!important}.config-item .info,.config-item .logo,.config-item .speed{width:100%!important;border:none!important;padding:0!important;position:static!important}.config-item .dev-intro{min-height:auto!important;justify-content:center!important;padding-right:90px!important}.config-item .logo{padding-bottom:4px!important}.config-item .info{flex-direction:column!important;margin:0 0 6px 0!important;gap:2px!important}.dev-ip{position:absolute!important;top:0!important;right:0!important;font-size:11px!important;background:rgba(0,89,250,0.08);color:#0059fa!important;padding:2px 6px!important;border-radius:4px;font-weight:bold;line-height:1.2;z-index:10;width:auto!important}.dev-number{width:auto!important;margin:0!important;font-size:11px!important}.gege-ratio-box{width:100%!important;margin-top:2px!important;margin-bottom:0!important}.gege-down-box{width:100%!important;margin-top:2px!important}#zte-geek-board{padding:8px!important;gap:0!important;font-size:11.5px!important}.geek-row{height:auto!important;flex-wrap:wrap!important;margin-bottom:4px!important;justify-content:flex-start!important;gap:2px 6px!important;line-height:1.3!important}.geek-label{width:auto!important;min-width:60px!important;font-size:11.5px!important;flex:0 0 auto!important}.geek-val-box{width:auto!important;flex:1 1 0%!important;display:flex!important;flex-wrap:wrap!important;margin-left:0!important;gap:2px 6px!important}.geek-fixed-width{width:auto!important}.geek-right-box{width:100%!important;flex:0 0 100%!important;text-align:left!important;font-size:11.5px!important;margin-top:2px!important;margin-left:0!important}.gege-list-container{padding:8px!important}.zte-enhance-speed{gap:4px!important}}#zte-geek-board{position:relative!important;overflow:visible!important;}#gege-speed-chart{position:absolute;z-index:25;box-sizing:border-box;cursor:move;user-select:none;touch-action:none;container-type:inline-size;}#gege-speed-chart canvas{display:block;width:100%;height:100%;}.gege-chart-head,.gege-chart-foot{position:absolute;left:clamp(28px,8%,36px);right:8px;display:flex;align-items:center;pointer-events:none;font:bold clamp(9px,2.1cqw,11px) system-ui,sans-serif;white-space:nowrap;overflow:hidden;}.gege-chart-head{top:2px;color:#111;gap:8px;}.gege-chart-head [data-gc="range"]{color:#666;font-weight:normal;overflow:hidden;text-overflow:ellipsis;margin-left:auto;}.gege-chart-foot{bottom:4px;justify-content:flex-start;gap:clamp(3px,1.1cqw,12px);}.gege-chart-foot span{min-width:0;overflow:hidden;text-overflow:ellipsis;}.gc-up{color:#ff4c00;flex:0 1 auto;}.gc-down{color:#0b5;flex:0 1 auto;}.gc-extra{color:#666;text-align:right;margin-left:auto;flex:1 1 0;min-width:0;}#gege-speed-chart .gege-chart-resize{position:absolute;right:-4px;bottom:-4px;width:13px;height:13px;border-right:3px solid #0059fa;border-bottom:3px solid #0059fa;cursor:nwse-resize;border-radius:2px;}@media (max-width:768px){#gege-speed-chart{left:210px!important;width:calc(100% - 220px)!important;height:96px!important;}}
+    .gege-list-item:last-child{border-bottom:none!important;}#zte-geek-board{contain:layout;background-color:transparent!important;border-left:4px solid #0059fa!important;border-radius:0!important;padding:5px 0 5px 15px!important;margin:10px 0 15px 0!important;box-shadow:none!important;border-bottom:1px solid #f0f0f0!important;font-size:14px;display:flex;flex-direction:column;gap:6px;padding-bottom:15px!important;}#gege-global-overlay #zte-geek-board.geek-frozen-pane{position:sticky!important;top:0px!important;z-index:100!important;background-color:#f3f4f5!important;margin-top:0!important;padding-top:15px!important;box-shadow:0 10px 15px -3px rgba(0,0,0,0.05)!important;border-radius:0 0 8px 8px!important;}.gege-pin{cursor:pointer;font-size:11px;filter:grayscale(100%);opacity:0.5;transition:transform 0.2s;margin-left:2px;}
+    .gege-pin.active{filter:none;opacity:1;transform:scale(1.1);}#gege-global-overlay{position:fixed;top:0;right:0;bottom:0;background:#f3f4f5;z-index:9999;overflow-y:auto;padding-bottom:50px;left:0;transition:left 0.3s ease;}@media (min-width: 1025px) and (orientation: landscape){#gege-global-overlay{left:max(15%, 240px);}}@media (max-width: 768px){.geek-right-box:has(#gb-wan-zero-up),.geek-right-box:has(#gb-cur-up-vol){display:none!important}.gege-list-item{padding:12px 10px!important}.config-item-box{position:relative!important;flex-direction:column!important;padding-bottom:0!important}.config-item .info,.config-item .logo,.config-item .speed{width:100%!important;border:none!important;padding:0!important;position:static!important}.config-item .dev-intro{min-height:auto!important;justify-content:center!important;padding-right:90px!important}.config-item .logo{padding-bottom:4px!important}.config-item .info{flex-direction:column!important;margin:0 0 6px 0!important;gap:2px!important}.dev-ip{position:absolute!important;top:0!important;right:0!important;font-size:11px!important;background:rgba(0,89,250,0.08);color:#0059fa!important;padding:2px 6px!important;border-radius:4px;font-weight:bold;line-height:1.2;z-index:10;width:auto!important}.dev-number{width:auto!important;margin:0!important;font-size:11px!important}.gege-ratio-box{width:100%!important;margin-top:2px!important;margin-bottom:0!important}.gege-down-box{width:100%!important;margin-top:2px!important}#zte-geek-board{padding:8px!important;gap:0!important;font-size:11.5px!important}.geek-row{height:auto!important;flex-wrap:wrap!important;margin-bottom:4px!important;justify-content:flex-start!important;gap:2px 6px!important;line-height:1.3!important}.geek-label{width:auto!important;min-width:60px!important;font-size:11.5px!important;flex:0 0 auto!important}.geek-val-box{width:auto!important;flex:1 1 0%!important;display:flex!important;flex-wrap:wrap!important;margin-left:0!important;gap:2px 6px!important}.geek-fixed-width{width:auto!important}.geek-right-box{width:100%!important;flex:0 0 100%!important;text-align:left!important;font-size:11.5px!important;margin-top:2px!important;margin-left:0!important}.gege-list-container{padding:8px!important}.zte-enhance-speed{gap:4px!important}}#zte-geek-board{position:relative!important;overflow:visible!important;}#gege-speed-chart{position:absolute;z-index:25;box-sizing:border-box;cursor:move;user-select:none;touch-action:none;container-type:inline-size;}#gege-speed-chart canvas{display:block;width:100%;height:100%;}.gege-chart-head,.gege-chart-foot{position:absolute;left:clamp(28px,8%,36px);right:8px;display:flex;align-items:center;pointer-events:none;font:bold clamp(9px,2.1cqw,11px) system-ui,sans-serif;white-space:nowrap;overflow:hidden;}.gege-chart-head{top:2px;color:#111;gap:8px;}.gege-chart-head [data-gc="range"]{color:#666;font-weight:normal;overflow:hidden;text-overflow:ellipsis;margin-left:auto;}.gege-chart-foot{bottom:4px;justify-content:flex-start;gap:clamp(3px,1.1cqw,12px);}.gege-chart-foot span{min-width:0;overflow:hidden;text-overflow:ellipsis;}.gc-up{color:#ff4c00;flex:0 1 auto;}.gc-down{color:#0b5;flex:0 1 auto;}.gc-extra{color:#666;text-align:right;margin-left:auto;flex:1 1 0;min-width:0;}#gege-speed-chart .gege-chart-resize{position:absolute;right:-4px;bottom:-4px;width:13px;height:13px;border-right:3px solid #0059fa;border-bottom:3px solid #0059fa;cursor:nwse-resize;border-radius:2px;}
     `;
   document.head.
   appendChild(st);
@@ -417,7 +418,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
           if (dU < 0 || dD < 0) {
             if (dU < 0) { cS.uB += dU; cS.oU += dU; cS.dpU = cS.lU; }
             if (dD < 0) { cS.dB += dD; cS.oD += dD; cS.dpD = cS.lD; }
-            cS.aR = 3;
+            cS.aR = 3; //前面已经讲过原因，不要跟我讲可复用性、特定特殊性，大不了我搞个3e-9不就不可能冲突了？
           }
           else if (cS.aR === 3) {
             if (dU > 0 || dD > 0) {
@@ -507,11 +508,11 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
     const csvQ = s => `"${s.replaceAll('"', '""')}"`; // RFC 4180：字段整体加引号，内部双引号翻倍
     const csvE = v => {
       let s = String(v ?? '');
-      if (typeof v === 'string' && /^(?:\s*[=+\-@＝＋－＠]|[\t\r\n])/.test(s)) s = "'" + s; // 防表格公式注入（OWASP：=+-@/全角变体，及行首 Tab/CR/LF）
+      if (typeof v === 'string' && /^(?:\s*[=+\-@＝＋－＠]|[\t\r\n])/.test(s)) s = "'" + s;
       return csvQ(s);
     };
-    const csvRow = a => a.map(csvE).join(','); // 默认行：所有字符串都做公式防护（设备名等外部数据必须走这里）
-    const csvRowT = a => a.map(v => csvQ(String(v ?? ''))).join(','); // 仅限脚本自带的可信常量行（如 "--- [xx] ---" 分节标记），不加撇号
+    const csvRow = a => a.map(csvE).join(','); // 字符串公式防护
+    const csvRowT = a => a.map(v => csvQ(String(v ?? ''))).join(','); // 仅限脚本自带的可信常量行分节标记
     return ((sp, now, start) => '\uFEFF' + [
       csvRow([`哥哥科技 硬路由 NPU 增强系列：专用组件 ${版本号} 生成`]),
       csvRow([`统计周期：${new Date(start + CONFIG.时区补偿).toISOString().replace('T', ' ').slice(0, 19)} 至 ${new Date(now + CONFIG.时区补偿).toISOString().replace('T', ' ').slice(0, 19)} (UTC${CONFIG.时区补偿 > 0 ? '+' : ''}${CONFIG.时区补偿 / 3600000})${CONFIG.readSaveData === 1 ? ' （含路由器后台读档）' : ''}`]),
@@ -547,7 +548,7 @@ function doSettle(nowMs) {
     S.lLT = performance.now();
     for (let k in S.cls) { let s = S.cls[k]; s.intUp = s.intDn = 0; s.uB = s.oU = s.lU; s.dB = s.oD = s.lD; s.hU.fill(0); s.hD.fill(0); } // 内存原地清零底表
     document.getElementById('gb-w-bnr')?.remove(); // 预警横幅
-    S.calcTime(Math.max(nowMs, S.Force_MS - CONFIG.自动导出 * 60000 + 1000) + CONFIG.时区补偿); // 瞬间算出下月/下周新线
+    S.calcTime(Math.max(nowMs, S.Force_MS - CONFIG.自动导出 * 60000 + 1000) + CONFIG.时区补偿); // 瞬间算出下月/下周新判断线
     window.gegeForceUIRedraw = !0; // 重绘 UI
     setTimeout(() => { S._RST = !1; }, 2000); // 解开安全锁
   }
@@ -647,18 +648,18 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
         box = document.createElement('div'); box.id = 'gege-speed-chart';
         box.innerHTML = '<canvas></canvas><div class="gege-chart-head"><b data-gc="meta"></b><span data-gc="range"></span></div><div class="gege-chart-foot"><span class="gc-up" data-gc="up"></span><span class="gc-down" data-gc="down"></span><span class="gc-extra" data-gc="extra"></span></div><div class="gege-chart-resize" title="缩放"></div>';
         bd.appendChild(box);
-        let bw = bd.clientWidth || 1800, w = Math.max(320, Math.min(650, bw * .30));
-        box.style.left = Math.max(520, bw * .52) + 'px'; box.style.top = '2px'; box.style.width = w + 'px'; box.style.height = '112px';
-        const 起手 = (e, 模式) => { e.preventDefault(); S.图表拖 = { 模式, x: e.clientX, y: e.clientY, l: box.offsetLeft, t: box.offsetTop, w: box.offsetWidth, h: box.offsetHeight }; box.setPointerCapture?.(e.pointerId); };
-        box.addEventListener('pointerdown', e => { if (!e.target.classList.contains('gege-chart-resize')) 起手(e, '拖'); });
-        box.querySelector('.gege-chart-resize').addEventListener('pointerdown', e => 起手(e, '缩'));
+        let bw = bd.clientWidth || 1800, mobile = window.innerWidth <= 768, w = mobile ? Math.max(180, Math.min(320, bw - 20)) : Math.max(320, Math.min(650, bw * .30));
+        box.style.left = mobile ? '10px' : Math.max(520, bw * .52) + 'px'; box.style.top = '2px'; box.style.width = w + 'px'; box.style.height = (mobile ? 96 : 112) + 'px';
+        const 图表起手 = (e, 图表模式) => { e.preventDefault(); S.拖动图表 = { 图表模式, x: e.clientX, y: e.clientY, l: box.offsetLeft, t: box.offsetTop, w: box.offsetWidth, h: box.offsetHeight }; box.setPointerCapture?.(e.pointerId); };
+        box.addEventListener('pointerdown', e => { if (!e.target.classList.contains('gege-chart-resize')) 图表起手(e, '拖动中'); });
+        box.querySelector('.gege-chart-resize').addEventListener('pointerdown', e => 图表起手(e, '缩'));
         box.addEventListener('pointermove', e => {
-          let g = S.图表拖; if (!g) return;
-          if (g.模式 === '拖') { box.style.left = Math.max(330, g.l + e.clientX - g.x) + 'px'; box.style.top = Math.max(0, g.t + e.clientY - g.y) + 'px'; }
+          let g = S.拖动图表; if (!g) return;
+          if (g.图表模式 === '拖动中') { box.style.left = (g.l + e.clientX - g.x) + 'px'; box.style.top = (g.t + e.clientY - g.y) + 'px'; }
           else { box.style.width = Math.max(260, g.w + e.clientX - g.x) + 'px'; box.style.height = Math.max(88, g.h + e.clientY - g.y) + 'px'; }
           if (!S.图表待画) { S.图表待画 = 1; requestAnimationFrame(() => { S.图表待画 = 0; 画总速率图(bd); }); }
         });
-        box.addEventListener('pointerup', () => S.图表拖 = null); box.addEventListener('pointercancel', () => S.图表拖 = null); box.addEventListener('lostpointercapture', () => S.图表拖 = null);
+        box.addEventListener('pointerup', () => S.拖动图表 = null); box.addEventListener('pointercancel', () => S.拖动图表 = null); box.addEventListener('lostpointercapture', () => S.拖动图表 = null);
         return box;
       }
       function 画总速率图(bd) {
@@ -679,7 +680,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
         (box._gcUp ??= box.querySelector('[data-gc="up"]')).textContent = `发 ${n ? fBy(S.总上行图[li]) : fBy(0)}`;
         (box._gcDown ??= box.querySelector('[data-gc="down"]')).textContent = `收 ${n ? fBy(S.总下行图[li]) : fBy(0)}`;
         (box._gcExtra ??= box.querySelector('[data-gc="extra"]')).textContent = `均↑${fBy(au)} ↓${fBy(ad)}`;
-        const 画线 = (arr, col) => {
+        const DrawingTheLine = (arr, col) => {
           if (!n) return;
           x.strokeStyle = col; x.lineWidth = 2.4; x.beginPath();
           let bins = Math.max(1, Math.min(n, gw | 0)), first = !0;
@@ -695,7 +696,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
           }
           x.stroke();
         };
-        画线(S.总上行图, '#ff1b00'); 画线(S.总下行图, '#006400');
+        DrawingTheLine(S.总上行图, '#ff1b00'); DrawingTheLine(S.总下行图, '#006400');
       }
 
   function rUI(wU, wD, sU, sD, cI) {
@@ -729,7 +730,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
       s.hU[s.hIdx] = cC ? cC.upRate : 0;
       s.hD[s.hIdx] = cC ? cC.dnRate : 0;
 
-      /* 需要使用 HA 快速上线下线报告的用户，请删除该注释以启用该功能。
+      /* ⚠️ 需要使用 HA 快速上线下线报告的用户，请删除该注释以启用该功能。
       try {
         if (S.cSnap) {
           if (CONFIG.盲漫游 === 1) {
@@ -798,7 +799,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
             if (bd) {
                 let bn = document.createElement('div'); bn.id = 'gb-w-bnr';
                 bn.style.cssText = 'background:#fff3cd;color:#856404;padding:10px 15px;margin-bottom:10px;border-radius:6px;border-left:5px solid #ffc107;font-weight:bold;font-size:13px;display:flex;justify-content:space-between;align-items:center;width:100%;box-sizing:border-box;';
-                bn.innerHTML = `<span> 统计周期即将结束，流量将在跨越边界时自动清零备份。</span><button id="gb-f-btn" style="background:#ffc107;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-weight:bold;color:#333;">立即导出并清零</button>`;
+                bn.innerHTML = `<span> 统计周期即将结束，流量将在跨越执行时间时自动清零备份。</span><button id="gb-f-btn" style="background:#ffc107;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-weight:bold;color:#333;">立即导出并清零</button>`;
                 bd.insertBefore(bn, bd.firstChild);
                 document.getElementById('gb-f-btn').onclick = () => doSettle(Date.now());
             }
@@ -1076,7 +1077,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
       requestAnimationFrame(() => {
         ol.innerHTML = `<div style="padding: 20px; max-width: 1580px; margin: 0 auto; min-height: 100%;"><div id="gege-board-anchor"></div><div id="config-list" class="config-list gege-list-container"><div class="gege-section"><div class="config-title">有线设备${(window.gegeHiddenDevices && Object.keys(window.gegeHiddenDevices).length > 0) ? `<span id="gege-mesh-badge" style="color: #ff4c00; font-size: 13px; font-weight: normal; margin-left: 10px; font-family: Consolas;">(哥哥科技：${ol.querySelector('#gege-mesh-badge')?.textContent === '(哥哥科技：Mesh全面适配)' || Object.values(window.gegeHiddenDevices).some(d => d?.mesh === false) ? 'Mesh全面适配' : '智能Mesh适配'})</span>` : ''}</div>${hW.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.8GHz':'5.2GHz'}）</div>${h52.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.2GHz':'5.8GHz'}）</div>${h58.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（2.4GHz）</div>${h2.join('')||'<div class="gege-empty-state">没有连接设备</div>'}
         </div><div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed #eee; text-align: center; font-family: Consolas, 'Microsoft YaHei', sans-serif;"><div style="font-size: 11.5px; color: #777; font-style: italic; margin-bottom: 8px;">“在一个文明社会，干净的、不被监视与吸血的网络，是我们每个人的基本权利。”</div><div style="font-size: 10.5px; color: #999; line-height: 1.3; margin-bottom: 8px;">本交互式程序基于相关协议开放源代码，按“原样 (AS IS)”提供，不对其适用性、稳定性、精密度或任何商业场景合规性作任何明示或暗示的担保。<a href="https://github.com/ucxn/ZTE-Stat_Max/blob/main/法律声明：「哥哥科技 」品牌使用政策.md" target="_blank" style="color: #777; text-decoration: underline;">许可证</a><br>根据显著GUI署名权原理等条款，基于本程序的任何修改均不得移除或篡改本界面的署名与法律声明。保持此处完整性是使用本软件代码的合法性的前置条件。
-        </div><div style="font-size: 12px; color: #555;"><a href="https://github.com/ucxn/ZTE-Stat_Max" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">ZTE-Stat_Max 增强组件</a> <span title="构建时间：2026-9.21 2时&#10;架构设计：哥哥科技 BroTech&#10;Bilibili UID：501430041&#10;QQ群：680464365" style="cursor:help; border-bottom:1px dotted #ccc; font-family:Consolas;">${版本号}</span> | Copyright &copy; 2026 <a href="https://www.bilibili.com/video/BV1PtR7B8ECC" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">哥哥科技</a> (BroTech)<span style="color: #888; font-weight: normal;"> | All Rights Reserved</span>&emsp;&nbsp;<a href="https://scriptcat.org/zh-CN/script-show-page/6194" target="_blank" style="color: #666; text-decoration: none;">点此分享</a></div></div></div></div>`;
+        </div><div style="font-size: 12px; color: #555;"><a href="https://github.com/ucxn/ZTE-Stat_Max" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">ZTE-Stat_Max 增强组件</a> <span title="构建时间：2026-9.21 3时&#10;架构设计：哥哥科技 BroTech&#10;Bilibili UID：501430041&#10;QQ群：680464365" style="cursor:help; border-bottom:1px dotted #ccc; font-family:Consolas;">${版本号}</span> | Copyright &copy; 2026 <a href="https://www.bilibili.com/video/BV1PtR7B8ECC" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">哥哥科技</a> (BroTech)<span style="color: #888; font-weight: normal;"> | All Rights Reserved</span>&emsp;&nbsp;<a href="https://scriptcat.org/zh-CN/script-show-page/6194" target="_blank" style="color: #666; text-decoration: none;">点此分享</a></div></div></div></div>`;
       S._domRebuilt = true;});}
     catch (e) {
       requestAnimationFrame(() => {
@@ -1153,11 +1154,11 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
           S.is5G_149 = !0;
           document.getElementById('gege-global-overlay')?.style.display === 'block' && bVD(document.getElementById('gege-global-overlay'));
         }
-      }).catch(e => { S.RSSI频率修正 = 20 * Math.log10(5220 / 2452); uRSSI(); console.warn("[哥哥科技] 无线信道彩蛋探测异常:", e); });
+      }).catch(e => { S.RSSI频率修正 = 20 * Math.log10(5220 / 2452); uRSSI(); console.warn("[哥哥科技] 无线信道彩蛋探测异常:", e); }); // 起到科普中国有5.2G和5.8G的作用，避免笼统的5GHz，哪怕用户的单个路由器不一定有三频功能。
       if (CONFIG.forceMeshMode === 1) {
         setTimeout(() => {
           if (window.gegeRenderedMacs.size === 0) {
-            console.log("⏱️ [哥哥科技] 17秒熔断生效：强制切入档位2");
+            console.log("⏱️ [哥哥科技] 超时熔断生效：强制切入档位2");
             CONFIG.forceMeshMode = 2;
             clearInterval(window.gegeMasterTimer);
             if (window.gegeLanTimer) clearInterval(window.gegeLanTimer);
