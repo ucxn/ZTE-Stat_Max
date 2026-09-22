@@ -63,7 +63,7 @@ Mode A: Relies on the official page's `Network Management`; Mode B1: The mainlin
 For details regarding the requested API endpoints, architecture descriptions, and more, please refer to the **Program Manual**: design intentions, term mapping, and interface explanations. For "anything you find confusing", you can mostly find the answers here: [Development History & Stories](发展史故事.md).
 #### Further Explanations
 For in-depth details regarding requested API endpoints, architectural descriptions, and more, please refer to the **Program Manual**.
-Whether you are looking for design intentions, vocabulary mappings, API breakdowns, or just answers to "anything that seems confusing," you will most likely find what you need here: [The History & Story](https://www.google.com/search?q=%25E5%258F%2591%25E5%25B1%2595%25E5%258F%25B2%25E6%2595%2585%25E4%25BA%258B.md&utm_source=gemini).
+Whether you are looking for design intentions, vocabulary mappings, API breakdowns, or just answers to "anything that seems confusing," you will most likely find what you need here: [The History & Story](发展史故事.md#glossary--core-concepts).
 
 #### 🔗 Symlinks
 
@@ -119,7 +119,7 @@ Before using this script, ensure your browser has a user script manager extensio
 
 | Xiaomi Reference | ZTE Original | Enhanced Version |
 | :---: | :---: | :---: |
-| ![Xiaomi Reference](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjkxNTcyLCJwdXIiOiJibG9iX2lkIn19--a48da4038f2514b01b5c33bbc8839d5b924a3853/Mi.png) | ![ZTE Original](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjkxNTcyLCJwdXIiOiJibG9iX2lkIn19--a48da4038f2514b01b5c33bbc8839d5b924a3853/ZTE.png) | ![Enhanced Version](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MjkxNTcyLCJwdXIiOiJibG9iX2lkIn19--a48da4038f2514b01b5c33bbc8839d5b924a3853/me.png) |
+| ![Xiaomi Reference](./assets/Mi.png) | ![ZTE Original](./assets/ZTE.png) | ![Enhanced Version](./assets/me.png) |
 
 ## ⚙️ Configuration
 
