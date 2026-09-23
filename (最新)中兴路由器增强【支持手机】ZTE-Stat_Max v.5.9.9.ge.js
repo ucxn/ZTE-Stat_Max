@@ -41,12 +41,12 @@
     injectMode: 1, // 【UI注入模式】 0: 原生侧边栏(1min)| 1: 优先，10秒悬浮舱(D)| 2: 联动模式| 3：强制模式
     calcMode: 1, // 1: 上行/下行倍数模式, 0: 上行占总和比例模式
     lanPortMode: 1, // 【物理网口】 0: 关闭 | 1: 底部追加显示 | 2: WAN高速接管主线
-    portInterval: 3, // 物理网口刷新频率(秒)
+    portInterval: 1, // 物理网口刷新频率(秒)
     ratioExtremeUp: 10, // 极端上传判定阈值 (> 1000%)
     ratioWarnUp: 0.07, // 重度上传警告阈值 (> 7%)
     ratioExtremeDown: 0.01, // 极端下载判定阈值 (< 1%)
     ratioThreshold: 7, // (仅calcMode=0时有效) 上传占比报警阈值(%)
-    lanRefreshInterval: 6, // LAN口刷新时间(秒)，用于补偿评估0到唤醒期间的流量
+    lanRefreshInterval: 3, // LAN口刷新时间(秒)，用于补偿评估0到唤醒期间的流量
     wanRefreshInterval: 3, // 【外网】WAN口刷新时间(秒)，通常为程序主时钟周期
     信号强度刷新周期: 16, // 信号强度刷新周期，单位：帧（程序主采样周期）；请设成 2 的自然数次幂（其中1为不主动请求刷新）
     宽带最大外网下行速率: 24e8, // 配置外网最大上传|下载比特(bit/bps)速率
