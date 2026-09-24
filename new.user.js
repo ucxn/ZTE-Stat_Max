@@ -1329,7 +1329,7 @@ async function fPP() {
         if(pb) { pb.style.display = 'inline'; document.getElementById('gb-pwan-bps-up').textContent = '🔼 ' + fB(Phys.wU); document.getElementById('gb-pwan-bps-down').textContent = '🔽 ' + fB(Phys.wD); }
         if(pv) { pv.style.display = 'flex'; document.getElementById('gb-pwan-tot-up').textContent = '🔼 ' + fV(Phys.tU); document.getElementById('gb-pwan-tot-down').textContent = '🔽 ' + fV(Phys.tD); }
       }
-    } catch (e) {console.warn(e)}
+    } catch (e) {console.warn(e);}
     finally { fPPRunning = !1; }
   }
   window.gegeBActivated = !1;
