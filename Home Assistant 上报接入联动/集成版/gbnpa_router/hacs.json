@@ -3,7 +3,7 @@
   "render_readme": true,
   "filename": "gbnpa_router",
   "zip_release": false,
-  "homeassistant": "2024.0.0",
+  "homeassistant": "2024.1.1",
   "country": ["CN"],
   "iot_class": "Local Push"
 }

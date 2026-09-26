@@ -23,7 +23,7 @@
 // @grant           GM_getValue
 // @storageName     GBNPA_Storage
 // @run-at          document-start
-// @license         APL OR SUL-1.0 AND PolyForm-Noncommercial-1.0.0
+// @license         LicenseRef-APL-0.1.Bro OR SUL-1.0 AND PolyForm-Noncommercial-1.0.0
 // @updateURL       https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // @downloadURL     https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // ==/UserScript==

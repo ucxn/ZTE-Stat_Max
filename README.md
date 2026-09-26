@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/badge/version-5.9.9.Z-orange.svg?logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
 [![Platform](https://img.shields.io/badge/platform-Web-green.svg?logo=javascript&logoColor=white)](https://scriptcat.org/zh-CN)&nbsp;&emsp;
 [![Integration](https://img.shields.io/badge/集成-Home_Assistant-41BDF5.svg?logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)&nbsp;&emsp;
-[![APL](https://img.shields.io/badge/APL-Source-3DA639?logo=opensourceinitiative&logoColor=white&labelColor=222222)](https://raw.githubusercontent.com/ucxn/ZTE-Stat_Max/refs/heads/main/LICENSE/license.txt)&nbsp;&emsp;
+[![APL](https://img.shields.io/badge/Source-APL_0.1_Bro-3DA639?logo=opensourceinitiative&logoColor=white&labelColor=222222)](https://raw.githubusercontent.com/ucxn/ZTE-Stat_Max/refs/heads/main/LICENSE/license.txt)&nbsp;&emsp;
 [![License: SUL-1.0](https://img.shields.io/badge/SUL-1.0-EA4B71.svg?logo=n8n&logoColor=white&labelColor=040506)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/SUL-1.0.md)&nbsp;&emsp;
 [![PolyForm Noncommercial 1.0.0](./assets/nc_custom_noversion.svg)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/PolyForm-Noncommercial-1.0.0.md)
 
@@ -97,7 +97,7 @@
 
 ## ℹ️ 程序术语
 #### 模式名称
-A模式：依托于官方页面的 `组网管理`，B1模式：主线，自建 `哥哥科技面板`，B2：和B1无缝自动切换，主要针对隐藏Mesh等设备逐个发`小包`；A到B的切换不可逆：主要也是为了保证统计时间频率口径的一致性。
+A模式：依托于官方页面的 `组网管理`，B1模式：主线，自建 `哥哥科技面板`，B2：和B1无缝自动切换，主要针对隐藏Mesh等设备逐个发`小包`；A到B的切换不可逆：主要也是为了保证统计时间频率口径的一致性。详见：**[名词解释](中兴名词对照表.md)**.
 #### 名词解释
 关于请求的API接口，架构的描述等详见**程序说明书**：设计意图、词汇对照表、接口解释，“看不懂的地方”，大多可在这里寻求答案：[发展史故事](发展史故事.md).
 

@@ -1,4 +1,4 @@
-ADAPTIVE PUBLIC LICENSE
+ADAPTIVE PUBLIC LICENSE 0.1 Bro
 175325443+ucxn@users.noreply.github.com
 
 THE LICENSED WORK IS PROVIDED UNDER THE TERMS OF THIS ADAPTIVE PUBLIC LICENSE ("LICENSE"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE LICENSED WORK CONSTITUTES RECIPIENT'S 
@@ -125,7 +125,7 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
     When a Distributor makes the Licensed Work, or any portion thereof, available to any Person in Source Code form, it must be made available under this License and a copy of this 
 	License must be included with each copy of the Source Code, situated so that the copy of the License is conspicuously brought to the attention of that Person. For greater 
 	clarification, this Section 3.3 applies to all distribution of the Licensed Work in any Source Code form. A Distributor may charge a fee for the physical act of transferring 
-	a copy, which charge shall be no more than the cost of physically performing source distribution.
+	a copy, which shall be free of charge.
 
     3.4. REQUIRED NOTICES IN SOURCE CODE.
     Each Subsequent Contributor must ensure that the notice set out in Part 5 of Exhibit A is included in each file of the Source Code for each Subsequent Work originating from that 
@@ -163,36 +163,23 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 		Description Requirements may choose, with respect to each such Earlier Licensed Copy, to comply with the Earlier Description Requirements or the New Description Requirements. 
 		Where a Recipient chooses to comply with the New Description Requirements, that Recipient will, when thereafter distributing any copies of any such Earlier Licensed Copy, include 
 		a Supplement File having a section entitled Part 1 that contains a copy of the New Description Requirements.
-        (d) For greater certainty, the intent of Part 1 of the Supplement File is to provide a mechanism (if any) by which Subsequent Contributors must document changes that they make to the 
-		Licensed Work resulting in Subsequent Works. Part 1 of any Supplement File shall not be used to increase or reduce the scope of the license granted in Article 2 of this License 
-		or in any other way increase or decrease the rights and obligations of any Recipient, and shall at no time serve as the basis for terminating the License. Further, a Recipient 
-		can be required to correct and change its documentation procedures to comply with Part 1 of the Supplement File, but cannot be penalised with damages. Part 1 of any Supplement 
-		File is only binding on each Recipient of any Licensed Work to the extent Part 1 sets out the requirements for documenting changes to the Initial Work or any Subsequent Work.
-        (e) An example of a set of requirements for documenting changes and contributions made by Subsequent Contributor is set out in Part 7 of Exhibit A of this License. Part 7 is a sample 
+        (d) An example of a set of requirements for documenting changes and contributions made by Subsequent Contributor is set out in Part 7 of Exhibit A of this License. Part 7 is a sample 
 		only and is not binding on Recipients, unless (subject to the earlier paragraphs of this Section 3.8) those are the requirements that the Initial Contributor includes in Part 1 
 		of the Supplement File with the copies of the Initial Work distributed under this License.
 
     3.9. USE OF DISTRIBUTOR NAME.
     The name of a Distributor may not be used by any other Distributor to endorse or promote the Licensed Work or products derived from the Licensed Work, without prior written permission.
 
-    3.10. LIMITED RECOGNITION OF INITIAL CONTRIBUTOR.
-        (a) As a modest attribution to the Initial Contributor, in the hope that its promotional value may help justify the time, money and effort invested in writing the Initial Work, the 
+    3.10. RECOGNITION OF INITIAL CONTRIBUTOR.
+        As a modest attribution to the Initial Contributor, in the hope that its promotional value may help justify the time, money and effort invested in writing the Initial Work, the 
 		Initial Contributor may include in Part 2 of the Supplement File a requirement that each time an executable program resulting from the Initial Work or any Subsequent Work, or 
 		a program dependent thereon, is launched or run, a prominent display of the Initial Contributor's attribution information must occur (the "ATTRIBUTION INFORMATION"). The 
 		Attribution Information must be included at the beginning of each Source Code file. For greater certainty, the Initial Contributor may specify in the Supplement File that the 
 		above attribution requirement only applies to an executable program resulting from the Initial Work or any Subsequent Work, but not a program dependent thereon. The intent is 
-		to provide for reasonably modest attribution, therefore the Initial Contributor may not require Recipients to display, at any time, more than the following Attribution Information: 
-		(a) a copyright notice including the name of the Initial Contributor; (b) a word or one phrase (not exceeding 10 words); (c) one digital image or graphic provided with the Initial 
-		Work; and (d) a URL (collectively, the "ATTRIBUTION LIMITS").
-        (b) If no Supplement File exists, or no Attribution Information is set out in Part 2 of the Supplement File, then there are no requirements for Recipients to display any Attribution 
-		Information of the Initial Contributor.
-        (c) Each Recipient acknowledges that all trademarks, service marks and/or trade names contained within Part 2 of the Supplement File distributed with the Licensed Work are the exclusive 
-		property of the Initial Contributor and may only be used with the permission of the Initial Contributor, or under circumstances otherwise permitted by law, or as expressly set 
-		out in this License.
+		to provide for PROMINENT modest attribution.
 
     3.11. For greater certainty, any description or attribution provisions contained within a Supplement File may only be used to specify the nature of the description or attribution requirements, 
-	as the case may be. Any provision in a Supplement File that otherwise purports to modify, vary, nullify or amend any right, obligation or representation contained herein shall be deemed 
-	void to that extent, and shall be of no force or effect.
+	as the case may be.
 
 4. COMMERCIAL USE AND INDEMNITY.
     4.1. COMMERCIAL SERVICES.
@@ -282,8 +269,20 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 10. MISCELLANEOUS.
     10.1. The obligations imposed by this License are for the benefit of the Initial Contributor and any Recipient, and each Recipient acknowledges and agrees that the Initial Contributor and/or 
 		any other Recipient may enforce the terms and conditions of this License against any Recipient.
-    10.2. This License represents the complete agreement concerning subject matter hereof, and supersedes and cancels all previous oral and written communications, representations, agreements 
-		and understandings between the parties with respect to the subject matter hereof.
+    10.2. Where a reference to my project already makes the relevant field or context unambiguous, the GitHub username or project name (although omission is not recommended), as well as the repository URL, may be omitted.
+		However, under no circumstances may the following four Chinese characters:
+
+		『哥哥科技』
+
+		be subject to any Removal, Alteration, Obscuration, Concealment, Replacement, Rewording, Abbreviation, Truncation, Attenuation, Reduction of Visibility, Reduction of Prominence, or Misleading Presentation.	
+		The only exception is where the environment into which the work is integrated is technically incapable of supporting UTF-8, Unicode, GB 18030, or other suitable character encodings. In such a case, "Bro-Tech"
+		may be used as a substitute, provided that the GitHub username is also included.
+
+		The characters 哥哥科技 absolutely and unconditionally must be preserved. Under no circumstances may the prominence of the original form of attribution be reduced in any manner or to any degree. This prohibition
+		applies to any reduction whatsoever, not merely to a substantial or significant reduction in prominence. Regardless of the reason, even where technical difficulties make it impossible to preserve
+		哥哥科技 in its original form within a Larger Work, another programming language, or any other environment, you must retain another form of attribution that prominently and unambiguously identifies 哥哥科技,
+		and you must promptly notify me of the circumstances through GitHub or by email. The foregoing requirements constitute an inseparable and integral part of every right granted under this License.
+
     10.3. The application of the United Nations Convention on Contracts for the International Sale of Goods is expressly excluded.
     10.4. The language in all parts of this License shall be in all cases construed simply according to its fair meaning, and not strictly for or against any of the parties hereto. Any 
 		law or regulation which provides that the language of a contract shall be construed against the drafter shall not apply to this License.
@@ -293,7 +292,7 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 		of any part hereof.
     10.7. Each of the terms "including", "include" and "includes", when used in this License, is not limiting whether or not non-limiting language (such as "without limitation" or 
 		"but not limited to" or words of similar import) is used with reference thereto.
-    10.8. The parties hereto acknowledge they have expressly required that this License and notices relating thereto be drafted in the English language.
+    10.8. The parties hereto acknowledge they have expressly required that this License and notices relating thereto be drafted in the Auther's language.
 
 //***THE LICENSE TERMS END HERE (OTHER THAN AS SET OUT IN EXHIBIT A).***//
 EXHIBIT A (to the Adaptive Public License)
@@ -393,4 +392,5 @@ EXHIBIT A (to the Adaptive Public License)
 		notice has been given.
 
     PART 7: SAMPLE REQUIREMENTS FOR THE DESCRIPTION OF DISTRIBUTED MODIFICATIONS
-    	PLEASE REFER TO SUPPFILE.TXT //***EXHIBIT A ENDS HERE.***//
+    	PLEASE REFER TO SUPPFILE.TXT 
+//***EXHIBIT A ENDS HERE.***//

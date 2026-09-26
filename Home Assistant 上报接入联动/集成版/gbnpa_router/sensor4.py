@@ -3,6 +3,7 @@ from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
 DOMAIN = "gbnpa_router"
 SIGNAL_UPDATE = f"{DOMAIN}_data_update"
+SIGNAL_DISCOVERY = f"{DOMAIN}_discovery"
 
 GLOBAL_NAME_MAP = {
     "wan_up": "WAN总上传",
@@ -18,22 +19,27 @@ GLOBAL_NAME_MAP = {
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """动态生成实体与设备"""
     known_macs = set()
-    global_added = False
+    hass.data[DOMAIN]["_known_macs"] = known_macs
+    known_global_keys = set()
+    time_sensor_added = False
 
     async def async_discover_new_entities():
-        nonlocal global_added
+        nonlocal time_sensor_added
         data = hass.data[DOMAIN]
         new_entities = []
         
-        # 1. 注册全局大盘设备
-        if not global_added and data.get("time_obj"):
-            global_added = True
-            # 加入探针时间
-            new_entities.append(
-                GbnpaGlobalSensor(hass, "time_obj", "探针最后握手", "mdi:clock-check-outline", is_traffic=False)
-            )
-            # 动态遍历注入所有大盘流量实体
+        # 1. 注册全局大盘设备，并持续发现后续才出现的新键
+        if data.get("time_obj"):
+            if not time_sensor_added:
+                time_sensor_added = True
+                new_entities.append(
+                    GbnpaGlobalSensor(hass, "time_obj", "探针最后握手", "mdi:clock-check-outline", is_traffic=False)
+                )
+
             for key, value in data.get("global", {}).items():
+                if key in known_global_keys:
+                    continue
+                known_global_keys.add(key)
                 cn_name = GLOBAL_NAME_MAP.get(key, key.upper())
                 if key == "wan_up": 
                     icon = "mdi:cloud-upload"
@@ -76,8 +82,11 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     # 监听 Webhook，并保存注销句柄
     hass.data[DOMAIN]["unsub_dispatcher"] = async_dispatcher_connect(
-        hass, SIGNAL_UPDATE, async_discover_new_entities
+        hass, SIGNAL_DISCOVERY, async_discover_new_entities
     )
+
+    # 重载时直接吃现存内存数据，不必等下一次 Webhook 才恢复实体
+    await async_discover_new_entities()
 
 
 class GbnpaGlobalSensor(SensorEntity):

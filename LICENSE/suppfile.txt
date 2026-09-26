@@ -1,6 +1,6 @@
 SUPPLEMENT FILE
 
-Adaptive Public License of Bro-Tech
+Adaptive Public License 0.1.Bro of Bro-Tech
 
 PART 1: DESCRIPTION OF DISTRIBUTED MODIFICATIONS
 
