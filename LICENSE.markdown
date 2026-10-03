@@ -15,8 +15,8 @@ This project is available under either of the following licensing options:
 Regardless of the licensing path chosen, it is subject to the **BroTech Prominent Attribution Terms** set forth in this document.
 无论选择何种授权路径，均同时受本文件所载 **哥哥科技显著署名附加条款** 约束。
 
-1. **Adaptive Public License - Bro 0.1**[（已经包含额外的署名要求条件）]((./LICENSE/license.txt)) ; or
-2. Sustainable Use License 1.0 ([**SUL-1.0**]((./LICENSE/SUL-1.0.md))) WITH [***BroTech-Prominent-Attribution-Terms***](#哥哥科技显著署名附加条款) AND Broware Attribution–Noncommercial License（**[Bro-BY-NC]((./LICENSE/BR-BY-NC-1.0.md))**）1.0（以每次提交时的版本或最新版为准）.
+1. **Adaptive Public License - Bro 0.1**[（已经包含额外的署名要求条件）](/LICENSE/license.txt) ; or
+2. Sustainable Use License 1.0 ([**SUL-1.0**](/LICENSE/SUL-1.0.md)) WITH [***BroTech-Prominent-Attribution-Terms***](#哥哥科技显著署名附加条款) AND Broware Attribution–Noncommercial License（**[Bro-BY-NC](/LICENSE/BR-BY-NC-1.0.md)**）1.0（以每次提交时的版本或最新版为准）.
 
 可以根据自己的使用场景自行抉择，第二种看似严格多，但是针对个人、非商业使用，条款相对较简练通俗，方便非英语母语者理解。
 
