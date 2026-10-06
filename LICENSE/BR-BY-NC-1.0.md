@@ -41,18 +41,19 @@ Any redistribution, modification, porting, merging, integration, translation, co
 Preserving the complete literal text “哥哥科技”, together with its actual display, visibility, and prominence, is an inseparable condition of every license right granted by the author for this software.
 
 ### Additional
-The following guidelines apply strictly and exclusively to the specific scenario where you integrate this software into a larger, overarching work, rendering it structurally or technically impossible to preserve the original unmodified Graphical User Interface (GUI) and its attribution design in their exact original form.
 *EXPRESS RESERVATION OF RIGHTS AND OBLIGATIONS*: This guide is provided solely for instructional compliance purposes. It does **NOT**, under any circumstances, operate as an implicit or explicit grant of any additional rights or licenses beyond the primary agreement. Furthermore, it does **NOT** waive, substitute, or dilute any of your strict obligations under the primary licenses and the [*BroTech Prominent Attribution Terms*](../LICENSE.markdown#brotech-prominent-attribution-terms). Adherence to this guide is merely a compliant implementation method for integration scenarios, and shall by no means exempt you from the absolute and simultaneous satisfaction of all conditions precedent set forth above.
 
 The rights to use this software are granted to you ONLY subject to the absolute condition precedent of your complete, continuous, and strict compliance with the prominent attribution requirements herein. If you are unable to comprehend the legal implications of these terms, you are advised to consult independent legal counsel. Conversely, under no circumstances may you isolate, sever, or selectively apply the rights-granting clauses without fulfilling the prominent attribution obligations.
 
 Should you fail to understand what constitutes "prominent attribution," you MUST elect NOT to use the source code of this software. In such an event, you are permitted solely to share the official original link or download the software exclusively for personal, local use; any and all other operations or distributions are strictly prohibited.
 
+The following guidelines apply strictly and exclusively to the specific scenario where you integrate this software into a larger, overarching work, rendering it structurally or technically impossible to preserve the original unmodified End User Interface and its attribution design in their exact original form.（begin）
+
 Should you, as a developer, integrate this software into a larger work or project, you must strictly adhere to the following display protocols: The physical|logical prominence of the attribution (including but not limited to layout style, font size, color, and contrast) shall absolutely NOT be altered or diminished in any manner.
 
-When developing based on this program, the absolute depth level of the attribution within the Graphical User Interface (GUI) hierarchy must remain unchanged; furthermore, upon integration into a larger work, its "relative depth level" within the navigation and interaction architecture shall suffer no degradation.
+When developing based on this program, the absolute depth level of the attribution within the Graphical User Interface (GUI) hierarchy must remain unchanged; furthermore, upon integration into a larger work, its "relative depth level" within the navigation and interaction architecture shall suffer no degradation.（end）
 
-For instance, when an end-user navigates into a module or feature primarily powered by this software, the text "哥哥科技" (Brother Tech) MUST be prominently and unaltered displayed in the exact original position designed by the Author on the GUI of that specific directory/module. Any attempt to fold, collapse, or relocate the attribution into secondary or hidden menus is strictly forbidden.
+For instance, when an end-user navigates into a module or feature primarily powered by this software, the text "哥哥科技" MUST be prominently and unaltered displayed in the exact original position designed by the Author on the GUI of that specific directory/module. Any attempt to fold, collapse, or relocate the attribution into secondary or hidden menus is strictly forbidden.
 
 ## Copyright License
 
