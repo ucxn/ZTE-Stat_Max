@@ -67,7 +67,7 @@
 ### 脚本安装
 1.  点击此处安装全面版ZTE-Stat_Max：
 
-    [从GitHub安装](https://github.com/ucxn/ZTE-Stat_Max/releases)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[从GreasyFork安装](https://greasyfork.org/zh-CN/scripts/598569)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[直接安装测试版](https://raw.githubusercontent.com/ucxn/ZTE-Stat_Max/refs/heads/main/new.user.js)
+    [从GitHub安装](https://github.com/ucxn/ZTE-Stat_Max/releases)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[从GreasyFork安装](https://greasyfork.org/zh-CN/scripts/576199)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[直接安装测试版](https://raw.githubusercontent.com/ucxn/ZTE-Stat_Max/refs/heads/main/new.user.js)
 
     [通过 ScriptCat 脚本猫 安装（直连推荐：**无需科学上网**）](https://scriptcat.org/zh-CN/script-show-page/6194)更新推送
 

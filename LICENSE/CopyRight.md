@@ -5,6 +5,7 @@
 
 若您无法理解何为“显著署名”，则您必须选择不使用本软件的任何代码。在此情况下，除分享官方原始链接及下载至本地仅供个人自用外，严禁对本软件进行任何其他操作或分发行为。
 ## 简要版规则速览
+*本文本仅仅强调部分核心特征和真正许可协议的部分条款，不是许可协议，也没有法律意义。您应当在使用授权作品前，仔细审阅真正许可协议的所有条款。*
 
 以下指南仅严格适用于一种极其特定的情形：即您将本软件代码实质性地集成至一个更大的整体作品中，且由于系统结构或技术原因，导致实质上已无法原封不动地保留原汁原味的原版最终用户界面（GUI）及其署名设计。
 
@@ -22,11 +23,11 @@
 2. 源码、许可证、元数据及其他能够保存文字的载体中，不得删除、改写或替换“哥哥科技”。
 3. 在原项目中，署名必须保持在作者设计的原有界面位置和层级。任何二次开发均不得将其移动至更深的功能层级，亦不得以任何方式降低其原有的显示、可见性或显著程度。
 4. 集成至更大作品时，宿主可以在本软件对应功能之外增加外层页面、模块或导航层级，但不得在该功能对应的界面内部进一步增加署名层级；署名相对于本软件所对应功能的位置不得发生任何下降。
-5. 当最终用户进入由本软件提供或主要由本软件构成的功能或模块时，“哥哥科技”必须直接显示在该功能或模块的用户界面中，并保持原有的显示位置、显示方式及显著程度。
+5. ***署名不得藏在用户日常在实际界面不会使用的深层菜单当中***，必须要放在主要使用我代码的“界面、框架、模块、区域”附近且容易被看到的位置当中（“不更差”原则）；当最终用户进入由本软件提供或主要由本软件构成的功能或模块时，“哥哥科技”必须直接显示在该功能或模块的用户界面中，并保持原有的显示位置、显示方式及显著程度。
 6. 不得将署名从其对应功能界面移入与该功能无直接对应关系的“关于”“许可证”“第三方组件”或其他次级页面；不得通过折叠、隐藏、额外点击、二级菜单或其他信息架构方式使用户必须离开该功能界面后才能看到署名。
-7. 集成或改造时，如宿主界面确需调整布局，可以改变具体排版形式，但不得因此降低署名的任何显示程度、可见性、显著性或相对层级。能够保留原有显示方式时，应直接保留。
+7. 如果框架大体相同，页面设计能够得以保留，**则必须直接原样保留署名**；实在无法保留之时，不要过度地进行重新设计，应当尽量的等价的保留，但***不得因此降低署名的任何显示程度、可见性、显著性或相对层级***，且显著程度不能有任何的降低。
 8. 署名要求具有最高优先级；任何违反署名要求的行为都会立即终止本项目授予的相关授权，不受其他期限、宽限期或补救安排影响。
-9. 哥哥科技许可证是本项目的主授权条件。使用、修改、集成或再分发本项目的权利，以持续、完整地遵守哥哥科技显著署名条款为前提。
+9. 只要使用了我的代码，则您的作品最终用户界面中出现“哥哥科技”的次数不能比我的原始完整作品更少，*且您至少应当在最少一个页面中署名；* 如果有多个主要使用我代码的地方，则应当保留或者追加署名多次，上限不做限制；
 10. 本总览用于快速理解与实施；完整权利、义务及授权条件以随项目发布的完整许可证文本为准。
 # General Provisions
 You shall understand and expressly agree that the *[BroTech Prominent Attribution Terms](https://github.com/ucxn/ZTE-Stat_Max?tab=License-1-ov-file#brotech-prominent-attribution-terms)*  constitutes the Primary Law of this Agreement.
@@ -35,6 +36,8 @@ The rights to use this software are granted to you ONLY subject to the absolute 
 
 Should you fail to understand what constitutes "prominent attribution," you MUST elect NOT to use the source code of this software. In such an event, you are permitted solely to share the official original link or download the software exclusively for personal, local use; any and all other operations or distributions are strictly prohibited.
 ## The simplified summary for quick read
+*This deed highlights only some of the key features and terms of the actual license. It is not a license and has no legal value. You should carefully review all of the terms and conditions of the actual license before using the licensed material.*
+
 The following guidelines apply strictly and exclusively to the specific scenario where you integrate this software into a larger, overarching work, rendering it structurally or technically impossible to preserve the original unmodified Graphical User Interface (GUI) and its attribution design in their exact original form.</br>
 EXPRESS RESERVATION OF RIGHTS AND OBLIGATIONS: This guide is provided solely for instructional compliance purposes. It does NOT, under any circumstances, operate as an implicit or explicit grant of any additional rights or licenses beyond the primary agreement. Furthermore, it does NOT waive, substitute, or dilute any of your strict obligations under the primary licenses and the BroTech Prominent Attribution Terms. Adherence to this guide is merely a compliant implementation method for integration scenarios, and shall by no means exempt you from the absolute and simultaneous satisfaction of all conditions precedent set forth above.
 
@@ -51,9 +54,9 @@ These is for reference only.
 2. In source code, license files, metadata, and other media capable of preserving text, “哥哥科技” must not be removed, rewritten, or replaced.
 3. In the original project, the attribution must remain at the original interface position and depth designed by the Author. No derivative work may move it to a deeper functional level or in any way reduce its original degree of display, visibility, or prominence.
 4. When integrated into a larger work, the host may add outer pages, modules, or navigation levels around the function provided by this software, but may not add further attribution depth within the interface corresponding to that function. The attribution's relative position to the function provided by this software must not be reduced in any respect.
-5. When an end user enters a function or module provided by or primarily built upon this software, “哥哥科技” must be directly displayed within that function or module's user interface, while retaining its original position, presentation, and prominence.
+5. ***Attribution must not be hidden away solely in deep or secondary menus that users rarely visit.*** It must be placed near the relevant interface, framework, module, or area that primarily uses my code, in a location that is readily visible to users, or at minimum no less readily visible than in my original design, retaining its original position, presentation, and prominence.
 6. The attribution must not be moved from the interface corresponding to its function into unrelated “About,” “Licenses,” “Third-Party Components,” or other secondary pages. It must not be made accessible only after leaving that function interface through collapsing, hiding, additional clicks, secondary menus, or other information-architecture mechanisms.
-7. During integration or adaptation, the specific layout may be changed where the host interface requires it, but such changes must not reduce the attribution's degree of display, visibility, prominence, or relative depth in any respect. Where the original presentation can be retained, it must be retained.
+7. Where the overall framework remains substantially the same and the original page design can reasonably be preserved, the **attribution must be retained in its original form**, such changes must not reduce the attribution's degree of display, visibility, prominence, or relative depth in any respect. Where preserving the original presentation is genuinely impracticable, the attribution should not be subjected to unnecessary or excessive redesign. It should be retained in an equivalent manner to the greatest extent reasonably possible, and its ***prominence must not be reduced in any respect***.
 8. The attribution requirements have the highest priority. Any violation immediately terminates the applicable rights granted under this project, regardless of any other period, cure period, or remedial arrangement.
-9. The BroTech Additional License is the primary licensing condition of this project. The rights to use, modify, integrate, or redistribute this project are conditioned upon continuous and complete compliance with the BroTech Prominent Attribution Terms.
+9. Once my code is used, the number of appearances of “哥哥科技” in the end-user interface of your work must NOT be lower than the number of appearances in my original complete work. In all cases, *at least one page of the resulting work must contain the attribution.*
 10. This summary is intended for quick understanding and implementation. The complete license texts published with the project govern the full rights, obligations, and licensing conditions.

@@ -16,7 +16,7 @@
 
 该项目包含两个相互配合的子组件：
 
-**主项目**&emsp;&nbsp;[![主项目](https://img.shields.io/badge/Network-ZTE--Stat__Max-FF4C00?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)
+**HA 项目**&emsp;&nbsp;[![主项目](https://img.shields.io/badge/Network-ZTE--Stat__HA-FF4C00?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)
 
 1. **ZTE-Stat_Max（双 JS 脚本）**：运行于浏览器前端，负责接管中兴路由器后台的数据流并优化本地 UI 展示。
 2. **GBNPA-Router-Sync（HA 集成）**：运行于 Home Assistant 服务器，实现状态的多端无限转发与图表记录。
@@ -84,8 +84,6 @@ const WEBHOOK_URL = "http://[家庭HA可访问IP]:8123/api/webhook/gbnpa_router_
 ## 📄 协议 (License)
 
 详见 </kbd>**[ZTE-Stat_HA](https://github.com/ucxn/ZTE-Stat_HA)**</kbd> 对应仓库。
-
-特别声明：**主项目 [ZTE-Stat_Max](https://github.com/ucxn/ZTE-Stat_Max)** 保持独立。
 
 ---
 *Authored by 哥哥科技*

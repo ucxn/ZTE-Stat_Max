@@ -16,7 +16,7 @@ It runs on a passive-receive architecture: HA never polls the router over HTTP, 
 
 The project is made up of two components that work together:
 
-**Main project**&emsp;&nbsp;[![Main project](https://img.shields.io/badge/Network-ZTE--Stat__Max-FF4C00?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)
+**HA project**&emsp;&nbsp;[![HA project](https://img.shields.io/badge/Network-ZTE--Stat__HA-FF4C00?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)
 
 1. **ZTE-Stat_Max** (a pair of JS scripts): runs in the browser front end, taking over the ZTE router admin panel's data stream and polishing up the local UI.
 2. **GBNPA-Router-Sync** (HA integration): runs on your Home Assistant server, handling unlimited multi-endpoint state forwarding and chart logging.
