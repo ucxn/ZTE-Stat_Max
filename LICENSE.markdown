@@ -12,13 +12,12 @@ Required Notice: https://github.com/ucxn/ZTE-Stat_Max
 “哥哥软件”和勋章软件有一定的相似之处，*但并非完全相同*：“徽章软件”通常要求在集成时显著追加相应的标识，且显示在作品的每一个界面；“哥哥软件”并不一定更严格：他更类似于一个完整的免费软件，而非“底层基础设施”、“框架”、“开源项目”或“库”，因此代码界限可以非常明晰：在主要使用我的作品构成的界面当中，所有的我的名字，无论是否为法律意义上的署名必须要完全得以保留，不能有任何篡改。但是我并不要求在您更大的作品中，依然要在每个页面中显示或喧宾夺主。
 
 # License
-Copyright © 2026 哥哥科技 (Bro-Tech)<br>
-This project is available under either of the following licensing options:
+Copyright © 2026 哥哥科技<br>
+无论选择何种授权路径，均同时受本文件所载 **哥哥科技显著署名附加条款** 约束。这是本项目的主授权条件。使用、修改、集成或再分发本项目的权利，以持续、完整地遵守哥哥科技显著署名条款为前提。
 
 Regardless of the licensing path chosen, it is subject to the **BroTech Prominent Attribution Terms** set forth in this document. This is the primary licensing condition of this project. The rights to use, modify, integrate, or redistribute this project are conditioned upon continuous and complete compliance with the BroTech Prominent Attribution Terms.
 
-无论选择何种授权路径，均同时受本文件所载 **哥哥科技显著署名附加条款** 约束。这是本项目的主授权条件。使用、修改、集成或再分发本项目的权利，以持续、完整地遵守哥哥科技显著署名条款为前提。
-
+This project is available under either of the following licensing options:
 1. **Adaptive Public License - Bro 0.1**[（已经包含额外的署名要求条件）](/LICENSE/license.txt) ; or
 2. Sustainable Use License 1.0 ([**SUL-1.0**](/LICENSE/SUL-1.0.md)) WITH [***BroTech-Prominent-Attribution-Terms***](#哥哥科技显著署名附加条款) AND Broware Attribution–Noncommercial License（**[Bro-BY-NC](/LICENSE/BR-BY-NC-1.0.md)**）1.0（以每次提交时的版本或最新版为准）.
 
@@ -65,7 +64,7 @@ Regardless of the license used, the 哥哥科技's prominent attribution must be
 
 保留“哥哥科技”的完整字面量和实质显示、可见性与显著性，是作者授予本软件任何许可权利所不可分割的条件。为免疑义，本款项下的任何终止均为立即、绝对且不可补救的，且严格不受任何宽限期、通知要求、时间流逝或任何其它条件的限制。
 
-本项目主条款全文结束，严格遵守该协议是使用本仓库任意代码合法性的前置条件。
+本项目主条款全文结束，严格遵守该协议是使用本仓库任意部分或完整代码合法性的前置条件。
 
 ## BroTech Prominent Attribution Terms
 Regardless of the license or licensing route used, the Bro-Tech's prominent attribution MUST be retained.

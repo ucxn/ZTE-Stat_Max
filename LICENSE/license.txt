@@ -296,23 +296,29 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 
 		Any Recipient relying on such technical difficulty must objectively demonstrate that the inability to display Chinese results from genuine technical limitations.
 
-        (b) The following guidelines apply strictly and exclusively to the specific scenario where you integrate this software into a larger, overarching work, rendering it structurally or technically impossible to
-		preserve the original unmodified Graphical User Interface (GUI) and its attribution design in their exact original form.
-		EXPRESS RESERVATION OF RIGHTS AND OBLIGATIONS: This guide is provided solely for instructional compliance purposes. It does NOT, under any circumstances, operate as an implicit or explicit grant of any additional
-		rights or licenses beyond the primary agreement. Furthermore, it does NOT waive, substitute, or dilute any of your strict obligations under the primary licenses and the BroTech Prominent Attribution Terms and 3.11.
-		Adherence to this guide is merely a compliant implementation method for integration scenarios, and shall by no means exempt you from the absolute and simultaneous satisfaction of all conditions precedent set forth above.
-
-		The rights to use this software are granted to you ONLY subject to the absolute condition precedent of your complete, continuous, and strict compliance with the prominent attribution requirements herein. If you are unable to
+        (b) The rights to use this software are granted to you ONLY subject to the absolute condition precedent of your complete, continuous, and strict compliance with the prominent attribution requirements herein. If you are unable to
 		comprehend the legal implications of these terms, you are advised to consult independent legal counsel. Conversely, under no circumstances may you isolate, sever, or selectively apply the rights-granting clauses without
 		fulfilling the prominent attribution obligations. Should you fail to understand what constitutes "prominent attribution," you MUST elect NOT to use the source code of this software. In such an event, you are permitted solely
 		to share the official original link or download the software exclusively for personal, local use; any and all other operations or distributions are strictly prohibited.
 
+		EXPRESS RESERVATION OF RIGHTS AND OBLIGATIONS: This guide is provided solely for instructional compliance purposes. It does NOT, under any circumstances, operate as an implicit or explicit grant of any additional
+		rights or licenses beyond the primary agreement. Furthermore, it does NOT waive, substitute, or dilute any of your strict obligations under the primary licenses and the BroTech Prominent Attribution Terms and 3.11.
+		Adherence to this guide is merely a compliant implementation method for integration scenarios, and shall by no means exempt you from the absolute and simultaneous satisfaction of all conditions precedent set forth above.
+		
+		（begin）The following guidelines apply strictly and exclusively to the specific scenario where you integrate this software into a larger, overarching work, rendering it structurally or technically impossible to
+		preserve the original unmodified End User Interface (UI) and its attribution design in their exact original form.
+		
 		Should you, as a developer, integrate this software into a larger work or project, you must strictly adhere to the following display protocols: The physical|logical prominence of the attribution (including but not limited to
-		layout style, font size, color, and contrast) shall absolutely NOT be altered or diminished in any manner. When developing based on this program, the absolute depth level of the attribution within the Graphical User Interface
-		(GUI) hierarchy must remain unchanged; furthermore, upon integration into a larger work, its "relative depth level" within the navigation and interaction architecture shall suffer no degradation.
+		layout style, font size, color, and contrast) shall absolutely NOT be altered or diminished in any manner. When developing based on this program, the absolute depth level of the attribution within the End User Interface 
+		(UI) hierarchy actually accessible to must remain unchanged; furthermore, upon integration into a larger work, its "relative depth level" within the navigation and interaction architecture shall suffer no degradation.
+
+		The more practical guide is on [https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/CopyRight.md#the-simplified-summary-for-quick-read]
 
 		For instance, when an end-user navigates into a module or feature primarily powered by this software, the text "哥哥科技" (Brother Tech) MUST be prominently and unaltered displayed in the exact original position designed by
-		the Author on the GUI of that specific directory/module. Any attempt to fold, collapse, or relocate the attribution into secondary or hidden menus is strictly forbidden.
+		the Author on the GUI of that specific directory/module. Any attempt to fold, collapse, or relocate the attribution into secondary or hidden menus is strictly forbidden.（end）
+
+		Once my code is used, the number of appearances of “哥哥科技” in the end-user interface of your work must NOT be lower than the number of appearances in my original complete work. In all cases, at least one page of the resulting
+		work must contain the attribution. Attribution must not be hidden away solely in deep or secondary menus that users rarely visit. It must be placed near the relevant interface, framework, module, or area that primarily uses my code.
 
     10.3. The application of the United Nations Convention on Contracts for the International Sale of Goods is expressly excluded.
     10.4. The language in all parts of this License shall be in all cases construed simply according to its fair meaning, and not strictly for or against any of the parties hereto. Any 

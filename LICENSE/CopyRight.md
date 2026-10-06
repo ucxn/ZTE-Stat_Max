@@ -7,13 +7,14 @@
 ## 简要版规则速览
 *本文本仅仅强调部分核心特征和真正许可协议的部分条款，不是许可协议，也没有法律意义。您应当在使用授权作品前，仔细审阅真正许可协议的所有条款。*
 
-以下指南仅严格适用于一种极其特定的情形：即您将本软件代码实质性地集成至一个更大的整体作品中，且由于系统结构或技术原因，导致实质上已无法原封不动地保留原汁原味的原版最终用户界面（GUI）及其署名设计。
+以下指南仅严格适用于一种极其特定的情形：即您将本软件代码实质性地集成至一个更大的整体作品中，且由于系统结构或技术原因，导致实质上已无法原封不动地保留原汁原味的原版最终用户界面（UI）及其署名设计。
 
 请特别注意（权利之保留）： 本指南仅出于指导合规之目的而提供。本指南该指南并不代表作者向您授予了额外的权利，也不意味着您只需遵守另外的义务。您对本指南的参考或执行，绝不意味着您可以免除对前述所有累加式法定前置条件的严格遵守，其无法表示任何豁免、替代或削弱。
 
 若您作为开发者将本程序集成至更大的作品或项目中，您必须严格履行以下界面展示规则：署名的物理|逻辑显著程度（包括但不限于排版样式、字体字号、颜色及对比度等）绝对不得发生任何改变或削弱。
 
-基于本程序进行二次开发时，署名在用户界面（GUI）上的绝对深度层级不得被更改；将其集成至更大作品时，其在界面交互架构中的“相对深度层级”亦不得发生任何降级。
+基于本程序进行二次开发时，署名在终端用户实际使用的界面（UI）上的绝对深度层级不得被更改；</br>
+将其集成至更大作品时，其在界面交互架构中的“相对深度层级”亦不得发生任何降级。
 
 例如：当最终用户进入主要由本软件构建的模块或功能页面时，必须在该特定模块/目录的最终用户界面内、且在本软件原设计的固定位置，原样且显著地呈现“哥哥科技”字样。严禁将其折叠、收纳或移至任何隐藏菜单。
 
@@ -43,7 +44,9 @@ EXPRESS RESERVATION OF RIGHTS AND OBLIGATIONS: This guide is provided solely for
 
 Should you, as a developer, integrate this software into a larger work or project, you must strictly adhere to the following display protocols: The physical prominence of the attribution (including but not limited to layout style, font size, color, and contrast) shall absolutely NOT be altered or diminished in any manner.
 
-When developing based on this program, the absolute depth level of the attribution within the Graphical User Interface (GUI) hierarchy must remain unchanged; furthermore, upon integration into a larger work, its "relative depth level" within the navigation and interaction architecture shall suffer no degradation.
+When developing based on this program, the absolute depth level of the attribution within the actual end-user interface (UI) hierarchy must remain unchanged; 
+
+Furthermore, upon integration into a larger work, its "relative depth level" within the navigation and interaction architecture shall suffer no degradation.
 
 For instance, when an end-user navigates into a module or feature primarily powered by this software, the text "哥哥科技" (Brother Tech) MUST be prominently and unaltered displayed in the exact original position designed by the Author on the GUI of that specific directory/module. Any attempt to fold, collapse, or relocate the attribution into secondary or hidden menus is strictly forbidden.
 
