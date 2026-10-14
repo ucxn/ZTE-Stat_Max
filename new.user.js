@@ -1089,6 +1089,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
         ol.innerHTML = `<div style="padding: 20px; max-width: 1580px; margin: 0 auto; min-height: 100%;"><div id="gege-board-anchor"></div><div id="config-list" class="config-list gege-list-container"><div class="gege-section"><div class="config-title">有线设备${(window.gegeHiddenDevices && Object.keys(window.gegeHiddenDevices).length > 0) ? `<span id="gege-mesh-badge" style="color: #ff4c00; font-size: 13px; font-weight: normal; margin-left: 10px; font-family: Consolas;">(哥哥科技：${ol.querySelector('#gege-mesh-badge')?.textContent === '(哥哥科技：Mesh全面适配)' || Object.values(window.gegeHiddenDevices).some(d => d?.mesh === false) ? 'Mesh全面适配' : '智能Mesh适配'})</span>` : ''}</div>${hW.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.8GHz':'5.2GHz'}）</div>${h52.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.2GHz':'5.8GHz'}）</div>${h58.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（2.4GHz）</div>${h2.join('')||'<div class="gege-empty-state">没有连接设备</div>'}
         </div><div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed #eee; text-align: center; font-family: Consolas, 'Microsoft YaHei', sans-serif;"><div style="font-size: 11.5px; color: #777; font-style: italic; margin-bottom: 8px;">“在一个文明社会，干净的、不被监视与吸血的网络，是我们每个人的基本权利。”</div><div style="font-size: 10.5px; color: #999; line-height: 1.3; margin-bottom: 8px;">本交互式程序为“哥哥软件”范本；分享请使用官方链接，仅对尊重署名且持续保留者开放源代码，按“原样”免费提供，不对其适用性、稳定性、精密度或任何商业场景的合规性作任何担保。<a href="https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE.markdown" target="_blank" style="color: #777; text-decoration: underline;">分享/查看许可证</a><br>协议规定：基于本程序的任何修改均不得移除本界面的署名，也不得弱化“显示的程度”。保持显著GUI署名、原样保留程序中所有“哥哥科技”样式完全不变且轻松可见，是使用本软件代码的合法性的前置条件。
         </div><div style="font-size:12px;color:#555;"><svg xmlns="http://www.w3.org/2000/svg" width="110" height="18" viewBox="0 0 122 20" role="img" aria-label="Broware BY NC" style="vertical-align:middle;margin-right:6px"><defs><linearGradient id="bg1" x2="0" y2="1"><stop stop-color="#4b4b4b"/><stop offset=".5" stop-color="#333"/><stop offset="1" stop-color="#1f1f1f"/></linearGradient><linearGradient id="bg2" x2="0" y2="1"><stop stop-color="#52d58c"/><stop offset=".52" stop-color="#31bc71"/><stop offset="1" stop-color="#218b50"/></linearGradient><linearGradient id="sh" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".32"/><stop offset=".45" stop-color="#fff" stop-opacity=".08"/><stop offset=".46" stop-opacity="0"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="c"><rect width="122" height="20" rx="4"/></clipPath></defs><g clip-path="url(#c)"><path fill="url(#bg1)" d="M0 0h24v20H0z"/><path fill="url(#bg2)" d="M24 0h98v20H24z"/><path fill="url(#sh)" d="M0 0h122v20H0z"/></g><g transform="translate(4 2)"><rect width="15" height="15" rx=".6" fill="#fff"/><rect x="1" y="1" width="13" height="13" fill="#58d18d"/><path fill="#fff" d="M1 1h7v7z"/><path fill="#32bf70" d="M8 1h6v13H8z"/><path fill="#1ba856" d="M1 14h7V8l6 6z"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" font-size="11"><text x="73" y="15" fill="#000" fill-opacity=".28">Broware BY NC</text><text x="73" y="14">Broware BY NC</text></g></svg><a href="https://github.com/ucxn/ZTE-Stat_Max" target="_blank" style="color:#0059fa;text-decoration:none;font-weight:bold;">ZTE-Stat_Max 增强组件</a> <span title="构建时间：2026-9.29 11时&#10;架构设计：哥哥科技 BroTech&#10;Bilibili UID：501430041&#10;QQ群：680464365" style="cursor:help; border-bottom:1px dotted #ccc; font-family:Consolas;">${版本号}</span> | Copyright &copy; 2026 <a href="https://www.bilibili.com/video/BV1PtR7B8ECC" target="_blank" style="color: #0059fa; text-decoration: none; font-weight: bold;">哥哥科技</a> (BroTech)<span style="color: #888; font-weight: normal;"> | All Rights Reserved</span>&emsp;&nbsp;<a href="https://scriptcat.org/zh-CN/script-show-page/6194" target="_blank" style="color: #666; text-decoration: none;">点此分享</a></div></div></div></div>`;
+      window.gegeRenderNotice && window.gegeRenderNotice();
       S._domRebuilt = true;});}
     catch (e) {
       requestAnimationFrame(() => {
@@ -1176,17 +1177,13 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
             eBET(!1);  // 立即打一枪 LAN 大包
             window.gegeMasterTimer = setInterval(rSD, CONFIG.wanRefreshInterval * 1000);
             window.gegeLanTimer = setInterval(() => eBET(!1), CONFIG.lanRefreshInterval * (1 + .5 * ((CONFIG.lanRefreshInterval <= 10) + (CONFIG.lanRefreshInterval <= 7.5) + (CONFIG.lanRefreshInterval <= 6) + (CONFIG.lanRefreshInterval <= 5)) + 2 * (CONFIG.lanRefreshInterval <= 3)) * 1000); //大包时钟
-            let ol = document.getElementById('gege-global-overlay');
-            if (ol) {
-              let aB = document.createElement('div');
-              aB.id = 'gege-fallback-alert';
-              aB.style.cssText = 'background:#fff3cd;color:#856404;padding:12px 15px;margin:15px 30px 5px 30px;border-radius:6px;border:1px solid #ffeeba;border-left:5px solid #ffc107;font-weight:bold;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);';
-              aB.innerHTML = '⚠️ 17秒熔断机制触发：检测到当前固件常规接口异常（被阉割），已自动为您开启【深度大包抓取模式】。';
-              let ac = document.getElementById('gege-board-anchor');
-              if (ac && !document.getElementById('gege-fallback-alert')) {
-                ac.parentNode.insertBefore(aB, ac);
-              }
-            }
+            // 熔断横幅 → 15 秒后无条件撤下；仍无设备则换成求助面板，有设备则直接显示列表，到此为止（只跑一次）
+            window.gegeNotice = 'fallback';
+            window.gegeRenderNotice();
+            setTimeout(() => {
+              window.gegeNotice = window.gegeRenderedMacs.size === 0 ? 'help' : null;
+              window.gegeRenderNotice();
+            }, 15000);
           }
         }, 8500);
       }
@@ -1382,6 +1379,33 @@ async function fPP() {
     }).finally(() => { bigReq = null; });
     return bigReq;
   }
+  // 顶部提示区（熔断横幅 / 求助面板）：状态驱动。
+  // 面板每次重建都会 ol.innerHTML=…，把直接插进去的节点全部抹掉（没有设备时每个 tick 都会重建），
+  // 所以这里只记录状态 gegeNotice，并在每次重建之后调用 gegeRenderNotice 重新插入。
+  window.gegeNotice = null; // null | 'fallback'(熔断横幅) | 'help'(求助面板)
+  window.gegeRenderNotice = function () {
+    const ol = document.getElementById('gege-global-overlay');
+    if (!ol) return;
+    if (window.gegeNotice && ol.querySelector('.gege-list-item')) window.gegeNotice = null; // 已有设备数据：一律撤下
+    ['gege-fallback-alert', 'gege-nodata-help'].forEach(id => document.getElementById(id)?.remove());
+    const ac = document.getElementById('gege-board-anchor');
+    if (!ac || !window.gegeNotice) return;
+    const b = document.createElement('div');
+    if (window.gegeNotice === 'fallback') {
+      b.id = 'gege-fallback-alert';
+      b.style.cssText = 'background:#fff3cd;color:#856404;padding:12px 15px;margin:15px 30px 5px 30px;border-radius:6px;border:1px solid #ffeeba;border-left:5px solid #ffc107;font-weight:bold;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);';
+      b.innerHTML = '⚠️ 17秒熔断机制触发：检测到当前固件常规接口异常（被阉割），已自动为您开启【深度大包抓取模式】。';
+    } else {
+      b.id = 'gege-nodata-help';
+      b.style.cssText = 'background:#fff;color:#333;padding:14px 18px;margin:15px 30px 15px 30px;border-radius:6px;border:1px solid #e5e5e5;border-left:5px solid #0059fa;font-size:13px;line-height:1.85;box-shadow:0 2px 8px rgba(0,0,0,0.05);';
+      b.innerHTML = '<div style="font-weight:bold;font-size:14px;margin-bottom:6px;">🧭 未能获取到设备数据，请按你的设备类型选择：</div>'
+        + '<div>• 如果您的路由器是<b>中兴在售的家用路由器</b>，您可以联系开发者排查原因：使用 Chrome 浏览器的 <b>F12 → 网络（Network）</b> 抓包发给我适配，或者直接私下协助。</div>'
+        + '<div>• 如果您使用的是<b>运营商定制路由器</b>，适配起来通常比较简单，只需要发送抓包文件。</div>'
+        + '<div>• 如果您使用的是<b>光猫之类的非消费级路由器</b>，您可以尝试打开 <a href="https://github.com/ucxn/Bro-Stat/blob/main/.github/Install.md" target="_blank" rel="noopener" style="color:#0059fa;font-weight:bold;text-decoration:none;">Bro-Stat 项目</a>，安装其兼容版本。</div>'
+        + '<div>• 若兼容版本安装以后仍然无效，请联系开发者，并使用<b>视频</b>的方式进行协助。</div>';
+    }
+    ac.parentNode.insertBefore(b, ac);
+  };
   window.startGegePrecisionEngine = function () {
     if (window.gegeTimerStarted || window.gegeBActivated) return;
     window.gegeTimerStarted = !0;
@@ -1552,8 +1576,7 @@ async function fPP() {
       }
     }, 12000);
   };
-  setTimeout(tKA, 2000);
-  setInterval(tKA, 720000);
+  setInterval(tKA, 720000); // 保活：不在首帧触发，首次在 12 分钟后；对不兼容的设备，保活 URL 会直接显示 404/Forbidden，推迟后故障不再一开机就糊脸
   window.addEventListener('load', () => {
     setTimeout(() => {
       if (!window.gegeTimerStarted && window.startGegePrecisionEngine) window.startGegePrecisionEngine();
