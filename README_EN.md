@@ -97,8 +97,18 @@ Before using this script, ensure your browser has a user script manager extensio
 > [!IMPORTANT]
 > **Alternative Wake-up Entry**: If it isn't working, please check the **left sidebar navigation**, find the **🚀 哥哥科技面板（BroTech Panel）**, and click to open it; the functionality is essentially the same.<br> <br> Please ensure the **UserScript** extension is running correctly!! Specifically, the extension icon in your browser should be displaying a number! The tutorial for allowing userscript injection is shown in the image below.
 
+## Troubleshooting
+Q: I'm using a ZTE optical modem (ONT)—why isn't the script working?
+
+A: First, make sure the dashboard panel pops up properly. This tool supports almost all ZTE home routers (both retail consumer models and the vast majority of ISP-customized units):  
+If the panel fails to appear, please check the [Troubleshooting Guide](https://github.com/ucxn/Bro-Stat/blob/main/.github/Install.md#Trouble?).
+
+If the panel pops up fine but shows no data, please follow the on-screen prompt and head over to [**Bro-Stat**](https://github.com/ucxn/Bro-Stat) to download the dedicated ONT edition (since the underlying architecture differs significantly, ONT API field names aren't included in this build's compatibility fallback list).
+
+Q: The script/extension *isn't working* in the **Via** mobile browser?  
+A: We recommend using the new approach: [Download the **Mobile App** directly](https://github.com/ucxn/Bro-Stat/blob/main/.github/Install.md#App).
 > [!NOTE]
-> **Via Browser** (Mobile): Script/Plugin features *DON'T WORK* ?
+> If you prefer to run it directly in a mobile browser without installing the app:
 > <details>
 > <summary>👉 Click here to view the solution</summary>
 > <br>Due to limitations in Via Browser's rendering engine behavior, the default `document-idle` injection timing may fail to work properly.<br>
