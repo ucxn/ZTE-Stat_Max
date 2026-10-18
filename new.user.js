@@ -1583,7 +1583,7 @@ async function fPP() {
     setTimeout(() => {
       if (!window.gegeTimerStarted && window.startGegePrecisionEngine) window.startGegePrecisionEngine();
     }, 60000);
-    if (CONFIG.injectMode === 3 || (CONFIG.injectMode === 1 && +(window.location.hostname.slice(window.location.hostname.lastIndexOf('.') + 1)) < 6)) {
+    if (CONFIG.injectMode === 3 || CONFIG.injectMode > 0 && /\.[0-5]$|^zte\.home$/.test(location.hostname)) {
       if (window.createGegeFloatingBtn) window.createGegeFloatingBtn();
     }
     if (CONFIG.injectMode !== 3) {
