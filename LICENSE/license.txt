@@ -323,8 +323,24 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
     10.3. The application of the United Nations Convention on Contracts for the International Sale of Goods is expressly excluded.
     10.4. The language in all parts of this License shall be in all cases construed simply according to its fair meaning, and not strictly for or against any of the parties hereto. Any 
 		law or regulation which provides that the language of a contract shall be construed against the drafter shall not apply to this License.
+
+		Notwithstanding anything to the contrary in this License, the Attribution Requirements shall be interpreted strictly and exclusively in the manner most favorable to the Author. This rule applies in particular to Section 3.11 and
+		Section 10.2, as well as to any other provision concerning attribution, identification of the Author, or preservation of the Author’s name and attribution notices.
+
+		Based on the actual source code of the Software and its technical characteristics, there is no technically possible mode of operation in which the Software’s ordinary functionality operates normally while the required attribution
+		automatically disappears. Once the Software’s principal functionality operates normally, and the Software is capable of displaying Chinese text normally as part of that functionality—except where Chinese descriptions of functionality
+		in the source code have themselves been deleted—the Software shall be deemed to be operating normally.
+
+		Whenever the Software is operating normally, there is no legitimate basis whatsoever for failing to display the name “哥哥科技” as required by the Attribution Requirements.
+
     10.5. If any provision of this License is invalid or unenforceable under the laws of the Governing Jurisdiction, it shall not affect the validity or enforceability of the remainder of 
 		the terms of this License, and without further action by the parties hereto, such provision shall be reformed to the minimum extent necessary to make such provision valid and enforceable.
+
+		In any extreme case in which compliance with certain provisions of this License is possible only at the expense of compliance with other provisions, including where such provisions are contradictory, incompatible, or directly opposed to
+		one another, the Attribution Requirements shall take absolute priority. The Licensee must satisfy the Attribution Requirements first and in full.
+		
+		All other provisions, including without limitation any restrictions on commercial use or requirements concerning fees or charges, shall not be mandatory to the extent that compliance with them would prevent, conflict with, or take priority
+		over compliance with the Attribution Requirements.
     10.6. The paragraph headings of this License are for reference and convenience only and are not a part of this License, and they shall have no effect upon the construction or interpretation 
 		of any part hereof.
     10.7. Each of the terms "including", "include" and "includes", when used in this License, is not limiting whether or not non-limiting language (such as "without limitation" or 

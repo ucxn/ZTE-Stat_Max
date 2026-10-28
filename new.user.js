@@ -1395,14 +1395,14 @@ async function fPP() {
     if (window.gegeNotice === 'fallback') {
       b.id = 'gege-fallback-alert';
       b.style.cssText = 'background:#fff3cd;color:#856404;padding:12px 15px;margin:15px 30px 5px 30px;border-radius:6px;border:1px solid #ffeeba;border-left:5px solid #ffc107;font-weight:bold;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);';
-      b.innerHTML = '⚠️ 17秒熔断机制触发：检测到当前固件常规接口异常（被阉割），已自动为您开启【深度大包抓取模式】。';
+      b.innerHTML = '⚠️ 17秒熔断机制触发：检测到当前固件常规接口异常（被阉割），已自动为您开启【深度大包抓取模式】：请耐心等待。';
     } else {
       b.id = 'gege-nodata-help';
       b.style.cssText = 'background:#fff;color:#333;padding:14px 18px;margin:15px 30px 15px 30px;border-radius:6px;border:1px solid #e5e5e5;border-left:5px solid #0059fa;font-size:13px;line-height:1.85;box-shadow:0 2px 8px rgba(0,0,0,0.05);';
       b.innerHTML = '<div style="font-weight:bold;font-size:14px;margin-bottom:6px;">🧭 未能获取到设备数据，请按你的设备类型选择：</div>'
         + '<div>• 如果您的路由器是<b>中兴在售的家用路由器</b>，您可以联系开发者排查原因：使用 Chrome 浏览器的 <b>F12 → 网络（Network）</b> 抓包发给我适配，或者直接私下协助。</div>'
         + '<div>• 如果您使用的是<b>运营商定制路由器</b>，适配起来通常比较简单，只需要发送抓包文件，走完路由器后台各界面流程。</div>'
-		+ '<div>• 如果您在电脑上使用正常，却无法在 Android 手机上使用，请前往主页浏览器 Ctrl+F 搜索<b>App</b>并查看相应下载说明。</div>'  
+		+ '<div>• 如果您在电脑上使用正常，却无法在 Android 手机上使用，请下载集成本程序的另用<a href="https://github.com/ucxn/ZTE-Stat_Max#问题排查" target="_blank" rel="noopener" style="color:#0059fa;font-weight:bold;text-decoration:none;"><b>App</b>并查看</a>相应下载说明。</div>'  
         + '<div>• 如果您使用的是<b>光猫之类的非消费级路由器</b>，您可以尝试打开 <a href="https://github.com/ucxn/Bro-Stat/blob/main/.github/Install.md" target="_blank" rel="noopener" style="color:#0059fa;font-weight:bold;text-decoration:none;">Bro-Stat 项目</a>，安装其兼容版本。</div>'
         + '<div>• 若兼容版本安装以后仍然无效，请联系开发者，并使用<b>视频/屏幕连线</b>的方式进行协助。</div>';
     }
