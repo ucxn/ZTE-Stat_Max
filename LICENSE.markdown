@@ -67,6 +67,11 @@ Regardless of the license used, the 哥哥科技's prominent attribution must be
 
 本项目主条款全文结束，严格遵守该协议是使用本仓库任意部分或完整代码合法性的前置条件。
 
+### 哥哥的名字是最重要的
+对于所有、无论何种要求，唯独关于署名条款，需严格地按照有利于哥哥科技的方式来解释。基于本程序的实际源代码和技术条件，不存在一种软件正常功能能使用，而署名在技术上自动消失的方式。一旦程序的主要功能能正常使用，并且程序的主要功能能够正常的显示中文（源代码中功能描述中文被删除掉的作弊不算），则视为软件运行正常。软件运行正常的时候，没有任何合法理由可以不显示“哥哥科技”。
+
+如果在最极端的情况下，只能满足某些条款，而不能满足另外一些条款，甚至这些条款属于矛盾或者对立关系，则必须先满足署名条款。其他条款，包括半商业限制或者收费条款，均可以不作为必须履行的条款以避免拖后腿或者和显著强制不弱于原样署名条款冲突。
+
 ## BroTech Prominent Attribution Terms
 Regardless of the license or licensing route used, the Bro-Tech's prominent attribution MUST be retained.
 
