@@ -1,6 +1,6 @@
 # ZTE-Stat_Max by 哥哥科技
 
-[![Version](https://img.shields.io/badge/version-5.9.X-orange.svg?logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
+[![Version](https://img.shields.io/badge/version-6.0-orange.svg?logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
 [![Platform](https://img.shields.io/badge/platform-Web-green.svg?logo=javascript&logoColor=white)](https://scriptcat.org/zh-CN)&nbsp;&emsp;
 [![Integration](https://img.shields.io/badge/集成-Home_Assistant-41BDF5.svg?logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)&nbsp;&emsp;
 [![Reference:APL for Bro](https://img.shields.io/badge/Source-APL_Bro_0.1-3DA639?logo=opensourceinitiative&logoColor=white&labelColor=222222)](https://raw.githubusercontent.com/ucxn/ZTE-Stat_Max/refs/heads/main/LICENSE/license.txt)&nbsp;
@@ -11,6 +11,7 @@
 
 **ZTE-Stat_Max**是一款网速监控、流量多维分析查看工具，运用了专业的测控思想，融合 哥哥科技 的匠心精神；<br>专为中兴路由器 Web 管理后台设计的 “油猴” 增强脚本插件 + HA 全屋智能家居接入集成，作者：*哥哥科技* ！<br><br>
 **支持检测**：WAN口速率、每个物理端口：含LAN口速率（精度1s）、各设备速率（2/3/5s）、各设备官方流量小计。</br>
+**超高精度**：WAN口累计字节计数器（大部分支持、32位），后台逐设备原版流量（累计，防清零回流、校正）；和各设备网卡残差比例相差无几。</br>
 **双WAN支持**：完全支持！可以统计WAN1/2网速，分别积分∫Sum，自动计算*主次网比*，和内网、设备高精统计对比。</br>
 **支持计算**：WAN口总流量、各设备流量（积分）+官方统计（防0回流）双轨制对比！</br>
 **统计口径**：同时支持对比：官方值（只含本次接入）、当前在线、网页打开以来的总计→支持定期导出.csv数据。</br>

@@ -1,6 +1,6 @@
 # ZTE-Stat_Max by BroTech
 
-[![Version](https://img.shields.io/badge/version-5.9.X-orange.svg?logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
+[![Version](https://img.shields.io/badge/version-6.0-orange.svg?logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
 [![Platform](https://img.shields.io/badge/platform-Web-green.svg?logo=javascript&logoColor=white)](https://scriptcat.org/zh-CN)&nbsp;&emsp;
 [![Integration](https://img.shields.io/badge/集成-Home_Assistant-41BDF5.svg?logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)&emsp;&nbsp;[![Reference:APL for Bro](https://img.shields.io/badge/Freeware-APL_Bro_0.1-3DA639?logo=opensourceinitiative&logoColor=white&labelColor=222222)](https://raw.githubusercontent.com/ucxn/ZTE-Stat_Max/refs/heads/main/LICENSE/license.txt)&nbsp;[![Reference:SUL-1.0](https://img.shields.io/badge/SUL-Strict--Attribution-EA4B71.svg?logo=n8n&logoColor=white&labelColor=040506)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/SUL-1.0.md)&nbsp;
 [![BroWare BY NC 1.0](./assets/nc_custom_noversion.svg)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/BR-BY-NC-1.0.md)
@@ -11,6 +11,7 @@
 <br>A Xmonkey enhancement script specifically designed for the ZTE router Web UI management dashboard, now coupled with a dedicated **Home Assistant integration** for smart home automation and embodying the spirit of craftsmanship from Bro-Tech.
 
 **Real-time Monitoring**: WAN port speed, individual physical ports (including LAN speeds at 1s precision), per-device speeds (2/3/5s intervals), and official per-device traffic subtotals.</br>
+**Ultra-high precision**: the WAN port's cumulative byte counter (available on most models, 32-bit), plus the router's own per-device traffic totals pulled from the backend (cumulative, with reset/backflow protection and correction). Checked against each device's own NIC counters, the residual error is next to nothing, so any offset is a single scale factor you can calibrate out.</br>
 **Dual-WAN Support**: Fully supported! Independently tracks WAN1/WAN2 speeds with calculus-based integration (∫Sum), automatically calculates the *Primary/Secondary Load Ratio*, and cross-references with high-precision LAN and device statistics.</br>
 **Advanced Calculus**: Total WAN traffic and per-device traffic (via integration) displayed in a dual-track comparison alongside official hardware stats (equipped with an anti 0-rollback/reset shield)!</br>
 **Data Scopes**: Simultaneously compares: Official hardware readings (current session only), real-time online data, and cumulative totals since page load. Output to .CSV Regularly is supported.</br>
