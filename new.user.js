@@ -1347,21 +1347,21 @@ async function fPP() {
       const r = await fetch(k & 2 ? `/?_type=vueData&_tag=home_internetreg_lua_no_update_sess&IF_OP=refresh&_=${Date.now()}` : `/?_type=vueData&_tag=vue_mainwan_data&_=${Date.now()}`);
       const t = r.ok ? await r.text() : '', n = performance.now();
       // 实测核对：vue_mainwan_data 里 Rx 紧跟 Tx；home_internetreg 里 Tx 在前、Rx 在后且中间隔着几十个字段，所以两个字段必须各取各的
-      const mR = t.match(/<ParaName>RxBytes<\/ParaName>\s*<ParaValue>(\d+)</), mT = t.match(/<ParaName>TxBytes<\/ParaName>\s*<ParaValue>(\d+)</),
-        mt = mR && mT && [0, mR[1], mT[1]];
-      if (!mt) {
+      const iR = t.indexOf('<ParaName>RxBytes</ParaName>'), iT = t.indexOf('<ParaName>TxBytes</ParaName>');
+      if (iR < 0 || iT < 0) {
         if (k === undefined) CONFIG.外网计数器 = -2;
         else if (k < 0) { CONFIG.外网计数器 = 0; clearInterval(window.gegeWCTimer); }
         return;
       }
+      const tx = parseInt(t.slice(t.indexOf('<ParaValue>', iT) + 11)), rx = parseInt(t.slice(t.indexOf('<ParaValue>', iR) + 11));
       if (!(k > 0)) CONFIG.外网计数器 = k & 2 || 1;
       if (WC.rx === undefined) WC.p = Phys.lT !== undefined;
       // 积分只在速率变化时结账，此刻还有一段按当前速率没入账，补到计数器的采样时刻再比
       const iU = WC.p ? Phys.tU + Phys.wU * (n - Phys.lT) * 0.001 : S.wTotUp + S.wInstUp * (n - S.wLT) * 0.001,
         iD = WC.p ? Phys.tD + Phys.wD * (n - Phys.lT) * 0.001 : S.wTotDn + S.wInstDn * (n - S.wLT) * 0.001;
       if (WC.rx === undefined) { WC.iU = iU; WC.iD = iD; document.getElementById('gb-wc-row').style.display = 'flex'; document.getElementById('gb-wc-src').textContent = WC.p ? '(物理)' : '(逻辑)'; }
-      else { WC.u += ((mt[2] - WC.tx) >>> 0) * 8; WC.d += ((mt[1] - WC.rx) >>> 0) * 8; }
-      WC.tx = +mt[2]; WC.rx = +mt[1];
+      else { WC.u += ((tx - WC.tx) >>> 0) * 8; WC.d += ((rx - WC.rx) >>> 0) * 8; }
+      WC.tx = tx; WC.rx = rx;
       document.getElementById('gb-wc-up').textContent = `🔼 ${fV(WC.u)}`;
       document.getElementById('gb-wc-down').textContent = `🔽 ${fV(WC.d)}`;
       document.getElementById('gb-wc-pu').textContent = WC.u ? ((iU - WC.iU) * 100 / WC.u).toFixed(2) + '%' : '--';
