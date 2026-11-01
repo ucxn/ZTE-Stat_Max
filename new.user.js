@@ -1344,10 +1344,11 @@ async function fPP() {
     fWCRunning = !0;
     try {
       const k = CONFIG.外网计数器; // -2: 接口 1 不通，正在试接口 2
-      const r = await fetch(k & 2 ? `/?_type=vueData&_tag=home_internetreg_lua_no_update_sess&_=${Date.now()}` : `/?_type=vueData&_tag=vue_mainwan_data&_=${Date.now()}`);
+      const r = await fetch(k & 2 ? `/?_type=vueData&_tag=home_internetreg_lua_no_update_sess&IF_OP=refresh&_=${Date.now()}` : `/?_type=vueData&_tag=vue_mainwan_data&_=${Date.now()}`);
       const t = r.ok ? await r.text() : '', n = performance.now();
-      // TODO(Sonnet)：按 HAR 核对两个接口的 URL、字段名和 Rx/Tx 的先后顺序；若同一响应里有多条 WAN 连接，改成取正在上网的那条
-      const mt = t.match(/<ParaName>RxBytes<\/ParaName>\s*<ParaValue>(\d+)[\s\S]*?<ParaName>TxBytes<\/ParaName>\s*<ParaValue>(\d+)/);
+      // 实测核对：vue_mainwan_data 里 Rx 紧跟 Tx；home_internetreg 里 Tx 在前、Rx 在后且中间隔着几十个字段，所以两个字段必须各取各的
+      const mR = t.match(/<ParaName>RxBytes<\/ParaName>\s*<ParaValue>(\d+)</), mT = t.match(/<ParaName>TxBytes<\/ParaName>\s*<ParaValue>(\d+)</),
+        mt = mR && mT && [0, mR[1], mT[1]];
       if (!mt) {
         if (k === undefined) CONFIG.外网计数器 = -2;
         else if (k < 0) { CONFIG.外网计数器 = 0; clearInterval(window.gegeWCTimer); }
