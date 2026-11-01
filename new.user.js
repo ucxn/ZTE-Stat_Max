@@ -44,6 +44,8 @@
     calcMode: 1, // 1: 上行/下行倍数模式, 0: 上行占总和比例模式
     lanPortMode: 1, // 【物理网口】 0: 关闭 | 1: 底部追加显示 | 2: WAN高速接管主线
     portInterval: 1, // 物理网口刷新频率(秒)
+    外网计数器: undefined, // 【外网字节计数器】0: 关闭 | 1: vue_mainwan_data | 2: home_internetreg | undefined: 自动探测，失败即关
+    外网计数器刷新: 10, // 秒；两次采样间的流量不能超过 4 GiB 的一圈，千兆满速别超过 30 秒
     ratioExtremeUp: 10, // 极端上传判定阈值 (> 1000%)
     ratioWarnUp: 0.07, // 重度上传警告阈值 (> 7%)
     ratioExtremeDown: 0.01, // 极端下载判定阈值 (< 1%)
@@ -90,7 +92,7 @@
     aWu: 0, aWd: 0, lwTU: 0, lwTD: 0, cSnap: null,
     lInstUp: 0, lInstDn: 0, lTotUp: 0, lTotDn: 0, lLT: undefined,
     总上行图: new Float64Array(8192), 总下行图: new Float64Array(8192), 总图点数: 0,
-    wMaxU: 0, wMaxD: 0, wMinU: Infinity, wMinD: Infinity, 拖动图表: null, 图表待画: 0
+    wMaxU: 0, wMaxD: 0, wMinU: Infinity, wMinD: Infinity, 拖动图表: null, 图表待画: 0, pL: [], pLC: null
   };
 const WAN_COMPAT = [
     // 兼容层只在标准 WAN 首次失败时探测；社区可继续追加旧固件接口。
@@ -169,6 +171,7 @@ const WAN_COMPAT = [
   };
   const 版本号 = (typeof GM_info !== 'undefined' && GM_info.script?.version) || '环境不支持获取版本号';// 虽然不喜欢废物变量，但是这里会使用两次或以上
   const Phys = { p: Object.create(null), wU: undefined, wD: undefined, tU: 0, tD: 0, lT: undefined, _pM: null, _wID: null };
+  const WC = { rx: undefined, tx: 0, u: 0, d: 0, iU: 0, iD: 0, p: !1 };
   let gWUp = (wI, k) => s2b(wI[k]);
   let gWDn = (wI, k) => s2b(wI[k]);
   let isF = !1,
@@ -337,7 +340,8 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       }
       let cSU = 0,
         cSD = 0;
-      parseXml(lCxt, "OBJ_CLIENTS_ID").forEach(d => {
+      if (S.pLC !== lCxt) { S.pL = parseXml(lCxt, "OBJ_CLIENTS_ID"); S.pLC = lCxt; } // LAN 帧比 WAN 帧稀，同一份文本不重复解析
+      S.pL.forEach(d => {
         if (d.MACAddress) {
           let m = nM(d.MACAddress),
             u = s2b(d.UpRate),
@@ -846,6 +850,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
                 <div class="geek-row"><span class="geek-label">LAN：<span id="gege-pin-btn" class="gege-pin" title="冻结窗格">📌</span></span><div class="geek-val-box"><span class="c-up geek-fixed-width" id="gb-lan-up-vol"></span><span class="c-down geek-fixed-width" id="gb-lan-down-vol"></span></div><div class="geek-right-box">WAN：<span class="c-up" id="gb-wan-up-vol"></span> | <span class="c-down" id="gb-wan-down-vol"></span></div></div>
                 <div class="geek-row"><span class="geek-label">高精流量统计 -></span><div class="geek-val-box"><span class="c-up geek-fixed-width" id="gb-int-up-vol"></span><span class="c-down geek-fixed-width" id="gb-int-down-vol"></span></div><div class="geek-right-box" style="color: #666;">当前总计：<span style="color:#FF6700;" id="gb-abs-up-vol"></span> | <span style="color:#18A058;" id="gb-abs-down-vol"></span></div></div>`;
         }layoutHtml += `<div class="geek-row" id="gb-phys-row" style="display:none; height:auto!important; flex-wrap:wrap;"><span class="geek-label" style="font-weight:normal; color:#666;">物理网口:</span><div class="geek-val-box" id="gb-phys-data" style="flex-wrap:wrap; font-size:13px; font-weight:normal;"></div></div>`;
+        if (CONFIG.外网计数器 !== 0) layoutHtml += `<div class="geek-row" id="gb-wc-row" style="display:none;"><span class="geek-label">外网计数器</span><div class="geek-val-box"><span class="c-up geek-fixed-width" id="gb-wc-up"></span><span class="c-down geek-fixed-width" id="gb-wc-down"></span></div><div class="geek-right-box" style="font-weight:normal; color:#666;">积分精度<span id="gb-wc-src"></span>：<span class="c-up" id="gb-wc-pu"></span> | <span class="c-down" id="gb-wc-pd"></span></div></div>`;
         bd.innerHTML = layoutHtml;
         let pinBtn = bd.querySelector('#gege-pin-btn');
         if (pinBtn) {
@@ -1157,6 +1162,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
         window.gegePortTimer = setInterval(fPP, CONFIG.portInterval * 1000);
         fPP();
       }
+      if (CONFIG.外网计数器 !== 0) window.gegeWCTimer = setInterval(fWC, CONFIG.外网计数器刷新 * 1000);
       fetch(`/?_type=vueData&_tag=wlanConfig_data&_=${Date.now()}`)
       .then(r => r.text())
       .then(t => {
@@ -1331,6 +1337,36 @@ async function fPP() {
       }
     } catch (e) {console.warn(e);}
     finally { fPPRunning = !1; }
+  }
+  let fWCRunning = !1; // 两次响应一旦乱序，>>> 0 会把负差算成一整圈 4 GiB
+  async function fWC() {
+    if (fWCRunning) return;
+    fWCRunning = !0;
+    try {
+      const k = CONFIG.外网计数器; // -2: 接口 1 不通，正在试接口 2
+      const r = await fetch(k & 2 ? `/?_type=vueData&_tag=home_internetreg_lua_no_update_sess&_=${Date.now()}` : `/?_type=vueData&_tag=vue_mainwan_data&_=${Date.now()}`);
+      const t = r.ok ? await r.text() : '', n = performance.now();
+      // TODO(Sonnet)：按 HAR 核对两个接口的 URL、字段名和 Rx/Tx 的先后顺序；若同一响应里有多条 WAN 连接，改成取正在上网的那条
+      const mt = t.match(/<ParaName>RxBytes<\/ParaName>\s*<ParaValue>(\d+)[\s\S]*?<ParaName>TxBytes<\/ParaName>\s*<ParaValue>(\d+)/);
+      if (!mt) {
+        if (k === undefined) CONFIG.外网计数器 = -2;
+        else if (k < 0) { CONFIG.外网计数器 = 0; clearInterval(window.gegeWCTimer); }
+        return;
+      }
+      if (!(k > 0)) CONFIG.外网计数器 = k & 2 || 1;
+      if (WC.rx === undefined) WC.p = Phys.lT !== undefined;
+      // 积分只在速率变化时结账，此刻还有一段按当前速率没入账，补到计数器的采样时刻再比
+      const iU = WC.p ? Phys.tU + Phys.wU * (n - Phys.lT) * 0.001 : S.wTotUp + S.wInstUp * (n - S.wLT) * 0.001,
+        iD = WC.p ? Phys.tD + Phys.wD * (n - Phys.lT) * 0.001 : S.wTotDn + S.wInstDn * (n - S.wLT) * 0.001;
+      if (WC.rx === undefined) { WC.iU = iU; WC.iD = iD; document.getElementById('gb-wc-row').style.display = 'flex'; document.getElementById('gb-wc-src').textContent = WC.p ? '(物理)' : '(逻辑)'; }
+      else { WC.u += ((mt[2] - WC.tx) >>> 0) * 8; WC.d += ((mt[1] - WC.rx) >>> 0) * 8; }
+      WC.tx = +mt[2]; WC.rx = +mt[1];
+      document.getElementById('gb-wc-up').textContent = `🔼 ${fV(WC.u)}`;
+      document.getElementById('gb-wc-down').textContent = `🔽 ${fV(WC.d)}`;
+      document.getElementById('gb-wc-pu').textContent = WC.u ? ((iU - WC.iU) * 100 / WC.u).toFixed(2) + '%' : '--';
+      document.getElementById('gb-wc-pd').textContent = WC.d ? ((iD - WC.iD) * 100 / WC.d).toFixed(2) + '%' : '--';
+    } catch (e) {console.warn(e);}
+    finally { fWCRunning = !1; }
   }
   window.gegeBActivated = !1;
   window.gegeEngineRunning = !1;
