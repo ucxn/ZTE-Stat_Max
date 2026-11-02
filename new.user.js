@@ -233,27 +233,27 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
     }
 
   function fV(bits) {
-        if (bits > 83886080000) return `${(bits / 8589934592).toFixed(4)} GiB`;
-		if (bits >= 8589934592) return `${(bits / 8388608).toFixed(1)} MiB`;
-        if (bits > 8388608) return `${(bits / 8388608).toFixed(4)} MiB`;
-        if (bits > 8192) return `${(bits / 8192).toFixed(2)} KiB`;
-        return `${Math.round(bits / 8)} B`;
+        if (bits > 83886080000) return `${(bits * 1.1641532182693481e-10).toFixed(4)} GiB`;
+		if (bits >= 8589934592) return `${(bits * 1.1920928955078125e-7).toFixed(1)} MiB`;
+        if (bits > 8388608) return `${(bits * 1.1920928955078125e-7).toFixed(4)} MiB`;
+        if (bits > 8192) return `${(bits * 0.0001220703125).toFixed(2)} KiB`;
+        return `${Math.round(bits * 0.125)} B`;
     }
 
   function fVD(bitsIntegral, bitsOfficial) {
-        if (bitsIntegral > 8796093022208) return `${(bitsOfficial / 8796093022208).toFixed(4)} | ${(bitsIntegral / 8796093022208).toFixed(4)} TiB`;
-        if (bitsIntegral > 83886080000) return `${(bitsOfficial / 8589934592).toPrecision(5)} | ${(bitsIntegral / 8589934592).toPrecision(5)} GiB`;
-		if (bitsIntegral > 8388608000) return `${(bitsOfficial / 8388608).toFixed(3)} | ${(bitsIntegral / 8388608).toFixed(2)} MiB`;
-        if (bitsIntegral > 8388608) return `${(bitsOfficial / 8388608).toFixed(3)} | ${(bitsIntegral / 8388608).toFixed(3)} MiB`;
-        if (bitsIntegral > 8192) return `${(bitsOfficial / 8192).toFixed(2)} | ${(bitsIntegral / 8192).toFixed(2)} KiB`;
-        return `${Math.round(bitsOfficial / 8)} | ${Math.round(bitsIntegral / 8)} B`;}
+        if (bitsIntegral > 8796093022208) return `${(bitsOfficial * 1.1368683772161603e-13).toFixed(4)} | ${(bitsIntegral * 1.1368683772161603e-13).toFixed(4)} TiB`;
+        if (bitsIntegral > 83886080000) return `${(bitsOfficial * 1.1641532182693481e-10).toPrecision(5)} | ${(bitsIntegral * 1.1641532182693481e-10).toPrecision(5)} GiB`;
+		if (bitsIntegral > 8388608000) return `${(bitsOfficial * 1.1920928955078125e-7).toFixed(3)} | ${(bitsIntegral * 1.1920928955078125e-7).toFixed(2)} MiB`;
+        if (bitsIntegral > 8388608) return `${(bitsOfficial * 1.1920928955078125e-7).toFixed(3)} | ${(bitsIntegral * 1.1920928955078125e-7).toFixed(3)} MiB`;
+        if (bitsIntegral > 8192) return `${(bitsOfficial * 0.0001220703125).toFixed(2)} | ${(bitsIntegral * 0.0001220703125).toFixed(2)} KiB`;
+        return `${Math.round(bitsOfficial * 0.125)} | ${Math.round(bitsIntegral * 0.125)} B`;}
 
   function fSV(bits) { //要偷懒或者简洁易读，就完整一点，不要弄个挂MB实则1024又不正确、又高不成低不就的偷一半懒；GNU本身也支持这种单字母UI写法.
-    if (bits >= 84607500288) return `${(bits / 8589934592).toPrecision(4)}G`;
-	if (bits > 8388608000) return `${Math.round(bits / 8388608)}M`;
-    if (bits > 8388608) return `${(bits / 8388608).toPrecision(4)}M`;
-    if (bits >= 8192) return `${(bits / 8192).toFixed(1)}K`;
-    return `${Math.round(bits / 8)}B`;}
+    if (bits >= 84607500288) return `${(bits * 1.1641532182693481e-10).toPrecision(4)}G`;
+	if (bits > 8388608000) return `${Math.round(bits * 1.1920928955078125e-7)}M`;
+    if (bits > 8388608) return `${(bits * 1.1920928955078125e-7).toPrecision(4)}M`;
+    if (bits >= 8192) return `${(bits * 0.0001220703125).toFixed(1)}K`;
+    return `${Math.round(bits * 0.125)}B`;}
 
   function fOT(totalSec) {
 		totalSec = totalSec | 0;
@@ -496,7 +496,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       S.wInstUp = cWU;
       S.wInstDn = cWD;
       rUI(cWU, cWD, cSU, cSD, cI);
-      if (document.getElementById('gege-global-overlay')?.style.display === 'block') {
+      if (ol?.style.display === 'block') {
         S.lTick = ((S.lTick || 0) + 1) & ((CONFIG.信号强度刷新周期 << 3) - 1);
         if ((S.lTick & (CONFIG.信号强度刷新周期 - 1)) === 1 && CONFIG.forceMeshMode !== 2) fRSSI();
         if (S.lTick === 1) fPHY();
@@ -573,6 +573,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
     }
   };
 const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
+const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
       function getSpark(ringArr, headIdx, maxVal) {
         let s = "";
         for (let i = 16; i--; ) {
@@ -614,7 +615,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
         for (let m in S.cls) {
           let cS = S.cls[m], it = S.oDC[m], rRs = cS.rssi, lRs = cS.lRs ?? rRs;
           if (!it || !rRs) continue;
-          if ([-23, -34, -40, -55].some(t => (rRs >= t) !== (lRs >= t)) && Math.abs(rRs - lRs) + (cS.dbC || 0) <= 4) {
+          if (RS_T.some(t => (rRs >= t) !== (lRs >= t)) && Math.abs(rRs - lRs) + (cS.dbC || 0) <= 4) {
             rRs = lRs; cS.dbC = ((cS.dbC || 0) + 1) & 7;
           } else { cS.dbC = 0; cS.lRs = rRs; }
           let cache = it._gege || (it._gege = {}), logo = cache.logo ??= it.querySelector('.dev-logo');
@@ -654,11 +655,11 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
         if (u > 0 && u < S.wMinU) S.wMinU = u; if (d > 0 && d < S.wMinD) S.wMinD = d;
       }
       function 初始化总速率图(bd) {
-        let box = bd.querySelector('#gege-speed-chart');
+        let box = bd._chart;
         if (box) return box;
         box = document.createElement('div'); box.id = 'gege-speed-chart';
         box.innerHTML = '<canvas></canvas><div class="gege-chart-head"><b data-gc="meta"></b><span data-gc="range"></span></div><div class="gege-chart-foot"><span class="gc-up" data-gc="up"></span><span class="gc-down" data-gc="down"></span><span class="gc-extra" data-gc="extra"></span></div><div class="gege-chart-resize" title="缩放"></div>';
-        bd.appendChild(box);
+        bd.appendChild(box); bd._chart = box;
         let bw = bd.clientWidth || 1800, mobile = window.innerWidth <= 768, w = mobile ? Math.max(180, Math.min(320, bw - 20)) : Math.max(320, Math.min(650, bw * .30));
         box.style.left = mobile ? '10px' : Math.max(520, bw * .52) + 'px'; box.style.top = '2px'; box.style.width = w + 'px'; box.style.height = (mobile ? 96 : 112) + 'px';
         const 图表起手 = (e, 图表模式) => { e.preventDefault(); S.拖动图表 = { 图表模式, x: e.clientX, y: e.clientY, l: box.offsetLeft, t: box.offsetTop, w: box.offsetWidth, h: box.offsetHeight }; box.setPointerCapture?.(e.pointerId); };
@@ -674,7 +675,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
         return box;
       }
       function 画总速率图(bd) {
-        let box = 初始化总速率图(bd), cv = box.querySelector('canvas'), W = box.clientWidth | 0, H = box.clientHeight | 0, R = window.devicePixelRatio || 1;
+        let box = 初始化总速率图(bd), cv = box._cv ??= box.querySelector('canvas'), W = box.clientWidth | 0, H = box.clientHeight | 0, R = window.devicePixelRatio || 1;
         if (W < 40 || H < 40) return;
         if (cv.width !== (W * R | 0) || cv.height !== (H * R | 0)) { cv.width = W * R | 0; cv.height = H * R | 0; cv.style.width = '100%'; cv.style.height = '100%'; }
         const x = cv.getContext('2d'); x.setTransform(R,0,0,R,0,0); x.clearRect(0,0,W,H);
@@ -720,7 +721,8 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
       abD = 0,
       curHpU = 0,
       curHpD = 0,
-      tot_cU = 0;
+      tot_cU = 0,
+      dv = S.rTick === 1 ? {} : null; // 快照只在存档和结算的那一帧才有人读，其余帧不造
     for (let k in S.cls) {
       let s = S.cls[k], cC = cI[k];
       let cU = Math.max(0, (s.lU || 0) - (s.uB || 0));
@@ -740,6 +742,15 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
       s.hIdx = (s.hIdx + 1) & 31;
       s.hU[s.hIdx] = cC ? cC.upRate : 0;
       s.hD[s.hIdx] = cC ? cC.dnRate : 0;
+      if (dv) dv[k] = {
+        up: cU, down: cD,
+        integral_up: s.intUp || 0,
+        integral_down: s.intDn || 0,
+        status: cC ? (CONFIG.portMap[cC.iface] || cC.iface || "未知接口") : (s.haOff > 0 ? (CONFIG.portMap[s.ifc] || s.ifc || "未知接口") : "下线"),
+        name: cC?.name || s.name || k, ip: cC?.ip || "",
+        raw_up: cC?.offUp || 0, raw_down: cC?.offDn || 0,
+        rssi: s.rssi, via: s.via, via_mac: s.viaMac
+      };
 
       /* ⚠️ 需要使用 HA 快速上线下线报告的用户，请删除该注释以启用该功能。
       try {
@@ -776,7 +787,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
       } catch(e) { console.warn("[哥哥科技] HA上下线事件写入失败:", e); }
       */
     }
-    S.cSnap = {
+    if (dv) S.cSnap = {
         timestamp: Date.now(),
         global: {
             wan_up: S.wTotUp, wan_down: S.wTotDn,
@@ -784,20 +795,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
             lan_high_up: hpU, lan_high_down: hpD,
             lan_off_up: abU, lan_off_down: abD
         },
-        devices: Object.keys(S.cls).reduce((acc, k) => {
-            let s = S.cls[k], cC = cI[k];
-            acc[k] = {
-                up: Math.max(0, (s.lU || 0) - (s.uB || 0)),
-                down: Math.max(0, (s.lD || 0) - (s.dB || 0)),
-                integral_up: s.intUp || 0,
-                integral_down: s.intDn || 0,
-                status: cC ? (CONFIG.portMap[cC.iface] || cC.iface || "未知接口") : (s.haOff > 0 ? (CONFIG.portMap[s.ifc] || s.ifc || "未知接口") : "下线"),
-                name: cC?.name || s.name || k, ip: cC?.ip || "",
-                raw_up: cC?.offUp || 0, raw_down: cC?.offDn || 0,
-                rssi: s.rssi, via: s.via, via_mac: s.viaMac
-            };
-            return acc;
-        }, {})
+        devices: dv
     };
     if (typeof GM_setValue !== 'undefined' && S.rTick === 1) {
         S.haTick = ((S.haTick || 0) + 1) & 7;
@@ -828,7 +826,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
         } else {
             let rUp = calcStageRatio((Phys.tU + S.wTotUp) / ((Phys.tU > 0) + (S.wTotUp > 0)) || 0, LUp, hpU), rDn = calcStageRatio((Phys.tD + S.wTotDn) / ((Phys.tD > 0) + (S.wTotDn > 0)) || 0, LDn, hpD);
             S.cRT = `<span style="font-weight: bold;"><span style="color: ${rUp > 1.5 ? '#ff4c00' : (rUp > 1.15 ? '#FF9800' : '#4CAF50')};">${(rUp * 100).toFixed(2)}%</span>，<span style="color: ${rDn > 1.5 ? '#ff4c00' : (rDn > 1.15 ? '#FF9800' : '#4CAF50')};">${(rDn * 100).toFixed(2)}%</span></span>`;
-            if (document.getElementById('gb-ratio-display')) document.getElementById('gb-ratio-display').innerHTML = S.cRT;
+            const rd = document.getElementById('gb-ratio-display'); if (rd) rd.innerHTML = S.cRT;
         }
     }
     let bd = document.getElementById('zte-geek-board');
@@ -858,6 +856,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
         }layoutHtml += `<div class="geek-row" id="gb-phys-row" style="display:none; height:auto!important; flex-wrap:wrap;"><span class="geek-label" style="font-weight:normal; color:#666;">物理网口:</span><div class="geek-val-box" id="gb-phys-data" style="flex-wrap:wrap; font-size:13px; font-weight:normal;"></div></div>`;
         if (CONFIG.外网计数器 !== 0) layoutHtml += `<div class="geek-row" id="gb-wc-row" style="display:none;"><span class="geek-label">外网计数器</span><div class="geek-val-box"><span class="c-up geek-fixed-width" id="gb-wc-up"></span><span class="c-down geek-fixed-width" id="gb-wc-down"></span></div><div class="geek-right-box" style="font-weight:normal; color:#666;">积分精度<span id="gb-wc-src"></span>：<span class="c-up" id="gb-wc-pu"></span> | <span class="c-down" id="gb-wc-pd"></span></div></div>`;
         bd.innerHTML = layoutHtml;
+        bd._g = Object.create(null); for (const e of bd.querySelectorAll('[id]')) bd._g[e.id] = e; // 看板只建一次，每帧按 id 取节点，不再逐个 querySelector
         let pinBtn = bd.querySelector('#gege-pin-btn');
         if (pinBtn) {
             if (S.isPinned) {
@@ -906,59 +905,59 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
       }
       let oDC = S.oDC; 
       if (bd.parentNode) {
+        const g = bd._g;
         let aW2U = S.hasW2 ? S.w2U : undefined,aW2D = S.hasW2 ? S.w2D : undefined,aW2TU = S.hasW2 ? S.w2TotUp : undefined,aW2TD = S.hasW2 ? S.w2TotDn : undefined;
-        bd.querySelector('#gb-lan-up-bytes').textContent = `🔼 ${fB(sU)}`;
-        bd.querySelector('#gb-lan-down-bytes').textContent = `🔽 ${fB(sD)}`;
-        bd.querySelector('#gb-lan-up-vol').textContent = `🔼 ${fV(LUp)}`;
-        bd.querySelector('#gb-lan-down-vol').textContent = `🔽 ${fV(LDn)}`;
-        bd.querySelector('#gb-wan-up-vol').textContent = `🔼 ${fV(S.wTotUp)}`;
-        bd.querySelector('#gb-wan-down-vol').textContent = `🔽 ${fV(S.wTotDn)}`;
-        bd.querySelector('#gb-int-up-vol').textContent = `🔼 ${fV(hpU)}`;
-        bd.querySelector('#gb-int-down-vol').textContent = `🔽 ${fV(hpD)}`;
-        bd.querySelector('#gb-abs-up-vol').textContent = `🔼 ${fV(abU)}`;
-        bd.querySelector('#gb-abs-down-vol').textContent = `🔽 ${fV(abD)}`;
-		bd.querySelector('#gb-perc-up').textContent = `🔼 ${((sU * 100) / (Math.max(Phys.wU || 0, wU || 0) || Infinity) || 0).toFixed(1)}%`;
-        bd.querySelector('#gb-perc-down').textContent = `🔽 ${((sD * 100) / (Math.max(Phys.wD || 0, wD || 0) || Infinity) || 0).toFixed(1)}%`;
-        let pb = bd.querySelector('#gb-pwan-bps-container'), pv = bd.querySelector('#gb-pwan-vol-container');
+        g['gb-lan-up-bytes'].textContent = `🔼 ${fB(sU)}`;
+        g['gb-lan-down-bytes'].textContent = `🔽 ${fB(sD)}`;
+        g['gb-lan-up-vol'].textContent = `🔼 ${fV(LUp)}`;
+        g['gb-lan-down-vol'].textContent = `🔽 ${fV(LDn)}`;
+        g['gb-wan-up-vol'].textContent = `🔼 ${fV(S.wTotUp)}`;
+        g['gb-wan-down-vol'].textContent = `🔽 ${fV(S.wTotDn)}`;
+        g['gb-int-up-vol'].textContent = `🔼 ${fV(hpU)}`;
+        g['gb-int-down-vol'].textContent = `🔽 ${fV(hpD)}`;
+        g['gb-abs-up-vol'].textContent = `🔼 ${fV(abU)}`;
+        g['gb-abs-down-vol'].textContent = `🔽 ${fV(abD)}`;
+		g['gb-perc-up'].textContent = `🔼 ${((sU * 100) / (Math.max(Phys.wU || 0, wU || 0) || Infinity) || 0).toFixed(1)}%`;
+        g['gb-perc-down'].textContent = `🔽 ${((sD * 100) / (Math.max(Phys.wD || 0, wD || 0) || Infinity) || 0).toFixed(1)}%`;
+        let pb = g['gb-pwan-bps-container'], pv = g['gb-pwan-vol-container'];
         if (aW2U !== undefined) {
-            bd.querySelector('#gb-wan-up-bytes').textContent = `🔼 ${fBy(wU + (aW2U||0))}`;
-            bd.querySelector('#gb-wan-down-bytes').textContent = `🔽 ${fBy(wD + (aW2D||0))}`;
-            bd.querySelector('#gb-wan-up-bps').textContent = `🔼 ${fB(wU)}`;
-            bd.querySelector('#gb-wan-down-bps').textContent = `🔽 ${fB(wD)}`;
-            if (pb) { pb.style.display = 'inline'; bd.querySelector('#gb-pwan-bps-up').textContent = '🔼 ' + fB(aW2U); bd.querySelector('#gb-pwan-bps-down').textContent = '🔽 ' + fB(aW2D); }
+            g['gb-wan-up-bytes'].textContent = `🔼 ${fBy(wU + (aW2U||0))}`;
+            g['gb-wan-down-bytes'].textContent = `🔽 ${fBy(wD + (aW2D||0))}`;
+            g['gb-wan-up-bps'].textContent = `🔼 ${fB(wU)}`;
+            g['gb-wan-down-bps'].textContent = `🔽 ${fB(wD)}`;
+            if (pb) { pb.style.display = 'inline'; g['gb-pwan-bps-up'].textContent = '🔼 ' + fB(aW2U); g['gb-pwan-bps-down'].textContent = '🔽 ' + fB(aW2D); }
             if (pv) { 
                 pv.style.display = 'flex'; 
-                bd.querySelector('#gb-pwan-tot-up').textContent = '🔼 ' + fV(aW2TU); 
-                bd.querySelector('#gb-pwan-tot-down').textContent = '🔽 ' + fV(aW2TD); 
-                if (bd.querySelector('#gb-pwan-zero-up')) {
+                g['gb-pwan-tot-up'].textContent = '🔼 ' + fV(aW2TU); 
+                g['gb-pwan-tot-down'].textContent = '🔽 ' + fV(aW2TD); 
+                if (g['gb-pwan-zero-up']) {
                     let isPhysTakeover = CONFIG.lanPortMode === 1 && !S.hasW2;
-                    bd.querySelector('#gb-pwan-zero-up').textContent = (isPhysTakeover && Phys.zEU) ? fSV(Phys.zEU) : '';
-                    bd.querySelector('#gb-pwan-zero-down').textContent = (isPhysTakeover && Phys.zED) ? fSV(Phys.zED) : '';
-                    bd.querySelector('#gb-pwan-zero-up-cnt').textContent = (isPhysTakeover && Phys.zEUC) ? Phys.zEUC : 0;
-                    bd.querySelector('#gb-pwan-zero-down-cnt').textContent = (isPhysTakeover && Phys.zEDC) ? Phys.zEDC : 0;
+                    g['gb-pwan-zero-up'].textContent = (isPhysTakeover && Phys.zEU) ? fSV(Phys.zEU) : '';
+                    g['gb-pwan-zero-down'].textContent = (isPhysTakeover && Phys.zED) ? fSV(Phys.zED) : '';
+                    g['gb-pwan-zero-up-cnt'].textContent = (isPhysTakeover && Phys.zEUC) ? Phys.zEUC : 0;
+                    g['gb-pwan-zero-down-cnt'].textContent = (isPhysTakeover && Phys.zEDC) ? Phys.zEDC : 0;
                 }
             }
         } else if (CONFIG.lanPortMode !== 1 || Phys.wU === undefined) {
-            bd.querySelector('#gb-wan-up-bytes').textContent = `🔼 ${fB(wU)}`;
-            bd.querySelector('#gb-wan-down-bytes').textContent = `🔽 ${fB(wD)}`;
-            bd.querySelector('#gb-wan-up-bps').textContent = `🔼 ${fBy(wU)}`;
-            bd.querySelector('#gb-wan-down-bps').textContent = `🔽 ${fBy(wD)}`;
+            g['gb-wan-up-bytes'].textContent = `🔼 ${fB(wU)}`;
+            g['gb-wan-down-bytes'].textContent = `🔽 ${fB(wD)}`;
+            g['gb-wan-up-bps'].textContent = `🔼 ${fBy(wU)}`;
+            g['gb-wan-down-bps'].textContent = `🔽 ${fBy(wD)}`;
             if (pb) pb.style.display = 'none'; if (pv) pv.style.display = 'none';
         } else {
-            bd.querySelector('#gb-wan-up-bytes').textContent = `🔼 ${fBy(wU)}`;
-            bd.querySelector('#gb-wan-down-bytes').textContent = `🔽 ${fBy(wD)}`;
-            bd.querySelector('#gb-wan-up-bps').textContent = `🔼 ${fB(wU)}`;
-            bd.querySelector('#gb-wan-down-bps').textContent = `🔽 ${fB(wD)}`;
+            g['gb-wan-up-bytes'].textContent = `🔼 ${fBy(wU)}`;
+            g['gb-wan-down-bytes'].textContent = `🔽 ${fBy(wD)}`;
+            g['gb-wan-up-bps'].textContent = `🔼 ${fB(wU)}`;
+            g['gb-wan-down-bps'].textContent = `🔽 ${fB(wD)}`;
         }
-        画总速率图(bd);
-        if (bd.querySelector('#gb-ratio-display')) {
-          bd.querySelector('#gb-cur-up-vol').textContent = `🔼 ${fV(curHpU)}`;
-          bd.querySelector('#gb-cur-down-vol').textContent = `🔽 ${fV(curHpD)}`;
-          if (bd.querySelector('#gb-wan-zero-up')) {
-              bd.querySelector('#gb-wan-zero-up').textContent = !S.wZEU ? '' : fSV(S.wZEU);
-              bd.querySelector('#gb-wan-zero-down').textContent = !S.wZED ? '' : fSV(S.wZED);
-              bd.querySelector('#gb-wan-zero-up-cnt').textContent = S.wZEUC || 0;
-              bd.querySelector('#gb-wan-zero-down-cnt').textContent = S.wZEDC || 0;
+        if (g['gb-ratio-display']) {
+          g['gb-cur-up-vol'].textContent = `🔼 ${fV(curHpU)}`;
+          g['gb-cur-down-vol'].textContent = `🔽 ${fV(curHpD)}`;
+          if (g['gb-wan-zero-up']) {
+              g['gb-wan-zero-up'].textContent = !S.wZEU ? '' : fSV(S.wZEU);
+              g['gb-wan-zero-down'].textContent = !S.wZED ? '' : fSV(S.wZED);
+              g['gb-wan-zero-up-cnt'].textContent = S.wZEUC || 0;
+              g['gb-wan-zero-down-cnt'].textContent = S.wZEDC || 0;
           }
         }
       }
@@ -969,8 +968,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
       for (let m in cI) {
         let it = oDC[m];
         if (!it) continue;
-        const cC = cI[m] || { upRate: 0, dnRate: 0, iface: "", offUp: 0, offDn: 0 },
-              cS = S.cls[m] || { intUp: 0, intDn: 0, onS: 0, hU: [], hD: [], hIdx: 0 };
+        const cC = cI[m], cS = S.cls[m];
         
         let cache = it._gege || (it._gege = {});
         const hqU = Math.max(0, (cS.lU || 0) - (cS.uB || 0));
@@ -1080,6 +1078,7 @@ const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
           (cache.bDPct ??= bD.querySelector('.v-pct')).textContent = pd.toFixed(1) + '%';
         }
       }
+      if (bd.parentNode) 画总速率图(bd); // 放在所有文字写完之后：读画布尺寸只触发一次排版
     });
   }
   async function bVD(ol) {
