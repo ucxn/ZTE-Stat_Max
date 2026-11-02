@@ -1587,9 +1587,9 @@ async function fPP() {
           let iI_arr = [];
           for (let m of hM) {
             try {
-              const mt = window.gegeHiddenDevices[m];
-              if (!mt?.origMac) continue;
-              const sR = await fetch(`/?_type=vueData&_tag=localnet_lan_detailinfo_lua&MACAddress=${encodeURIComponent(mt.origMac)}&_=${Date.now()}`);
+              const mt = window.gegeHiddenDevices[m] || {};
+              if (!mt || !mt.origMac) continue;
+              const sR = await fetch(`/?_type=vueData&_tag=localnet_lan_detailinfo_lua&MACAddress=${encodeURIComponent(mt.origMac||m)}&_=${Date.now()}`);
               if (!sR.ok) continue;
               let sD = parseXml(await sR.text(), "OBJ_LANINFO_BYMAC")[0];
               if (sD) {
