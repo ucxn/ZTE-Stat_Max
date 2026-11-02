@@ -184,8 +184,9 @@ const WAN_COMPAT = [
         if (this.responseType === '' ||
           this.responseType === 'text') {
           let t = this.responseText;
-          if (t && (t.includes('<OBJ_CLIENTS_ID>') || t.includes('<OBJ_HOME_BASICINFO_ID>'))) {
-            if (t.includes('<OBJ_CLIENTS_ID>')) { lCxt = t; lCxtT = null; }
+          const c = t && t.includes('<OBJ_CLIENTS_ID>');
+          if (c || t && t.includes('<OBJ_HOME_BASICINFO_ID>')) {
+            if (c) { lCxt = t; lCxtT = null; }
             if (window.startGegePrecisionEngine) {
               window.startGegePrecisionEngine();
             }
@@ -575,10 +576,10 @@ const calcStageRatio = (W, L_int, L_hp) => {
 const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
 const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
       function getSpark(ringArr, headIdx, maxVal) {
-        let s = "";
+        let s = "", k = 7 / maxVal;
         for (let i = 16; i--; ) {
           let v = ringArr[(headIdx - i) & 31];
-          s += SPRK[v > 0 ? Math.min(7, Math.max(1, ((v / maxVal) * 7) | 0)) : 0];
+          s += SPRK[v > 0 ? Math.min(7, Math.max(1, (v * k) | 0)) : 0];
         }
         return s;
       }
@@ -1084,7 +1085,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
   async function bVD(ol) {
     try {
       let h2 = [], h52 = [], h58 = [], hW = [];
-      parseXml(lCxt, "OBJ_CLIENTS_ID").forEach(d => {
+      (S.pLC === lCxt ? S.pL : parseXml(lCxt, "OBJ_CLIENTS_ID")).forEach(d => { // rSD 已解析过同一份文本就直接用
         if (!d.MACAddress) return;
         let m = nM(d.MACAddress),
           tS = fOT(+(d.OnlineDuration || d.OnlineTime || d.LeaseTime || 0)),
@@ -1329,16 +1330,23 @@ async function fPP() {
         }
       });
       if (document.getElementById('gege-global-overlay')?.style.display !== 'block') return;
-      let rw = document.getElementById('gb-phys-row'), db = document.getElementById('gb-phys-data');
-      if (rw && db) {
-        rw.style.display = 'flex';
-        db.innerHTML = Object.entries(Phys.p).map(([k, v]) => `<span style="margin-right:16px; white-space:nowrap; font-weight:normal; color:#333;">${k}:<span class="c-up" style="display:inline-block; min-width:55px; font-weight:bold; margin-left:6px; text-align:left;">${fBy(v.dn)}</span><span class="c-down" style="display:inline-block; min-width:55px; font-weight:bold; margin-left:10px; text-align:left;">${fBy(v.u)}</span><span style="margin-left:6px; color:#666;">(<span style="color:#9c27b0;">${fSV(v.tD)}</span>，<span style="color:#4caf50;">${fSV(v.tU)}</span>)</span></span>`).join('');
+      const g = document.getElementById('zte-geek-board')?._g;
+      if (!g) return;
+      const db = g['gb-phys-data'], ks = Object.keys(Phys.p);
+      if (db._k !== ks.length) { // 每秒一次的地方：网口集合变了才重排结构，平时只改文字
+        db._k = ks.length; g['gb-phys-row'].style.display = 'flex';
+        db.innerHTML = ks.map(k => `<span style="margin-right:16px; white-space:nowrap; font-weight:normal; color:#333;">${k}:<span class="c-up" style="display:inline-block; min-width:55px; font-weight:bold; margin-left:6px; text-align:left;"></span><span class="c-down" style="display:inline-block; min-width:55px; font-weight:bold; margin-left:10px; text-align:left;"></span><span style="margin-left:6px; color:#666;">(<span style="color:#9c27b0;"></span>，<span style="color:#4caf50;"></span>)</span></span>`).join('');
+        db._n = Array.from(db.children, e => [e.children[0], e.children[1], e.children[2].children[0], e.children[2].children[1]]);
+      }
+      for (let i = 0; i < ks.length; i++) {
+        const v = Phys.p[ks[i]], n = db._n[i];
+        n[0].textContent = fBy(v.dn); n[1].textContent = fBy(v.u); n[2].textContent = fSV(v.tD); n[3].textContent = fSV(v.tU);
       }
 
       if (CONFIG.lanPortMode === 1 && !S.hasW2 && Phys.wU !== undefined) {
-        let pb = document.getElementById('gb-pwan-bps-container'), pv = document.getElementById('gb-pwan-vol-container');
-        if(pb) { pb.style.display = 'inline'; document.getElementById('gb-pwan-bps-up').textContent = '🔼 ' + fB(Phys.wU); document.getElementById('gb-pwan-bps-down').textContent = '🔽 ' + fB(Phys.wD); }
-        if(pv) { pv.style.display = 'flex'; document.getElementById('gb-pwan-tot-up').textContent = '🔼 ' + fV(Phys.tU); document.getElementById('gb-pwan-tot-down').textContent = '🔽 ' + fV(Phys.tD); }
+        const pb = g['gb-pwan-bps-container'], pv = g['gb-pwan-vol-container'];
+        if(pb) { pb.style.display = 'inline'; g['gb-pwan-bps-up'].textContent = '🔼 ' + fB(Phys.wU); g['gb-pwan-bps-down'].textContent = '🔽 ' + fB(Phys.wD); }
+        if(pv) { pv.style.display = 'flex'; g['gb-pwan-tot-up'].textContent = '🔼 ' + fV(Phys.tU); g['gb-pwan-tot-down'].textContent = '🔽 ' + fV(Phys.tD); }
       }
     } catch (e) {console.warn(e);}
     finally { fPPRunning = !1; }
@@ -1485,8 +1493,8 @@ async function fPP() {
       } else wT = window.__gLWT || "";
       if (wT) {
         if (!wanCompat) {
-          let wI = parseXml(wT, 'OBJ_HOME_BASICINFO_ID')[0] || {};
-          cDC = +(wI.AccessDevNum || -1) || -1;
+          const i = wT.indexOf('<ParaName>AccessDevNum</ParaName>', wT.indexOf('<OBJ_HOME_BASICINFO_ID>')); // rSD 还要整段解析同一份文本，这里只取一个数
+          cDC = i < 0 ? -1 : parseInt(wT.slice(wT.indexOf('<ParaValue>', i) + 11)) || -1;
         } else if (wanCompat.cK) {
           let wI = parseXml(wT, wanCompat.n)[0] || {};
           cDC = +(wI[wanCompat.cK] || -1) || -1;
@@ -1579,9 +1587,9 @@ async function fPP() {
           let iI_arr = [];
           for (let m of hM) {
             try {
-              const mt = window.gegeHiddenDevices[m] || {};
-              if (!mt || !mt.origMac) continue;
-              const sR = await fetch(`/?_type=vueData&_tag=localnet_lan_detailinfo_lua&MACAddress=${encodeURIComponent(mt.origMac||m)}&_=${Date.now()}`);
+              const mt = window.gegeHiddenDevices[m];
+              if (!mt?.origMac) continue;
+              const sR = await fetch(`/?_type=vueData&_tag=localnet_lan_detailinfo_lua&MACAddress=${encodeURIComponent(mt.origMac)}&_=${Date.now()}`);
               if (!sR.ok) continue;
               let sD = parseXml(await sR.text(), "OBJ_LANINFO_BYMAC")[0];
               if (sD) {
