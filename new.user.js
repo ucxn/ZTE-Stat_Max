@@ -275,13 +275,14 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
   const UNESC_MAP = { '&#32;': ' ', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&apos;': "'", '&amp;': '&' };
   function parseXml(xmlStr, tag) {
     if (!xmlStr) return [];
-    let list = [], m = xmlStr.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`));
-    if (!m) return list;
+    let list = [], a = xmlStr.indexOf(`<${tag}>`), b = xmlStr.indexOf(`</${tag}>`, a);
+    if (a < 0 || b < 0) return list;
+    const body = xmlStr.slice(a + tag.length + 2, b);
     let instRx = /<Instance>([\s\S]*?)<\/Instance>/g, pRx = /<ParaName>([^<]+)<\/ParaName>\s*<ParaValue>([^<]*)<\/ParaValue>/g, im;
-    while ((im = instRx.exec(m[1])) !== null) {
+    while ((im = instRx.exec(body)) !== null) {
       let o = Object.create(null), pm;
       while ((pm = pRx.exec(im[1])) !== null) {
-        o[pm[1]] = pm[2].replace(/&#32;|&lt;|&gt;|&quot;|&apos;|&amp;/g, m => UNESC_MAP[m]);
+        o[pm[1]] = pm[2].includes('&') ? pm[2].replace(/&#32;|&lt;|&gt;|&quot;|&apos;|&amp;/g, m => UNESC_MAP[m]) : pm[2];
       }
       list.push(o);
     }
@@ -684,13 +685,15 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         let box = 初始化总速率图(bd), cv = box._cv ??= box.querySelector('canvas'), W = box.clientWidth | 0, H = box.clientHeight | 0, R = window.devicePixelRatio || 1;
         if (W < 40 || H < 40) return;
         if (cv.width !== (W * R | 0) || cv.height !== (H * R | 0)) { cv.width = W * R | 0; cv.height = H * R | 0; cv.style.width = '100%'; cv.style.height = '100%'; }
-        const x = cv.getContext('2d'); x.setTransform(R,0,0,R,0,0); x.clearRect(0,0,W,H);
+        const x = box._cx ??= cv.getContext('2d'); x.setTransform(R,0,0,R,0,0); x.clearRect(0,0,W,H);
         let l = 34, r = 8, t = 20, b = 25, gw = W - l - r, gh = H - t - b, n = Math.min(S.总图点数, 8000), st = S.总图点数 - n, ym = 1, su = 0, sd = 0;
         for (let k = 0; k < n; k++) { const j = (st + k) & 8191, u = S.总上行图[j], d = S.总下行图[j]; if (u > ym) ym = u; if (d > ym) ym = d; su += u; sd += d; }
         x.fillStyle = 'rgba(255,255,255,.58)'; x.strokeStyle = 'rgba(0,89,250,.88)'; x.lineWidth = 1.5; x.beginPath(); x.roundRect ? x.roundRect(.5,.5,W-1,H-1,8) : x.rect(.5,.5,W-1,H-1); x.fill(); x.stroke();
         x.setLineDash([4,4]); x.strokeStyle = 'rgba(0,89,250,.45)'; x.lineWidth = 1;
-        for (let i = 5; i--; ) { const y = t + gh * i / 4; x.beginPath(); x.moveTo(l,y); x.lineTo(W-r,y); x.stroke(); }
-        for (let i = 7; i--; ) { const xx = l + gw * i / 6; x.beginPath(); x.moveTo(xx,t); x.lineTo(xx,H-b); x.stroke(); }
+        x.beginPath();
+        for (let i = 5; i--; ) { const y = t + gh * i / 4; x.moveTo(l,y); x.lineTo(W-r,y); }
+        for (let i = 7; i--; ) { const xx = l + gw * i / 6; x.moveTo(xx,t); x.lineTo(xx,H-b); }
+        x.stroke();
         x.setLineDash([]);
         const li = (S.总图点数 - 1) & 8191, au = n ? (n === 8000 ? su * .000125 : su / n) : 0, ad = n ? (n === 8000 ? sd * .000125 : sd / n) : 0;
         (box._gcMeta ??= box.querySelector('[data-gc="meta"]')).textContent = `采样:${window.gegeBActivated ? CONFIG.wanRefreshInterval : 3}s  点:${S.总图点数}`;
@@ -993,8 +996,8 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
           }
           const p = hqU * inv_tot_cU;
           (cache.upVol ??= bx.querySelector('.v-vol')).textContent = fVD(cS.intUp, cC.offUp);
-          (cache.upPct ??= bx.querySelector('.v-pct')).textContent = p.toFixed(1) + '%';
-          (cache.upBar ??= bx.querySelector('.zte-thin-bar-inner')).style.width = Math.min(p, 100) + '%';
+          const kU = (p * 10 + .5) | 0;
+          if (cache.kU !== kU) { cache.kU = kU; (cache.upPct ??= bx.querySelector('.v-pct')).textContent = p.toFixed(1) + '%'; (cache.upBar ??= bx.querySelector('.zte-thin-bar-inner')).style.width = Math.min(p, 100) + '%'; }
         }
         
         const inf = cache.info ??= it.querySelector('.info');
@@ -1038,8 +1041,9 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
           (cache.rBoxUp ??= rB.querySelector('.v-interval .c-up')).textContent = '' + fSV(hqU);
           (cache.rBoxDn ??= rB.querySelector('.v-interval .c-down')).textContent = '' + fSV(hqD);
           const rtP = cache.rtPct ??= rB.querySelector('.v-rt-pct');
-          rtP.textContent = tC; rtP.style.color = tCol;
-          (cache.rBoxBar ??= rB.querySelector('.gege-ratio-bar-inner')).style.width = Math.min(bR, 100) + '%';
+          if (cache.kC !== tCol + tC) { cache.kC = tCol + tC; rtP.textContent = tC; rtP.style.color = tCol; }
+          const kB = (bR * 10 + .5) | 0;
+          if (cache.kB !== kB) { cache.kB = kB; (cache.rBoxBar ??= rB.querySelector('.gege-ratio-bar-inner')).style.width = Math.min(bR, 100) + '%'; }
           
           let dBx = cache.dBox ??= inf.querySelector('.gege-down-box');
           if (!dBx) {
@@ -1050,8 +1054,8 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
           }
           const dp = (cC.offDn || 0) * inv_tOD;
           (cache.dBoxVol ??= dBx.querySelector('.v-vol')).textContent = fVD(cS.intDn, cC.offDn);
-          (cache.dBoxPct ??= dBx.querySelector('.v-pct')).textContent = dp.toFixed(1) + '%';
-          (cache.dBoxBar ??= dBx.querySelector('.zte-thin-bar-inner')).style.width = Math.min(dp, 100) + '%';
+          const kD = (dp * 10 + .5) | 0;
+          if (cache.kD !== kD) { cache.kD = kD; (cache.dBoxPct ??= dBx.querySelector('.v-pct')).textContent = dp.toFixed(1) + '%'; (cache.dBoxBar ??= dBx.querySelector('.zte-thin-bar-inner')).style.width = Math.min(dp, 100) + '%'; }
         }
         
         const sp = cache.speed ??= it.querySelector('.speed');
@@ -1072,16 +1076,15 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
           let clU = (S.aWu * 0.1) || 0; if (clU < 512000) clU = 512000;
           let clD = (S.aWd * 0.125) || 0;
           for (let i = 32; i--; ) { if (cS.hU[i] > clU) clU = cS.hU[i]; if (cS.hD[i] > clD) clD = cS.hD[i]; }
-          (cache.bUSpk ??= bU.querySelector('.v-spark')).textContent = getSpark(cS.hU, cS.hIdx, clU);
-          (cache.bDSpk ??= bD.querySelector('.v-spark')).textContent = getSpark(cS.hD, cS.hIdx, clD);
+          const spU = getSpark(cS.hU, cS.hIdx, clU), spD = getSpark(cS.hD, cS.hIdx, clD);
+          if (cache.spU !== spU) { cache.spU = spU; (cache.bUSpk ??= bU.querySelector('.v-spark')).textContent = spU; }
+          if (cache.spD !== spD) { cache.spD = spD; (cache.bDSpk ??= bD.querySelector('.v-spark')).textContent = spD; }
 
-          bU.style.setProperty('--p-up', Math.min(pu, 100) + '%');
-          (cache.bUVal ??= bU.querySelector('.v-val')).textContent = `🔼 ${fBy(cC.upRate)}`;
-          (cache.bUPct ??= bU.querySelector('.v-pct')).textContent = pu.toFixed(1) + '%';
-          
-          bD.style.setProperty('--p-down', Math.min(pd, 100) + '%');
-          (cache.bDVal ??= bD.querySelector('.v-val')).textContent = `🔽 ${fBy(cC.dnRate)}`;
-          (cache.bDPct ??= bD.querySelector('.v-pct')).textContent = pd.toFixed(1) + '%';
+          const kPU = (pu * 10 + .5) | 0, kPD = (pd * 10 + .5) | 0;
+          if (cache.kPU !== kPU) { cache.kPU = kPU; bU.style.setProperty('--p-up', Math.min(pu, 100) + '%'); (cache.bUPct ??= bU.querySelector('.v-pct')).textContent = pu.toFixed(1) + '%'; }
+          if (cache.rU !== cC.upRate) { cache.rU = cC.upRate; (cache.bUVal ??= bU.querySelector('.v-val')).textContent = `🔼 ${fBy(cC.upRate)}`; }
+          if (cache.kPD !== kPD) { cache.kPD = kPD; bD.style.setProperty('--p-down', Math.min(pd, 100) + '%'); (cache.bDPct ??= bD.querySelector('.v-pct')).textContent = pd.toFixed(1) + '%'; }
+          if (cache.rD !== cC.dnRate) { cache.rD = cC.dnRate; (cache.bDVal ??= bD.querySelector('.v-val')).textContent = `🔽 ${fBy(cC.dnRate)}`; }
         }
       }
       if (bd.parentNode) 画总速率图(bd); // 放在所有文字写完之后：读画布尺寸只触发一次排版
@@ -1384,8 +1387,9 @@ async function fPP() {
       WC.tx = tx; WC.rx = rx;
       g['gb-wc-up'].textContent = `🔼 ${fV(WC.u)}`;
       g['gb-wc-down'].textContent = `🔽 ${fV(WC.d)}`;
-      g['gb-wc-pu'].textContent = WC.u ? (iU * 100 / WC.u).toFixed(2) + '%' : '--';
-      g['gb-wc-pd'].textContent = WC.d ? (iD * 100 / WC.d).toFixed(2) + '%' : '--';
+      let qU, qD;
+      g['gb-wc-pu'].textContent = WC.u ? (qU = (iU * 1e4 / WC.u + .5) | 0, (qU / 100 | 0) + (qU % 100 < 10 ? '.0' : '.') + qU % 100 + '%') : '--';
+      g['gb-wc-pd'].textContent = WC.d ? (qD = (iD * 1e4 / WC.d + .5) | 0, (qD / 100 | 0) + (qD % 100 < 10 ? '.0' : '.') + qD % 100 + '%') : '--';
     } catch (e) {console.warn(e);}
     finally { fWCRunning = !1; }
   }
