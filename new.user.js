@@ -2,7 +2,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         6.0.3
+// @version         6.0.4
 // @website         https://github.com/ucxn/ZTE-Stat_Max
 // @supportURL      https://b23.tv/BV1PtR7B8ECC
 // @description     一款针对中兴官方计数器和UI不区分上下行、流量数据不可靠、网页隐藏API等问题而诞生的测控“引擎”，一个庞大的循环流程程序；融合了哥哥的大量思想和算法，探索属于家庭网关的真相。
@@ -1301,7 +1301,7 @@ async function fPP() {
     try {
       let r = await fetch(`/?_type=vueData&_tag=vue_internet_ethport_data&_=${Date.now()}`);
       if (!r.ok) return;
-      let txt = await r.text(), n = performance.now();
+      const n = performance.now(), txt = await r.text(); // 响应头到达即取时间，和外网计数器同口径
       if (!Phys._pM) { // 终生只解析一次字典，零 GC
         Phys._pM = {};
         parseXml(txt, "OBJ_ETHPORT_INFO_ID").forEach(d => {
