@@ -79,7 +79,6 @@
     return str ? String(str).replace(/[&<>'"]/g, m => ESC_MAP[m]) : '';
   }
   const S = {
-    lt: 0,
     wInstUp: 0,
     wInstDn: 0,
     wTotUp: 0,
@@ -312,7 +311,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
         wT = pWT; n = sT || performance.now();
       } else {
         wT = await gWT(); n = performance.now();}
-      window.__gLWT = wT; window.__gLWT_t = n; // 保障解耦模式全局缓存不丢失
+      window.__gLWT = wT; // 保障解耦模式全局缓存不丢失
       let lanNow = lCxtT ?? n,
         新LAN帧 = lCxtT === null || lCxtT !== lCxtProcessedT,
          lanDt = lCxtT !== null && lCxtProcessedT !== null && 新LAN帧 ? Math.min((lanNow - lCxtProcessedT) * .001, CONFIG.forceMeshMode & 2 ? 30 : CONFIG.lanRefreshInterval) : CONFIG.lanRefreshInterval;
@@ -493,7 +492,6 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
         }
       }
       if (lCxtT !== null && 新LAN帧) lCxtProcessedT = lCxtT;
-      S.lt = n;
       S.wInstUp = cWU;
       S.wInstDn = cWD;
       rUI(cWU, cWD, cSU, cSD, cI);
@@ -837,9 +835,9 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
             const rd = document.getElementById('gb-ratio-display'); if (rd) rd.innerHTML = S.cRT;
         }
     }
-    let bd = document.getElementById('zte-geek-board');
+    let bd = S.bd; // 面板重建 (bVD 整体 innerHTML) 会把看板摘下来，节点本身留着，下面的挂载逻辑会接回新锚点；一次性显示的外网计数器行、图表位置、冻结状态都靠它保留
     if (!bd) {
-      bd = document.createElement('div');
+      bd = S.bd = document.createElement('div');
       bd.id = 'zte-geek-board';
  let layoutHtml = '';
         if (CONFIG.uiLayout === 1) { // 紧凑版 (驾驶舱)
@@ -1337,7 +1335,7 @@ async function fPP() {
         }
       });
       if (document.getElementById('gege-global-overlay')?.style.display !== 'block') return;
-      const g = document.getElementById('zte-geek-board')?._g;
+      const g = S.bd?._g;
       if (!g) return;
       const db = g['gb-phys-data'], ks = Object.keys(Phys.p);
       if (db._k !== ks.length) { // 每秒一次的地方：网口集合变了才重排结构，平时只改文字
@@ -1380,13 +1378,14 @@ async function fPP() {
       const iU = WC.p ? Phys.tU + Phys.wU * (n - Phys.lT) * 0.001 : S.wTotUp + S.wInstUp * (n - S.wLT) * 0.001,
         iD = WC.p ? Phys.tD + Phys.wD * (n - Phys.lT) * 0.001 : S.wTotDn + S.wInstDn * (n - S.wLT) * 0.001;
       // 首帧借积分当起点，两行数字从此对齐；读档模式接着存档里的计数器走，积分不再覆盖它
-      if (WC.rx === undefined) { WC.u ??= iU; WC.d ??= iD; document.getElementById('gb-wc-row').style.display = 'flex'; document.getElementById('gb-wc-src').textContent = WC.p ? '(物理)' : '(逻辑)'; }
+      const g = S.bd._g;
+      if (WC.rx === undefined) { WC.u ??= iU; WC.d ??= iD; g['gb-wc-row'].style.display = 'flex'; g['gb-wc-src'].textContent = WC.p ? '(物理)' : '(逻辑)'; }
       else { WC.u += ((tx - WC.tx) >>> 0) * 8; WC.d += ((rx - WC.rx) >>> 0) * 8; }
       WC.tx = tx; WC.rx = rx;
-      document.getElementById('gb-wc-up').textContent = `🔼 ${fV(WC.u)}`;
-      document.getElementById('gb-wc-down').textContent = `🔽 ${fV(WC.d)}`;
-      document.getElementById('gb-wc-pu').textContent = WC.u ? (iU * 100 / WC.u).toFixed(2) + '%' : '--';
-      document.getElementById('gb-wc-pd').textContent = WC.d ? (iD * 100 / WC.d).toFixed(2) + '%' : '--';
+      g['gb-wc-up'].textContent = `🔼 ${fV(WC.u)}`;
+      g['gb-wc-down'].textContent = `🔽 ${fV(WC.d)}`;
+      g['gb-wc-pu'].textContent = WC.u ? (iU * 100 / WC.u).toFixed(2) + '%' : '--';
+      g['gb-wc-pd'].textContent = WC.d ? (iD * 100 / WC.d).toFixed(2) + '%' : '--';
     } catch (e) {console.warn(e);}
     finally { fWCRunning = !1; }
   }
