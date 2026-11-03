@@ -2,7 +2,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         6.0.4
+// @version         6.0.5.beta
 // @website         https://github.com/ucxn/ZTE-Stat_Max
 // @supportURL      https://b23.tv/BV1PtR7B8ECC
 // @description     一款针对中兴官方计数器和UI不区分上下行、流量数据不可靠、网页隐藏API等问题而诞生的测控“引擎”，一个庞大的循环流程程序；融合了哥哥的大量思想和算法，探索属于家庭网关的真相。
@@ -344,9 +344,9 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       if (S.pLC !== lCxt) { S.pL = parseXml(lCxt, "OBJ_CLIENTS_ID"); S.pLC = lCxt; } // LAN 帧比 WAN 帧稀，同一份文本不重复解析
       S.pL.forEach(d => {
         if (d.MACAddress) {
-          let m = nM(d.MACAddress),
-            u = s2b(d.UpRate),
-            dn = s2b(d.DownRate),
+          let m = d._m ??= nM(d.MACAddress),
+            u = d._u ??= s2b(d.UpRate),
+            dn = d._d ??= s2b(d.DownRate),
             uT = (+d.UpThroughput || 0) * 8000,
             dT = (+d.DownThroughput || 0) * 8000;
           let bN =
@@ -359,7 +359,8 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
             offDn: dT,
             onSec: +(d.OnlineDuration || d.OnlineTime || d.LeaseTime || 0),
             name: bN,
-            ip: d.IPAddress || ""
+            ip: d.IPAddress || "",
+            s: null
           };
           cSU += u;
           cSD += dn;
@@ -368,16 +369,18 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       let ol = document.getElementById('gege-global-overlay'),
         cM = Object.keys(
           cI),
-        iD = window.gegeForceUIRedraw || (cM.length !== window.gegeRenderedMacs.size);
+        rm = window.gegeRenderedMacs,
+        iD = window.gegeForceUIRedraw || (cM.length !== rm.size);
       if (!iD && cM.length > 0) {
         for (let i = 0; i <
           cM.length; i++) {
-          if (!window.gegeRenderedMacs.has(cM[i])) {
+          if (!rm.has(cM[i])) {
             iD = !0;
             break;
           }
         }
       }
+      const olOn = ol?.style.display === 'block';
       if (iD) {
         for (let m in S.cls) if (!cI[m]) {
           let cS = S.cls[m], dt = (lanNow - cS.lUT) * .001;
@@ -387,7 +390,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
           cS.upR = cS.dnR = 0;
         }
       }
-      if (ol && ol.style.display === 'block' && (iD || !ol.querySelector('.gege-list-item'))) {
+      if (olOn && (iD || !ol.querySelector('.gege-list-item'))) {
         bVD(ol);
         window.gegeRenderedMacs = new Set(
           cM);
@@ -406,7 +409,8 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       }
       if (CONFIG.readSaveData === 2 && !S.snapLoaded) { try { let sp = typeof GM_getValue !== 'undefined' ? GM_getValue('ha_snapshot') : null; S.snap = sp && sp.timestamp > (typeof GM_getValue !== 'undefined' ? (GM_getValue('gege_reset_ms', 0) || 0) : 0) ? sp : {}; if(S.snap.global) { S.wTotUp = S.wTotUp === 0 ? S.snap.global.wan_up || 0 : S.wTotUp; S.wTotDn = S.wTotDn === 0 ? S.snap.global.wan_down || 0 : S.wTotDn; S.lTotUp = S.lTotUp === 0 ? S.snap.global.lan_integral_up || 0 : S.lTotUp; S.lTotDn = S.lTotDn === 0 ? S.snap.global.lan_integral_down || 0 : S.lTotDn; } WC.u = S.snap.wc_up; WC.d = S.snap.wc_down; } catch(e){console.warn(e);} S.snapLoaded = !0; }
       const 本轮刷新接口 = lCxtT !== null && 新LAN帧 ? new Set() : null;
-      const 有Mesh = 本轮刷新接口 !== null && (CONFIG.forceMeshMode === 2 || window.gegeLastMeshDevCount > 0 || Object.keys(window.gegeHiddenDevices).length > 0);
+      const hid = window.gegeHiddenDevices;
+      const 有Mesh = 本轮刷新接口 !== null && (CONFIG.forceMeshMode === 2 || window.gegeLastMeshDevCount > 0 || Object.keys(hid).length > 0);
       for (let m in cI) {
         let cC = cI[m], cS = S.cls[m];
         if (!cS) {
@@ -457,13 +461,14 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
           if (cC.name) cS.name = cC.name;
         }
 
+        cC.s = cS;
         if (cC.upRate > 6e8) { cSU -= cC.upRate; cC.upRate = 3; }
         else if (cS.aR === 2) { cSU -= cC.upRate; cC.upRate = 2; }
         else if (cS.aR === 1 && cC.upRate > CONFIG.宽带最大外网上行速率 * 1.2 && cC.upRate > 32e7) { cSU -= cC.upRate; cC.upRate = 1; }
         if (cC.dnRate > 24e8) { cSD -= cC.dnRate; cC.dnRate = 3; }
         else if (cS.aR === 2) { cSD -= cC.dnRate; cC.dnRate = 2; }
         else if (cS.aR === 1 && (cC.dnRate > CONFIG.宽带最大外网下行速率 || cC.dnRate > 36e7)) { cSD -= cC.dnRate; cC.dnRate = 1; }
-        if (本轮刷新接口 && cS.aR === 0 && (!有Mesh || !window.gegeHiddenDevices[m]) && (cC.upRate !== cS.upR || cC.dnRate !== cS.dnR)) 本轮刷新接口.add(cC.iface);
+        if (本轮刷新接口 && cS.aR === 0 && (!有Mesh || !hid[m]) && (cC.upRate !== cS.upR || cC.dnRate !== cS.dnR)) 本轮刷新接口.add(cC.iface);
         cS.onS = cC.onSec;
         cS.lU = cC.offUp;
         cS.lD = cC.offDn;
@@ -480,8 +485,8 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       }
       S.lInstUp = cSU; S.lInstDn = cSD;
       for (let m in cI) {
-        let cC = cI[m], cS = S.cls[m];
-        if (cC.upRate !== cS.upR || cC.dnRate !== cS.dnR || cS.aR === 0 && (!有Mesh || !window.gegeHiddenDevices[m]) && 本轮刷新接口?.has(cC.iface)) {
+        let cC = cI[m], cS = cC.s;
+        if (cC.upRate !== cS.upR || cC.dnRate !== cS.dnR || cS.aR === 0 && (!有Mesh || !hid[m]) && 本轮刷新接口?.has(cC.iface)) {
           const ms = lanNow - cS.lUT;
           if (cS.upR > 0) { cS.intUp += (cS.upR + cC.upRate) * ms * 0.0005; }
           else if (cC.upRate > 0) { const eU = cC.upRate * lanDt * 0.5; cS.intUp += eU; cS.zEU = (cS.zEU || 0) + eU; cS.zUC = (cS.zUC || 0) + 1; }
@@ -496,7 +501,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       S.wInstUp = cWU;
       S.wInstDn = cWD;
       rUI(cWU, cWD, cSU, cSD, cI);
-      if (ol?.style.display === 'block') {
+      if (olOn) {
         S.lTick = ((S.lTick || 0) + 1) & ((CONFIG.信号强度刷新周期 << 3) - 1);
         if ((S.lTick & (CONFIG.信号强度刷新周期 - 1)) === 1 && CONFIG.forceMeshMode !== 2) fRSSI();
         if (S.lTick === 1) fPHY();
@@ -611,9 +616,10 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
           if (r = +d.Rssi) c.rssi = r;
           if (d.ParentDeviceMac) { c.via = d.ParentDeviceName; c.viaMac = d.ParentDeviceMac === '00:00:00:00:00:00' ? '' : d.ParentDeviceMac; }
         });
-        if (!S.oDC) return;
+        const oDC = S.oDC, fx = S.RSSI频率修正 || 0;
+        if (!oDC) return;
         for (let m in S.cls) {
-          let cS = S.cls[m], it = S.oDC[m], rRs = cS.rssi, lRs = cS.lRs ?? rRs;
+          let cS = S.cls[m], it = oDC[m], rRs = cS.rssi, lRs = cS.lRs ?? rRs;
           if (!it) continue;
           const cache = it._gege ??= {};
 		  // 如果值没有返回的话，它会一直显示缓存的旧值。它是程序本来就是这样子的，不是你专门做了一个防抖动。但是如果反之，为了避免显示缓存，要增加新的逻辑，那就不做。也就是说我们就是顺其自然，代码最简的思维：就是说如果没有新值就把旧值保留的逻辑，那也没有必要。
@@ -628,7 +634,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
           const logo = cache.logo ??= it.querySelector('.dev-logo');
           if (logo) { logo.style.background = 'none'; logo.innerHTML = gWSvg(rRs); }
           let dI = cache.devIntro ??= it.querySelector('.dev-intro'), rN = dI && (cache.rssiNode ??= dI.querySelector('.gege-rssi'));
-          if (rN) { let p = Math.round((cS.rssi - (cS.ifc === 'wl0' || cS.ifc === 'wl1' || cS.ifc === 'wlan0' || cS.ifc === 'wlan1' ? S.RSSI频率修正 || 0 : 0)) * 1.6666666666666667 + 133.33333333333334); rN.innerHTML = `<span style="color:${p < 0 ? '#ff4c00' : 'inherit'}">${p}%</span>, ${cS.rssi}`; }
+          if (rN) { let p = Math.round((cS.rssi - (cS.ifc === 'wl0' || cS.ifc === 'wl1' || cS.ifc === 'wlan0' || cS.ifc === 'wlan1' ? fx : 0)) * 1.6666666666666667 + 133.33333333333334); rN.innerHTML = `<span style="color:${p < 0 ? '#ff4c00' : 'inherit'}">${p}%</span>, ${cS.rssi}`; }
         }
       }
       function uPHY(dL) {
@@ -638,9 +644,10 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
           let d = dL.find(x => x.EthPortAliasName === 'LAN' + cS.ifc.slice(3) || x._InstID === cS.ifc);
           cS.phy = +(d?.EthPortSpeed || 0);
         }
-        if (!S.oDC) return;
+        const oDC = S.oDC;
+        if (!oDC) return;
         for (let m in S.cls) {
-          let cS = S.cls[m], it = S.oDC[m];
+          let cS = S.cls[m], it = oDC[m];
           if (!it || !/^eth\d+$/i.test(cS.ifc || '')) continue;
           let cache = it._gege || (it._gege = {}), logo = cache.logo ??= it.querySelector('.dev-logo');
           if (logo) { logo.style.background = 'none'; logo.innerHTML = gPSvg(cS.phy); }
@@ -656,8 +663,8 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
       }
       function 记总速率图(u, d) {
         u = u || 0; d = d || 0;
-        const i = S.总图点数 & 8191;
-        S.总上行图[i] = u; S.总下行图[i] = d; S.总图点数++;
+        const c = S.总图点数, i = c & 8191;
+        S.总上行图[i] = u; S.总下行图[i] = d; S.总图点数 = c + 1;
         if (u > S.wMaxU) S.wMaxU = u; if (d > S.wMaxD) S.wMaxD = d;
         if (u > 0 && u < S.wMinU) S.wMinU = u; if (d > 0 && d < S.wMinD) S.wMinD = d;
       }
@@ -687,7 +694,8 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         if (cv.width !== (W * R | 0) || cv.height !== (H * R | 0)) { cv.width = W * R | 0; cv.height = H * R | 0; cv.style.width = '100%'; cv.style.height = '100%'; }
         const x = box._cx ??= cv.getContext('2d'); x.setTransform(R,0,0,R,0,0); x.clearRect(0,0,W,H);
         let l = 34, r = 8, t = 20, b = 25, gw = W - l - r, gh = H - t - b, n = Math.min(S.总图点数, 8000), st = S.总图点数 - n, ym = 1, su = 0, sd = 0;
-        for (let k = 0; k < n; k++) { const j = (st + k) & 8191, u = S.总上行图[j], d = S.总下行图[j]; if (u > ym) ym = u; if (d > ym) ym = d; su += u; sd += d; }
+        const AU = S.总上行图, AD = S.总下行图;
+        for (let k = 0; k < n; k++) { const j = (st + k) & 8191, u = AU[j], d = AD[j]; if (u > ym) ym = u; if (d > ym) ym = d; su += u; sd += d; }
         x.fillStyle = 'rgba(255,255,255,.58)'; x.strokeStyle = 'rgba(0,89,250,.88)'; x.lineWidth = 1.5; x.beginPath(); x.roundRect ? x.roundRect(.5,.5,W-1,H-1,8) : x.rect(.5,.5,W-1,H-1); x.fill(); x.stroke();
         x.setLineDash([4,4]); x.strokeStyle = 'rgba(0,89,250,.45)'; x.lineWidth = 1;
         x.beginPath();
@@ -704,15 +712,15 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         const DrawingTheLine = (arr, col) => {
           if (!n) return;
           x.strokeStyle = col; x.lineWidth = 2.4; x.beginPath();
-          const bins = Math.max(1, Math.min(n, gw | 0)); let first = 1;
+          const bins = Math.max(1, Math.min(n, gw | 0)), sx = n > 1 ? gw / (n - 1) : 0, x0 = n > 1 ? l : l + gw, ky = gh / ym, yb = H - b; let first = 1;
           if (bins === n) {
-            for (let k = 0; k < n; k++) { let xx = l + (n > 1 ? gw * k / (n - 1) : gw), yy = H - b - (arr[(st + k) & 8191] / ym) * gh; first ? (x.moveTo(xx, yy), first = !1) : x.lineTo(xx, yy); }
+            for (let k = 0; k < n; k++) { const xx = x0 + sx * k, yy = yb - arr[(st + k) & 8191] * ky; first ? (x.moveTo(xx, yy), first = !1) : x.lineTo(xx, yy); }
           } else {
             for (let q = 0; q < bins; q++) {
               let a = q * n / bins | 0, z = (q + 1) * n / bins | 0, mn = Infinity, mx = -Infinity, mi = a, ma = a; if (z <= a) z = a + 1;
               for (let k = a; k < z; k++) { let v = arr[(st + k) & 8191]; if (v < mn) { mn = v; mi = k; } if (v > mx) { mx = v; ma = k; } }
-              if (mi <= ma) { let xx = l + (n > 1 ? gw * mi / (n - 1) : gw), yy = H - b - (mn / ym) * gh; first ? (x.moveTo(xx, yy), first = !1) : x.lineTo(xx, yy); if (ma !== mi) { xx = l + gw * ma / (n - 1); yy = H - b - (mx / ym) * gh; x.lineTo(xx, yy); } }
-              else { let xx = l + gw * ma / (n - 1), yy = H - b - (mx / ym) * gh; first ? (x.moveTo(xx, yy), first = !1) : x.lineTo(xx, yy); xx = l + gw * mi / (n - 1); yy = H - b - (mn / ym) * gh; x.lineTo(xx, yy); }
+              if (mi <= ma) { first ? (x.moveTo(x0 + sx * mi, yb - mn * ky), first = !1) : x.lineTo(x0 + sx * mi, yb - mn * ky); if (ma !== mi) x.lineTo(x0 + sx * ma, yb - mx * ky); }
+              else { first ? (x.moveTo(x0 + sx * ma, yb - mx * ky), first = !1) : x.lineTo(x0 + sx * ma, yb - mx * ky); x.lineTo(x0 + sx * mi, yb - mn * ky); }
             }
           }
           x.stroke();
@@ -732,25 +740,27 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
       curHpD = 0,
       tot_cU = 0,
       dv = S.rTick === 1 ? {} : null; // 快照只在存档和结算的那一帧才有人读，其余帧不造
+    const rs2 = CONFIG.readSaveData === 2;
     for (let k in S.cls) {
       let s = S.cls[k], cC = cI[k];
-      let cU = Math.max(0, (s.lU || 0) - (s.uB || 0));
-      let cD = Math.max(0, (s.lD || 0) - (s.dB || 0));
-      let sessU = Math.max(0, (s.lU || 0) - (s.oU || 0));
-      let sessD = Math.max(0, (s.lD || 0) - (s.oD || 0));
+      const lU = s.lU || 0, lD = s.lD || 0;
+      let cU = s.qU = Math.max(0, lU - (s.uB || 0));
+      let cD = s.qD = Math.max(0, lD - (s.dB || 0));
+      let sessU = Math.max(0, lU - (s.oU || 0));
+      let sessD = Math.max(0, lD - (s.oD || 0));
       tot_cU += cU;
-      hpU += (CONFIG.readSaveData === 2 ? cU : sessU);
-      hpD += (CONFIG.readSaveData === 2 ? cD : sessD);
+      hpU += rs2 ? cU : sessU;
+      hpD += rs2 ? cD : sessD;
       if (cC) {
-        curHpU += (CONFIG.readSaveData === 2 ? cU : sessU); 
-        curHpD += (CONFIG.readSaveData === 2 ? cD : sessD);
+        curHpU += rs2 ? cU : sessU;
+        curHpD += rs2 ? cD : sessD;
         tOD += cC.offDn || 0;
       }
-      abU += CONFIG.readSaveData === 2 ? sessU : (cC ? (cC.offUp || 0) : (s.lU || 0));
-      abD += CONFIG.readSaveData === 2 ? sessD : (cC ? (cC.offDn || 0) : (s.lD || 0));
-      s.hIdx = (s.hIdx + 1) & 31;
-      s.hU[s.hIdx] = cC ? cC.upRate : 0;
-      s.hD[s.hIdx] = cC ? cC.dnRate : 0;
+      abU += rs2 ? sessU : (cC ? (cC.offUp || 0) : lU);
+      abD += rs2 ? sessD : (cC ? (cC.offDn || 0) : lD);
+      const h = s.hIdx = (s.hIdx + 1) & 31;
+      s.hU[h] = cC ? cC.upRate : 0;
+      s.hD[h] = cC ? cC.dnRate : 0;
       if (dv) dv[k] = {
         up: cU, down: cD,
         integral_up: s.intUp || 0,
@@ -827,7 +837,8 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
 
     S.rTick = ((S.rTick || 0) + 1) & 7;
     if (S.rTick === 1 || !S.cRT) {
-      S.aWu = (S.wTotUp - (S.lwTU || S.wTotUp)) / ((window.gegeBActivated ? CONFIG.wanRefreshInterval : 3) << 3); S.lwTU = S.wTotUp; S.aWd = (S.wTotDn - (S.lwTD || S.wTotDn)) / ((window.gegeBActivated ? CONFIG.wanRefreshInterval : 3) << 3); S.lwTD = S.wTotDn;
+      const wi = (window.gegeBActivated ? CONFIG.wanRefreshInterval : 3) << 3;
+      S.aWu = (S.wTotUp - (S.lwTU || S.wTotUp)) / wi; S.lwTU = S.wTotUp; S.aWd = (S.wTotDn - (S.lwTD || S.wTotDn)) / wi; S.lwTD = S.wTotDn;
         if (S.hasW2) {
             let rU = S.w2TotUp > 0 ? (S.wTotUp / S.w2TotUp) : (S.wTotUp > 0 ? Infinity : 0), rD = S.w2TotDn > 0 ? (S.wTotDn / S.w2TotDn) : (S.wTotDn > 0 ? Infinity : 0);
             let fR = (r) => r === Infinity ? '∞' : (r > 1 ? r.toFixed(2) + 'x' : (r * 100).toPrecision(3) + '%');
@@ -974,14 +985,15 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
       const inv_tOD = tOD > 0 ? 100 / tOD : 0;
       const inv_sU = sU > 0 ? 100 / sU : 0;
       const inv_sD = sD > 0 ? 100 / sD : 0;
+      const clU0 = Math.max(S.aWu * 0.1 || 0, 512000), clD0 = S.aWd * 0.125 || 0;
+      const cm = CONFIG.calcMode === 1, rxU = CONFIG.ratioExtremeUp, rwU = CONFIG.ratioWarnUp, rxD = CONFIG.ratioExtremeDown, rth = CONFIG.ratioThreshold, pm = CONFIG.portMap;
       for (let m in cI) {
         let it = oDC[m];
         if (!it) continue;
-        const cC = cI[m], cS = S.cls[m];
+        const cC = cI[m], cS = cC.s;
         
         let cache = it._gege || (it._gege = {});
-        const hqU = Math.max(0, (cS.lU || 0) - (cS.uB || 0));
-        const hqD = Math.max(0, (cS.lD || 0) - (cS.dB || 0));
+        const hqU = cS.qU, hqD = cS.qD;
         const tN = cache.timeNode ??= it.querySelector('.gege-online-time');
         if (tN && cS.onS > 0) tN.textContent = `在线：${fOT(cS.onS)}`;
         
@@ -1026,18 +1038,19 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
           }
           
           const bR = (hqU + hqD) > 0 ? (hqU * 100 / (hqU + hqD)) : 0;          let tC = "", tCol;
-          if (CONFIG.calcMode === 1) {
+          if (cm) {
             const rt = hqD > 0 ? (hqU / hqD) : (hqU > 0 ? Infinity : 0);
-            if (rt > CONFIG.ratioExtremeUp) { tCol = '#ff4c00'; tC = (rt === Infinity ? '∞' : rt.toFixed(2)) + '⚠️'; }
-            else if (rt > CONFIG.ratioWarnUp) { tCol = '#ff4c00'; tC = (rt * 100).toFixed(1) + '%'; }
-            else if (rt > CONFIG.ratioExtremeDown) { tCol = '#0059fa'; tC = (rt * 100).toFixed(1) + '%'; }
+            if (rt > rxU) { tCol = '#ff4c00'; tC = (rt === Infinity ? '∞' : rt.toFixed(2)) + '⚠️'; }
+            else if (rt > rwU) { tCol = '#ff4c00'; tC = (rt * 100).toFixed(1) + '%'; }
+            else if (rt > rxD) { tCol = '#0059fa'; tC = (rt * 100).toFixed(1) + '%'; }
             else { tCol = '#0059fa'; const rRt = hqU > 0 ? (hqD / hqU) : (hqD > 0 ? Infinity : 0); tC = (rRt === Infinity ? '∞' : rRt.toFixed(1)) + 'x'; }
           } else {
-            tCol = bR > CONFIG.ratioThreshold ? '#ff4c00' : '#0059fa';
+            tCol = bR > rth ? '#ff4c00' : '#0059fa';
             tC = bR.toFixed(1) + '%';
           }
           
-          (cache.rBoxPort ??= rB.querySelector('.v-port')).textContent = CONFIG.portMap[cC.iface] || cC.iface || "未知";
+          const pt = pm[cC.iface] || cC.iface || "未知";
+          if (cache.pt !== pt) { cache.pt = pt; (cache.rBoxPort ??= rB.querySelector('.v-port')).textContent = pt; }
           (cache.rBoxUp ??= rB.querySelector('.v-interval .c-up')).textContent = '' + fSV(hqU);
           (cache.rBoxDn ??= rB.querySelector('.v-interval .c-down')).textContent = '' + fSV(hqD);
           const rtP = cache.rtPct ??= rB.querySelector('.v-rt-pct');
@@ -1073,10 +1086,10 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
               bU = cache.bU ??= enh.querySelector('.zte-bar-up'),
               bD = cache.bD ??= enh.querySelector('.zte-bar-down');
           
-          let clU = (S.aWu * 0.1) || 0; if (clU < 512000) clU = 512000;
-          let clD = (S.aWd * 0.125) || 0;
-          for (let i = 32; i--; ) { if (cS.hU[i] > clU) clU = cS.hU[i]; if (cS.hD[i] > clD) clD = cS.hD[i]; }
-          const spU = getSpark(cS.hU, cS.hIdx, clU), spD = getSpark(cS.hD, cS.hIdx, clD);
+          let clU = clU0, clD = clD0;
+          const hU = cS.hU, hD = cS.hD;
+          for (let i = 32; i--; ) { if (hU[i] > clU) clU = hU[i]; if (hD[i] > clD) clD = hD[i]; }
+          const spU = getSpark(hU, cS.hIdx, clU), spD = getSpark(hD, cS.hIdx, clD);
           if (cache.spU !== spU) { cache.spU = spU; (cache.bUSpk ??= bU.querySelector('.v-spark')).textContent = spU; }
           if (cache.spD !== spD) { cache.spD = spD; (cache.bDSpk ??= bD.querySelector('.v-spark')).textContent = spD; }
 
@@ -1346,8 +1359,9 @@ async function fPP() {
         db.innerHTML = ks.map(k => `<span style="margin-right:16px; white-space:nowrap; font-weight:normal; color:#333;">${k}:<span class="c-up" style="display:inline-block; min-width:55px; font-weight:bold; margin-left:6px; text-align:left;"></span><span class="c-down" style="display:inline-block; min-width:55px; font-weight:bold; margin-left:10px; text-align:left;"></span><span style="margin-left:6px; color:#666;">(<span style="color:#9c27b0;"></span>，<span style="color:#4caf50;"></span>)</span></span>`).join('');
         db._n = Array.from(db.children, e => [e.children[0], e.children[1], e.children[2].children[0], e.children[2].children[1]]);
       }
+      const P = Phys.p, nn = db._n;
       for (let i = 0; i < ks.length; i++) {
-        const v = Phys.p[ks[i]], n = db._n[i];
+        const v = P[ks[i]], n = nn[i];
         n[0].textContent = fBy(v.dn); n[1].textContent = fBy(v.u); n[2].textContent = fSV(v.tD); n[3].textContent = fSV(v.tU);
       }
 
@@ -1385,11 +1399,12 @@ async function fPP() {
       if (WC.rx === undefined) { WC.u ??= iU; WC.d ??= iD; g['gb-wc-row'].style.display = 'flex'; g['gb-wc-src'].textContent = WC.p ? '(物理)' : '(逻辑)'; }
       else { WC.u += ((tx - WC.tx) >>> 0) * 8; WC.d += ((rx - WC.rx) >>> 0) * 8; }
       WC.tx = tx; WC.rx = rx;
-      g['gb-wc-up'].textContent = `🔼 ${fV(WC.u)}`;
-      g['gb-wc-down'].textContent = `🔽 ${fV(WC.d)}`;
+      const wu = WC.u, wd = WC.d;
+      g['gb-wc-up'].textContent = `🔼 ${fV(wu)}`;
+      g['gb-wc-down'].textContent = `🔽 ${fV(wd)}`;
       let qU, qD;
-      g['gb-wc-pu'].textContent = WC.u ? (qU = (iU * 1e4 / WC.u + .5) | 0, (qU / 100 | 0) + (qU % 100 < 10 ? '.0' : '.') + qU % 100 + '%') : '--';
-      g['gb-wc-pd'].textContent = WC.d ? (qD = (iD * 1e4 / WC.d + .5) | 0, (qD / 100 | 0) + (qD % 100 < 10 ? '.0' : '.') + qD % 100 + '%') : '--';
+      g['gb-wc-pu'].textContent = wu ? (qU = (iU * 1e4 / wu + .5) | 0, (qU / 100 | 0) + (qU % 100 < 10 ? '.0' : '.') + qU % 100 + '%') : '--';
+      g['gb-wc-pd'].textContent = wd ? (qD = (iD * 1e4 / wd + .5) | 0, (qD / 100 | 0) + (qD % 100 < 10 ? '.0' : '.') + qD % 100 + '%') : '--';
     } catch (e) {console.warn(e);}
     finally { fWCRunning = !1; }
   }
@@ -1426,13 +1441,14 @@ async function fPP() {
             }
           }
         });
-        if (Object.keys(nHD).sort().join('|') !== Object.keys(window.gegeHiddenDevices).sort().join('|') ||
+        const nk = Object.keys(nHD);
+        if (nk.sort().join('|') !== Object.keys(window.gegeHiddenDevices).sort().join('|') ||
             Object.values(nHD).some(d => d?.mesh === false) !== Object.values(window.gegeHiddenDevices).some(d => d?.mesh === false)) {
           window.gegeForceUIRedraw = !0;
-          if (Object.keys(nHD).length > 0) console.log("🎯 [哥哥科技] 破甲弹命中！强制狙击名单:", Object.keys(nHD));
+          if (nk.length > 0) console.log("🎯 [哥哥科技] 破甲弹命中！强制狙击名单:", nk);
         }
         window.gegeHiddenDevices = nHD;
-        if (!Object.keys(nHD).length) document.getElementById('gege-mesh-badge')?.remove();
+        if (!nk.length) document.getElementById('gege-mesh-badge')?.remove();
       }
       return dL;
     })().catch(e => {
