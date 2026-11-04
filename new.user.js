@@ -342,11 +342,12 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       let cSU = 0,
         cSD = 0;
       if (S.pLC !== lCxt) { S.pL = parseXml(lCxt, "OBJ_CLIENTS_ID"); S.pLC = lCxt; } // LAN 帧比 WAN 帧稀，同一份文本不重复解析
+      const 复用 = CONFIG.lanRefreshInterval > CONFIG.wanRefreshInterval;
       S.pL.forEach(d => {
         if (d.MACAddress) {
-          let m = d._m ??= nM(d.MACAddress),
-            u = d._u ??= s2b(d.UpRate),
-            dn = d._d ??= s2b(d.DownRate),
+          let m = 复用 ? d._m ??= nM(d.MACAddress) : nM(d.MACAddress),
+            u = 复用 ? d._u ??= s2b(d.UpRate) : s2b(d.UpRate),
+            dn = 复用 ? d._d ??= s2b(d.DownRate) : s2b(d.DownRate),
             uT = (+d.UpThroughput || 0) * 8000,
             dT = (+d.DownThroughput || 0) * 8000;
           let bN =
@@ -409,7 +410,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       }
       if (CONFIG.readSaveData === 2 && !S.snapLoaded) { try { let sp = typeof GM_getValue !== 'undefined' ? GM_getValue('ha_snapshot') : null; S.snap = sp && sp.timestamp > (typeof GM_getValue !== 'undefined' ? (GM_getValue('gege_reset_ms', 0) || 0) : 0) ? sp : {}; if(S.snap.global) { S.wTotUp = S.wTotUp === 0 ? S.snap.global.wan_up || 0 : S.wTotUp; S.wTotDn = S.wTotDn === 0 ? S.snap.global.wan_down || 0 : S.wTotDn; S.lTotUp = S.lTotUp === 0 ? S.snap.global.lan_integral_up || 0 : S.lTotUp; S.lTotDn = S.lTotDn === 0 ? S.snap.global.lan_integral_down || 0 : S.lTotDn; } WC.u = S.snap.wc_up; WC.d = S.snap.wc_down; } catch(e){console.warn(e);} S.snapLoaded = !0; }
       const 本轮刷新接口 = lCxtT !== null && 新LAN帧 ? new Set() : null;
-      const hid = window.gegeHiddenDevices;
+      const hid = 本轮刷新接口 && window.gegeHiddenDevices;
       const 有Mesh = 本轮刷新接口 !== null && (CONFIG.forceMeshMode === 2 || window.gegeLastMeshDevCount > 0 || Object.keys(hid).length > 0);
       for (let m in cI) {
         let cC = cI[m], cS = S.cls[m];
@@ -1054,7 +1055,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
           (cache.rBoxUp ??= rB.querySelector('.v-interval .c-up')).textContent = '' + fSV(hqU);
           (cache.rBoxDn ??= rB.querySelector('.v-interval .c-down')).textContent = '' + fSV(hqD);
           const rtP = cache.rtPct ??= rB.querySelector('.v-rt-pct');
-          if (cache.kC !== tCol + tC) { cache.kC = tCol + tC; rtP.textContent = tC; rtP.style.color = tCol; }
+          if (cache.kC !== tC || cache.kCol !== tCol) { cache.kC = tC; cache.kCol = tCol; rtP.textContent = tC; rtP.style.color = tCol; }
           const kB = (bR * 10 + .5) | 0;
           if (cache.kB !== kB) { cache.kB = kB; (cache.rBoxBar ??= rB.querySelector('.gege-ratio-bar-inner')).style.width = Math.min(bR, 100) + '%'; }
           
