@@ -2,7 +2,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         6.0.5.beta
+// @version         6.0.5.Pre
 // @website         https://github.com/ucxn/ZTE-Stat_Max
 // @supportURL      https://b23.tv/BV1PtR7B8ECC
 // @description     一款针对中兴官方计数器和UI不区分上下行、流量数据不可靠、网页隐藏API等问题而诞生的测控“引擎”，一个庞大的循环流程程序；融合了哥哥的大量思想和算法，探索属于家庭网关的真相。
@@ -36,6 +36,7 @@
   console.log(`🚀 哥哥科技 V${(typeof GM_info !== 'undefined' && GM_info.script?.version) || '6.0'} 引擎已装载...`);
 
   // ======== [0] 用户极客环境变量配置区 ========
+
   const CONFIG = {
     readSaveData: 3, // 【历史记录】 1: 从路由器后台读档（继承基线） | 0: 新局模式 | 2: 从本地长期历史读档 [自动保存！] | 3: 启动时用后台临时值充当积分
     forceMeshMode: 1, // 【Mesh探测模式】0: 官方拓扑驱动 | 1: n秒智能等待(默认) | 2: 强制大包抓取(专治阉割、不出数据)[会改变LAN时率]
@@ -44,20 +45,28 @@
     calcMode: 1, // 1: 上行/下行倍数模式, 0: 上行占总和比例模式
     lanPortMode: 1, // 【物理网口】 0: 关闭 | 1: 底部追加显示 | 2: WAN高速接管主线
     portInterval: 1, // 物理网口刷新频率(秒)
+
+    // 上传/下载异常占比的判定阈值
     ratioExtremeUp: 10, // 极端上传判定阈值 (> 1000%)
     ratioWarnUp: 0.07, // 重度上传警告阈值 (> 7%)
     ratioExtremeDown: 0.01, // 极端下载判定阈值 (< 1%)
     ratioThreshold: 7, // (仅calcMode=0时有效) 上传占比报警阈值(%)
+
+    // 刷新节奏
     lanRefreshInterval: 6, // LAN口刷新时间(秒)，用于补偿评估0到唤醒期间的流量
     wanRefreshInterval: 3, // 【外网】WAN口刷新时间(秒)，通常为程序主时钟周期
     外网计数器: undefined, // 【外网字节计数器】0: 关闭 | 1: vue_mainwan_data | 2: home_internetreg | undefined: 自动探测，失败即关
     外网计数器刷新: 10, // 秒；两次采样间的流量不能超过 4 GiB 的一圈，千兆满速别超过 30 秒
+
+    // 统计周期与自动导出
     周期类型: 'W', // 'M'(每月), 'W'(每周), 'D'(固定天数)； 其它任意字符：不开启周期重置+自动导出功能
     周_天设置: 6, // M: 1~31号; W: 0~6(周日~周六); D: 间隔天数(如 7)
     基准日期: '2027-03-01', // 原点时间(仅 D 模式有效) 任意一个历史周期的零点
     报告时间: -720, // 提示时间：相对周期0点的偏移分钟数（如 -4320 代表提前 3 天）设置相对指定日期的下个周期起点的时间偏移量
     自动导出: -180, // 强制导出：相对周期0点的偏移分钟数（如 W模式+锚点6(周六)+偏移-180 = 周五 21:00 强制导出清零）
     时区补偿: 28800000, // 默认 UTC+8 时区补偿量。
+
+    // 接口名 → 面板上显示的名称
     portMap: {
       "eth1": "网口 1",
       "eth2": "网口 2",
@@ -69,11 +78,16 @@
       "wlan0": "2.4G",
       "wlan4": "5.2G"
     },
+
+    // 性能和算法相关
     信号强度刷新周期: 16, // 信号强度刷新周期，单位：帧（程序主采样周期）；请设成 2 的自然数次幂（其中1为不主动请求刷新）
     盲漫游: undefined, //也就是包括但不限于无线交换机（AP/有线桥接）模式，无线设备被主路由识别为有线设备则设置1
     宽带最大外网下行速率: 24e8, // 配置外网最大上传|下载比特(bit/bps)速率
     宽带最大外网上行速率: 3e8 //请略微大于真实值；500兆为5e8，一千兆1e9
   };
+
+
+  // ---[1]------------------------ 全局状态与运行时变量 ------------------------
   const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
   function escapeHTML(str) {
     return str ? String(str).replace(/[&<>'"]/g, m => ESC_MAP[m]) : '';
@@ -93,6 +107,8 @@
     总上行图: new Float64Array(8192), 总下行图: new Float64Array(8192), 总图点数: 0,
     wMaxU: 0, wMaxD: 0, wMinU: Infinity, wMinD: Infinity, 拖动图表: null, 图表待画: 0, pL: [], pLC: null
   };
+  // ---[4]------------------------ 数据获取层：WAN / LAN 文本拉取 + XHR 劫持 ------------------------
+  // 拉取文本并确认含有目标标记；网络错误 / 非 200 / 缺少标记一律返回空串
 const WAN_COMPAT = [
     // 兼容层只在标准 WAN 首次失败时探测；社区可继续追加旧固件接口。
     { u: '/getpage.lua?pid=1005&nextpage=Internet_WANInfo_lua.lua', n: 'OBJ_TOTALSPEED_ID', uK: 'TotalUpRate', dK: 'TotalDownRate' }
@@ -115,6 +131,7 @@ const WAN_COMPAT = [
       return t.includes('<OBJ_HOME_BASICINFO_ID>') ? t : "";
     } catch(e) { console.warn(e); return ""; }
   }
+  // WAN 文本：先试标准接口；失败则依次探测兼容表。一旦某个接口跑通，就把后续调用永久替换成它。主接口性能或执行顺序地位最高，也就是一主加多从自动轮换架构。
   let gWT = async function () {
     let t = await gWTPrimary();
     if (t) { gWT = gWTPrimary; return t; }
@@ -132,12 +149,11 @@ const WAN_COMPAT = [
             let t = await r.text();
             return t.includes('<' + c.n + '>') ? t : "";
           } catch(e) { console.warn(e); return ""; }
-        };
-        return t;
+        }; return t;
       } catch(e) { console.warn(e); }
     }
-    return "";
-  };
+    return ""; };
+
   async function gLTPrimary(ts) {
     try {
       let r = await fetch(`/?_type=vueData&_tag=vue_client_data&_=${ts}`);
@@ -164,17 +180,19 @@ const WAN_COMPAT = [
           } catch(e) { console.warn(e); return ""; }
         };
         return t;
-      } catch(e) { console.warn(e); }
-    }
+      } catch(e) { console.warn(e); } }
     return "";
   };
-  const 版本号 = (typeof GM_info !== 'undefined' && GM_info.script?.version) || '环境不支持获取版本号';// 虽然不喜欢废物变量，但是这里会使用两次或以上
+  // ---[2]------------------------ 工具函数 ------------------------
+  const 版本号 = (typeof GM_info !== 'undefined' && GM_info.script?.version) || '环境不支持获取版本号'; // 虽然不喜欢废物变量，但是这里会使用两次或以上（也不是多次就必须要抽，还是只为了性能，可读性不作为加分项。主要是因为不同类型的数组序列化之类的，反而可能更不划算。而且敲起字来也太麻烦了…）
   const Phys = { p: Object.create(null), wU: undefined, wD: undefined, tU: 0, tD: 0, lT: undefined, _pM: null, _wID: null };
   const WC = { rx: undefined, tx: 0, u: undefined, d: undefined, p: !1 };
   let gWUp = (wI, k) => s2b(wI[k]);
   let gWDn = (wI, k) => s2b(wI[k]);
   let isF = !1,
     lCxt = null, lCxtT = null, lCxtProcessedT = null;
+  // 劫持原版页面自己的 XHR：只要看到设备列表 / 首页基础信息的响应，就缓存设备列表并（在面板未激活时）启动引擎。这样官方页面每次刷新，我们都能零额外请求地拿到最新数据。
+  // 作者备注：原厂的逻辑是你停留在哪个页面才给哪个页面的数据，所以你必须停留在LAN或者主MAC页面，而不是停留在主页看路由器的大头照和信息量不够的单只有Wan口速率。
   const oOp = XMLHttpRequest.prototype.open;
   XMLHttpRequest.prototype.open = function () {
     this.
@@ -188,17 +206,15 @@ const WAN_COMPAT = [
             if (c) { lCxt = t; lCxtT = null; }
             if (window.startGegePrecisionEngine) {
               window.startGegePrecisionEngine();
-            }
-          }
-        }
-      }
+            }          }        }      }
       catch (e) {
         console.warn("[哥哥科技] XHR 拦截器异常:", e.message);
-      }
-    });
-    oOp.apply(this, arguments);
-  };
+      }    });
+    oOp.apply(this, arguments); };
 
+  // ---[3]------------------------ 格式化 / 解析 ------------------------
+  // 单位换算：全程以 bit 为基准
+  // 官方速率字符串（如 "12.3Kbps"）→ bit/s
  function s2b(speedStr) {
         if (!speedStr) return 0;
         const val = parseFloat(speedStr);
@@ -212,13 +228,14 @@ const WAN_COMPAT = [
         return val;
  }
 
-  function fB(bps) {
+  function fB(bps) {  // bit/s → 十进制“比特率”文本（Mbps / kbps）
         if (bps > 1e9) return `${Math.round(bps * 1e-6)} Mbit/s`;
         if (bps > 1e6) return `${(bps * 1e-6).toFixed(1)} Mbps`;
         if (bps > 1e3) return `${(bps * 1e-3).toFixed(1)} kbps`;
-        return `${Math.round(bps)} bps`;
-    }
-const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]', '[1]'];
+        return `${Math.round(bps)} bps`;}
+
+  // bit/s → “字节率”文本。小于 8700 的低速段用十进制 kB/s，并尽量显示成 1/8 的分数，避免单位频繁切换。
+  const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]', '[1]'];
   function fBy(bps) {
         if (bps === 0) return '0  B';
         if (bps > 8388608) return `${(bps * 1.1920928955078125e-7).toFixed(2)} MiB/s`;
@@ -232,14 +249,16 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
             : `${(bps * 0.0001220703125).toFixed(1)} KiB/s`;
     }
 
+  // 累计流量 (bit) → 文本。
   function fV(bits) {
         if (bits > 83886080000) return `${(bits * 1.1641532182693481e-10).toFixed(4)} GiB`;
-		if (bits >= 8589934592) return `${(bits * 1.1920928955078125e-7).toFixed(1)} MiB`;
-        if (bits > 8388608) return `${(bits * 1.1920928955078125e-7).toFixed(4)} MiB`;
-        if (bits > 8192) return `${(bits * 0.0001220703125).toFixed(2)} KiB`;
-        return `${Math.round(bits * 0.125)} B`;
+		if (bits >= 8589934592) return `${(bits / 8388608).toFixed(1)} MiB`;
+        if (bits > 8388608) return `${(bits / 8388608).toFixed(4)} MiB`;
+        if (bits > 8192) return `${(bits / 8192).toFixed(2)} KiB`;
+        return `${Math.round(bits / 8)} B`;
     }
 
+  // “官方值 | 积分值”双轨文本，以积分值决定用哪个单位
   function fVD(bitsIntegral, bitsOfficial) {
         if (bitsIntegral > 8796093022208) return `${(bitsOfficial * 1.1368683772161603e-13).toFixed(4)} | ${(bitsIntegral * 1.1368683772161603e-13).toFixed(4)} TiB`;
         if (bitsIntegral > 83886080000) return `${(bitsOfficial * 1.1641532182693481e-10).toPrecision(5)} | ${(bitsIntegral * 1.1641532182693481e-10).toPrecision(5)} GiB`;
@@ -248,13 +267,15 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
         if (bitsIntegral > 8192) return `${(bitsOfficial * 0.0001220703125).toFixed(2)} | ${(bitsIntegral * 0.0001220703125).toFixed(2)} KiB`;
         return `${Math.round(bitsOfficial * 0.125)} | ${Math.round(bitsIntegral * 0.125)} B`;}
 
+  // 单字母单位的紧凑流量文本（B / K / M / G）。要么简洁，要么完整，所以不写“MB”这种半吊子。
   function fSV(bits) { //要偷懒或者简洁易读，就完整一点，不要弄个挂MB实则1024又不正确、又高不成低不就的偷一半懒；GNU本身也支持这种单字母UI写法.
     if (bits >= 84607500288) return `${(bits * 1.1641532182693481e-10).toPrecision(4)}G`;
 	if (bits > 8388608000) return `${Math.round(bits * 1.1920928955078125e-7)}M`;
     if (bits > 8388608) return `${(bits * 1.1920928955078125e-7).toPrecision(4)}M`;
-    if (bits >= 8192) return `${(bits * 0.0001220703125).toFixed(1)}K`;
-    return `${Math.round(bits * 0.125)}B`;}
+    if (bits >= 8192) return `${(bits / 8192).toFixed(1)}K`;
+    return `${Math.round(bits / 8)}B`;}
 
+  // 秒 → “X天X时X分X秒”。刻意不用 %，实测这种减法写法更快。
   function fOT(totalSec) {
 		totalSec = totalSec | 0;
         if (totalSec < 0) return "";
@@ -268,6 +289,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
         ? `${d}天${h}时${m}分${s}秒` 
         : `${h}小时${m}分${s}秒`;} //跑过测试，这种写法实质性能较优
 
+  // 解析官方的 <tag> … <Instance><ParaName>…</ParaName><ParaValue>…</ParaValue> … </Instance> 结构
   function nM(m) {
     return m ? m.trim().toLowerCase().replaceAll('-', ':') : '';
   }
@@ -288,6 +310,8 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
     }
     return list;
   }
+  // ---[5]------------------------ 样式注入 ------------------------
+  // 分组顺序即层叠顺序，改动前请留意后面的规则会覆盖前面的同级选择器。
   const st = document.createElement('style');
   st.innerHTML = `.config-item{
         clear:both;}.config-item-box{display:flex!important;
@@ -303,6 +327,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
   document.head.
   appendChild(st);
   window.gegeRenderedMacs = new Set();
+  // ---[6]------------------------ 核心采样引擎 refreshSpeedData ------------------------
   async function rSD(pWT = null, sT = null) {
     if (isF && pWT === null) return;
     isF = !0;
@@ -342,12 +367,12 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       let cSU = 0,
         cSD = 0;
       if (S.pLC !== lCxt) { S.pL = parseXml(lCxt, "OBJ_CLIENTS_ID"); S.pLC = lCxt; } // LAN 帧比 WAN 帧稀，同一份文本不重复解析
-      const 复用 = CONFIG.lanRefreshInterval > CONFIG.wanRefreshInterval;
+      // ---- 解析 LAN 设备列表 ----
       S.pL.forEach(d => {
         if (d.MACAddress) {
-          let m = 复用 ? d._m ??= nM(d.MACAddress) : nM(d.MACAddress),
-            u = 复用 ? d._u ??= s2b(d.UpRate) : s2b(d.UpRate),
-            dn = 复用 ? d._d ??= s2b(d.DownRate) : s2b(d.DownRate),
+          let m = nM(d.MACAddress),
+            u = s2b(d.UpRate),
+            dn = s2b(d.DownRate),
             uT = (+d.UpThroughput || 0) * 8000,
             dT = (+d.DownThroughput || 0) * 8000;
           let bN =
@@ -381,6 +406,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
           }
         }
       }
+      // ---- 判断设备列表是否需要重绘 ----
       const olOn = ol?.style.display === 'block';
       if (iD) {
         for (let m in S.cls) if (!cI[m]) {
@@ -400,6 +426,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       if (S.wLT === undefined) {
         S.wLT = n;
       }
+      // ---- WAN 主线路积分 ----
       else if (cWU !== S.wInstUp || cWD !== S.wInstDn) {
         const wDt = n - S.wLT;
         if (S.wInstUp > 0) { S.wTotUp += (S.wInstUp + cWU) * wDt * 0.0005; }
@@ -408,10 +435,13 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
         else if (cWD > 0) { const wED = cWD * 0.5 * CONFIG.wanRefreshInterval; S.wTotDn += wED; S.wZED = (S.wZED || 0) + wED; S.wZEDC = (S.wZEDC || 0) + 1; }
         S.wLT = n;
       }
+      // ---- 读档（readSaveData = 2）：只在第一帧加载一次本地快照 ---- 快照早于最近一次清零，就视为作废
       if (CONFIG.readSaveData === 2 && !S.snapLoaded) { try { let sp = typeof GM_getValue !== 'undefined' ? GM_getValue('ha_snapshot') : null; S.snap = sp && sp.timestamp > (typeof GM_getValue !== 'undefined' ? (GM_getValue('gege_reset_ms', 0) || 0) : 0) ? sp : {}; if(S.snap.global) { S.wTotUp = S.wTotUp === 0 ? S.snap.global.wan_up || 0 : S.wTotUp; S.wTotDn = S.wTotDn === 0 ? S.snap.global.wan_down || 0 : S.wTotDn; S.lTotUp = S.lTotUp === 0 ? S.snap.global.lan_integral_up || 0 : S.lTotUp; S.lTotDn = S.lTotDn === 0 ? S.snap.global.lan_integral_down || 0 : S.lTotDn; } WC.u = S.snap.wc_up; WC.d = S.snap.wc_down; } catch(e){console.warn(e);} S.snapLoaded = !0; }
       const 本轮刷新接口 = lCxtT !== null && 新LAN帧 ? new Set() : null;
       const hid = 本轮刷新接口 && window.gegeHiddenDevices;
       const 有Mesh = 本轮刷新接口 !== null && (CONFIG.forceMeshMode === 2 || window.gegeLastMeshDevCount > 0 || Object.keys(hid).length > 0);
+      // ---- 7. 逐设备：建档 / 官方计数器恢复状态机 / 速率合法性检查 ----
+      // 同一接口（如同一个 Wi-Fi 频段）下的设备由路由器同时刷新，下面记录“本轮被刷新过的接口”
       for (let m in cI) {
         let cC = cI[m], cS = S.cls[m];
         if (!cS) {
@@ -462,6 +492,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
           if (cC.name) cS.name = cC.name;
         }
 
+        // 速率合法性检查：不可信的速率换成哨兵值，并从代数和里扣掉
         cC.s = cS;
         if (cC.upRate > 6e8) { cSU -= cC.upRate; cC.upRate = 3; }
         else if (cS.aR === 2) { cSU -= cC.upRate; cC.upRate = 2; }
@@ -485,7 +516,8 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
         S.lLT = lanNow;
       }
       S.lInstUp = cSU; S.lInstDn = cSD;
-      for (let m in cI) {
+      // ---- 逐设备积分：速率变了，或同接口的其他设备刚被路由器刷新过，就结算一次 ----
+      for (const m in cI) {
         let cC = cI[m], cS = cC.s;
         if (cC.upRate !== cS.upR || cC.dnRate !== cS.dnR || cS.aR === 0 && (!有Mesh || !hid[m]) && 本轮刷新接口?.has(cC.iface)) {
           const ms = lanNow - cS.lUT;
@@ -498,6 +530,7 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
           cS.lUT = lanNow;
         }
       }
+      // ---- 收尾：标记这份 LAN 数据已处理，渲染，按节拍刷新信号强度与网口协商 ----
       if (lCxtT !== null && 新LAN帧) lCxtProcessedT = lCxtT;
       S.wInstUp = cWU;
       S.wInstDn = cWD;
@@ -506,30 +539,30 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
         S.lTick = ((S.lTick || 0) + 1) & ((CONFIG.信号强度刷新周期 << 3) - 1);
         if ((S.lTick & (CONFIG.信号强度刷新周期 - 1)) === 1 && CONFIG.forceMeshMode !== 2) fRSSI();
         if (S.lTick === 1) fPHY();
-      }
-    }
-    catch (e) {
-      console.error("[哥哥科技] 周期采样中断:", e);
-    }
+      }} 
+      catch (e) {
+      console.error("[哥哥科技] 周期采样中断:", e); }
     finally {
-      isF = !1;
-    }
+      isF = !1;}
   }
 
+  // ---[7]------------------------ 周期结算与 CSV 导出 ------------------------
+  // 计算下一个“预警时间”和“强制导出清零时间”。
+  // 入参是已经叠加了时区补偿的“伪本地时间”；用 UTC 系列 API 取年月日，就等于取到了本地的年月日。
   function buildCSV() {
     const csvQ = s => `"${s.replaceAll('"', '""')}"`; // RFC 4180：字段整体加引号，内部双引号翻倍
     const csvE = v => {
       let s = String(v ?? '');
       if (typeof v === 'string' && /^(?:\s*[=+\-@＝＋－＠]|[\t\r\n])/.test(s)) s = "'" + s;
-      return csvQ(s);
-    };
+      return csvQ(s); };
+
     const csvRow = a => a.map(csvE).join(','); // 字符串公式防护
     const csvRowT = a => a.map(v => csvQ(String(v ?? ''))).join(','); // 仅限脚本自带的可信常量行分节标记
     return ((sp, now, start) => '\uFEFF' + [
       csvRow([`哥哥科技 硬路由 NPU 增强系列：专用组件 ${版本号} 生成`]),
       csvRow([`统计周期：${new Date(start + CONFIG.时区补偿).toISOString().replace('T', ' ').slice(0, 19)} 至 ${new Date(now + CONFIG.时区补偿).toISOString().replace('T', ' ').slice(0, 19)} (UTC${CONFIG.时区补偿 > 0 ? '+' : ''}${CONFIG.时区补偿 / 3600000})${CONFIG.readSaveData === 1 ? ' （含路由器后台读档）' : ''}`]),
       csvRowT(['--- [全局统计] ---']),
-      csvRow(['WAN总上传(B)','WAN总下载(B)','高精全局上行(B)','高精全局下行(B)','LAN积分总上行(B)','LAN积分总下行(B)','本次在线总上行(B)','本次在线总下行(B)']),
+      csvRow(['WAN总上传(bit)','WAN总下载','高精全局上行','高精全局下行','LAN积分总上行','LAN积分总下行','本次在线总上行','本次在线总下行(b)']),
       csvRow([Math.round(sp.global?.wan_up||0),Math.round(sp.global?.wan_down||0),Math.round(sp.global?.lan_high_up||0),Math.round(sp.global?.lan_high_down||0),Math.round(sp.global?.lan_integral_up||0),Math.round(sp.global?.lan_integral_down||0),Math.round(sp.global?.lan_off_up||0),Math.round(sp.global?.lan_off_down||0)]),
       '',
       csvRowT(['--- [设备明细] ---']),
@@ -543,8 +576,9 @@ const F_ARR = ['0', '[1/8]', '[2/8]', '[3/8]', '[4/8]', '[5/8]', '[6/8]', '[7/8]
       S.cSnap || {}, 
       S.cSnap?.timestamp || Date.now(), 
       (CONFIG.readSaveData === 2 && typeof GM_getValue !== 'undefined' ? GM_getValue('gege_reset_ms', null) : null) || performance.timeOrigin || Date.now()
-    );
-  }
+    );}
+
+  // 启动时：以上次导出时间（没有就用当前时间）为基准算出本周期的两个时间点
 function doSettle(nowMs) {
     S._RST = !0; // 防重入锁
     let csv = buildCSV(), a = document.createElement('a');
@@ -565,6 +599,8 @@ function doSettle(nowMs) {
     setTimeout(() => { S._RST = !1; }, 2000); // 解开安全锁
   }
 
+  // 内外网流量比：LAN 侧流量 / WAN 侧流量。
+  // LAN 侧有两种估计（积分值、高精值），按它们与 WAN 的吻合程度挑选或取平均。
 const calcStageRatio = (W, L_int, L_hp) => {
     if (W === 0) return 1.0;
     const L_max = Math.max(L_int, L_hp);
@@ -575,9 +611,11 @@ const calcStageRatio = (W, L_int, L_hp) => {
     } else if (L_min < W && W < L_max && L_max < 1.5 * W) {
         return L_max / W;
     } else {
-        return (Math.abs(L_int - W) < Math.abs(L_hp - W) ? L_int : L_hp) / W;
-    }
+        return (Math.abs(L_int - W) < Math.abs(L_hp - W) ? L_int : L_hp) / W; }
   };
+
+  // ---[8]------------------------ 可视化部件：火花线 / 图标 / 信号 / 总速率曲线 ------------------------
+  // 火花线：取 32 点环形缓冲里最近 16 个采样（从旧到新），按 maxValue 缩放到 ▂~█ 八档
 const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
 const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
       function getSpark(ringArr, headIdx, maxVal) {
@@ -588,6 +626,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         }
         return s;
       }
+  // RJ45 口：颜色表示协商速率档位；光口（SFP）、带金色引脚的高速口图标（协商档位 4），有线口图标：按协商速率档位选择；Wi-Fi 信号图标：RSSI 越强，图形越饱满；极差时换成带 ! ? ✖ 的告警样式：圆点环偏左，右侧挂一个符号。
       const gRSvg = c => `<svg viewBox="0 0 100 100" width="45" height="45" xmlns="http://www.w3.org/2000/svg"><g transform="rotate(180 50 50)"><path d="M18 82V36Q18 32 22 32H28V24Q28 20 32 20H38V14Q38 10 42 10H58Q62 10 62 14V20H68Q72 20 72 24V32H78Q82 32 82 36V82Q82 86 78 86H22Q18 86 18 82Z" fill="${c}" fill-opacity=".10" stroke="${c}" stroke-width="4" stroke-linejoin="round"/><g stroke="${c}" stroke-width="3.2" stroke-linecap="round"><path d="M31 54V76"/><path d="M36.5 54V76"/><path d="M42 54V76"/><path d="M47.5 54V76"/><path d="M53 54V76"/><path d="M58.5 54V76"/><path d="M64 54V76"/><path d="M69.5 54V76"/></g></g></svg>`;
       const gSFPSvg = c => `<svg viewBox="0 0 100 100" width="45" height="45" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="24" width="80" height="52" rx="4" fill="${c}" fill-opacity=".10" stroke="${c}" stroke-width="4"/><path d="M18 32H38V38H62V32H82V68H65V62H35V68H18Z" fill="none" stroke="${c}" stroke-width="4" stroke-linejoin="round"/><path d="M27 43H73M27 50H73M27 57H73" fill="none" stroke="${c}" stroke-width="2.5" stroke-linecap="round" opacity=".55"/></svg>`;
       const gWSvg = r => {
@@ -617,6 +656,8 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
           if (r = +d.Rssi) c.rssi = r;
           if (d.ParentDeviceMac) { c.via = d.ParentDeviceName; c.viaMac = d.ParentDeviceMac === '00:00:00:00:00:00' ? '' : d.ParentDeviceMac; }
         });
+        // 我当然知道这是一个经验公式，我自然也知道RSSI不能简单粗暴的算，哪怕公式中的参数是正确的。不是我不聪明，是因为在实践中，城市里面通常2.4G，它就是体验非常不好。所以将其设置为一个惩罚系数，总比拍脑袋的数字要好的多吧？
+        // 针对不同情况进行不同的处理，也是公平的一部分：思政课本上面教过我们这个道理。同时个人认为工程上有个“不更坏原则”：一个东西就算不完美，但是它比之前的解决方案并没有显著更差的地方，权衡后并不能说它不好。主要是要比较这么一个“diff”；你不能因为一个化学学霸只辅导了你的化学，然后没有同时指出你物理作业的问题，就说不能合并这个PR。
         const oDC = S.oDC, fx = S.RSSI频率修正 || 0;
         if (!oDC) return;
         for (let m in S.cls) {
@@ -624,7 +665,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
           if (!it) continue;
           const cache = it._gege ??= {};
 		  // 如果值没有返回的话，它会一直显示缓存的旧值。它是程序本来就是这样子的，不是你专门做了一个防抖动。但是如果反之，为了避免显示缓存，要增加新的逻辑，那就不做。也就是说我们就是顺其自然，代码最简的思维：就是说如果没有新值就把旧值保留的逻辑，那也没有必要。
-          // 不留废物变量：只用一次的内联，多次使用才起名；同等条件下 const 优于 let，let 只在写起来更方便或更快时用。
+      // 不留废物变量：只用一次的内联，多次使用才起名；同等条件下 const 优于 let，let 只在写起来更方便或更快时用。
 		  // 我非常讨厌废物变量，也就是wasteful let 1.除非使用多次，否则可读性不构成任何加分项；我丝毫不在乎可读性，能内联就内联；你看我那么复杂的数学公式都宁可内联，而不是抽一条出来。
 		  // 在其他条件相同的情况下，个人审美认为const比let好。 // 当let对于写程序更方便或者性能更优时，那就用let，不一定非要遵守上面说的const。 // 无论是let还是const，我都不喜欢临时、中间、废物、未复用却为了“看上去有语义”的变量。
           if (cS.via) (cache.viaNode ??= it.querySelector('.dev-ip').appendChild(Object.assign(document.createElement('span'), { className: 'gege-via' }))).textContent = cS.via;
@@ -662,9 +703,10 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         try { let r = await fetch(`/?_type=vueData&_tag=vue_internet_ethport_data&_=${Date.now()}`); if (r.ok) uPHY(parseXml(await r.text(), "OBJ_ETHPORT_INFO_ID")); }
         catch (e) { console.warn("[哥哥科技] PHY 拉取失败:", e.message); }
       }
+  // ---- WAN 总速率曲线（环形缓冲 + canvas，可拖动缩放）----
       function 记总速率图(u, d) {
         u = u || 0; d = d || 0;
-        const c = S.总图点数, i = c & 8191;
+        const c = S.总图点数, i = c & 8191; // 环形缓冲容量，必须是2的次方（下标用 & 取模）
         S.总上行图[i] = u; S.总下行图[i] = d; S.总图点数 = c + 1;
         if (u > S.wMaxU) S.wMaxU = u; if (d > S.wMaxD) S.wMaxD = d;
         if (u > 0 && u < S.wMinU) S.wMinU = u; if (d > 0 && d < S.wMinD) S.wMinD = d;
@@ -699,10 +741,8 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         for (let k = 0; k < n; k++) { const j = (st + k) & 8191, u = AU[j], d = AD[j]; if (u > ym) ym = u; if (d > ym) ym = d; su += u; sd += d; }
         x.fillStyle = 'rgba(255,255,255,.58)'; x.strokeStyle = 'rgba(0,89,250,.88)'; x.lineWidth = 1.5; x.beginPath(); x.roundRect ? x.roundRect(.5,.5,W-1,H-1,8) : x.rect(.5,.5,W-1,H-1); x.fill(); x.stroke();
         x.setLineDash([4,4]); x.strokeStyle = 'rgba(0,89,250,.45)'; x.lineWidth = 1;
-        x.beginPath();
-        for (let i = 5; i--; ) { const y = t + gh * i / 4; x.moveTo(l,y); x.lineTo(W-r,y); }
-        for (let i = 7; i--; ) { const xx = l + gw * i / 6; x.moveTo(xx,t); x.lineTo(xx,H-b); }
-        x.stroke();
+        for (let i = 5; i--; ) { const y = t + gh * i / 4; x.beginPath(); x.moveTo(l,y); x.lineTo(W-r,y); x.stroke(); }
+        for (let i = 7; i--; ) { const xx = l + gw * i / 6; x.beginPath(); x.moveTo(xx,t); x.lineTo(xx,H-b); x.stroke(); }
         x.setLineDash([]);
         const li = (S.总图点数 - 1) & 8191, au = n ? (n === 8000 ? su * .000125 : su / n) : 0, ad = n ? (n === 8000 ? sd * .000125 : sd / n) : 0;
         (box._gcMeta ??= box.querySelector('[data-gc="meta"]')).textContent = `采样:${window.gegeBActivated ? CONFIG.wanRefreshInterval : 3}s  点:${S.总图点数}`;
@@ -729,18 +769,18 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         DrawingTheLine(S.总上行图, '#ff1b00'); DrawingTheLine(S.总下行图, '#006400');
       }
 
+  // ---[9]------------------------ 看板渲染 renderUI（看板 + 设备卡片）------------------------
+  //   每个采样帧调用一次，分三步：
+  //   1) 汇总各设备流量、生成存档快照、检查是否该预警 / 结算
+  //   2) 建立并挂载看板（#zte-geek-board），重建「MAC → 卡片」索引
+  //   3) 在 requestAnimationFrame 里统一写 DOM：先写看板文字，再逐张刷新设备卡片，最后画曲线图
   function rUI(wU, wD, sU, sD, cI) {
-    let tOD = 0,
-      LUp = S.lTotUp,
-      LDn = S.lTotDn,
-      hpU = 0,
-      hpD = 0,
-      abU = 0,
-      abD = 0,
-      curHpU = 0,
-      curHpD = 0,
-      tot_cU = 0,
-      dv = S.rTick === 1 ? {} : null; // 快照只在存档和结算的那一帧才有人读，其余帧不造
+    // ---- 1. 汇总 ----
+    // “周期流量”= 官方累计值 − 基线；“会话流量”= 官方累计值 − 会话原点。
+    // readSaveData = 2 时高精统计按周期口径（跨会话延续），其余模式按本次会话口径。
+    let tOD = 0, LUp = S.lTotUp, LDn = S.lTotDn,
+      hpU = 0, hpD = 0, abU = 0, abD = 0, curHpU = 0,
+      curHpD = 0, tot_cU = 0, dv = S.rTick === 1 ? {} : null; // 快照只在存档和结算的那一帧才有人读，其余帧不造
     const rs2 = CONFIG.readSaveData === 2;
     for (let k in S.cls) {
       let s = S.cls[k], cC = cI[k];
@@ -760,8 +800,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
       abU += rs2 ? sessU : (cC ? (cC.offUp || 0) : lU);
       abD += rs2 ? sessD : (cC ? (cC.offDn || 0) : lD);
       const h = s.hIdx = (s.hIdx + 1) & 31;
-      s.hU[h] = cC ? cC.upRate : 0;
-      s.hD[h] = cC ? cC.dnRate : 0;
+      s.hU[h] = cC ? cC.upRate : 0;  s.hD[h] = cC ? cC.dnRate : 0;
       if (dv) dv[k] = {
         up: cU, down: cD,
         integral_up: s.intUp || 0,
@@ -817,6 +856,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         },
         devices: dv
     };
+  // 预警横幅：统计周期即将结束
     if (typeof GM_setValue !== 'undefined' && S.rTick === 1) {
         S.haTick = ((S.haTick || 0) + 1) & 7;
         if (S.haTick === 1) {
@@ -854,7 +894,9 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
     if (!bd) {
       bd = S.bd = document.createElement('div');
       bd.id = 'zte-geek-board';
- let layoutHtml = '';
+
+  // 三种看板布局，行里的 id 是 updateBoardTexts 写数据时的索引，改名需同步。
+    let layoutHtml = '';
         if (CONFIG.uiLayout === 1) { // 紧凑版 (驾驶舱)
             layoutHtml = `
                 <div class="geek-row"><span class="geek-label">WAN口速率</span><div class="geek-val-box" style="position:relative;"><span class="c-up geek-fixed-width" id="gb-wan-up-bytes"></span><span class="c-down geek-fixed-width" id="gb-wan-down-bytes"></span><span style="margin-left: 5px;"><span class="c-up" id="gb-wan-up-bps"></span> | <span class="c-down" id="gb-wan-down-bps"></span></span><div id="gb-pwan-vol-container" style="display:none; position:absolute; left:clamp(450px, 60%, 700px); color:#333; white-space:nowrap; flex-direction:column; line-height:1.2; top:-4px;"><span style="font-weight:bold;">副WAN总：<span class="c-up" id="gb-pwan-tot-up"></span> | <span class="c-down" id="gb-pwan-tot-down"></span></span><span style="font-size:12px; font-weight:normal; color:#666;">0补偿：<span id="gb-pwan-zero-up"></span>，<span id="gb-pwan-zero-down"></span>｜<span id="gb-pwan-zero-up-cnt"></span>，<span id="gb-pwan-zero-down-cnt"></span></span></div></div><div class="geek-right-box" style="font-weight: normal; color: #666;"><span style="color: #333;">0估算：</span><span id="gb-wan-zero-up"></span>，<span id="gb-wan-zero-down"></span>｜<span id="gb-wan-zero-up-cnt"></span>，<span id="gb-wan-zero-down-cnt"></span></div></div>
@@ -875,8 +917,10 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
                 <div class="geek-row"><span class="geek-label">LAN：<span id="gege-pin-btn" class="gege-pin" title="冻结窗格">📌</span></span><div class="geek-val-box"><span class="c-up geek-fixed-width" id="gb-lan-up-vol"></span><span class="c-down geek-fixed-width" id="gb-lan-down-vol"></span></div><div class="geek-right-box">WAN：<span class="c-up" id="gb-wan-up-vol"></span> | <span class="c-down" id="gb-wan-down-vol"></span></div></div>
                 <div class="geek-row"><span class="geek-label">高精流量统计 -></span><div class="geek-val-box"><span class="c-up geek-fixed-width" id="gb-int-up-vol"></span><span class="c-down geek-fixed-width" id="gb-int-down-vol"></span></div><div class="geek-right-box" style="color: #666;">当前总计：<span style="color:#FF6700;" id="gb-abs-up-vol"></span> | <span style="color:#18A058;" id="gb-abs-down-vol"></span></div></div>`;
         }layoutHtml += `<div class="geek-row" id="gb-phys-row" style="display:none; height:auto!important; flex-wrap:wrap;"><span class="geek-label" style="font-weight:normal; color:#666;">物理网口:</span><div class="geek-val-box" id="gb-phys-data" style="flex-wrap:wrap; font-size:13px; font-weight:normal;"></div></div>`;
+        // 三种布局共有的附加行：物理网口、外网计数器
         if (CONFIG.外网计数器 !== 0) layoutHtml += `<div class="geek-row" id="gb-wc-row" style="display:none;"><span class="geek-label">外网计数器</span><div class="geek-val-box"><span class="c-up geek-fixed-width" id="gb-wc-up"></span><span class="c-down geek-fixed-width" id="gb-wc-down"></span></div><div class="geek-right-box" style="font-weight:normal; color:#666;">积分精度<span id="gb-wc-src"></span>：<span class="c-up" id="gb-wc-pu"></span> | <span class="c-down" id="gb-wc-pd"></span></div></div>`;
         bd.innerHTML = layoutHtml;
+  // 创建看板（只建一次）。之后每帧通过 board._nodes[id] 直接取节点，不再逐个 querySelector。
         bd._g = Object.create(null); for (const e of bd.querySelectorAll('[id]')) bd._g[e.id] = e; // 看板只建一次，每帧按 id 取节点，不再逐个 querySelector
         let pinBtn = bd.querySelector('#gege-pin-btn');
         if (pinBtn) {
@@ -889,8 +933,11 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
                 bd.classList.toggle('geek-frozen-pane', S.isPinned);
                 pinBtn.classList.toggle('active', S.isPinned);
             };
-        }
-    }
+        } }
+
+    // ---- 2. 建立并挂载看板 ----
+    // 面板重建（buildVirtualDom 整体 innerHTML）会把看板摘下来，但节点本身还在 state.board 里，
+    // 下面的挂载逻辑会把它接回新锚点；外网计数器行、曲线图位置、冻结状态都靠这个保留。
     let ol = document.getElementById('gege-global-overlay'),
       iPO = ol && ol.style.display === 'block',
       aC = iPO ? ol : document;
@@ -902,6 +949,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
       let mn = document.querySelector('.el-table') || document.querySelector('.config-item')?.closest('div') || document.querySelector('.main-content');
       if (mn && bd.parentNode !== mn.parentNode) mn.parentNode.insertBefore(bd, mn);
     }
+  // 重建「MAC → 设备卡片」索引：原生页面从官方卡片的 .dev-number 文本里抠 MAC，自家面板直接读 data 属性
     requestAnimationFrame(() => {
       if (!S.oDC || S._domRebuilt || S._lastPanelState !== iPO) {
         S.oDC = Object.create(null);
@@ -917,14 +965,14 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
           let gI = aC.getElementsByClassName('gege-list-item');
           for (let n of gI) {
             let m = n.getAttribute('data-gege-mac');
-            if (m) S.oDC[m] = n;
+            if (m) S.oDC[m] = n; }
           }
-        }
         S._domRebuilt = false;
         S._lastPanelState = iPO;
         uRSSI(); uPHY();
       }
       let oDC = S.oDC; 
+      // 把汇总数据写进看板各个节点
       if (bd.parentNode) {
         const g = bd._g;
         let aW2U = S.hasW2 ? S.w2U : undefined,aW2D = S.hasW2 ? S.w2D : undefined,aW2TU = S.hasW2 ? S.w2TotUp : undefined,aW2TD = S.hasW2 ? S.w2TotDn : undefined;
@@ -938,7 +986,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         g['gb-int-down-vol'].textContent = `🔽 ${fV(hpD)}`;
         g['gb-abs-up-vol'].textContent = `🔼 ${fV(abU)}`;
         g['gb-abs-down-vol'].textContent = `🔽 ${fV(abD)}`;
-		g['gb-perc-up'].textContent = `🔼 ${((sU * 100) / (Math.max(Phys.wU || 0, wU || 0) || Infinity) || 0).toFixed(1)}%`;
+		    g['gb-perc-up'].textContent = `🔼 ${((sU * 100) / (Math.max(Phys.wU || 0, wU || 0) || Infinity) || 0).toFixed(1)}%`;
         g['gb-perc-down'].textContent = `🔽 ${((sD * 100) / (Math.max(Phys.wD || 0, wD || 0) || Infinity) || 0).toFixed(1)}%`;
         let pb = g['gb-pwan-bps-container'], pv = g['gb-pwan-vol-container'];
         if (aW2U !== undefined) {
@@ -982,6 +1030,9 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
           }
         }
       }
+  // 刷新每张设备卡片：在线时长 / 上行流量条 / 零估算角标 / 占比条 / 下行流量条 / 实时网速条。
+  // 所有找到过的子节点都缓存在 card._gege 里；数值没变的文字不重写，减少 DOM 写入。
+  // 百分比统一用“一位小数的整数键”（percent × 10 四舍五入）判断是否变化。
       const inv_tot_cU = tot_cU > 0 ? 100 / tot_cU : 0;
       const inv_tOD = tOD > 0 ? 100 / tOD : 0;
       const inv_sU = sU > 0 ? 100 / sU : 0;
@@ -1104,6 +1155,11 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
       if (bd.parentNode) 画总速率图(bd); // 放在所有文字写完之后：读画布尺寸只触发一次排版
     });
   }
+  // ---[UI]------------------------ 设备列表重建 / 提示区 / 面板开关 ------------------------
+  // 官方列表在 Mesh 模式下会被销毁，所以我们自己渲染一份全屏面板（#gege-global-overlay），
+  // 里面按 有线 / 5G / 5G / 2.4G 分组列出设备；每张卡片的 data-gege-mac 就是 rebuildDeviceCardMap 的索引依据。
+
+  // 隐藏设备里是否存在“不是 Mesh 子节点”的（mesh 字段显式为 false）
   async function bVD(ol) {
     try {
       let h2 = [], h52 = [], h58 = [], hW = [];
@@ -1118,6 +1174,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         else if (ifc === 'wl2' || ifc === 'wlan2' || ifc === 'wl5' || (/w/i.test(ifc) && !/wan/i.test(ifc))) h58.push(htm);
         else hW.push(htm);
       });
+  // 单台设备的卡片骨架（三列：头像+名称 / IP+MAC / 实时网速）；具体数字由 updateDeviceCards 填充
       requestAnimationFrame(() => {
         ol.innerHTML = `<div style="padding: 20px; max-width: 1580px; margin: 0 auto; min-height: 100%;"><div id="gege-board-anchor"></div><div id="config-list" class="config-list gege-list-container"><div class="gege-section"><div class="config-title">有线设备${(window.gegeHiddenDevices && Object.keys(window.gegeHiddenDevices).length > 0) ? `<span id="gege-mesh-badge" style="color: #ff4c00; font-size: 13px; font-weight: normal; margin-left: 10px; font-family: Consolas;">(哥哥科技：${ol.querySelector('#gege-mesh-badge')?.textContent === '(哥哥科技：Mesh全面适配)' || Object.values(window.gegeHiddenDevices).some(d => d?.mesh === false) ? 'Mesh全面适配' : '智能Mesh适配'})</span>` : ''}</div>${hW.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.8GHz':'5.2GHz'}）</div>${h52.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（${S.is5G_149?'5.2GHz':'5.8GHz'}）</div>${h58.join('')||'<div class="gege-empty-state">没有连接设备</div>'}</div><div class="gege-section"><div class="config-title">无线设备（2.4GHz）</div>${h2.join('')||'<div class="gege-empty-state">没有连接设备</div>'}
         </div><div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed #eee; text-align: center; font-family: Consolas, 'Microsoft YaHei', sans-serif;"><div style="font-size: 11.5px; color: #777; font-style: italic; margin-bottom: 8px;">“在一个文明社会，干净的、不被监视与吸血的网络，是我们每个人的基本权利。”</div><div style="font-size: 10.5px; color: #999; line-height: 1.3; margin-bottom: 8px;">本交互式程序为“哥哥软件”范本；分享请使用官方链接，仅对尊重署名且持续保留者开放源代码，按“原样”免费提供，不对其适用性、稳定性、精密度或任何商业场景的合规性作任何担保。<a href="https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE.markdown" target="_blank" style="color: #777; text-decoration: underline;">分享/查看许可证</a><br>协议规定：基于本程序的任何修改均不得移除本界面的署名，也不得弱化“显示的程度”。保持显著GUI署名、原样保留程序中所有“哥哥科技”样式完全不变且轻松可见，是使用本软件代码的合法性的前置条件。
@@ -1312,7 +1369,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
   }
   window.gegePortTimer = null;
   let fPPRunning = !1;
-async function fPP() {
+async function fPP() {// 物理网口探针：读取每个网口的收发速率，对 WAN 口和各 LAN 口分别做积分
     if (fPPRunning) return;
     fPPRunning = !0;
     try {
@@ -1374,6 +1431,8 @@ async function fPP() {
     } catch (e) {console.warn(e);}
     finally { fPPRunning = !1; }
   }
+  // ---- 外网字节计数器：读路由器 WAN 口的 Tx / Rx 字节数，用来校验积分精度 ----
+  // 计数器是 32 位的，两次采样间不能跑满一圈（4 GiB）。两次响应若乱序，>>> 0 会把负差算成一整圈，所以必须防重入。
   let fWCRunning = !1; // 两次响应一旦乱序，>>> 0 会把负差算成一整圈 4 GiB
   async function fWC() {
     if (fWCRunning) return;
@@ -1389,6 +1448,7 @@ async function fPP() {
         else if (k < 0) { CONFIG.外网计数器 = 0; clearInterval(window.gegeWCTimer); }
         return;
       }
+      // 官方 XML 里取一个字段的整数值：定位到 <ParaName> 之后的第一个 <ParaValue>
       const tx = parseInt(t.slice(t.indexOf('<ParaValue>', iT) + 11)), rx = parseInt(t.slice(t.indexOf('<ParaValue>', iR) + 11));
       if (!(k > 0)) CONFIG.外网计数器 = k & 2 || 1;
       if (WC.rx === undefined) WC.p = CONFIG.readSaveData !== 2 && Phys.lT !== undefined; // 物理积分不存档，读档模式只和逻辑 WAN 比
@@ -1404,6 +1464,7 @@ async function fPP() {
       g['gb-wc-up'].textContent = `🔼 ${fV(wu)}`;
       g['gb-wc-down'].textContent = `🔽 ${fV(wd)}`;
       let qU, qD;
+  // 积分精度的百分比文本，保留两位小数（分子为积分值，分母为计数器值）
       g['gb-wc-pu'].textContent = wu ? (qU = (iU * 1e4 / wu + .5) | 0, (qU / 100 | 0) + (qU % 100 < 10 ? '.0' : '.') + qU % 100 + '%') : '--';
       g['gb-wc-pd'].textContent = wd ? (qD = (iD * 1e4 / wd + .5) | 0, (qD / 100 | 0) + (qD % 100 < 10 ? '.0' : '.') + qD % 100 + '%') : '--';
     } catch (e) {console.warn(e);}
@@ -1419,6 +1480,8 @@ async function fPP() {
   window.gegeTickCount = 0;
   window.gegeMasterTimer = null;
   let bigReq = null;
+  // ---- Mesh “大包”接口：一次性拿到所有设备（含官方列表里看不到的 Mesh 子节点设备）----
+  // 同时顺便刷新 RSSI 与上联节点；并和官方列表对比，找出“官方看不到”的设备记入 gegeHiddenDevices。
   async function getBigLan() {
     if (!bigReq) bigReq = (async () => {
       const liR = await fetch(`/?_type=vueData&_tag=localnet_lan_info_lua&_=${Date.now()}`);
@@ -1528,6 +1591,7 @@ async function fPP() {
         }
       }
 
+  // 把一台设备拼成官方 <Instance> 结构，让“大包接口”和“Mesh 狙击”的结果可以复用同一套解析路径：不去影响本人自用的非Mesh路径的性能，避免重构已有的底层单位等逻辑。
       let lT = "", lF = window.gegeLastLanFingerprint, lST = null;
       if (CONFIG.forceMeshMode === 2) {
         const liR = await fetch(`/?_type=vueData&_tag=localnet_lan_info_lua&_=${ts}`);
@@ -1640,6 +1704,7 @@ async function fPP() {
       window.gegeEngineRunning = !1;
     }
   }
+  // ---[S]------------------------ 保活与启动 ------------------------
   const tKA = () => {
     let i = document.createElement('iframe');
     i.id = 'gege-keepalive-iframe';
