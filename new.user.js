@@ -105,7 +105,9 @@
     aWu: 0, aWd: 0, lwTU: 0, lwTD: 0, cSnap: null,
     lInstUp: 0, lInstDn: 0, lTotUp: 0, lTotDn: 0, lLT: undefined,
     总上行图: new Float64Array(8192), 总下行图: new Float64Array(8192), 总图点数: 0,
-    wMaxU: 0, wMaxD: 0, wMinU: Infinity, wMinD: Infinity, 拖动图表: null, 图表待画: 0, pL: [], pLC: null
+    wMaxU: 0, wMaxD: 0, wMinU: Infinity, wMinD: Infinity, 拖动图表: null, 图表待画: 0, pL: [], pLC: null,
+    // 以下原本运行中才陆续追加；一次写全，S 的形状从头到尾不变，读 S.xxx 的地方不会因为形状变来变去退化成超多态
+    wLT: undefined, wZEU: 0, wZED: 0, wZEUC: 0, wZEDC: 0, rTick: 0, haTick: 0, lTick: 0, bd: null, cRT: '', snap: undefined, snapLoaded: !1, calcTime: null
   };
   // ---[3]------------------------ 数据获取层：WAN / LAN 文本拉取 + XHR 劫持 ------------------------
 const WAN_COMPAT = [
@@ -190,7 +192,7 @@ const WAN_COMPAT = [
   // ---- 运行时状态：物理网口 / 外网计数器 / LAN 文本缓存 ----
   const 版本号 = (typeof GM_info !== 'undefined' && GM_info.script?.version) || '环境不支持获取版本号'; // 虽然不喜欢废物变量，但是这里会使用两次或以上（也不是多次就必须要抽，还是只为了性能，可读性不作为加分项。主要是因为不同类型的数组序列化之类的，反而可能更不划算。而且敲起字来也太麻烦了…）
   // Phys：物理网口，独立于逻辑 WAN 的另一路数据。p 是非 WAN 网口表，wU/wD/tU/tD 是 WAN 口速率与积分，_pM 是 _InstID → 别名字典
-  const Phys = { p: Object.create(null), wU: undefined, wD: undefined, tU: 0, tD: 0, lT: undefined, _pM: null, _wID: null };
+  const Phys = { p: Object.create(null), wU: undefined, wD: undefined, tU: 0, tD: 0, lT: undefined, _pM: null, _wID: null, zEU: 0, zED: 0, zEUC: 0, zEDC: 0 };
   // WC：外网字节计数器。rx/tx 是上次读到的原始计数，u/d 是累计 bit，p 表示拿物理口积分当对照（否则用逻辑 WAN）
   const WC = { rx: undefined, tx: 0, u: undefined, d: undefined, p: !1 };
   let gWUp = (wI, k) => s2b(wI[k]);
@@ -633,6 +635,11 @@ const calcStageRatio = (W, L_int, L_hp) => {
   // 火花线：取 32 点环形缓冲里最近 16 个采样（从旧到新），按 maxValue 缩放到 ▂~█ 八档
 const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
 const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
+// 设备卡片的节点与数值缓存（it._gege）的模板：每张卡片都从它复制，所有卡片共用一个隐藏类。
+// uRSSI、uPHY、rUI 各自往里写的顺序不同，按需追加的话每张卡片形状不一，rUI 逐卡读缓存会退化成超多态。
+// 数值键初值 -1、字符串键 undefined：保证第一帧的“有没有变”判断一定成立
+const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined, bU: undefined, bUPct: undefined, bUSpk: undefined, bUVal: undefined, dBox: undefined, dBoxBar: undefined, dBoxPct: undefined, dBoxVol: undefined, devIntro: undefined, enh: undefined, info: undefined, ipNode: undefined, logo: undefined, rBox: undefined, rBoxBar: undefined, rBoxDn: undefined, rBoxPort: undefined, rBoxUp: undefined, rssiNode: undefined, rtPct: undefined, speed: undefined, timeNode: undefined, upBar: undefined, upBox: undefined, upPct: undefined, upVol: undefined, viaNode: undefined, zBadge: undefined,
+  kU: -1, kB: -1, kD: -1, kPU: -1, kPD: -1, rU: -1, rD: -1, kC: undefined, kCol: undefined, pt: undefined, spU: undefined, spD: undefined };
       function getSpark(ringArr, headIdx, maxVal) {
         let s = "", k = 7 / maxVal;
         for (let i = 16; i--; ) {
@@ -681,7 +688,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         for (let m in S.cls) {
           let cS = S.cls[m], it = oDC[m], rRs = cS.rssi, lRs = cS.lRs ?? rRs;
           if (!it) continue;
-          const cache = it._gege ??= {};
+          const cache = it._gege ??= { ...GC };
           // 如果值没有返回的话，它会一直显示缓存的旧值。它是程序本来就是这样子的，不是你专门做了一个防抖动。但是如果反之，为了避免显示缓存，要增加新的逻辑，那就不做。也就是说我们就是顺其自然，代码最简的思维：就是说如果没有新值就把旧值保留的逻辑，那也没有必要。
           // 不留废物变量：只用一次的内联，多次使用才起名；同等条件下 const 优于 let，let 只在写起来更方便或更快时用。
           // 我非常讨厌废物变量，也就是wasteful let 1.除非使用多次，否则可读性不构成任何加分项；我丝毫不在乎可读性，能内联就内联；你看我那么复杂的数学公式都宁可内联，而不是抽一条出来。
@@ -711,7 +718,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         for (let m in S.cls) {
           let cS = S.cls[m], it = oDC[m];
           if (!it || !/^eth\d+$/i.test(cS.ifc || '')) continue;
-          let cache = it._gege || (it._gege = {}), logo = cache.logo ??= it.querySelector('.dev-logo');
+          let cache = it._gege || (it._gege = { ...GC }), logo = cache.logo ??= it.querySelector('.dev-logo');
           if (logo) { logo.style.background = 'none'; logo.innerHTML = gPSvg(cS.phy); }
         }
       }
@@ -1075,7 +1082,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         if (!it) continue;
         const cC = cI[m], cS = cC.s;
         
-        let cache = it._gege || (it._gege = {});
+        let cache = it._gege || (it._gege = { ...GC });
         const hqU = cS.qU, hqD = cS.qD;
         const tN = cache.timeNode ??= it.querySelector('.gege-online-time');
         if (tN && cS.onS > 0) tN.textContent = fOT(cS.onS);
