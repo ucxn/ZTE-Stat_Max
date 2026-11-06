@@ -177,7 +177,6 @@ class GbnpaDeviceSensor(SensorEntity):
         return {
             "identifiers": {(DOMAIN, self._mac)},
             "name": self._device_name,
-            "manufacturer": "哥哥科技 GBNPA",
             "model": model_display,
         }
 
@@ -221,6 +220,8 @@ class GbnpaDeviceSensor(SensorEntity):
             elif chk_status == "offline_shield":
                 return "离线 (护盾)"
             return str(raw_val)
+
+        return None
 
     async def async_added_to_hass(self):
         self.async_on_remove(
