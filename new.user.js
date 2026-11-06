@@ -294,7 +294,7 @@ const WAN_COMPAT = [
     return m ? m.trim().toLowerCase().replaceAll('-', ':') : '';
   }
 
-  const UNESC_MAP = { '&#32;': ' ', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&apos;': "'", '&amp;': '&' };
+  const UNESC_MAP = { '&#32;': ' ', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&apos;': "'", '&#39;': "'", '&amp;': '&' }; // &#39; 来自 escapeHTML 拼的 Mesh 假 XML
   function parseXml(xmlStr, tag) {
     if (!xmlStr) return [];
     let list = [], a = xmlStr.indexOf(`<${tag}>`), b = xmlStr.indexOf(`</${tag}>`, a);
@@ -304,7 +304,7 @@ const WAN_COMPAT = [
     while ((im = instRx.exec(body)) !== null) {
       let o = Object.create(null), pm;
       while ((pm = pRx.exec(im[1])) !== null) {
-        o[pm[1]] = pm[2].includes('&') ? pm[2].replace(/&#32;|&lt;|&gt;|&quot;|&apos;|&amp;/g, m => UNESC_MAP[m]) : pm[2];
+        o[pm[1]] = pm[2].includes('&') ? pm[2].replace(/&#32;|&lt;|&gt;|&quot;|&apos;|&#39;|&amp;/g, m => UNESC_MAP[m]) : pm[2];
       }
       list.push(o);
     }
@@ -453,7 +453,10 @@ const WAN_COMPAT = [
             dB: (CONFIG.readSaveData === 1 || CONFIG.readSaveData === 3) ? 0 : (spD ? cC.offDn - (spD.down || 0) : cC.offDn),
             lU: cC.offUp, lD: cC.offDn, aR: 0, dpU: 0, dpD: 0,
             oU: cC.offUp, oD: cC.offDn, hU: new Float64Array(32), hD: new Float64Array(32), hIdx: 0,
-            ifc: cC.iface, name: cC.name || spD?.name || m // 真实流量
+            ifc: cC.iface, name: cC.name || spD?.name || m, // 真实流量
+            // 下面这些原本是运行中按条件追加的；一次写全，所有设备共用一个隐藏类。会反复写小数的给 0（原地改写不分配），靠“有没有值”判断的给 undefined
+            onS: 0, qU: 0, qD: 0, zEU: 0, zED: 0, zUC: 0, zDC: 0, dbC: 0,
+            rssi: undefined, lRs: undefined, via: undefined, viaMac: undefined, phy: undefined, haOff: undefined
           };
         } else {
           let dU = cC.offUp - cS.lU, dD = cC.offDn - cS.lD;
@@ -590,7 +593,8 @@ function doSettle(nowMs) {
     }
     GM_setValue('gege_reset_ms', nowMs);
     GM_setValue('ha_snapshot', { timestamp: nowMs, global: {}, devices: {} }); S.snap = {}; S.cSnap = null; WC.u = WC.d = WC.rx = undefined;
-    S.wTotUp = S.wTotDn = S.w2TotUp = S.w2TotDn = S.lTotUp = S.lTotDn = 0; // 内存原地清零
+    S.wTotUp = S.wTotDn = S.w2TotUp = S.w2TotDn = S.lTotUp = S.lTotDn = S.wZEU = S.wZED = S.wZEUC = S.wZEDC = S.lwTU = S.lwTD = 0; // 内存原地清零；lwTU 不清的话下一个窗口的平均速率会算成负数
+    Phys.tU = Phys.tD = Phys.zEU = Phys.zED = Phys.zEUC = Phys.zEDC = 0; for (const k in Phys.p) Phys.p[k].tU = Phys.p[k].tD = 0; // 物理口和逻辑 WAN 同一个周期起点：内外网比取两者平均，外网计数器首帧也从这里借起点
     S.lLT = performance.now();
     for (let k in S.cls) { let s = S.cls[k]; s.intUp = s.intDn = 0; s.uB = s.oU = s.lU; s.dB = s.oD = s.lD; s.hU.fill(0); s.hD.fill(0); } // 内存原地清零底表
     document.getElementById('gb-w-bnr')?.remove(); // 预警横幅
@@ -622,7 +626,7 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         let s = "", k = 7 / maxVal;
         for (let i = 16; i--; ) {
           let v = ringArr[(headIdx - i) & 31];
-          s += SPRK[v > 0 ? Math.min(7, Math.max(1, (v * k) | 0)) : 0];
+          s += SPRK[v < 4 ? 0 : Math.min(7, Math.max(1, (v * k) | 0))]; // 1/2/3 是拦截、漫游、异常的哨兵值，按无流量画
         }
         return s;
       }
@@ -722,9 +726,9 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         box.querySelector('.gege-chart-resize').addEventListener('pointerdown', e => 图表起手(e, '缩'));
         box.addEventListener('pointermove', e => {
           const g = S.拖动图表; if (!g) return;
-          if (g.图表模式 === '拖动中') { box.style.left = (g.l + e.clientX - g.x) + 'px'; box.style.top = (g.t + e.clientY - g.y) + 'px'; }
-          else { box.style.width = Math.max(260, g.w + e.clientX - g.x) + 'px'; box.style.height = Math.max(88, g.h + e.clientY - g.y) + 'px'; }
-          if (!S.图表待画) { S.图表待画 = 1; requestAnimationFrame(() => { S.图表待画 = 0; 画总速率图(bd); }); }
+          if (g.图表模式 === '拖动中') { box.style.left = (g.l + e.clientX - g.x) + 'px'; box.style.top = (g.t + e.clientY - g.y) + 'px'; } // 只挪位置，画布内容不变，不重画
+          else { box.style.width = Math.max(260, g.w + e.clientX - g.x) + 'px'; box.style.height = Math.max(88, g.h + e.clientY - g.y) + 'px';
+            if (!S.图表待画) { S.图表待画 = 1; requestAnimationFrame(() => { S.图表待画 = 0; 画总速率图(bd); }); } }
         });
         box.addEventListener('pointerup', () => S.拖动图表 = null); box.addEventListener('pointercancel', () => S.拖动图表 = null); box.addEventListener('lostpointercapture', () => S.拖动图表 = null);
         return box;
@@ -748,10 +752,9 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
         (box._gcMeta ??= box.querySelector('[data-gc="meta"]')).textContent = `采样:${window.gegeBActivated ? CONFIG.wanRefreshInterval : 3}s  点:${S.总图点数}`;
         const rs = `峰↑${fBy(S.wMaxU)} ↓${fBy(S.wMaxD)}  谷↑${S.wMinU < Infinity ? fBy(S.wMinU) : '--'} ↓${S.wMinD < Infinity ? fBy(S.wMinD) : '--'}`;
         if (box._rs !== rs) { box._rs = rs; const rg = box._gcRange ??= box.querySelector('[data-gc="range"]'); rg.textContent = rs; rg.title = rs; }
-        const us = `发 ${n ? fBy(S.总上行图[li]) : fBy(0)}`, ds = `收 ${n ? fBy(S.总下行图[li]) : fBy(0)}`, es = `均↑${fBy(au)} ↓${fBy(ad)}`;
-        if (box._us !== us) { box._us = us; (box._gcUp ??= box.querySelector('[data-gc="up"]')).textContent = us; }
-        if (box._ds !== ds) { box._ds = ds; (box._gcDown ??= box.querySelector('[data-gc="down"]')).textContent = ds; }
-        if (box._es !== es) { box._es = es; (box._gcExtra ??= box.querySelector('[data-gc="extra"]')).textContent = es; }
+        (box._gcUp ??= box.querySelector('[data-gc="up"]')).textContent = `发 ${n ? fBy(S.总上行图[li]) : fBy(0)}`; // 每次采样几乎都变，直接写
+        (box._gcDown ??= box.querySelector('[data-gc="down"]')).textContent = `收 ${n ? fBy(S.总下行图[li]) : fBy(0)}`;
+        (box._gcExtra ??= box.querySelector('[data-gc="extra"]')).textContent = `均↑${fBy(au)} ↓${fBy(ad)}`;
         const DrawingTheLine = (arr, col) => {
           if (!n) return;
           x.strokeStyle = col; x.lineWidth = 2.4; x.beginPath();
@@ -1242,6 +1245,9 @@ const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
     S.lTick = 0;
     if (!window.gegeBActivated) {
       window.gegeBActivated = !0;
+      // 点火：A 引擎在点开面板前只记了逻辑 WAN，这里归零，让它和物理口、外网计数器、LAN 积分同一个起点。整个页面周期只来一次。
+      // 速率状态（wInstUp、wLT）不动，否则下一次积分的底边会乱；存档模式 2 已读档时不动，读档本来就要跨会话延续
+      if (!S.snapLoaded) S.wTotUp = S.wTotDn = S.w2TotUp = S.w2TotDn = S.wZEU = S.wZED = S.wZEUC = S.wZEDC = S.lwTU = S.lwTD = 0;
       clearTimeout(window.gegeMasterTimer);
       window.gegeMasterTimer = null;
       if (CONFIG.lanPortMode > 0 && !window.gegePortTimer) {
@@ -1378,11 +1384,11 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
       let r = await fetch(`/?_type=vueData&_tag=vue_internet_ethport_data&_=${Date.now()}`);
       if (!r.ok) return;
       const n = performance.now(), txt = await r.text(); // 响应头到达即取时间，和外网计数器同口径
-      if (!Phys._pM) { // 终生只解析一次字典，零 GC
-        Phys._pM = {};
-        parseXml(txt, "OBJ_ETHPORT_INFO_ID").forEach(d => {
+      if (!Phys._pM) { // 终生只解析一次字典，零 GC；首包为空就下一秒再来
+        const pI = parseXml(txt, "OBJ_ETHPORT_INFO_ID");
+        if (pI.length) { Phys._pM = {}; pI.forEach(d => {
           if (d._InstID) { Phys._pM[d._InstID] = d.EthPortAliasName || d._InstID; if (d.WanType === '1' || d.EthPortAliasName === 'ETH_WAN') Phys._wID = d._InstID; }
-        });
+        }); } else return; // 没有网口字典就认不出 WAN，这一秒整个跳过
       }
       parseXml(txt, "OBJ_ETHPORT_STATE_ID").forEach(d => {
         if (d._InstID && d.EthPortStatus === '0') {
@@ -1600,7 +1606,7 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
         if (liR.ok) {
           let liT = await liR.text();
           lST = performance.now();
-          let iI_arr = [],
+          let iI_arr = [], mA = [],
             nHD = Object.create(null),
             dC = 0,
             dL = parseXml(liT, "OBJ_LAN_INFO_ID");
@@ -1613,6 +1619,7 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
                 bI = d.Interface || "";
               if (d.IFAliasName === 'SSID1') bI = 'wl0';
               else if (d.IFAliasName === 'SSID5') bI = 'wl4';
+              mA.push(m);
               if (d.DevMeshType === '3') nHD[m] = {
                 name: bN,
                 iface: bI,
@@ -1623,7 +1630,7 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
           });
           window.gegeHiddenDevices = nHD;
           lT = `<ajax_response_xml_root><OBJ_CLIENTS_ID>${iI_arr.join('')}</OBJ_CLIENTS_ID></ajax_response_xml_root>`;
-          lF = [...lT.matchAll(/<ParaName>MACAddress<\/ParaName><ParaValue>([^<]+)<\/ParaValue>/g)].map(m => nM(m[1])).sort().join('|');
+          lF = mA.sort().join('|'); // MAC 已在上面的循环里取好，不再对拼出来的串跑正则
           cDC = dC;
         }
       }
