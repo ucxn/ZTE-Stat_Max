@@ -1,4 +1,4 @@
-# Broware Attribution–Noncommercial License 1.0
+# Broware PBY-Attribution License 1.0
 
 *This license is adapted from the PolyForm Noncommercial License 1.0.0.<https://polyformproject.org/licenses/noncommercial/1.0.0>. This modified version is not affiliated with the PolyForm Project.*
 ## Copyright © 2026 哥哥科技
@@ -7,11 +7,11 @@ Key Rules (核心规则):
 
 **BY (Attribution):**<br> 
 
-You MUST strictly preserve the attribution to 『哥哥科技』(Bro-Tech), In any form.</br>
+You MUST strictly preserve the attribution to 『哥哥科技』(Bro-Tech), In any form.
 
-Include but not only The code, the GUI, the end-user display, any place that the original author has set, whether it is literal, real quality, presentation, or how, must not make any changes to the degree of significance. Not only can no significant reduction be made, but also no changes, express or implied, to the display.
+**P (Prominent):**</br>
 
-NC (Noncommercial): No commercial use is allowed.
+The rule of name: Include but not only The code, the GUI, the end-user display, any place that the original author has set, whether it is literal, real quality, presentation, or how, must not make any changes to the degree of significance. Not only can no significant reduction be made, but also no changes, express or implied, to the display.
 
 ## Acceptance
 
