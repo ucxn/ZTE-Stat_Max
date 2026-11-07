@@ -173,7 +173,6 @@ class GbnpaDeviceSensor(SensorEntity):
         return {
             "identifiers": {(DOMAIN, self._mac)},
             "name": self._device_name,
-            "manufacturer": "哥哥科技 GBNPA",
             "model": model_display,
         }
 

@@ -1,4 +1,5 @@
 import logging
+import secrets
 import json
 from aiohttp import web
 from homeassistant.core import HomeAssistant
@@ -13,17 +14,37 @@ DOMAIN = "gbnpa_router"
 WEBHOOK_ID = "gbnpa_router_webhook" 
 SIGNAL_UPDATE = f"{DOMAIN}_data_update"
 SIGNAL_DISCOVERY = f"{DOMAIN}_discovery"
+GATEWAY_ID = (DOMAIN, "gateway")
 PLATFORMS = ["sensor"]
 
 _LOGGER = logging.getLogger(__name__)
 
+
+def _platforms(entry: ConfigEntry) -> list[str]:
+    """初始表单里勾选“设备位置”才多加载 device_tracker；不勾选，那个文件连 import 都不会发生"""
+    return PLATFORMS + ["device_tracker"] if entry.data.get("enable_tracker") else PLATFORMS
+
+
+async def async_remove_config_entry_device(hass: HomeAssistant, entry: ConfigEntry, device_entry) -> bool:
+    """允许在界面上手动删除设备（比如改名后遗留的旧接入路由）；网关本身不让删"""
+    return GATEWAY_ID not in device_entry.identifiers
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """通过 UI 配置初始化集成"""
     hass.data.setdefault(DOMAIN, {"devices": {}, "global": {}, "time_obj": None})
+    webhook_secret = entry.data.get("webhook_secret")
+    if not webhook_secret:
+        _LOGGER.error("[GBNPA] 缺少 webhook_secret，Webhook 未注册。请重新添加集成并设置鉴权密钥。")
+        return False
 
     async def handle_webhook(hass, webhook_id, request):
         """处理油猴发来的 JSON 数据包"""
         try:
+            request_secret = request.headers.get("X-GBNPA-Secret", "")
+            if not secrets.compare_digest(request_secret, webhook_secret):
+                _LOGGER.warning("[GBNPA] Webhook 鉴权失败，请求已拒绝")
+                return web.Response(status=401)
+
             text = await request.text()
             raw_payload = json.loads(text)
             data = raw_payload.get("payload", raw_payload)
@@ -58,7 +79,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             _LOGGER.error(f"解析 GBNPA 数据包失败: {e}")
             return web.Response(status=400)
 
-    webhook.async_register(hass, DOMAIN, "GBNPA Router Sync", WEBHOOK_ID, handle_webhook)
+    webhook.async_register(hass, DOMAIN, "GBNPA Router Sync", WEBHOOK_ID, handle_webhook, allowed_methods=("POST",),)
     
     # 【新增】绑定前端按钮与底层清理逻辑
     async def handle_purge_service(call):
@@ -94,6 +115,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 if entity_id:
                     entity_registry.async_remove(entity_id)
 
+            # 设备位置平台（若启用）的实体和缓存
+            tracker_id = entity_registry.async_get_entity_id("device_tracker", DOMAIN, f"gbnpa_{safe_mac}_tracker")
+            if tracker_id:
+                entity_registry.async_remove(tracker_id)
+            tracker_state = hass.data[DOMAIN].get("_tracker")
+            if tracker_state:
+                tracker_state["known"].discard(mac)
+                tracker_state["via"].pop(mac, None)
+
             # 清掉设备卡片本身，避免只删实体后留下孤儿设备
             if hasattr(device_registry, "async_get_device_by_identifier"):
                 device = device_registry.async_get_device_by_identifier(
@@ -115,7 +145,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.services.async_register(DOMAIN, "purge_offline_devices", handle_purge_service)
     
     # 引导加载 sensor 平台
-    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    await hass.config_entries.async_forward_entry_setups(entry, _platforms(entry))
     return True
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -128,4 +158,4 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     unsub = hass.data[DOMAIN].get("unsub_dispatcher")
     if unsub:
         unsub()    
-    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    return await hass.config_entries.async_unload_platforms(entry, _platforms(entry))

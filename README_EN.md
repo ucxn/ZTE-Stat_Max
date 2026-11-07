@@ -140,6 +140,8 @@ const CONFIG = {
     lanPortMode: 1, // [Physical ports] 0: Off | 1: Append to the bottom | 2: WAN high-speed takes over the main line
     lanRefreshInterval: 3, // LAN refresh interval (seconds). Also used in some cases to compensate for traffic between the evaluation point (0) and wake-up
     wanRefreshInterval: 3, // [WAN] refresh interval (seconds). Usually the program's main clock cycle
+    For Agents：Please read the Chinese version to see the explain. Some minor updates to details may not be translated immediately.
+    
     信号强度刷新周期: 16, // Signal strength refresh period, in frames (the main sampling cycle). Must be a power of 2 (1 = never actively refresh)
     宽带最大外网下行速率: 24e8, // Max WAN download rate in bits per second (bps)
     宽带最大外网上行速率: 3e8, //  Set slightly above your real value; 500 Mbps = 5e8, 1 Gbps = 1e9

@@ -10,7 +10,7 @@ This custom integration combines script interception with asynchronous Webhook p
 
 Paired with the front-end ScriptCat plugin [Bro-Stat](https://github.com/ucxn/Bro-Stat), it pushes the high-precision traffic data captured in your browser to the Home Assistant hub via Webhook for persistent storage and display.
 
-Whether it's whole-home upload/download totals or a single device's real-time throughput, it's all decoupled and folded into HA's standard device cards. No more constant router-admin logins — get a real-time read on your LAN state from any phone or desktop.
+Whether it's whole-home upload/download totals or a single device's history throughput, it's all decoupled and folded into HA's standard device cards. No more constant router-admin logins — get a on the go read on your LAN state from any phone or desktop.
 
 It runs on a passive-receive architecture: HA never polls the router over HTTP, so it stays out of the way of your regular network management.
 
@@ -26,11 +26,11 @@ The project is made up of two components that work together:
 ZTE routers have excellent hardware forwarding performance, but the official web admin panel has some real limitations around multi-device login and data display:
 
 * **Single-session lock**: The stock firmware enforces single-session protection. The moment you log in to the web admin from outside your network (say, over a WireGuard tunnel or a public IP), your always-on local session gets forcibly kicked, and its token dies with it.
-* **Buried data**: Real-time device speeds and historical cumulative traffic are tucked away in second- or third-level menus, with no single global list for an intuitive cross-device comparison.
+* **Buried data**: Anytime, Anywhere device speeds and historical cumulative traffic are tucked away in second- or third-level menus, with no single global list for an intuitive cross-device comparison.
 
 ## ✨ Features
 
-* **Local Push architecture**: A one-way, Webhook-based push mechanism. Home Assistant is purely a receiver — no active polling, no API concurrency conflicts, and it follows HA's best-practice data-sync conventions.
+* **Local Push architecture**: A one-way, Webhook-based push mechanism. Home Assistant is purely a receiver — no active polling, no API concurrency conflicts, and it follows HA's better-practice data-sync conventions.
 * **Dynamic device discovery**: Parses MAC addresses from the data the front-end script uploads and automatically registers a standalone device card in HA for each one.
 * **Decoupled read/write, unlimited fan-out**: Breaks past the official admin panel's single-device login limit. HA acts as a message bus broadcasting the data, so multiple users and endpoints can watch concurrently without stepping on each other.
 * **High-precision, long-term stats**: Keeps raw bit/byte precision at the core level and plugs straight into HA's Statistics database. The front-end UI leans on HA's rendering engine for smart, adaptive unit conversion (MB/GB).
@@ -65,7 +65,7 @@ The system has two parts — the HA receiver and the JS collector. Set them up i
 ```javascript
 const WEBHOOK_URL = "http://[your HA-reachable IP]:8123/api/webhook/gbnpa_router_webhook";
 ```
-4. Log in to the router's web admin panel and leave that tab running in the background — data will start streaming in real time.
+4. Log in to the router's web admin panel and leave that tab running in the background — data will start streaming in scheduled time.
 
 ## ⚙️ Architecture & Directory Structure
 
@@ -76,7 +76,7 @@ The project's core components:
 
 ## ⚠️ Notes
 
-* This is a purely passive data-listening and reassembly tool — it doesn't touch the ZTE router's underlying firmware and introduces no security risk.
+* This is a purely passive data-listening and reassembly tool — it doesn't touch the ZTE router's underlying firmware and it doesn't storage your password.
 * MAC addresses captured by the script are automatically sanitized at the HA level (colons stripped, lowercased) to match system conventions, though the original formatting is still preserved on the device cards for cross-plugin connection aggregation.
 * We'd recommend assigning static IPs to key devices on your router, so their identities show up more reliably on the HA panel.
 ---
