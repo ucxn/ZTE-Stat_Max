@@ -1464,7 +1464,7 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
       if (!g) return;
       const db = g['gb-phys-data'], ks = Object.keys(Phys.p);
       if (db._k !== ks.length) { // 每秒一次的地方：网口集合变了才重排结构，平时只改文字
-        db._k = ks.length; g['gb-phys-row'].style.display = 'flex';
+        db._k = ks.length; g['gb-phys-row'].style.display = ks.length ? 'flex' : 'none'; // 一个 LAN 口都没插就整行不占位，插上后下一秒自己出现
         db.innerHTML = ks.map(k => `<span style="margin-right:16px; white-space:nowrap; font-weight:normal; color:#333;">${k}:<span class="c-up" style="display:inline-block; min-width:55px; font-weight:bold; margin-left:6px; text-align:left;"></span><span class="c-down" style="display:inline-block; min-width:55px; font-weight:bold; margin-left:10px; text-align:left;"></span><span style="margin-left:6px; color:#666;">(<span style="color:#9c27b0;"></span>，<span style="color:#4caf50;"></span>)</span></span>`).join('');
         // 每个网口 4 个文字节点：[速率1, 速率2, 积分1, 积分2]
         db._n = Array.from(db.children, e => [e.children[0], e.children[1], e.children[2].children[0], e.children[2].children[1]]);
