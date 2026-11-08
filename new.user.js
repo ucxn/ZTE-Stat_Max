@@ -401,7 +401,6 @@ const WAN_COMPAT = [
           }
         }
       }
-      // ---- 判断设备列表是否需要重绘 ----
       const olOn = ol?.style.display === 'block';
       if (iD) {
         for (let m in S.cls) if (!cI[m]) { // 已经下线的设备：把最后一段速率按半个周期补进积分，然后速率清零
@@ -423,7 +422,6 @@ const WAN_COMPAT = [
       if (!S.wLT) {
         S.wLT = n;
       }
-      // ---- WAN 主线路积分 ----
       else if (cWU !== S.wInstUp || cWD !== S.wInstDn) {
         const wDt = n - S.wLT;
         if (S.wInstUp > 0) { S.wTotUp += (S.wInstUp + cWU) * wDt * 0.0005; }
@@ -439,8 +437,6 @@ const WAN_COMPAT = [
       const 本轮刷新接口 = lCxtT !== null && 新LAN帧 ? new Set() : null;
       const hid = 本轮刷新接口 && window.gegeHiddenDevices;
       const 有Mesh = 本轮刷新接口 !== null && (CONFIG.forceMeshMode === 2 || window.gegeLastMeshDevCount > 0 || Object.keys(hid).length > 0);
-      // ---- 7. 逐设备：建档 / 官方计数器恢复状态机 / 速率合法性检查 ----
-      // 同一接口（如同一个 Wi-Fi 频段）下的设备由路由器同时刷新，下面记录“本轮被刷新过的接口”
       for (let m in cI) {
         let cC = cI[m], cS = S.cls[m];
         if (!cS) { // 第一次见到这台设备：建档；readSaveData 为 1 或 3 时，把路由器后台已有的累计值直接当作本期流量的起点
@@ -669,8 +665,6 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
           if (r = +d.Rssi) c.rssi = r;
           if (d.ParentDeviceMac) { c.via = d.ParentDeviceName; c.viaMac = d.ParentDeviceMac === '00:00:00:00:00:00' ? '' : d.ParentDeviceMac; }
         });
-        // 我当然知道这是一个经验公式，我自然也知道RSSI不能简单粗暴的算，哪怕公式中的参数是正确的。不是我不聪明，是因为在实践中，城市里面通常2.4G，它就是体验非常不好。所以将其设置为一个惩罚系数，总比拍脑袋的数字要好的多吧？
-        // 针对不同情况进行不同的处理，也是公平的一部分：思政课本上面教过我们这个道理。同时个人认为工程上有个“不更坏原则”：一个东西就算不完美，但是它比之前的解决方案并没有显著更差的地方，权衡后并不能说它不好。主要是要比较这么一个“diff”；你不能因为一个化学学霸只辅导了你的化学，然后没有同时指出你物理作业的问题，就说不能合并这个PR。
         const oDC = S.oDC, fx = S.RSSI频率修正 || 0;
         if (!oDC) return;
         for (let m in S.cls) {
@@ -758,11 +752,13 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
         let l = 34, r = 8, t = 20, b = 25, gw = W - l - r, gh = H - t - b, n = Math.min(S.总图点数, 8000), st = S.总图点数 - n, ym = 1, su = 0, sd = 0;
         const AU = S.总上行图, AD = S.总下行图;
         for (let k = 0; k < n; k++) { const j = (st + k) & 8191, u = AU[j], d = AD[j]; if (u > ym) ym = u; if (d > ym) ym = d; su += u; sd += d; }
-        // 底板与边框；虚线网格横 5 条、竖 7 条，合成一条路径一次描边
+        // 底板与边框；虚线网格横 5 条、竖 7 条，合成一条路径一次描边（比逐条描边省 CPU，交叉点不再叠色加深）
         x.fillStyle = 'rgba(255,255,255,.58)'; x.strokeStyle = 'rgba(0,89,250,.88)'; x.lineWidth = 1.5; x.beginPath(); x.roundRect ? x.roundRect(.5,.5,W-1,H-1,8) : x.rect(.5,.5,W-1,H-1); x.fill(); x.stroke();
         x.setLineDash([4,4]); x.strokeStyle = 'rgba(0,89,250,.45)'; x.lineWidth = 1;
-        for (let i = 5; i--; ) { const y = t + gh * i / 4; x.beginPath(); x.moveTo(l,y); x.lineTo(W-r,y); x.stroke(); }
-        for (let i = 7; i--; ) { const xx = l + gw * i / 6; x.beginPath(); x.moveTo(xx,t); x.lineTo(xx,H-b); x.stroke(); }
+        x.beginPath();
+        for (let i = 5; i--; ) { const y = t + gh * i / 4; x.moveTo(l,y); x.lineTo(W-r,y); }
+        for (let i = 7; i--; ) { const xx = l + gw * i / 6; x.moveTo(xx,t); x.lineTo(xx,H-b); }
+        x.stroke();
         x.setLineDash([]);
         // 文字：采样信息、峰谷值、最新值、均值（满 8000 点时用乘 1/8000 代替除法）
         const li = (S.总图点数 - 1) & 8191, au = n ? (n === 8000 ? su * .000125 : su / n) : 0, ad = n ? (n === 8000 ? sd * .000125 : sd / n) : 0;
@@ -946,7 +942,6 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
         layoutHtml += `<div class="geek-row" id="gb-phys-row" style="display:none; height:auto!important; flex-wrap:wrap;"><span class="geek-label" style="font-weight:normal; color:#666;">物理网口:</span><div class="geek-val-box" id="gb-phys-data" style="flex-wrap:wrap; font-size:13px; font-weight:normal;"></div></div>`;
         if (CONFIG.外网计数器 !== 0) layoutHtml += `<div class="geek-row" id="gb-wc-row" style="display:none;"><span class="geek-label">外网计数器</span><div class="geek-val-box"><span class="c-up geek-fixed-width" id="gb-wc-up"></span><span class="c-down geek-fixed-width" id="gb-wc-down"></span></div><div class="geek-right-box" style="font-weight:normal; color:#666;">积分精度<span id="gb-wc-src"></span>：<span class="c-up" id="gb-wc-pu"></span> | <span class="c-down" id="gb-wc-pd"></span></div></div>`;
         bd.innerHTML = layoutHtml;
-  // 创建看板（只建一次）。之后每帧通过 board._nodes[id] 直接取节点，不再逐个 querySelector。
         bd._g = Object.create(null); for (const e of bd.querySelectorAll('[id]')) bd._g[e.id] = e; // 看板只建一次，每帧按 id 取节点，不再逐个 querySelector
         let pinBtn = bd.querySelector('#gege-pin-btn');
         if (pinBtn) {
