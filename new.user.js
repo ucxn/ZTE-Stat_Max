@@ -2,7 +2,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         6.0.5.Alpha
+// @version         6.0.6
 // @website         https://github.com/ucxn/ZTE-Stat_Max
 // @supportURL      https://b23.tv/BV1PtR7B8ECC
 // @description     一款针对中兴官方计数器和UI不区分上下行、流量数据不可靠、网页隐藏API等问题而诞生的测控“引擎”，一个庞大的循环流程程序；融合了哥哥的大量思想和算法，探索属于家庭网关的真相。
@@ -35,7 +35,7 @@
 
   console.log(`🚀 哥哥科技 V${(typeof GM_info !== 'undefined' && GM_info.script?.version) || '6.0'} 引擎已装载...`);
 
-  // ---[1]------------------------ 用户极客环境变量配置区 ------------------------
+  // ---[0]------------------------ 用户极客环境变量配置区 ------------------------
   const CONFIG = {
     readSaveData: 3, // 【历史记录】 1: 从路由器后台读档（继承基线） | 0: 新局模式 | 2: 从本地长期历史读档 [自动保存！] | 3: 启动时用后台临时值充当积分
     forceMeshMode: 1, // 【Mesh探测模式】0: 官方拓扑驱动 | 1: n秒智能等待(默认) | 2: 强制大包抓取(专治阉割、不出数据)[会改变LAN时率]
@@ -85,8 +85,7 @@
     宽带最大外网上行速率: 3e8 //请略微大于真实值；500兆为5e8，一千兆1e9
   };
 
-
-  // ---[2]------------------------ 全局状态与运行时变量 ------------------------
+  // ---[1]------------------------ 全局状态与运行时变量 ------------------------
   const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
   function escapeHTML(str) {
     return str ? String(str).replace(/[&<>'"]/g, m => ESC_MAP[m]) : '';
@@ -109,7 +108,7 @@
     // 以下原本运行中才陆续追加；一次写全，S 的形状从头到尾不变，读 S.xxx 的地方不会因为形状变来变去退化成超多态
     wLT: 0, wZEU: 0, wZED: 0, wZEUC: 0, wZEDC: 0, rTick: 0, haTick: 0, lTick: 0, bd: null, cRT: '', snap: undefined, snapLoaded: !1, calcTime: null
   };
-  // ---[3]------------------------ 数据获取层：WAN / LAN 文本拉取 + XHR 劫持 ------------------------
+  // ---[2]------------------------ 数据获取层：WAN / LAN 文本拉取 + XHR 经典方案 ------------------------
 const WAN_COMPAT = [
     // 兼容层只在标准 WAN 首次失败时探测；社区可继续追加旧固件接口。
     { u: '/getpage.lua?pid=1005&nextpage=Internet_WANInfo_lua.lua', n: 'OBJ_TOTALSPEED_ID', uK: 'TotalUpRate', dK: 'TotalDownRate' }
@@ -220,9 +219,8 @@ const WAN_COMPAT = [
       }    });
     oOp.apply(this, arguments); };
 
-  // ---[4]------------------------ 工具函数：格式化 / 解析 ------------------------
-  // 单位换算：全程以 bit 为基准
-  // 官方速率字符串（如 "12.3Kbps"）→ bit/s
+  // ---[3]------------------------ 工具函数：格式化 / 解析 ------------------------
+  // 单位换算：全程以 bit 为基准 | 官方速率字符串（如 "12.3Kbps"）→ bit/s
  function s2b(speedStr) {
         if (!speedStr) return 0;
         const val = parseFloat(speedStr);
@@ -319,7 +317,7 @@ const WAN_COMPAT = [
     }
     return list;
   }
-  // ---[5]------------------------ 样式注入 ------------------------
+  // ---[4]------------------------ 样式注入 ------------------------
   // 分组顺序即层叠顺序，改动前请留意后面的规则会覆盖前面的同级选择器。
   const st = document.createElement('style');
   st.innerHTML = `.config-item{
@@ -336,7 +334,8 @@ const WAN_COMPAT = [
   document.head.
   appendChild(st);
   window.gegeRenderedMacs = new Set();
-  // ---[6]------------------------ 核心采样引擎 refreshSpeedData ------------------------
+
+  // ---[5]------------------------ 核心采样引擎 refreshSpeedData ------------------------
   async function rSD(pWT = null, sT = null) {
     if (isF && pWT === null) return;
     isF = !0;
@@ -546,7 +545,7 @@ const WAN_COMPAT = [
       isF = !1;}
   }
 
-  // ---[7]------------------------ 周期结算与 CSV 导出 ------------------------
+  // ---[6]------------------------ 周期结算与 CSV 导出 ------------------------
   // 周期判断线的计算在 [3] 的 S.calcTime
   function buildCSV() {
     const csvQ = s => `"${s.replaceAll('"', '""')}"`; // RFC 4180：字段整体加引号，内部双引号翻倍
@@ -614,7 +613,7 @@ const calcStageRatio = (W, L_int, L_hp) => {
         return (Math.abs(L_int - W) < Math.abs(L_hp - W) ? L_int : L_hp) / W; }
   };
 
-  // ---[8]------------------------ 可视化部件：火花线 / 图标 / 信号 / 总速率曲线 ------------------------
+  // ---[7]------------------------ 可视化部件：火花线 / 图标 / 信号 / 总速率曲线 ------------------------
   // 火花线：取 32 点环形缓冲里最近 16 个采样（从旧到新），按 maxValue 缩放到 ▂~█ 八档
 const SPRK = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
 const RS_T = [-23, -34, -40, -55]; // 信号图标的档位门槛
@@ -789,7 +788,7 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
         DrawingTheLine(S.总上行图, '#ff1b00'); DrawingTheLine(S.总下行图, '#006400');
       }
 
-  // ---[9]------------------------ 看板渲染 renderUI（看板 + 设备卡片）------------------------
+  // ---[8]------------------------ 看板渲染 renderUI（看板 + 设备卡片）------------------------
   //   每个采样帧调用一次，分三步：
   //   1) 汇总各设备流量、生成存档快照、检查是否该预警 / 结算
   //   2) 建立并挂载看板（#zte-geek-board），重建「MAC → 卡片」索引
@@ -1180,7 +1179,8 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
       if (bd.parentNode) 画总速率图(bd); // 放在所有文字写完之后：读画布尺寸只触发一次排版
     });
   }
-  // ---[10]------------------------ 设备列表重建 / 提示区 / 面板开关 / 菜单注入 ------------------------
+  
+  // ---[UI]------------------------ 设备列表重建 / 提示区 / 面板开关 / 菜单注入 ------------------------
   // 官方列表在 Mesh 模式下会被销毁，所以我们自己渲染一份全屏面板（#gege-global-overlay），
   // 里面按 有线 / 5G / 5G / 2.4G 分组列出设备；每张卡片的 data-gege-mac 就是 rUI 重建卡片索引的依据。
   // 重建整个面板内容。成功后把 _domRebuilt 置 true，让 rUI 下一帧重新索引卡片。
@@ -1401,7 +1401,8 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
       }
     }, !0);
   }
-  // ---[11]------------------------ 后台探针：物理网口 / 外网计数器 / Mesh 大包引擎 / 调度 ------------------------
+
+  // ---[9]------------------------ 后台探针：物理网口 / 外网计数器 / Mesh 大包引擎 / 调度 ------------------------
   // ---- 物理网口探针 ----
   // 注意方向：路由器“发送”= 设备下载，“接收”= 设备上传；WAN 口则正好相反（发送 = 上传）
   window.gegePortTimer = null;
@@ -1469,6 +1470,7 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
     } catch (e) {console.warn(e);}
     finally { fPPRunning = !1; }
   }
+
   // ---- 外网字节计数器：读路由器 WAN 口的 Tx / Rx 字节数，用来校验积分精度 ----
   // 计数器是 32 位的，两次采样间不能跑满一圈（4 GiB）。两次响应若乱序，>>> 0 会把负差算成一整圈，所以必须防重入。
   let fWCRunning = !1; // 两次响应一旦乱序，>>> 0 会把负差算成一整圈 4 GiB
@@ -1751,7 +1753,8 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
       window.gegeEngineRunning = !1;
     }
   }
-  // ---[12]------------------------ 保活与启动 ------------------------
+  
+  // ---[S]------------------------ 保活与启动 ------------------------
   // 每 12 分钟在隐藏 iframe 里随机打开一个官方页面，避免登录会话超时；iframe 12 秒后销毁
   const tKA = () => {
     let i = document.createElement('iframe');
