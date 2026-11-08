@@ -910,6 +910,7 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
         } else { // 单 WAN：LAN 总量 / WAN 总量。WAN 基准取逻辑 WAN 积分与物理口积分的平均（只有一个有数据就用那一个）
             let rUp = calcStageRatio((Phys.tU + S.wTotUp) / ((Phys.tU > 0) + (S.wTotUp > 0)) || 0, LUp, hpU), rDn = calcStageRatio((Phys.tD + S.wTotDn) / ((Phys.tD > 0) + (S.wTotDn > 0)) || 0, LDn, hpD);
             S.cRT = `<span style="font-weight: bold;"><span style="color: ${rUp > 1.5 ? '#ff4c00' : (rUp > 1.15 ? '#FF9800' : '#4CAF50')};">${(rUp * 100).toFixed(2)}%</span>，<span style="color: ${rDn > 1.5 ? '#ff4c00' : (rDn > 1.15 ? '#FF9800' : '#4CAF50')};">${(rDn * 100).toFixed(2)}%</span></span>`;
+            const rd = S.bd?._g['gb-ratio-display']; if (rd) rd.innerHTML = S.cRT; // 第一帧看板还没建，跳过；开头那几帧的比值本来也没意义
         }
     }
     let bd = S.bd; // 面板重建 (bVD 整体 innerHTML) 会把看板摘下来，节点本身留着，下面的挂载逻辑会接回新锚点；一次性显示的外网计数器行、图表位置、冻结状态都靠它保留
@@ -955,7 +956,6 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
                 pinBtn.classList.toggle('active', S.isPinned);
             };
         } }
-    if (S.rTick === 1 && !S.hasW2 && bd._g['gb-ratio-display']) bd._g['gb-ratio-display'].innerHTML = S.cRT; // 看板建好之后再写，第一帧就能显示
 
     // ---- 2. 建立并挂载看板 ----
     // bVD 整体重写 innerHTML 后看板被摘下，在这里接回新锚点（见上面 S.bd 处的注释）
@@ -1793,4 +1793,4 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
       }, 300);
     }
   });
-})();
+}
