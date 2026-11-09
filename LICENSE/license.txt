@@ -336,8 +336,9 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
     10.5. If any provision of this License is invalid or unenforceable under the laws of the Governing Jurisdiction, it shall not affect the validity or enforceability of the remainder of 
 		the terms of this License, and without further action by the parties hereto, such provision shall be reformed to the minimum extent necessary to make such provision valid and enforceable.
 
-		In any extreme case in which compliance with certain provisions of this License is possible only at the expense of compliance with other provisions, including where such provisions are contradictory, incompatible, or directly opposed to
-		one another, the Attribution Requirements shall take absolute priority. The Licensee must satisfy the Attribution Requirements first and in full.
+		In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, the attribution clause must be satisfied
+		first. All other terms, including commercial and any other restrictive terms, need not be treated as binding obligations, so that none of them can hold attribution back or come into conflict
+		with the requirement that it be prominent, mandatory, and no weaker than the original.
 		
 		All other provisions, including without limitation any restrictions on commercial use or requirements concerning fees or charges, shall not be mandatory to the extent that compliance with them would prevent, conflict with, or take priority
 		over compliance with the Attribution Requirements.

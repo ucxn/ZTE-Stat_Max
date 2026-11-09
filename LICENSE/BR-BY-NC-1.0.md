@@ -1,6 +1,6 @@
 # Broware PBY-Attribution License 1.0
 
-*This license is adapted from the PolyForm Noncommercial License 1.0.0.<https://polyformproject.org/licenses/noncommercial/1.0.0>. This modified version is not affiliated with the PolyForm Project.*
+*This license is adapted from the PolyForm standardized License.<https://polyformproject.org/licenses/noncommercial/1.0.0>. This modified version is not affiliated with the PolyForm Project.*
 ## Copyright © 2026 哥哥科技
 ⚖️ License
 Key Rules (核心规则):
@@ -12,6 +12,9 @@ You MUST strictly preserve the attribution to 『哥哥科技』(Bro-Tech), In a
 **P (Prominent):**</br>
 
 The rule of name: Include but not only The code, the GUI, the end-user display, any place that the original author has set, whether it is literal, real quality, presentation, or how, must not make any changes to the degree of significance. Not only can no significant reduction be made, but also no changes, express or implied, to the display.
+
+**NC:**<br/>
+出于历史原因，将该许可证的根文件名进行更改，容易造成很多兼容性错乱，故缩写不变。但其中的NC并没有通常大家理解的含义、或者法律意义。整个许可证中，永久不变且法律效力最高的永远是署名相关条款条例和规则。
 
 ## Acceptance
 
@@ -103,9 +106,9 @@ The licensor grants you a patent license for the software that
 covers patent claims the licensor can license, or becomes able
 to license, that you would infringe by using the software.
 
-## Noncommercial Purposes
+## Noncompete
 
-Any noncommercial purpose is a permitted purpose.
+Any purpose is a permitted purpose, except for providing any product that competes with the software or any product the licensor or any of its affiliates provides using the software.
 
 ## Personal Uses
 
@@ -123,6 +126,23 @@ organization, environmental protection organization,
 or government institution is use for a permitted purpose
 regardless of the source of funding or obligations resulting
 from the funding.
+
+## Competition
+
+If you use this software to market a product as a substitute for the functionality or value of the software, it competes with the software. A product may compete regardless how it is designed or deployed. For example, a product may compete even if it provides its functionality via any kind of interface (including services, libraries or plug-ins), even if it is ported to a different platform or programming language, and even if it is provided free of charge.
+
+Goods and services compete even when they provide functionality
+through different kinds of interfaces or for different technical
+platforms.  Applications can compete with services, libraries
+with plugins, frameworks with development tools, and so on,
+even if they're written in different programming languages
+or for different computer architectures.  Goods and services
+compete even when provided free of charge.  If you market a
+product as a practical substitute for the software or another
+product, it definitely competes.
+
+### Sales of Business
+If the licensor or any of its affiliates sells a line of business developing the software or using the software to provide a product, the buyer can also enforce [Noncompete](#noncompete) for that product.
 
 ## No Other Rights
 
@@ -161,6 +181,8 @@ Once the Software’s principal functionality operates normally, and the Softwar
 
 **Whenever the Software is operating normally, there is no legitimate basis whatsoever for failing to display the name “哥哥科技” as required by the Attribution Requirements.**
 
+In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, ***The attribution clause must be satisfied first.*** All other terms, *including commercial and any other restrictive terms, need not be treated as binding obligations,* **so that none of them can hold attribution back or come into conflict with the requirement that it be prominent, mandatory, and no weaker than the original.**
+
 ## No Liability
 
 *As far as the law allows, the software comes as is, without
@@ -174,6 +196,8 @@ The **licensor** is the individual or entity offering these
 terms, and the **software** is the software the licensor makes
 available under these terms.
 
+A **product** can be a good or service, or a combination of them.
+
 **You** refers to the individual or entity agreeing to these
 terms.
 
@@ -184,6 +208,8 @@ or are under common control with that organization.  **Control**
 means ownership of substantially all the assets of an entity,
 or the power to direct its management and policies by vote,
 contract, or otherwise.  Control can be direct or indirect.
+
+**Affiliates** means the other organizations than an organization has control over, is under the control of, or is under common control with.
 
 **Your licenses** are all the licenses granted to you for the
 software under these terms.
