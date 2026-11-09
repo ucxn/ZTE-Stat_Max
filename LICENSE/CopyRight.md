@@ -48,9 +48,9 @@ When developing based on this program, the absolute depth level of the attributi
 
 Furthermore, upon integration into a larger work, its "relative depth level" within the navigation and interaction architecture shall suffer no degradation.
 
-For instance, when an end-user navigates into a module or feature primarily powered by this software, the text "哥哥科技" (Brother Tech) MUST be prominently and unaltered displayed in the exact original position designed by the Author on the GUI of that specific directory/module. Any attempt to fold, collapse, or relocate the attribution into secondary or hidden menus is strictly forbidden.
+For instance, when an end-user navigates into a module or feature primarily powered by this software, the text "哥哥科技" (Brother Tech) MUST be displayed prominently and without alteration in the exact original position designed by the Author on the GUI of that specific directory/module. Any attempt to fold, collapse, or relocate the attribution into secondary or hidden menus is strictly forbidden.
 
-These is for reference only.
+This is for reference only.
 
 0. Always retain the complete text “哥哥科技”, which must be retained at all times and prominently displayed in the end-user interface; an attribution in the source code does not constitute fulfillment of the valid attribution obligation.
 1. “哥哥科技” is the core author attribution of this project. BroTech, GitHub usernames, project names, or links may supplement it, but may not replace it.

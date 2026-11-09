@@ -310,26 +310,26 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 		
 		Should you, as a developer, integrate this software into a larger work or project, you must strictly adhere to the following display protocols: The physical|logical prominence of the attribution (including but not limited to
 		layout style, font size, color, and contrast) shall absolutely NOT be altered or diminished in any manner. When developing based on this program, the absolute depth level of the attribution within the End User Interface 
-		(UI) hierarchy actually accessible to must remain unchanged; furthermore, upon integration into a larger work, its "relative depth level" within the navigation and interaction architecture shall suffer no degradation.
+		(UI) hierarchy actually accessible to end users must remain unchanged; furthermore, upon integration into a larger work, its "relative depth level" within the navigation and interaction architecture shall suffer no degradation.
 
 		The more practical guide is on [https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/CopyRight.md#the-simplified-summary-for-quick-read]
 
-		For instance, when an end-user navigates into a module or feature primarily powered by this software, the text "哥哥科技" (Brother Tech) MUST be prominently and unaltered displayed in the exact original position designed by
-		the Author on the GUI of that specific directory/module. Any attempt to fold, collapse, or relocate the attribution into secondary or hidden menus is strictly forbidden.（end）
+		For instance, when an end-user navigates into a module or feature primarily powered by this software, the text "哥哥科技" (Brother Tech) MUST be displayed prominently and without alteration in the exact original position
+		designed by the Author on the GUI of that specific directory/module. Any attempt to fold, collapse, or relocate the attribution into secondary or hidden menus is strictly forbidden.（end）
 
 		Once my code is used, the number of appearances of “哥哥科技” in the end-user interface of your work must NOT be lower than the number of appearances in my original complete work. In all cases, at least one page of the resulting
 		work must contain the attribution. Attribution must not be hidden away solely in deep or secondary menus that users rarely visit. It must be placed near the relevant interface, framework, module, or area that primarily uses my code.
 
     10.3. The application of the United Nations Convention on Contracts for the International Sale of Goods is expressly excluded.
-    10.4. The language in all parts of this License shall be in all cases construed simply according to its fair meaning, and not strictly for or against any of the parties hereto. Any 
-		law or regulation which provides that the language of a contract shall be construed against the drafter shall not apply to this License.
+    10.4. Except for the Attribution Requirements, which are governed by the next paragraph, the language in all parts of this License shall be construed simply according to its fair meaning, and not strictly for or against any of the parties
+		hereto. Any law or regulation which provides that the language of a contract shall be construed against the drafter shall not apply to this License.
 
-		Notwithstanding anything to the contrary in this License, the Attribution Requirements shall be interpreted strictly and exclusively in the manner most favorable to the Author. This rule applies in particular to Section 3.11 and
-		Section 10.2, as well as to any other provision concerning attribution, identification of the Author, or preservation of the Author’s name and attribution notices.
+        Notwithstanding anything to the contrary in this License, the attribution requirements in Sections 3.10, 3.11 and 10.2 (together, the "Attribution Requirements") shall be interpreted strictly and exclusively in the manner
+		most favorable to the Author.
 
 		Based on the actual source code of the Software and its technical characteristics, there is no technically possible mode of operation in which the Software’s ordinary functionality operates normally while the required attribution
-		automatically disappears. Once the Software’s principal functionality operates normally, and the Software is capable of displaying Chinese text normally as part of that functionality—except where Chinese descriptions of functionality
-		in the source code have themselves been deleted—the Software shall be deemed to be operating normally.
+		automatically disappears. Once the Software's principal functionality operates normally, and the Software is capable of displaying Chinese text normally as part of that functionality, the Software shall be deemed to be operating
+		normally. Deleting the Chinese functional descriptions from the source code does not change this, and cannot be relied on to claim that the Software is not operating normally.
 
 		Whenever the Software is operating normally, there is no legitimate basis whatsoever for failing to display the name “哥哥科技” as required by the Attribution Requirements.
 
@@ -346,7 +346,8 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 		of any part hereof.
     10.7. Each of the terms "including", "include" and "includes", when used in this License, is not limiting whether or not non-limiting language (such as "without limitation" or 
 		"but not limited to" or words of similar import) is used with reference thereto.
-    10.8. The parties hereto acknowledge they have expressly required that this License and notices relating thereto be interpreted in the Author's language.
+    10.8. This License and notices relating thereto are drawn up in English. Where the Author publishes a Chinese version of any provision,
+	the Chinese version prevails, and the English text shall be read consistently with it.
 
 //***THE LICENSE TERMS END HERE (OTHER THAN AS SET OUT IN EXHIBIT A).***//
 EXHIBIT A (to the Adaptive Public License of Bro-Tech)
@@ -354,7 +355,7 @@ EXHIBIT A (to the Adaptive Public License of Bro-Tech)
     PART 1: INITIAL CONTRIBUTOR AND DESIGNATED WEB SITE
     The Initial Contributor is: 	哥哥科技 
 
-    Address of Initial Contributor: 175325443+ucxn@users.noreply.github.com
+    Address of Initial Contributor: ucxn@outlook.com
 
     The Designated Web Site is: 	https://github.com/ucxn/ZTE-Stat_Max
       	
@@ -367,7 +368,7 @@ EXHIBIT A (to the Adaptive Public License of Bro-Tech)
     The date on which the Initial Work was first available under this License: Sep 21, 2026
 
     PART 3: GOVERNING JURISDICTION
-    For the purposes of this License, the Governing Jurisdiction is Wuhan, P.R. China.
+    For the purposes of this License, the Governing Jurisdiction is the People's Republic of China, and the courts located in Wuhan City shall have jurisdiction.
 
     PART 4: THIRD PARTIES
     For the purposes of this License, "Third Party" has the definition set forth below in the ONE paragraph selected by the Initial Contributor from paragraphs A, B, C, D and E when the Initial 

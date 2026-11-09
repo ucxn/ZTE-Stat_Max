@@ -1,6 +1,6 @@
 # Broware PBY-Attribution License 1.0
 
-*This license is adapted from the PolyForm standardized License.<https://polyformproject.org/licenses/noncommercial/1.0.0>. This modified version is not affiliated with the PolyForm Project.*
+*This license is adapted from the PolyForm standardized License.<https://polyformproject.org/licenses>. This modified version is not affiliated with the PolyForm Project.*
 ## Copyright © 2026 哥哥科技
 ⚖️ License
 Key Rules (核心规则):
@@ -11,7 +11,7 @@ You MUST strictly preserve the attribution to 『哥哥科技』(Bro-Tech), In a
 
 **P (Prominent):**</br>
 
-The rule of name: Include but not only The code, the GUI, the end-user display, any place that the original author has set, whether it is literal, real quality, presentation, or how, must not make any changes to the degree of significance. Not only can no significant reduction be made, but also no changes, express or implied, to the display.
+*The rule of name*: This applies to, without limitation, the code, the GUI, the end-user display, and every other place where the Author has placed the name. Whether in its literal text, its substance, or its presentation, the prominence of the attribution must not be altered or reduced in any way, express or implied. Any reduction is prohibited, not only a significant one.
 
 **NC:**<br/>
 出于历史原因，将该许可证的根文件名进行更改，容易造成很多兼容性错乱，故缩写不变。但其中的NC并没有通常大家理解的含义、或者法律意义。整个许可证中，永久不变且法律效力最高的永远是署名相关条款条例和规则。
@@ -56,11 +56,13 @@ Should you, as a developer, integrate this software into a larger work or projec
 
 When developing based on this program, the Absolute depth level of the attribution within the actual End-User Interface (UI) hierarchy must remain unchanged; Furthermore, upon integration into a larger work, its "Relative depth level" within the navigation and interaction architecture shall suffer no degradation.
 
-For instance, when an end-user navigates into a module or feature primarily powered by this software, the text "哥哥科技" MUST be prominently and unaltered displayed in the exact original position designed by the Author on the UI of that specific directory/module. Any attempt to fold, collapse, or relocate the attribution into secondary or hidden menus is strictly forbidden.
+For instance, when an end-user navigates into a module or feature primarily powered by this software, the text "哥哥科技" MUST be displayed prominently and without alteration in the exact original position designed by the Author on the UI of that specific directory/module. Any attempt to fold, collapse, or relocate the attribution into secondary or hidden menus is strictly forbidden.
 
 The more practical guide is on [CopyRight.md](CopyRight.md#the-simplified-summary-for-quick-read)（end）
 
-Once my code is used, the number of appearances of “哥哥科技” in the end-user interface of your work must NOT be lower than the number of appearances in my original complete work. In all cases, *at least one page of the resulting work must contain the attribution*. Attribution must not be hidden away solely in deep or secondary menus that users rarely visit. **That must be placed near the relevant interface, framework, module, or area that primarily uses my code.**
+Once my code is used, the number of appearances of “哥哥科技” in the end-user interface of your work must NOT be lower than the number of appearances in my original complete work. In all cases, *at least one page of the resulting work must contain the attribution*. Attribution must not be hidden away solely in deep or secondary menus that users rarely visit. **It must be placed near the relevant interface, framework, module, or area that primarily uses my code.**
+
+Where my code is used in more than one major place, the attribution shall be retained or added in each of them, with no upper limit.
 
 ## Copyright License
 
@@ -92,7 +94,7 @@ with the software.
 > Required Legal Notice: Copyright 哥哥科技, Bro-Tech. &nbsp;
 [github.com/ucxn/ZTE-Stat_Max](https://github.com/ucxn/ZTE-Stat_Max)
 >
-> 爱哥哥，也有个可爱的弟弟。
+> Required Legal Notice: 爱哥哥，也有个可爱的弟弟。
 
 ## Changes and New Works License
 
@@ -209,7 +211,7 @@ means ownership of substantially all the assets of an entity,
 or the power to direct its management and policies by vote,
 contract, or otherwise.  Control can be direct or indirect.
 
-**Affiliates** means the other organizations than an organization has control over, is under the control of, or is under common control with.
+**Affiliates** means the other organizations that an organization has control over, is under the control of, or is under common control with.
 
 **Your licenses** are all the licenses granted to you for the
 software under these terms.
