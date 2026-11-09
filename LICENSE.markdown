@@ -23,7 +23,7 @@ Regardless of the licensing path chosen, it is subject to the **BroTech Prominen
 
 This project is available under either of the following licensing options:
 1. **Adaptive Public License - Bro 0.1**[（已经包含额外的署名要求条件）](/LICENSE/license.txt) ; or
-2. Sustainable Use License 1.0 ([**SUL-1.0**](/LICENSE/SUL-1.0.md)) WITH [***BroTech-Prominent-Attribution-Terms***](#哥哥科技显著署名附加条款) AND Broware Attribution–Noncommercial License（**[Bro-BY-NC](/LICENSE/BR-BY-NC-1.0.md)**）1.0（以每次提交时的版本或最新版为准）.
+2. Sustainable Use License 1.0 ([**SUL-1.0**](/LICENSE/SUL-1.0.md)) WITH [***BroTech-Prominent-Attribution-Terms***](#哥哥科技显著署名附加条款) AND Broware PBY-Attribution License（**[Bro-PBY](/LICENSE/BR-BY-NC-1.0.md)**）1.0（以每次提交时的版本或最新版为准）.
 
 可以根据自己的使用场景自行抉择，第二种看似严格多，但是针对个人、非商业使用，条款相对较简练通俗，方便非英语母语者理解。
 
@@ -39,7 +39,7 @@ In SPDX notation:
 - Supplement File: [`suppfile.txt`](./LICENSE/suppfile.txt)<br><br>
 - Sustainable Use License 1.0: [`SUL-1.0.md`](./LICENSE/SUL-1.0.md)
 - 哥哥科技显著署名附加条款: [`BroTech Prominent Attribution Terms`](#brotech-prominent-attribution-terms)
-- Broware Attribution–Noncommercial License 1.0: [`BR-BY-NC-1.0.md`](./LICENSE/BR-BY-NC-1.0.md)
+- Broware PBY-Attribution License 1.0: [`BR-BY-NC-1.0.md`](./LICENSE/BR-BY-NC-1.0.md)
 
 针对开发使用的工程快速*参考* 指南：[Abstract of key rules for developers](/LICENSE/CopyRight.md)
 
@@ -68,12 +68,12 @@ Regardless of the license used, the 哥哥科技's prominent attribution must be
 
 保留“哥哥科技”的完整字面量和实质显示、可见性与显著性，是作者授予本软件任何许可权利所不可分割的条件。为免疑义，本款项下的任何终止均为立即、绝对且不可补救的，且严格不受任何宽限期、通知要求、时间流逝或任何其它条件的限制。
 
-本项目主条款全文结束，严格遵守该协议是使用本仓库任意部分或完整代码合法性的前置条件。
-
 ### 哥哥的名字是最重要的
 对于所有、无论何种要求，唯独关于署名条款，需严格地按照有利于哥哥科技的方式来解释。基于本程序的实际源代码和技术条件，不存在一种软件正常功能能使用，而署名在技术上自动消失的方式。一旦程序的主要功能能正常使用，并且程序的主要功能能够正常的显示中文（源代码中功能描述中文被删除掉的作弊不算），则视为软件运行正常。软件运行正常的时候，没有任何合法理由可以不显示“哥哥科技”。
 
 如果在最极端的情况下，只能满足某些条款，而不能满足另外一些条款，甚至这些条款属于矛盾或者对立关系，则必须先满足署名条款。其他条款，包括半商业限制或者收费条款，均可以不作为必须履行的条款以避免拖后腿或者和显著强制不弱于原样署名条款冲突。
+
+本项目主条款全文结束，严格遵守该协议是使用本仓库任意部分或完整代码合法性的前置条件。
 
 ## BroTech Prominent Attribution Terms
 Regardless of the license or licensing route used, the Bro-Tech's prominent attribution MUST be retained.
@@ -91,5 +91,9 @@ The characters “哥哥科技” must always be retained, without exception. Th
 Regardless of the reason, even if technical difficulties prevent “哥哥科技” from being displayed unchanged within a larger work or in another programming language, you must still retain the literal string “哥哥科技” and may only add other forms of attribution that prominently identify 哥哥科技. You must also promptly notify me via GitHub or email. Preserving the full visibility of “哥哥科技” is an inseparable condition of any rights I grant.
 
 For the avoidance of doubt, any termination under this paragraph is immediate, absolute, and non-curable, and shall operate strictly without regard to any cure period, notice requirement, lapse of time, or any other condition whatsoever.
+
+### 哥哥's Name Matters Most
+
+Among all requirements of any kind, the attribution clause, and it alone, shall be construed strictly in favor of 哥哥科技. Given this program's actual source code and technical conditions, there is no way for the software to function normally while the attribution drops out on its own for technical reasons. Once the program's main features work normally and can display Chinese text properly (deleting the Chinese feature descriptions from the source code is a cheat and does not get around this), the software is deemed to be running normally. While the software is running normally, there is no legitimate reason of any kind not to display "哥哥科技".
 
 END OF TERMS. Strict compliance with this Agreement constitutes an absolute condition precedent to the legality of using any code from this Repository.
