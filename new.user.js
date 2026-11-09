@@ -2,7 +2,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         6.0.6
+// @version         6.0.7
 // @website         https://github.com/ucxn/ZTE-Stat_Max
 // @supportURL      https://b23.tv/BV1PtR7B8ECC
 // @description     一款针对中兴官方计数器和UI不区分上下行、流量数据不可靠、网页隐藏API等问题而诞生的测控“引擎”，一个庞大的循环流程程序；融合了哥哥的大量思想和算法，探索属于家庭网关的真相。
@@ -448,7 +448,7 @@ const WAN_COMPAT = [
             dB: (CONFIG.readSaveData === 1 || CONFIG.readSaveData === 3) ? 0 : (spD ? cC.offDn - (spD.down || 0) : cC.offDn),
             lU: cC.offUp, lD: cC.offDn, aR: 0, dpU: 0, dpD: 0,
             oU: cC.offUp, oD: cC.offDn, hU: new Float64Array(32), hD: new Float64Array(32), hIdx: 0,
-            ifc: cC.iface, name: cC.name || spD?.name || m, // 真实流量
+            ifc: cC.iface, name: cC.name || spD?.name || m, ip: cC.ip || spD?.ip || '', // 真实流量；ip 是最后一次见到的
             // 下面这些原本是运行中按条件追加的；一次写全，所有设备共用一个隐藏类。会反复写小数的给 0（原地改写不分配），靠“有没有值”判断的给 undefined
             onS: 0, qU: 0, qD: 0, zEU: 0, zED: 0, zUC: 0, zDC: 0, dbC: 0,
             rssi: undefined, lRs: undefined, via: undefined, viaMac: undefined, phy: undefined, haOff: undefined
@@ -488,6 +488,7 @@ const WAN_COMPAT = [
           }
           cS.ifc = cC.iface;
           if (cC.name) cS.name = cC.name;
+          if (cC.ip) cS.ip = cC.ip;
         }
 
         // 速率合法性检查：不可信的速率换成哨兵值，并从代数和里扣掉
@@ -826,7 +827,7 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
         integral_up: s.intUp || 0,
         integral_down: s.intDn || 0,
         status: cC ? (CONFIG.portMap[cC.iface] || cC.iface || "未知接口") : (s.haOff > 0 ? (CONFIG.portMap[s.ifc] || s.ifc || "未知接口") : "下线"),
-        name: cC?.name || s.name || k, ip: cC?.ip || "",
+        name: cC?.name || s.name || k, ip: s.ip,
         raw_up: cC?.offUp || 0, raw_down: cC?.offDn || 0,
         rssi: s.rssi, via: s.via, via_mac: s.viaMac
       };
@@ -837,28 +838,28 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
           if (CONFIG.盲漫游 === 1) {
             if (cC) {
               if (s.haOff === 0 || (s.haOff === undefined && !S.cSnap.devices?.[k])) {
-                GM_setValue('ha_presence', { timestamp: Date.now(), devices: { [k]: { name: cC.name || s.name || k, status: "上线" } } });
+                GM_setValue('ha_presence', { timestamp: Date.now(), devices: { [k]: { name: cC.name || s.name || k, ip: s.ip, status: "上线" } } });
                 s.haOff = undefined;
               } else if (s.haOff > 0) s.haOff = undefined;
             } else if (s.haOff > 0) {
               if (Date.now() >= s.haOff) {
-                GM_setValue('ha_presence', { timestamp: Date.now(), devices: { [k]: { name: s.name || k, status: "下线" } } });
+                GM_setValue('ha_presence', { timestamp: Date.now(), devices: { [k]: { name: s.name || k, ip: s.ip, status: "下线" } } });
                 s.haOff = 0;
               }
             } else if (s.haOff === undefined) {
-              GM_setValue('ha_presence', { timestamp: Date.now(), devices: { [k]: { name: s.name || k, status: "下线" } } });
+              GM_setValue('ha_presence', { timestamp: Date.now(), devices: { [k]: { name: s.name || k, ip: s.ip, status: "下线" } } });
               s.haOff = 0;
             }
           } else {
             if (cC) {
               if (s.haOff === 0 || (s.haOff === undefined && !S.cSnap.devices?.[k])) {
-                GM_setValue('ha_presence', { timestamp: Date.now(), devices: { [k]: { name: cC.name || s.name || k, status: "上线" } } });
+                GM_setValue('ha_presence', { timestamp: Date.now(), devices: { [k]: { name: cC.name || s.name || k, ip: s.ip, status: "上线" } } });
                 s.haOff = undefined;
               } else if (s.haOff > 0) s.haOff = undefined;
             } else if (s.haOff === undefined) {
               s.haOff = Date.now() + 300000;
             } else if (s.haOff > 0 && Date.now() >= s.haOff) {
-              GM_setValue('ha_presence', { timestamp: Date.now(), devices: { [k]: { name: s.name || k, status: "下线" } } });
+              GM_setValue('ha_presence', { timestamp: Date.now(), devices: { [k]: { name: s.name || k, ip: s.ip, status: "下线" } } });
               s.haOff = 0;
             }
           }
