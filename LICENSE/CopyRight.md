@@ -4,6 +4,16 @@
 仅在您完全尊重本署名要求，且持续、完整、严格地遵守本协议各项规定的前提下，您方被授予使用本软件的其他衍生权利。如果您无法准确理解本条款的法律含义，请自行咨询专业律师；反之，您绝对无权将“权利授予条款”与“显著署名条款”割裂或孤立适用。
 
 若您无法理解何为“显著署名”，则您必须选择不使用本软件的任何代码。在此情况下，除分享官方原始链接及下载至本地仅供个人自用外，严禁对本软件进行任何其他操作或分发行为。
+### 关于英文名称与拼音
+“哥哥科技”的推荐英文名称为 BroTech。汉语拼音不能代替英文译名，请不要用 Gege Keji 这类拼音写法来指代哥哥科技；单独使用的 gege 不在此列。从审美上说，我也不希望程序里出现不必要的拼音地狱。
+
+无论是 BroTech 还是任何拉丁字母形式都只能作为“哥哥科技”的补充，不能替代任何署名要求。除主许可证中关于技术限制的规定所允许、并已按其要求履行相应义务的情形外，未以“哥哥科技”署名的，一律视为不符合署名要求。
+
+### On the English Name and Pinyin
+The recommended English name for 哥哥科技 is BroTech. Pinyin is not a substitute for an English translation, so please don't refer to 哥哥科技 with a romanization such as "Gege Keji"; "gege" used on its own is not covered by this. On a matter of taste, I would also rather not see a program cluttered with needless pinyin.
+
+Whether BroTech or any other spelling, a Latin-script form may only supplement “哥哥科技”; it can never replace any attribution requirement. Except where the technical-limitation provisions of the main license allow it and their accompanying obligations have been fulfilled, any attribution not given as “哥哥科技” is deemed non-compliant.
+
 ## 简要版规则速览
 *本文本仅仅强调部分核心特征和真正许可协议的部分条款，不是许可协议，也没有法律意义。您应当在使用授权作品前，仔细审阅真正许可协议的所有条款。*
 

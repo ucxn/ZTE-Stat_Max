@@ -773,12 +773,12 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
         const DrawingTheLine = (arr, col) => {
           if (!n) return;
           x.strokeStyle = col; x.lineWidth = 2.4; x.beginPath();
-          const bins = Math.max(1, Math.min(n, gw | 0)), sx = n > 1 ? gw / (n - 1) : 0, x0 = n > 1 ? l : l + gw, ky = gh / ym, yb = H - b; let first = 1;
+          const bins = Math.max(1, Math.min(n, gw | 0)), sx = n > 1 ? gw / (n - 1) : 0, x0 = n > 1 ? l : l + gw, ky = gh / ym, yb = H - b, sp = n / bins + 1e-9; let first = 1;
           if (bins === n) {
             for (let k = 0; k < n; k++) { const xx = x0 + sx * k, yy = yb - arr[(st + k) & 8191] * ky; first ? (x.moveTo(xx, yy), first = !1) : x.lineTo(xx, yy); }
           } else {
             for (let q = 0; q < bins; q++) {
-              let a = q * n / bins | 0, z = (q + 1) * n / bins | 0, mn = Infinity, mx = -Infinity, mi = a, ma = a; if (z <= a) z = a + 1;
+              let a = q * sp | 0, z = (q + 1) * sp | 0, mn = Infinity, mx = -Infinity, mi = a, ma = a; if (z <= a) z = a + 1;
               for (let k = a; k < z; k++) { let v = arr[(st + k) & 8191]; if (v < mn) { mn = v; mi = k; } if (v > mx) { mx = v; ma = k; } }
               if (mi <= ma) { first ? (x.moveTo(x0 + sx * mi, yb - mn * ky), first = !1) : x.lineTo(x0 + sx * mi, yb - mn * ky); if (ma !== mi) x.lineTo(x0 + sx * ma, yb - mx * ky); }
               else { first ? (x.moveTo(x0 + sx * ma, yb - mx * ky), first = !1) : x.lineTo(x0 + sx * ma, yb - mx * ky); x.lineTo(x0 + sx * mi, yb - mn * ky); }

@@ -72,6 +72,10 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 
 任何再分发、修改、移植、合并、集成、翻译、转换编程语言或形成更大作品的行为，均不得使“哥哥科技”的署名显著程度低于原作品中与作者身份相对应的署名程度。
 
+为明确起见，整个代码空间中任何形式或实质上包含和/或显示“哥哥”、“哥哥科技”以及满足表达式 `/\bBro(?:ther)?(?:[-_ ]?Tech)?\b/i` 的，均严禁被篡改、弱化，或以非预期名称方式呈现。
+
+无论项目有何种规定，一旦违反该条，视为侵犯著作权，我任何明示、暗示、潜在、显式或任何其他方式的授权一律无效。
+
 保留“哥哥科技”的完整字面量和实质显示、可见性与显著性，是作者授予本软件任何许可权利所不可分割的条件。为免疑义，本款项下的任何终止均为立即、绝对且不可补救的，且严格不受任何宽限期、通知要求、时间流逝或任何其它条件的限制。
 
 ### 哥哥的名字是最重要的
@@ -80,6 +84,35 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 如果在最极端的情况下，只能满足某些条款，而不能满足另外一些条款，甚至这些条款属于矛盾或者对立关系，则必须先满足署名条款。其他条款，包括半商业限制或者收费条款，均可以不作为必须履行的条款以避免拖后腿或者和显著强制不弱于原样署名条款冲突。
 
 本项目主条款全文结束，严格遵守该协议是使用本仓库任意部分或完整代码合法性的前置条件。
+
+### 拆分集成时的署名
+
+如果您必须修改源代码，例如加入大量自研功能，导致我的完整作品被拆分为两个或更多部分，则：
+1. 必须原样保留原设计中的全部署名；
+2. 必须在更显著的位置额外增加署名，例如屏幕顶端（我的原始署名位于屏幕底端）；
+3. 拆分后的每一个部分，都必须带有署名。
+
+#### 集成建议
+
+请注意：如果您无法理解以下条件，请咨询专业的技术顾问或律师；在理解之前，您只能原样传播官方链接。
+
+我们建议您像图吧工具箱那样集成本工具：完整收录，原样同步，并在您的软件中提供显著的入口，以提升用户的使用体验。
+
+本章节的推定不得被用于减少原作品已有的任何署名，也不影响前述任何署名义务。
+
+#### 全局参考次数
+
+在整个软件范围内，“哥哥科技”的署名累计达到 10000 次，且无恶意的，通常可善意推定为在次数上合规。该参考值不影响前述任何署名义务。
+
+例外：如果您的软件对最终用户而言是图灵完备的（用户可以在其中自主编写并运行程序），上述参考值不适用，署名次数上不封顶，且每一个拆分部分都必须带有署名。这里以图灵完备作为“大型专业软件”的形式标准，例如操作系统、浏览器、Microsoft Excel、米家极客版、可运行脚本插件的路由器固件后台；功能单一的小工具，例如 FastStone Capture，不在此列。
+
+#### 同一页面的署名次数
+
+在同一页面内，署名达到 4 次的，在无恶意的情况下，通常可善意推定为已满足本条的次数要求。
+
+“页面”，指用户无需经过菜单跳转、返回、超链接或自动跳转，仅通过单指拖动、鼠标滚轮或键盘方向键即可到达的全部内容。判断署名是否在同一屏内时，以页面缩小到最小比例后一屏能呈现的内容为准；因屏幕分辨率导致显示不清的情况除外。
+
+署名的位置以通常惯例为准。如果您对位置设计没有把握，应将署名置于屏幕正中央，且不透明度不低于 50%。
 
 ## BroTech Prominent Attribution Terms
 Regardless of the license or licensing route used, the Bro-Tech's prominent attribution MUST be retained.
@@ -100,6 +133,10 @@ The characters “哥哥科技” must always be retained, without exception. Th
 
 No redistribution, modification, port, merger, integration, translation, conversion to another programming language, or incorporation into a larger work may make the prominence of the “哥哥科技” attribution lower than that of the attribution identifying the author in the original work.
 
+For the avoidance of doubt, anything anywhere in the entire code space that, in form or in substance, contains and/or displays “哥哥” or “哥哥科技”, or that matches the expression `/\bBro(?:ther)?(?:[-_ ]?Tech)?\b/i`, must never be altered, weakened, or presented under any name other than the one intended.
+
+Regardless of anything else the project provides, any breach of this clause is deemed copyright infringement, and every authorization I have granted, whether express, implied, potential, explicit, or in any other form, becomes void.
+
 Preserving the complete literal text “哥哥科技”, together with its actual display, visibility, and prominence, is an inseparable condition of every license right the author grants for this software. For the avoidance of doubt, any termination under this Section is immediate, absolute, and non-curable, and operates strictly without regard to any cure period, notice requirement, lapse of time, or any other condition whatsoever.
 
 ### 哥哥's Name Matters Most
@@ -109,6 +146,31 @@ Among all requirements of any kind, the attribution clause, and it alone, shall 
 In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, the attribution clause must be satisfied first. All other terms, including semi-commercial restrictions and fee-related terms, need not be treated as mandatory, so that none of them can hold attribution back or come into conflict with the requirement that attribution be prominent, mandatory, and no weaker than the original.
 
 END OF THE PRIMARY TERMS OF THIS PROJECT. Strict compliance with these terms is a condition precedent to the lawful use of any part, or the whole, of the code in this repository.
+
+### Attribution When Splitting an Integration
+If you must modify the source code, for example by adding substantial features of your own, so that my complete work ends up split into two or more parts, then:
+
+1. Every attribution in the original design must be kept exactly as it is;
+2. An additional attribution must be placed somewhere more prominent, such as the top of the screen (my original attribution sits at the bottom);
+3. Every part resulting from the split must carry attribution.
+
+#### Integration Guidance
+
+If you cannot understand the conditions below, please consult a qualified technical adviser or lawyer. Until you do, you may only share the official link as it is.
+
+We recommend integrating this tool the way "Tualatin Toolbox" bundles the tools it collects: include it whole, keep it in sync with the original, and give it a prominent entry point in your software for a better user experience.
+
+#### Attribution Count on a Single Page
+Where attribution appears 4 times on a single page, and there is no bad faith, it may ordinarily be presumed in good faith to satisfy the count requirement of this section. This presumption may not be used to reduce any attribution already present in the original work, and it does not affect any of the attribution obligations above.
+
+A "page" means all content a user can reach by dragging with one finger, scrolling with a mouse wheel, or using the keyboard arrow keys, without going through menu navigation, a back action, a hyperlink, or an automatic redirect. To judge whether attributions fall within a single screen, use what one screen can show with the page zoomed out to its smallest scale, except where content becomes unreadable because of the screen's resolution.
+
+Attribution should be placed according to common convention. If you are unsure where to place it, put it at the center of the screen with an opacity of at least 50%.
+
+#### Overall Reference Count
+Where "哥哥科技" appears at least 10,000 times in total across your software, and there is no bad faith, you may ordinarily be presumed in good faith to have met the count requirements. This reference value does not affect any of the attribution obligations above.
+
+Exception: if your software is Turing-complete for its end users (that is, users can write and run their own programs within it), the reference value above does not apply. There is no upper limit on the number of attributions, and every split-off part must still carry attribution. Turing completeness serves here as the formal test for "large professional software": operating systems, web browsers, Microsoft Excel, the Mi Home geek edition, and router firmware admin panels that run script plugins all qualify, while single-purpose tools such as FastStone Capture do not.
 
 ## Statement
 Broware ("哥哥软件") has something in common with badgeware, *but is not the same*. Badgeware usually requires a corresponding mark to be added prominently on integration and shown on every screen of the work. Broware is not necessarily stricter: it is closer to a complete piece of free software than to "underlying infrastructure", a "framework", an "open-source project", or a "library", so the boundary of the code can be drawn very clearly. In the interfaces made up mainly of my work, every instance of my name, whether or not it is an attribution in the legal sense, must be fully preserved without any alteration. In engineering terms, this is actually the most natural choice.\
