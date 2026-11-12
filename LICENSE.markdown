@@ -57,7 +57,7 @@ The characters "哥哥科技" must, without exception, be retained, and the prom
 Whatever the reason, even if technical difficulties make it impossible to display "哥哥科技" unchanged within a larger work or in another programming language, "you" must still retain the literal text, may only add other forms that prominently identify 哥哥科技, and must promptly notify me via GitHub or email. Preserving the complete visibility of "哥哥科技" is an inseparable part of every right I license.
 
 # 哥哥科技显著署名附加条款
-
+【2026/11/12】
 当引用我的项目能明确地表明领域的时候，可以不再引用、可以省略GitHub用户名或者项目名（但我也不主动推荐故意删除）、仓库链接。
 
 在任何情况下，均不得在最终用户界面中删除、篡改、遮蔽、隐藏、替换、改写、缩写、截断、弱化、降低可见性、降低显著性、误导性呈现以任何形式呈现的：
@@ -108,9 +108,9 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 
 #### 同一页面的署名次数
 
-在同一页面内，署名达到 4 次的，在无恶意的情况下，通常可善意推定为已满足本条的次数要求。
+在同一页面内，非常显著的署名达到 4~9 次的，在无恶意的情况下，通常可善意推定为已满足本条的次数要求。
 
-“页面”，指用户无需经过菜单跳转、返回、超链接或自动跳转，仅通过单指拖动、鼠标滚轮或键盘方向键即可到达的全部内容。判断署名是否在同一屏内时，以页面缩小到最小比例后一屏能呈现的内容为准；因屏幕分辨率导致显示不清的情况除外。
+“页面”，指用户无需经过菜单跳转、返回、超链接或自动跳转，仅通过单指拖动、鼠标滚轮或键盘方向键，但不包括上、下一级菜单、返回键、进一步页面导航或者超链接、自动跳转等即可到达的全部内容。判断署名是否在同一屏内时，以页面缩小到最小比例后一屏能呈现的内容为准；不考虑因屏幕分辨率导致显示不清的情况。
 
 署名的位置以通常惯例为准。如果您对位置设计没有把握，应将署名置于屏幕正中央，且不透明度不低于 50%。
 
@@ -161,7 +161,7 @@ If you cannot understand the conditions below, please consult a qualified techni
 We recommend integrating this tool the way "Tualatin Toolbox" bundles the tools it collects: include it whole, keep it in sync with the original, and give it a prominent entry point in your software for a better user experience.
 
 #### Attribution Count on a Single Page
-Where attribution appears 4 times on a single page, and there is no bad faith, it may ordinarily be presumed in good faith to satisfy the count requirement of this section. This presumption may not be used to reduce any attribution already present in the original work, and it does not affect any of the attribution obligations above.
+Where attribution appears 4~9 times on a single page, and there is no bad faith, it may ordinarily be presumed in good faith to satisfy the count requirement of this section. This presumption may not be used to reduce any attribution already present in the original work, and it does not affect any of the attribution obligations above.
 
 A "page" means all content a user can reach by dragging with one finger, scrolling with a mouse wheel, or using the keyboard arrow keys, without going through menu navigation, a back action, a hyperlink, or an automatic redirect. To judge whether attributions fall within a single screen, use what one screen can show with the page zoomed out to its smallest scale, except where content becomes unreadable because of the screen's resolution.
 

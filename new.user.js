@@ -2,7 +2,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         6.0.7
+// @version         6.0.8
 // @website         https://github.com/ucxn/ZTE-Stat_Max
 // @supportURL      https://b23.tv/BV1PtR7B8ECC
 // @description     一款针对中兴官方计数器和UI不区分上下行、流量数据不可靠、网页隐藏API等问题而诞生的测控“引擎”，一个庞大的循环流程程序；融合了哥哥的大量思想和算法，探索属于家庭网关的真相。
