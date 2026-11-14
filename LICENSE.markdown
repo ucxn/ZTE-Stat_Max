@@ -57,14 +57,14 @@ The characters "哥哥科技" must, without exception, be retained, and the prom
 Whatever the reason, even if technical difficulties make it impossible to display "哥哥科技" unchanged within a larger work or in another programming language, "you" must still retain the literal text, may only add other forms that prominently identify 哥哥科技, and must promptly notify me via GitHub or email. Preserving the complete visibility of "哥哥科技" is an inseparable part of every right I license.
 
 # 哥哥科技显著署名附加条款
-【2026/11/12】
+【2026/11/14】
 当引用我的项目能明确地表明领域的时候，可以不再引用、可以省略GitHub用户名或者项目名（但我也不主动推荐故意删除）、仓库链接。
 
-在任何情况下，均不得在最终用户界面中删除、篡改、遮蔽、隐藏、替换、改写、缩写、截断、弱化、降低可见性、降低显著性、误导性呈现以任何形式呈现的：
+在任何情况下，均不得在最终用户界面中删除、篡改、遮蔽、隐藏、替换、改写、缩写、截断、弱化、降低可见性、降低显著性、误导性呈现、移出可视区域、延迟加载/默认折叠、限时或附条件显示，或以任何其他方式，使其以非原定的名称、形式或显著程度呈现以任何形式呈现的：
 
 **“哥哥科技”**
 
-这四个汉字。原则上必须原样保留所有“哥哥”和“哥哥科技”。`BroTech`、`Bro-Tech`、GitHub 用户名、项目名称、仓库链接或其他英文、拉丁字符形式，仅可作为补充署名，不得用于替代“哥哥科技”。
+这些汉字。必须原样保留所有“哥哥”和“哥哥科技”。`BroTech`、`Bro-Tech`、GitHub 用户名、项目名称、仓库链接或其他英文、拉丁字符形式，仅可作为补充署名，不得用于替代“哥哥科技”。
 
 即使目标运行环境、显示设备、编程语言或其他技术环境无法正常显示中文，凡能够保存 Unicode、UTF-8、GB 18030 或其他能够表示该字面量的源码、许可证文本、元数据或其他载体中，仍必须原样保留“哥哥科技”。
 
@@ -115,15 +115,15 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 署名的位置以通常惯例为准。如果您对位置设计没有把握，应将署名置于屏幕正中央，且不透明度不低于 50%。
 
 ## BroTech Prominent Attribution Terms
-Regardless of the license or licensing route used, the Bro-Tech's prominent attribution MUST be retained.
+Regardless of the license or licensing route used, the 哥哥科技's prominent attribution MUST be retained.
 
-Where a reference to my project already makes the relevant field clear, you need not cite it further, and you may omit the GitHub username or project name and the repository link, although myself don't recommend it on purpose.
+Where a reference to my project already makes the relevant field clear, you need not cite it further, and you may omit the GitHub username or project name and the repository link, although I do not actively recommend intentionally omitting them.
 
-Under no circumstances may the following, presented in any form in the end-user interface, be removed, altered, obscured, concealed, replaced, reworded, abbreviated, truncated, weakened, made less visible, made less prominent, or presented in a misleading manner:
+Under no circumstances may the following, presented in any form in the end-user interface, be removed, altered, obscured, concealed, replaced, reworded, abbreviated, truncated, weakened, or subjected to Reduction of Visibility, Reduction of Prominence, Misleading Presentation, Removal from the Visible Area, Deferred Loading, Default Collapse, Time-Limited or Conditional Display, or Presentation by any other means under a name, in a form, or at a degree of prominence other than as originally provided:
 
 『哥哥科技』
 
-These four Chinese characters. As a rule, every occurrence of “哥哥” and “哥哥科技” must be retained exactly as written. `BroTech`, `Bro-Tech`, the GitHub username, the project name, the repository link, or any other English or Latin-character form may be used only as supplementary attribution and must not replace “哥哥科技”.
+— these Chinese characters. Without exception, every occurrence of “哥哥” and “哥哥科技” must be retained exactly as written In all cases. `BroTech`, `Bro-Tech`, the GitHub username, the project name, the repository link, or any other English or Latin-character form may be used only as supplementary attribution and must not replace “哥哥科技”.
 
 Even if the target runtime environment, display device, programming language, or other technical environment cannot display Chinese properly, “哥哥科技” must still be retained exactly as written in any source code, license text, metadata, or other medium capable of storing that literal text in Unicode, UTF-8, GB 18030, or any other encoding that can represent it.
 
