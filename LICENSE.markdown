@@ -27,7 +27,7 @@ Regardless of the licensing path chosen, it is subject to the **BroTech Prominen
 
 This project is available under either of the following licensing options:
 1. **Adaptive Public License - Bro 0.1**[（已经包含额外的署名要求条件）](/LICENSE/license.txt) ; or
-2. Sustainable Use License 1.0 ([**SUL-1.0**](/LICENSE/SUL-1.0.md)) WITH [***BroTech-Prominent-Attribution-Terms***](#哥哥科技显著署名附加条款) AND Broware PBY-Attribution License（**[Bro-PBY](/LICENSE/BR-BY-NC-1.0.md)**）1.0（以每次提交时的版本或最新版为准）.
+2. Sustainable Use License 1.0 ([**SUL-1.0**](/LICENSE/SUL-1.0.md)) WITH [***BroTech-Prominent-Attribution-Terms***](#哥哥科技显著署名附加条款) AND Broware PBY-Attribution License（**[Bro-PBY](/LICENSE/BR-PBY-1.0.md)**）1.0（以每次提交时的版本或最新版为准）.
 
 可以根据自己的使用场景自行抉择，第二种看似更严格，但是针对个人、非竞争性使用，条款相对较简练通俗，方便非英语母语者理解。
 
@@ -43,7 +43,7 @@ In SPDX notation:
 - Supplement File: [`suppfile.txt`](./LICENSE/suppfile.txt)<br><br>
 - Sustainable Use License 1.0: [`SUL-1.0.md`](./LICENSE/SUL-1.0.md)
 - 哥哥科技显著署名附加条款: [`BroTech Prominent Attribution Terms`](#brotech-prominent-attribution-terms)
-- Broware PBY-Attribution License 1.0: [`BR-PBY-1.0`](./LICENSE/BR-BY-NC-1.0.md)
+- Broware PBY-Attribution License 1.0: [`BR-PBY-1.0.md`](./LICENSE/BR-PBY-1.0.md)
 
 针对开发使用的工程快速*参考* 指南：[Abstract of key rules for developers](/LICENSE/CopyRight.md)
 
@@ -110,7 +110,7 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 
 在同一页面内，非常显著的署名达到 4~9 次的，在无恶意的情况下，通常可善意推定为已满足本条的次数要求。
 
-“页面”，指用户无需经过菜单跳转、返回、超链接或自动跳转，仅通过单指拖动、鼠标滚轮或键盘方向键，但不包括上、下一级菜单、返回键、进一步页面导航或者超链接、自动跳转等即可到达的全部内容。判断署名是否在同一屏内时，以页面缩小到最小比例后一屏能呈现的内容为准；不考虑因屏幕分辨率导致显示不清的情况。
+“页面”，指用户无需经过菜单跳转、返回、超链接或自动跳转，仅通过单指拖动、鼠标滚轮或键盘方向键，但不包括上、下一级菜单、返回键、进一步页面导航或者超链接、自动跳转等即可到达的全部内容。判断署名是否在同一屏内时，以页面缩小到最小比例后一屏能呈现的内容为准；不考虑因屏幕分辨率导致显示不清的情况（此条仅用于解释何为页面，但是绝对不允许故意将署名与程序的正常运行部分的编辑距离或画面距离故意远远分开之类的流氓行为）。
 
 署名的位置以通常惯例为准。如果您对位置设计没有把握，应将署名置于屏幕正中央，且不透明度不低于 50%。
 
@@ -163,7 +163,7 @@ We recommend integrating this tool the way "Tualatin Toolbox" bundles the tools 
 #### Attribution Count on a Single Page
 Where attribution appears 4~9 times on a single page, and there is no bad faith, it may ordinarily be presumed in good faith to satisfy the count requirement of this section. This presumption may not be used to reduce any attribution already present in the original work, and it does not affect any of the attribution obligations above.
 
-A "page" means all content a user can reach by dragging with one finger, scrolling with a mouse wheel, or using the keyboard arrow keys, without going through menu navigation, a back action, a hyperlink, or an automatic redirect. To judge whether attributions fall within a single screen, use what one screen can show with the page zoomed out to its smallest scale, except where content becomes unreadable because of the screen's resolution.
+A "page" means all content a user can reach by dragging with one finger, scrolling with a mouse wheel, or using the keyboard arrow keys, without going through menu navigation, a back action, a hyperlink, or an automatic redirect. To judge whether attributions fall within a single screen, use what one screen can show with the page zoomed out to its smallest scale, regardless of whether the content becomes unreadable because of the screen's resolution (This clause serves solely to explain what counts as a "page"; rogue tactics such as deliberately placing the attribution far away from the normal working parts of the program—whether in edit distance or on-screen distance—are strictly forbidden).
 
 Attribution should be placed according to common convention. If you are unsure where to place it, put it at the center of the screen with an opacity of at least 50%.
 

@@ -1,22 +1,26 @@
 # Broware PBY-Attribution License 1.0
 
-2026.11.12
+2026.11.17
 
 *This license is adapted from the PolyForm standardized License.<https://polyformproject.org/licenses>. This modified version is not affiliated with the PolyForm Project.*
 ## Copyright © 2026 哥哥科技
 ⚖️ License
 Key Rules (核心规则):
 
-**BY (Attribution):**<br> 
+**BY (Attribution / 强制署名):**<br> 
 
-You MUST strictly preserve the attribution to 『哥哥科技』(Bro-Tech), In any form.
+You MUST strictly preserve the attribution to 『哥哥科技』(Bro-Tech), In any form. 这是获得任何使用权不可协商的前置条件。
 
-**P (Prominent):**</br>
+**P (Prominent / 显著):**</br>
 
 *The rule of name*: This applies to, without limitation, the code, the GUI, the end-user display, and every other place where the Author has placed the name. Whether in its literal text, its substance, or its presentation, the prominence of the attribution must not be altered or reduced in any way, express or implied. Any reduction is prohibited, not only a significant one.
 
-**NC:**<br/>
-出于历史原因，将该许可证的根文件名进行更改，容易造成很多兼容性错乱，故缩写不变。但其中的NC并没有通常大家理解的含义、或者法律意义。整个许可证中，永久不变且法律效力最高的永远是署名相关条款条例和规则。
+**NC（Noncompete / 非竞争）:**<br/>
+出于历史原因，将该许可证的根文件名进行更改，容易造成很多兼容性错乱，故缩写不变。但其中的NC并没有通常大家理解的纯粹非商业含义或简单法律意义。本授权条件只限制有竞争性的活动，无论是否属于同一业态。整个许可证中，永久不变且法律效力最高的永远是署名相关条款条例和规则。（我已下决心更改该名称，但是本声明暂且放此不变）
+
+*The rule of boundary*: You must not use it to build, market, or distribute any product or service that serves as a practical substitute for or competes with this software—regardless of technical platform, interface, programming language, or whether it is offered free of charge.  
+
+**严禁**利用本软件开发、宣传或分发任何在功能或价值上构成其替代品的竞争性产品或服务（无论跨平台、接口形态、重写的编程语言为何，亦无论免费还是收费）。
 
 ## Acceptance
 

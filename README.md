@@ -5,7 +5,7 @@
 [![Integration](https://img.shields.io/badge/集成-Home_Assistant-41BDF5.svg?logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)&nbsp;&emsp;
 [![Reference:APL for Bro](https://img.shields.io/badge/Source-APL_Bro_0.1-3DA639?logo=opensourceinitiative&logoColor=white&labelColor=222222)](https://raw.githubusercontent.com/ucxn/ZTE-Stat_Max/refs/heads/main/LICENSE/license.txt)&nbsp;
 [![Reference:SUL-1.0](https://img.shields.io/badge/SUL-保留显著署名-EA4B71.svg?logo=n8n&logoColor=white&labelColor=040506)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/SUL-1.0.md)&nbsp;
-[![BroWare BY NC 1.0](./assets/nc_custom_noversion.svg)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/BR-BY-NC-1.0.md)
+[![BroWare P-BY 1.0](./assets/nc_custom_noversion.svg)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/BR-PBY-1.0.md)
 
 [English](README_EN.md) | **简体中文**
 
