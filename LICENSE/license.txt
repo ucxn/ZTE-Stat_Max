@@ -1,6 +1,6 @@
 ADAPTIVE PUBLIC LICENSE for Bro 0.1
 ucxn@outlook.com
-2026-11-12
+2026-11-16
 
 THE LICENSED WORK IS PROVIDED UNDER THE TERMS OF THIS ADAPTIVE PUBLIC LICENSE ("LICENSE"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE LICENSED WORK CONSTITUTES RECIPIENT'S 
 ACCEPTANCE OF THIS LICENSE AND ITS TERMS, WHETHER OR NOT SUCH RECIPIENT READS THE TERMS OF THIS LICENSE. "LICENSED WORK" AND "RECIPIENT" ARE DEFINED BELOW.
@@ -285,7 +285,9 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 
 		『哥哥科技』
 
-		be subject to any Removal, Alteration, Obscuration, Concealment, Replacement, Rewording, Abbreviation, Truncation, Attenuation, Reduction of Visibility, Reduction of Prominence, or Misleading Presentation.	
+		be subject to any Removal, Alteration, Obscuration, Concealment, Replacement, Rewording, Abbreviation, Truncation, Attenuation, Reduction of Visibility, Reduction of Prominence, Misleading
+		Presentation, Removal from the Visible Area, Deferred Loading, Default Collapse, Time-Limited or Conditional Display, or Presentation by any other means.	
+
 		Technical difficulty may arise where the environment into which the work is integrated is technically incapable of supporting UTF-8, Unicode, GB 18030, or other suitable character encodings. In such a case,
 		"Bro-Tech" may be used as an auxiliary attribution, but not as a substitute for or modification of the existing literal 『哥哥科技』, provided that the GitHub username is also included.
 
@@ -373,7 +375,7 @@ EXHIBIT A (to the Adaptive Public License of Bro-Tech)
 
     PART 4: THIRD PARTIES
     For the purposes of this License, "Third Party" has the definition set forth below in the ONE paragraph selected by the Initial Contributor from paragraphs A, B, C, D and E when the Initial 
-	Work is distributed or otherwise made available by the Initial Contributor. To select one of the following paragraphs, the Initial Contributor must place an "◯" or "✓" in the selection box 
+	Work is distributed or otherwise made available by the Initial Contributor. To select one of the following paragraphs, the Initial Contributor must place a "◯" or "✓" in the selection box 
 	alongside the one respective paragraph selected.
 
     SELECTION 	 

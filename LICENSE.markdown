@@ -5,7 +5,7 @@ Required Notice: https://github.com/ucxn/ZTE-Stat_Max
 
 您可以收取通常范围内交易双方认为合理的、与本程序没有直接或间接关联的技术服务费，例如帮助用户上门安装路由器时附赠增值服务，但不得以哥哥科技的字号宣传；<br>服务原则上应当以含有明确物理成本的线下服务为主，但不得以附带安装调试该脚本为由收取任何附加费用；<br>切勿以该程序的取得、复制、下载方式、配置、调试、更新、维护为对价；<br>在线平台以辅助安装、调试、排错之类的收取维护费用若超合理限度，视为实质上为了掩盖倒卖该软件的本质。
 
-最简单的方式是直接分享官方GitHub或B站链接，否则在任何情况下，您有义务保证所有、包括但不限于显式或潜在的署名，且任何形式或意义上的名字，严格地完全不会被 *移除、篡改或者误导性呈现*。
+最简单的合规方式是直接分享官方GitHub或B站链接，否则在任何情况下，您有义务保证所有、包括但不限于显式或潜在的署名，且任何形式或意义上的名字，严格地完全不会被 *移除、篡改或者误导性呈现*。
 
 The simplest way is to share the official GitHub or Bilibili link directly. Otherwise, in every case you are obliged to ensure that every attribution, including without limitation explicit or embedded ones, and every name in any form or sense, is strictly and completely never *removed, altered, or misleadingly presented*.
 
@@ -29,13 +29,13 @@ This project is available under either of the following licensing options:
 1. **Adaptive Public License - Bro 0.1**[（已经包含额外的署名要求条件）](/LICENSE/license.txt) ; or
 2. Sustainable Use License 1.0 ([**SUL-1.0**](/LICENSE/SUL-1.0.md)) WITH [***BroTech-Prominent-Attribution-Terms***](#哥哥科技显著署名附加条款) AND Broware PBY-Attribution License（**[Bro-PBY](/LICENSE/BR-BY-NC-1.0.md)**）1.0（以每次提交时的版本或最新版为准）.
 
-可以根据自己的使用场景自行抉择，第二种看似严格多，但是针对个人、非商业使用，条款相对较简练通俗，方便非英语母语者理解。
+可以根据自己的使用场景自行抉择，第二种看似更严格，但是针对个人、非竞争性使用，条款相对较简练通俗，方便非英语母语者理解。
 
 You may choose either licensing option.
 
 In SPDX notation:
 
-`SPDX-License-Identifier: LicenseRef-APL-Bro-0.1+ OR (SUL-1.0 WITH AdditionRef-BroTech-Prominent-Attribution-Terms AND BR-BY-NC-1.0+)`
+`SPDX-License-Identifier: LicenseRef-APL-Bro-0.1+ OR (SUL-1.0 WITH AdditionRef-BroTech-Prominent-Attribution-Terms AND BR-PBY-1.0+)`
 
 许可证名称、SPDX 标识及其他简写仅用于识别。实际授权范围、条件及义务，以本仓库随软件发布的实际许可证文本、补充文件以及本文件中明确纳入的附加条款为准。&emsp;License names, SPDX identifiers, and other short forms are for identification only. The actual scope, conditions, and obligations of the license are determined by the actual license texts and supplement file released with the software in this repository, and by the additional terms expressly incorporated in this file.
 
@@ -43,7 +43,7 @@ In SPDX notation:
 - Supplement File: [`suppfile.txt`](./LICENSE/suppfile.txt)<br><br>
 - Sustainable Use License 1.0: [`SUL-1.0.md`](./LICENSE/SUL-1.0.md)
 - 哥哥科技显著署名附加条款: [`BroTech Prominent Attribution Terms`](#brotech-prominent-attribution-terms)
-- Broware PBY-Attribution License 1.0: [`BR-BY-NC-1.0.md`](./LICENSE/BR-BY-NC-1.0.md)
+- Broware PBY-Attribution License 1.0: [`BR-PBY-1.0`](./LICENSE/BR-BY-NC-1.0.md)
 
 针对开发使用的工程快速*参考* 指南：[Abstract of key rules for developers](/LICENSE/CopyRight.md)
 
@@ -57,7 +57,7 @@ The characters "哥哥科技" must, without exception, be retained, and the prom
 Whatever the reason, even if technical difficulties make it impossible to display "哥哥科技" unchanged within a larger work or in another programming language, "you" must still retain the literal text, may only add other forms that prominently identify 哥哥科技, and must promptly notify me via GitHub or email. Preserving the complete visibility of "哥哥科技" is an inseparable part of every right I license.
 
 # 哥哥科技显著署名附加条款
-【2026/11/14】
+【2026/11/16】
 当引用我的项目能明确地表明领域的时候，可以不再引用、可以省略GitHub用户名或者项目名（但我也不主动推荐故意删除）、仓库链接。
 
 在任何情况下，均不得在最终用户界面中删除、篡改、遮蔽、隐藏、替换、改写、缩写、截断、弱化、降低可见性、降低显著性、误导性呈现、移出可视区域、延迟加载/默认折叠、限时或附条件显示，或以任何其他方式，使其以非原定的名称、形式或显著程度呈现以任何形式呈现的：
@@ -72,7 +72,7 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 
 任何再分发、修改、移植、合并、集成、翻译、转换编程语言或形成更大作品的行为，均不得使“哥哥科技”的署名显著程度低于原作品中与作者身份相对应的署名程度。
 
-为明确起见，整个代码空间中任何形式或实质上包含和/或显示“哥哥”、“哥哥科技”以及满足表达式 `/\bBro(?:ther)?(?:[-_ ]?Tech)?\b/i` 的，均严禁被篡改、弱化，或以非预期名称方式呈现。
+为明确起见，整个代码空间中任何形式或实质上包含和/或显示“哥哥”、“哥哥科技”以及实质用来显示开发者和/或其认同之名的，均严禁被篡改、弱化，或以非预期名称方式呈现。
 
 无论项目有何种规定，一旦违反该条，视为侵犯著作权，我任何明示、暗示、潜在、显式或任何其他方式的授权一律无效。
 
@@ -133,7 +133,7 @@ The characters “哥哥科技” must always be retained, without exception. Th
 
 No redistribution, modification, port, merger, integration, translation, conversion to another programming language, or incorporation into a larger work may make the prominence of the “哥哥科技” attribution lower than that of the attribution identifying the author in the original work.
 
-For the avoidance of doubt, anything anywhere in the entire code space that, in form or in substance, contains and/or displays “哥哥” or “哥哥科技”, or that matches the expression `/\bBro(?:ther)?(?:[-_ ]?Tech)?\b/i`, must never be altered, weakened, or presented under any name other than the one intended.
+For the avoidance of doubt, anything anywhere in the entire code space that, in form or in substance, contains and/or displays "哥哥" or "哥哥科技", or that in substance serves to display the name of the developer and/or of those the developer identifies with, must never be altered, weakened, or presented under any name other than the one intended.
 
 Regardless of anything else the project provides, any breach of this clause is deemed copyright infringement, and every authorization I have granted, whether express, implied, potential, explicit, or in any other form, becomes void.
 
