@@ -177,7 +177,12 @@ and take practical steps to correct past violations, within
 32 days of receiving notice.  Otherwise, all your licenses
 end immediately.
 
-**BUT**, Under all circumstances, you must comply with the [***Attribution Terms***](#attribution), particularly the provisions protecting attribution. You must not, by any means, reduce the prominence of the attribution to any degree whatsoever, however slight. Otherwise, any use shall be deemed contrary to Fair Use and shall be regarded as a material breach and an act of infringement, and ***All* rights granted to you under this Agreement shall terminate immediately**. This provision shall take precedence over all other provisions of this Agreement. ➡️ For the avoidance of doubt, any termination under this paragraph is immediate, absolute, and non-curable, and **shall operate strictly without regard to any cure period** (including the aforementioned 32-day period), notice requirement, lapse of time, or any other condition whatsoever. ***It is by no means optional.***
+**BUT**, Under all circumstances, you must comply with the [***Attribution Terms***](#attribution), particularly the provisions protecting attribution. You must not, by any means, reduce the prominence of the attribution to any degree whatsoever, however slight. Otherwise, such use shall not be regarded as fair use or as any other limitation or exception to copyright, and shall be regarded as a material breach and an act of infringement, and ***All* rights granted to you under this Agreement shall terminate immediately**. This provision shall take precedence over all other provisions of this Agreement. ➡️ For the avoidance of doubt, any termination under this paragraph is immediate, absolute, and non-curable, and **shall operate strictly without regard to any cure period** (including the aforementioned 32-day period), notice requirement, lapse of time, or any other condition whatsoever. ***It is by no means optional.***
+
+## Severability
+If any provision is held unenforceable, it shall be enforced to the maximum extent permitted, and the remaining provisions remain in full effect.
+
+In applying the foregoing, any provision that is detrimental to, or in conflict with, the attribution requirements shall be severed first, ***whereas no attribution obligation shall ever be severed.*** **Only** in the wholly extreme case where, in a particular jurisdiction or under particular circumstances, *the attribution requirements absolutely cannot be fully enforced shall they be performed to the greatest extent and in the most prominent manner practicable*; and even then, to the fullest extent permitted by law, **the attribution must still be displayed prominently, and the original attribution style must remain unchanged.**
 
 ## Primary Obligation
 **Notwithstanding anything to the contrary in this License, the Attribution Requirements shall be interpreted strictly and exclusively in the manner most favorable to the Author.**  
@@ -189,7 +194,7 @@ Once the Software’s principal functionality operates normally, and the Softwar
 
 **Whenever the Software is operating normally, there is no legitimate basis whatsoever for failing to display the name “哥哥科技” as required by the Attribution Requirements.**
 
-In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, ***The attribution clause must be satisfied first.*** All other terms, *including commercial and any other restrictive terms, need not be treated as binding obligations,* **so that none of them can hold attribution back or come into conflict with the requirement that it be prominent, mandatory, and no weaker than the original.**
+In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, ***The attribution clause must be satisfied first.*** All other terms, *including commercial and any other restrictive terms, shall yield to it to the extent of the conflict,* **so that none of them can hold attribution back or come into conflict with the requirement that it be prominent, mandatory, and no weaker than the original.**
 
 ## No Liability
 
@@ -199,7 +204,6 @@ to you for any damages arising out of these terms or the use
 or nature of the software, under any kind of legal claim.*
 
 ## Definitions
-
 The **licensor** is the individual or entity offering these
 terms, and the **software** is the software the licensor makes
 available under these terms.
