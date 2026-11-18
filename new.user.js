@@ -29,7 +29,6 @@
 // @downloadURL     https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // ==/UserScript==
 
-
 (function () {
   'use strict';
   console.log(`🚀 哥哥科技 V${(typeof GM_info !== 'undefined' && GM_info.script?.version) || '6.0'} 引擎已装载...`);
@@ -88,7 +87,8 @@
     宽带最大外网下行速率: 24e8, // 配置外网最大上传|下载比特(bit/bps)速率
     宽带最大外网上行速率: 3e8 //请略微大于真实值；500兆为5e8，一千兆1e9
   };
-  if (typeof GM_getValue === 'function') for (const g of ['模式', '阈值', '节奏', '周期', '算法']) for (const k in CONFIG) { let v = GM_getValue(g + '.' + k); if (v == null || v === '') continue; if (typeof v === 'string') v = v.split('：')[0].trim(); if (v === 'auto') continue; const d = CONFIG[k], n = parseFloat(v); CONFIG[k] = typeof d === 'number' ? (Number.isNaN(n) ? d : n) : (k === '外网计数器' || k === '盲漫游') ? (Number.isNaN(n) ? undefined : n) : v; }
+
+  if (typeof GM_getValue === 'function') for (const g of ['模式', '阈值', '节奏', '周期', '算法']) for (const k in CONFIG) { let v = GM_getValue(g + '.' + k); if (v == null || v === '') continue; if (typeof v === 'string') v = v.split('：')[0].trim(); if (v === 'auto') continue; const d = CONFIG[k], n = parseFloat(v); CONFIG[k] = k === '信号强度刷新周期' ? (Number.isNaN(n) ? d : 1 << (n | 0)) : typeof d === 'number' ? (Number.isNaN(n) ? d : n) : (k === '外网计数器' || k === '盲漫游') ? (Number.isNaN(n) ? undefined : n) : v; }
 
   // ---[1]------------------------ 全局状态与运行时变量 ------------------------
   const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
@@ -1890,7 +1890,6 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
   });
 })();
 
-  // UserConfig 覆盖层：分组名须与头部 ==UserConfig== 的顶层名一致；下拉项形如「3：说明」，取冒号前的值
 /* ==UserConfig==
 模式:
   readSaveData:
@@ -1935,26 +1934,21 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
     description: "上行/下行倍数超过此值判为极端上传（10 即 >1000%）"
     type: number
     default: 10
-    min: 1
   ratioWarnUp:
     title: "重度上传警告"
     description: "上行/下行比值超过此值警告（0.07 即 >7%）"
     type: number
     default: 0.07
-    min: 0
   ratioExtremeDown:
     title: "极端下载"
     description: "上行/下行比值低于此值判为极端下载（0.01 即 <1%）"
     type: number
     default: 0.01
-    min: 0
   ratioThreshold:
     title: "上传占比报警"
     description: "仅「上下行显示」选占比模式时有效"
     type: number
     default: 7
-    min: 1
-    max: 100
     unit: "%"
 节奏:
   portInterval:
@@ -1962,24 +1956,21 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
     description: "物理网口速率的刷新间隔"
     type: number
     default: 1
-    min: 1
-    max: 60
+    min: 0.2
     unit: "秒"
   wanRefreshInterval:
     title: "WAN 刷新"
     description: "外网口刷新间隔，通常是程序主时钟周期"
     type: number
     default: 3
-    min: 1
-    max: 60
+    min: 0.25
     unit: "秒"
   lanRefreshInterval:
     title: "LAN 刷新"
     description: "局域网刷新间隔，用于补偿评估 0 到唤醒期间的流量"
     type: number
     default: 6
-    min: 1
-    max: 60
+    min: 0.5
     unit: "秒"
   外网计数器:
     title: "外网字节计数器"
@@ -1992,8 +1983,7 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
     description: "两次采样间的流量不能超过 4 GiB 的一圈，千兆满速别超过 30 秒"
     type: number
     default: 10
-    min: 2
-    max: 120
+    min: 1
     unit: "秒"
 周期:
   周期类型:
@@ -2007,8 +1997,6 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
     description: "M：1~31 号 | W：0~6（周日~周六） | D：间隔天数（如 7）"
     type: number
     default: 6
-    min: 0
-    max: 365
   基准日期:
     title: "基准日期"
     description: "仅「固定天数」有效；填任意一个历史周期的零点，格式 YYYY-MM-DD"
@@ -2040,11 +2028,11 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
     values: ["0：关闭", "1：开启"]
 算法:
   信号强度刷新周期:
-    title: "信号强度刷新"
-    description: "单位：帧（程序主采样周期），须为 2 的幂；1 为不主动请求刷新"
-    type: select
-    default: "32"
-    values: ["1", "2", "4", "8", "16", "32", "64", "128"]
+    title: "信号强度刷新（2ⁿ 帧）"
+    description: "填次方数 n，实际每 2ⁿ 帧刷新一次（0=不主动刷新，4=16帧，5=32帧，6=64帧，8=256帧）"
+    type: number
+    default: 5
+    max: 23
   盲漫游:
     title: "盲漫游拦截"
     description: "AP/有线桥接模式下，无线设备被主路由识别为有线设备时选 1"
@@ -2056,13 +2044,11 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
     description: "单位 bit/s；略大于真实值，千兆填 1000000000"
     type: number
     default: 2400000000
-    min: 1000000
     unit: "bps"
   宽带最大外网上行速率:
     title: "最大上行速率"
     description: "单位 bit/s；略大于真实值，500 兆填 500000000"
     type: number
     default: 300000000
-    min: 1000000
     unit: "bps"
 ==/UserConfig== */
