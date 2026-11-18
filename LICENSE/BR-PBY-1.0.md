@@ -37,7 +37,7 @@ Under no circumstances may:
 
 **『哥哥科技』**
 
-as presented in any form in the end-user interface, be subjected to Removal, Alteration, Obscuration, Concealment, Replacement, Rewording, Abbreviation, Truncation, Attenuation, Reduction of Visibility, Reduction of Prominence, Misleading Presentation, Removal from the Visible Area, Deferred Loading, Default Collapse, Time-Limited or Conditional Display, or Presentation by any other means.
+as presented in any form in the end-user interface, be subjected to Removal, Alteration, Obscuration, Concealment, Replacement, Rewording, Abbreviation, Truncation, Attenuation, Reduction of Visibility, Reduction of Prominence, Misleading Presentation, Removal from the Visible Area, Deferred Loading, Default Collapse, Time-Limited or Conditional Display, or Degradation by any other means.
 
 The Chinese characters “哥哥科技” must, in all cases, be retained exactly as written. "BroTech", "Bro-Tech", the GitHub username, project name, repository link, or any other English or Latin-character representation may be used only as supplementary attribution and must not replace “哥哥科技”.
 
@@ -71,7 +71,6 @@ Once my code is used, the number of appearances of “哥哥科技” in the end
 Where my code is used in more than one major place, the attribution shall be retained or added in each of them, with no upper limit.
 
 ## Copyright License
-
 The licensor grants you a copyright license for the
 software to do everything you might do with the software
 that would otherwise infringe the licensor's copyright
@@ -81,13 +80,22 @@ License](#distribution-license) and make changes or new works
 based on the software according to [Changes and New Works
 License](#changes-and-new-works-license).
 
-## Distribution License
-
+### Distribution License
 The licensor grants you an additional copyright license
 to distribute copies of the software.  Your license
 to distribute covers distributing the software with
 changes and new works permitted by [Changes and New Works
 License](#changes-and-new-works-license).
+
+#### Changes and New Works License
+The licensor grants you an additional copyright license to
+make changes and new works based on the software for any
+permitted purpose.
+
+#### Patent License
+The licensor grants you a patent license for the software that
+covers patent claims the licensor can license, or becomes able
+to license, that you would infringe by using the software.
 
 ## Notices
 
@@ -101,18 +109,6 @@ with the software.
 [github.com/ucxn/ZTE-Stat_Max](https://github.com/ucxn/ZTE-Stat_Max)
 >
 > Required Legal Notice: 爱哥哥，也有个可爱的弟弟。
-
-## Changes and New Works License
-
-The licensor grants you an additional copyright license to
-make changes and new works based on the software for any
-permitted purpose.
-
-## Patent License
-
-The licensor grants you a patent license for the software that
-covers patent claims the licensor can license, or becomes able
-to license, that you would infringe by using the software.
 
 ## Noncompete
 
@@ -148,9 +144,6 @@ or for different computer architectures.  Goods and services
 compete even when provided free of charge.  If you market a
 product as a practical substitute for the software or another
 product, it definitely competes.
-
-### Sales of Business
-If the licensor or any of its affiliates sells a line of business developing the software or using the software to provide a product, the buyer can also enforce [Noncompete](#noncompete) for that product.
 
 ## No Other Rights
 
