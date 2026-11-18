@@ -2,7 +2,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         6.1.0
+// @version         6.1.1
 // @website         https://github.com/ucxn/ZTE-Stat_Max
 // @supportURL      https://b23.tv/BV1PtR7B8ECC
 // @description     一款针对中兴官方计数器和UI不区分上下行、流量数据不可靠、网页隐藏API等问题而诞生的测控“引擎”，一个庞大的循环流程程序；融合了哥哥的大量思想和算法，探索属于家庭网关的真相。
@@ -63,6 +63,7 @@
     报告时间: -720, // 提示时间：相对周期0点的偏移分钟数（如 -4320 代表提前 3 天）设置相对指定日期的下个周期起点的时间偏移量
     自动导出: -180, // 强制导出：相对周期0点的偏移分钟数（如 W模式+锚点6(周六)+偏移-180 = 周五 21:00 强制导出清零）
     时区补偿: 28800000, // 默认 UTC+8 时区补偿量。
+    WAN速率序列自动导出: 0, // 0: 关闭 | 1: 每 8192 个采样点（约 6.8 小时）自动下载一份 WAN 上下行速率序列（bit/s）；需在浏览器里允许本站自动下载
 
     // 接口名 → 面板上显示的名称
     portMap: {
@@ -717,6 +718,7 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
       function 记总速率图(u, d) {
         u = u || 0; d = d || 0;
         const c = S.总图点数, i = c & 8191; // 环形缓冲容量，必须是2的次方（下标用 & 取模）
+        if (!i && c && CONFIG.WAN速率序列自动导出) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([`\uFEFF时间戳毫秒,${Date.now()}\n采样间隔秒,${window.gegeBActivated ? CONFIG.wanRefreshInterval : 3}\n上行bit/s,${S.总上行图.join()}\n下行bit/s,${S.总下行图.join()}`], {type: 'text/csv;charset=utf-8;'})); a.download = `哥哥科技_WAN速率序列_${Date.now()}.csv`; a.click(); }
         S.总上行图[i] = u; S.总下行图[i] = d; S.总图点数 = c + 1;
         if (u > S.wMaxU) S.wMaxU = u; if (d > S.wMaxD) S.wMaxD = d;
         if (u > 0 && u < S.wMinU) S.wMinU = u; if (d > 0 && d < S.wMinD) S.wMinD = d;
