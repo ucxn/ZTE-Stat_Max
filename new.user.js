@@ -2,7 +2,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         6.1.6
+// @version         6.1.7
 // @website         https://github.com/ucxn/ZTE-Stat_Max
 // @supportURL      https://b23.tv/BV1PtR7B8ECC
 // @description     一款针对中兴官方计数器和UI不区分上下行、流量数据不可靠、网页隐藏API等问题而诞生的测控“引擎”，一个庞大的循环流程程序；融合了哥哥的大量思想和算法，探索属于家庭网关的真相。
@@ -28,6 +28,7 @@
 // @updateURL       https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // @downloadURL     https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // ==/UserScript==
+
 
 (function () {
   'use strict';
@@ -87,7 +88,7 @@
     宽带最大外网下行速率: 24e8, // 配置外网最大上传|下载比特(bit/bps)速率
     宽带最大外网上行速率: 3e8 //请略微大于真实值；500兆为5e8，一千兆1e9
   };
-  if (typeof GM_getValue === 'function') for (const g of ['中兴·界面与模式', '中兴·阈值与节奏', '中兴·周期与导出', '中兴·算法与带宽']) for (const k in CONFIG) { const v = GM_getValue(g + '.' + k); if (v === undefined || v === '' || v === 'auto') continue; const d = CONFIG[k]; CONFIG[k] = typeof d === 'number' ? (Number.isNaN(+v) ? d : +v) : typeof d === 'boolean' ? !!v : (k === '外网计数器' || k === '盲漫游') ? (Number.isNaN(+v) ? undefined : +v) : v; }
+  if (typeof GM_getValue === 'function') for (const g of ['模式', '阈值', '节奏', '周期', '算法']) for (const k in CONFIG) { let v = GM_getValue(g + '.' + k); if (v == null || v === '') continue; if (typeof v === 'string') v = v.split('：')[0].trim(); if (v === 'auto') continue; const d = CONFIG[k], n = parseFloat(v); CONFIG[k] = typeof d === 'number' ? (Number.isNaN(n) ? d : n) : (k === '外网计数器' || k === '盲漫游') ? (Number.isNaN(n) ? undefined : n) : v; }
 
   // ---[1]------------------------ 全局状态与运行时变量 ------------------------
   const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
@@ -1889,176 +1890,179 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
   });
 })();
 
+  // UserConfig 覆盖层：分组名须与头部 ==UserConfig== 的顶层名一致；下拉项形如「3：说明」，取冒号前的值
 /* ==UserConfig==
-中兴·界面与模式:
+模式:
   readSaveData:
-    title: 历史记录模式
-    description: 0 新局归零 | 1 从路由器后台读档（继承基线） | 2 从本地长期存档读档（自动保存） | 3 启动时用后台值充当积分起点
+    title: "历史记录"
+    description: "脚本启动时积分从哪里来"
     type: select
-    default: 3
-    values: [0, 1, 2, 3]
+    default: "3：启动时用后台临时值充当积分"
+    values: ["0：新局模式", "1：从路由器后台读档（继承基线）", "2：从本地长期历史读档（自动保存）", "3：启动时用后台临时值充当积分"]
   lanPortMode:
-    title: 物理网口监控
-    description: 0 关闭 | 1 底部追加显示各物理口 | 2 物理 WAN 口高速接管主线速率
+    title: "物理网口"
+    description: "各物理网口的显示方式"
     type: select
-    default: 1
-    values: [0, 1, 2]
-  portInterval:
-    title: 物理网口刷新间隔
-    description: 物理网口速率与积分轮询周期
-    type: number
-    default: 1
-    min: 1
-    max: 60
-    unit: 秒
+    default: "1：底部追加显示"
+    values: ["0：关闭", "1：底部追加显示", "2：WAN 高速接管主线"]
   forceMeshMode:
-    title: Mesh 探测模式
-    description: 0 官方拓扑驱动 | 1 智能等待（超时自动熔断） | 2 强制大包抓取（专治阉割固件，会改变 LAN 采样节奏）
+    title: "Mesh 探测"
+    description: "遇到阉割固件、不出数据时选 2"
     type: select
-    default: 1
-    values: [0, 1, 2]
-  uiLayout:
-    title: 面板拓扑布局
-    description: 0 经典版 | 1 详细紧凑版（驾驶舱） | 2 详细平铺版（报表流）
-    type: select
-    default: 1
-    values: [0, 1, 2]
-  injectMode:
-    title: UI 注入模式
-    description: 0 原生侧边栏 | 1 优先侧边栏 + 悬浮球 | 2 联动模式 | 3 强制仅悬浮球
-    type: select
-    default: 1
-    values: [0, 1, 2, 3]
+    default: "1：n 秒智能等待（默认）"
+    values: ["0：官方拓扑驱动", "1：n 秒智能等待（默认）", "2：强制大包抓取（会改变 LAN 时率）"]
   calcMode:
-    title: 上下行比值显示模式
-    description: 1 上行/下行倍数模式 | 0 上行占总流量比例模式
+    title: "上下行显示"
+    description: "上行与下行的比较方式"
     type: select
-    default: 1
-    values: [0, 1]
-中兴·阈值与节奏:
+    default: "1：上行/下行倍数"
+    values: ["0：上行占总和比例", "1：上行/下行倍数"]
+  uiLayout:
+    title: "面板布局"
+    description: "悬浮面板的信息密度"
+    type: select
+    default: "1：详细紧凑版（驾驶舱）"
+    values: ["0：经典版", "1：详细紧凑版（驾驶舱）", "2：详细平铺版（报表流）"]
+  injectMode:
+    title: "UI 注入"
+    description: "面板显示在哪里"
+    type: select
+    default: "1：优先，10 秒悬浮舱（D）"
+    values: ["0：原生侧边栏（1 分钟）", "1：优先，10 秒悬浮舱（D）", "2：联动模式", "3：强制模式"]
+阈值:
   ratioExtremeUp:
-    title: 极端上传阈值
-    description: 上行/下行倍数大于此值触发极端上传告警（默认 10 即 >1000%）
+    title: "极端上传"
+    description: "上行/下行倍数超过此值判为极端上传（10 即 >1000%）"
     type: number
     default: 10
     min: 1
   ratioWarnUp:
-    title: 重度上传警告阈值
-    description: 上行/下行比值大于此值标红提醒（默认 0.07 即 >7%）
+    title: "重度上传警告"
+    description: "上行/下行比值超过此值警告（0.07 即 >7%）"
     type: number
     default: 0.07
     min: 0
   ratioExtremeDown:
-    title: 极端下载阈值
-    description: 上行/下行比值小于此值切换为下行倍数显示（默认 0.01 即 <1%）
+    title: "极端下载"
+    description: "上行/下行比值低于此值判为极端下载（0.01 即 <1%）"
     type: number
     default: 0.01
     min: 0
   ratioThreshold:
-    title: 上传占比报警阈值
-    description: 仅在占比模式（calcMode=0）生效
+    title: "上传占比报警"
+    description: "仅「上下行显示」选占比模式时有效"
     type: number
     default: 7
     min: 1
     max: 100
     unit: "%"
+节奏:
+  portInterval:
+    title: "物理网口刷新"
+    description: "物理网口速率的刷新间隔"
+    type: number
+    default: 1
+    min: 1
+    max: 60
+    unit: "秒"
   wanRefreshInterval:
-    title: WAN 主时钟刷新间隔
-    description: 外网速率主采样周期
+    title: "WAN 刷新"
+    description: "外网口刷新间隔，通常是程序主时钟周期"
     type: number
     default: 3
     min: 1
     max: 60
-    unit: 秒
+    unit: "秒"
   lanRefreshInterval:
-    title: LAN 刷新间隔
-    description: 局域网设备列表刷新周期，同时用于 0 到唤醒期间流量补偿
+    title: "LAN 刷新"
+    description: "局域网刷新间隔，用于补偿评估 0 到唤醒期间的流量"
     type: number
     default: 6
     min: 1
     max: 60
-    unit: 秒
+    unit: "秒"
   外网计数器:
-    title: 外网字节计数器接口
-    description: auto 自动探测（失败即关） | 0 关闭 | 1 vue_mainwan_data | 2 home_internetreg
+    title: "外网字节计数器"
+    description: "读取外网字节数用的接口；自动探测失败即关闭"
     type: select
-    default: auto
-    values: [auto, 0, 1, 2]
+    default: "auto：自动探测，失败即关"
+    values: ["auto：自动探测，失败即关", "0：关闭", "1：vue_mainwan_data", "2：home_internetreg"]
   外网计数器刷新:
-    title: 外网计数器刷新间隔
-    description: 32 位计数器两次采样间流量不能超过 4 GiB，千兆满速建议 ≤30 秒
+    title: "外网计数器刷新"
+    description: "两次采样间的流量不能超过 4 GiB 的一圈，千兆满速别超过 30 秒"
     type: number
     default: 10
     min: 2
     max: 120
-    unit: 秒
-中兴·周期与导出:
+    unit: "秒"
+周期:
   周期类型:
-    title: 统计周期类型
-    description: M 每月 | W 每周 | D 固定天数 | 其它任意文字（如“不散场”）关闭自动清零导出
-    type: text
-    default: 不散场
+    title: "统计周期"
+    description: "到点自动清零并导出；不散场则不开启此功能"
+    type: select
+    default: "不散场：不开启周期重置与自动导出"
+    values: ["M：每月", "W：每周", "D：固定天数", "不散场：不开启周期重置与自动导出"]
   周_天设置:
-    title: 周期锚点（号 / 星期 / 天数）
-    description: M 模式填 1~31 号 | W 模式填 0~6（周日~周六） | D 模式填间隔天数
+    title: "周期锚点"
+    description: "M：1~31 号 | W：0~6（周日~周六） | D：间隔天数（如 7）"
     type: number
     default: 6
     min: 0
     max: 365
   基准日期:
-    title: D 模式基准日期
-    description: 仅周期类型为 D 时有效，填任意历史周期零点（YYYY-MM-DD）
+    title: "基准日期"
+    description: "仅「固定天数」有效；填任意一个历史周期的零点，格式 YYYY-MM-DD"
     type: text
     default: "2027-03-01"
   报告时间:
-    title: 结算预警偏移
-    description: 相对周期 0 点的偏移分钟数（如 -720 表示提前 12 小时横幅提示）
+    title: "提示时间"
+    description: "相对周期零点的偏移分钟数；-4320 即提前 3 天"
     type: number
     default: -720
-    unit: 分钟
+    unit: "分钟"
   自动导出:
-    title: 强制导出清零偏移
-    description: 相对周期 0 点的偏移分钟数（如周六锚点 + -180 = 周五 21:00 导出清零）
+    title: "强制导出"
+    description: "相对周期零点的偏移分钟数；周六锚点配 -180 即周五 21:00 导出清零"
     type: number
     default: -180
-    unit: 分钟
+    unit: "分钟"
   时区补偿:
-    title: 时区补偿
-    description: 毫秒偏移，默认 28800000（UTC+8）
+    title: "时区补偿"
+    description: "毫秒；默认 28800000 即 UTC+8"
     type: number
     default: 28800000
-    unit: 毫秒
+    unit: "毫秒"
   WAN速率序列自动导出:
-    title: WAN 速率序列自动导出
-    description: 0 关闭 | 1 每满 8192 个采样点（约 6.8 小时）自动下载 CSV；需浏览器允许本站自动下载
+    title: "WAN 速率序列导出"
+    description: "每 8192 个采样点（约 6.8 小时）自动下载一份速率序列；需在浏览器里允许本站自动下载"
     type: select
-    default: 0
-    values: [0, 1]
-中兴·算法与带宽:
+    default: "0：关闭"
+    values: ["0：关闭", "1：开启"]
+算法:
   信号强度刷新周期:
-    title: 信号强度刷新周期
-    description: 单位为采样帧，须为 2 的自然数次幂（1 表示不主动刷新）
+    title: "信号强度刷新"
+    description: "单位：帧（程序主采样周期），须为 2 的幂；1 为不主动请求刷新"
     type: select
-    default: 32
-    values: [1, 2, 4, 8, 16, 32, 64, 128]
+    default: "32"
+    values: ["1", "2", "4", "8", "16", "32", "64", "128"]
   盲漫游:
-    title: 盲漫游拦截模式
-    description: auto 自动识别 | 0 关闭 | 1 开启（AP/无线桥接下无线设备被识别为有线时设为 1）
+    title: "盲漫游拦截"
+    description: "AP/有线桥接模式下，无线设备被主路由识别为有线设备时选 1"
     type: select
-    default: auto
-    values: [auto, 0, 1]
+    default: "auto：自动判断"
+    values: ["auto：自动判断", "0：关闭", "1：开启"]
   宽带最大外网下行速率:
-    title: 宽带最大下行速率
-    description: bit/s，略大于真实带宽（500M 填 500000000，千兆填 1000000000）
+    title: "最大下行速率"
+    description: "单位 bit/s；略大于真实值，千兆填 1000000000"
     type: number
     default: 2400000000
     min: 1000000
-    unit: bps
+    unit: "bps"
   宽带最大外网上行速率:
-    title: 宽带最大上行速率
-    description: bit/s，略大于真实上行带宽（300M 填 300000000）
+    title: "最大上行速率"
+    description: "单位 bit/s；略大于真实值，500 兆填 500000000"
     type: number
     default: 300000000
     min: 1000000
-    unit: bps
+    unit: "bps"
 ==/UserConfig== */
