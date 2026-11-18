@@ -2,7 +2,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         6.1.7
+// @version         6.1.8
 // @website         https://github.com/ucxn/ZTE-Stat_Max
 // @supportURL      https://b23.tv/BV1PtR7B8ECC
 // @description     一款针对中兴官方计数器和UI不区分上下行、流量数据不可靠、网页隐藏API等问题而诞生的测控“引擎”，一个庞大的循环流程程序；融合了哥哥的大量思想和算法，探索属于家庭网关的真相。
@@ -87,8 +87,8 @@
     宽带最大外网下行速率: 24e8, // 配置外网最大上传|下载比特(bit/bps)速率
     宽带最大外网上行速率: 3e8 //请略微大于真实值；500兆为5e8，一千兆1e9
   };
-
-  if (typeof GM_getValue === 'function') for (const g of ['模式', '阈值', '节奏', '周期', '算法']) for (const k in CONFIG) { let v = GM_getValue(g + '.' + k); if (v == null || v === '') continue; if (typeof v === 'string') v = v.split('：')[0].trim(); if (v === 'auto') continue; const d = CONFIG[k], n = parseFloat(v); CONFIG[k] = k === '信号强度刷新周期' ? (Number.isNaN(n) ? d : 1 << (n | 0)) : typeof d === 'number' ? (Number.isNaN(n) ? d : n) : (k === '外网计数器' || k === '盲漫游') ? (Number.isNaN(n) ? undefined : n) : v; }
+  
+  if (typeof GM_getValue === 'function') for (const g of ['模式', '阈值', '节奏', '周期', '算法']) for (const k in CONFIG) { let v = GM_getValue(g + '.' + k); if (v == null || v === '') continue; if (typeof v === 'string') v = v.split('：')[0].trim(); if (v === 'auto') continue; const d = CONFIG[k], n = typeof v === 'boolean' ? +v : parseFloat(v); CONFIG[k] = k === '信号强度刷新周期' ? (Number.isNaN(n) ? d : 1 << (n | 0)) : (k === '宽带最大外网下行速率' || k === '宽带最大外网上行速率') ? (Number.isNaN(n) ? d : n * 1e6) : typeof d === 'number' ? (Number.isNaN(n) ? d : n) : (k === '外网计数器' || k === '盲漫游') ? (Number.isNaN(n) ? undefined : n) : v; }
 
   // ---[1]------------------------ 全局状态与运行时变量 ------------------------
   const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
@@ -2022,10 +2022,9 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
     unit: "毫秒"
   WAN速率序列自动导出:
     title: "WAN 速率序列导出"
-    description: "每 8192 个采样点（约 6.8 小时）自动下载一份速率序列；需在浏览器里允许本站自动下载"
-    type: select
-    default: "0：关闭"
-    values: ["0：关闭", "1：开启"]
+    description: "开启后每 8192 个采样点（约 6.8 小时）自动下载一份速率序列；需在浏览器里允许本站自动下载"
+    type: checkbox
+    default: false
 算法:
   信号强度刷新周期:
     title: "信号强度刷新（2ⁿ 帧）"
@@ -2041,14 +2040,16 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
     values: ["auto：自动判断", "0：关闭", "1：开启"]
   宽带最大外网下行速率:
     title: "最大下行速率"
-    description: "单位 bit/s；略大于真实值，千兆填 1000000000"
+    description: "略大于真实宽带下行带宽，支持小数（如千兆填 1000、2.5G 填 2400）"
     type: number
-    default: 2400000000
-    unit: "bps"
+    default: 2400
+    min: 0
+    unit: "Mbps"
   宽带最大外网上行速率:
     title: "最大上行速率"
-    description: "单位 bit/s；略大于真实值，500 兆填 500000000"
+    description: "略大于真实宽带上行带宽，支持小数（如 300 兆填 300、50.5 兆填 50.5）"
     type: number
-    default: 300000000
-    unit: "bps"
+    default: 300
+    min: 0
+    unit: "Mbps"
 ==/UserConfig== */
