@@ -425,9 +425,9 @@ const WAN_COMPAT = [
       else if (cWU !== S.wInstUp || cWD !== S.wInstDn) {
         const wDt = n - S.wLT;
         if (S.wInstUp > 0) { S.wTotUp += (S.wInstUp + cWU) * wDt * 0.0005; }
-        else if (cWU > 0) { const wEU = cWU * 0.5 * CONFIG.wanRefreshInterval; S.wTotUp += wEU; S.wZEU = (S.wZEU || 0) + wEU; S.wZEUC = (S.wZEUC || 0) + 1; }
+        else if (cWU > 0) { const wEU = cWU * 0.5 * CONFIG.wanRefreshInterval; S.wTotUp += wEU; S.wZEU += wEU; S.wZEUC++; }
         if (S.wInstDn > 0) { S.wTotDn += (S.wInstDn + cWD) * wDt * 0.0005; }
-        else if (cWD > 0) { const wED = cWD * 0.5 * CONFIG.wanRefreshInterval; S.wTotDn += wED; S.wZED = (S.wZED || 0) + wED; S.wZEDC = (S.wZEDC || 0) + 1; }
+        else if (cWD > 0) { const wED = cWD * 0.5 * CONFIG.wanRefreshInterval; S.wTotDn += wED; S.wZED += wED; S.wZEDC++; }
         S.wLT = n;
       }
       // ---- 6. 读档（readSaveData = 2）：只在第一帧加载一次本地快照 ---- 快照早于最近一次清零，就视为作废
@@ -536,7 +536,7 @@ const WAN_COMPAT = [
       S.wInstDn = cWD;
       rUI(cWU, cWD, cSU, cSD, cI);
       if (olOn) {
-        S.lTick = ((S.lTick || 0) + 1) & ((CONFIG.信号强度刷新周期 << 3) - 1);
+        S.lTick = (S.lTick + 1) & ((CONFIG.信号强度刷新周期 << 3) - 1);
         if ((S.lTick & (CONFIG.信号强度刷新周期 - 1)) === 1 && CONFIG.forceMeshMode !== 2) fRSSI();
         if (S.lTick === 1) fPHY();
       }} 
@@ -880,7 +880,7 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
     };
     // ---- 存档、预警、结算（只在 rTick === 1 的帧做）----
     if (typeof GM_setValue !== 'undefined' && S.rTick === 1) {
-        S.haTick = ((S.haTick || 0) + 1) & 7;
+        S.haTick = (S.haTick + 1) & 7;
         if (S.haTick === 1) {
             try { S.cSnap.wc_up = WC.u; S.cSnap.wc_down = WC.d; GM_setValue('ha_snapshot', S.cSnap); } catch(e) { console.warn(e); }}
         let nowMs = Date.now();
@@ -899,7 +899,7 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
     }
 
     // ---- 内外网比（每 8 帧刷新一次）----
-    S.rTick = ((S.rTick || 0) + 1) & 7;
+    S.rTick = (S.rTick + 1) & 7;
     if (S.rTick === 1 || !S.cRT) {
       // 最近 8 帧（8 × 采样周期秒）内 WAN 累计量的增量 → 平均速率，供火花线定标
       const wi = (window.gegeBActivated ? CONFIG.wanRefreshInterval : 3) << 3;
