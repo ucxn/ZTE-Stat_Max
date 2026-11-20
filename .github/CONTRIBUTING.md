@@ -10,9 +10,9 @@ Thank you for contributing to ZTE-Stat_Max.
 
 3. 任何削弱、移除、改写「哥哥科技」署名的改动都不会被合并。\
    Any change that removes, alters, or diminishes the "哥哥科技" attribution will not be merged.
-4. 本项目的许可条款见 [LICENSE](LICENSE.markdown)。
-   The license terms of this project are in [LICENSE](LICENSE.markdown).
-
+4. 本项目的许可条款见 [LICENSE](https://github.com/ucxn/ZTE-Stat_Max?tab=License-1-ov-file)。
+   The license terms of this project are in [LICENSE](/LICENSE.markdown).
+<br/><br/>
 <a id="cla"></a>
 
 # 贡献者许可协议 / Contributor License Agreement (CLA)
