@@ -59,7 +59,7 @@
 
     // 统计周期与自动导出
     周期类型: '不散场', // 'M'(每月), 'W'(每周), 'D'(固定天数)； 其它任意字符：不开启周期重置+自动导出功能
-    周_天设置: 6, // M: 1~31号; W: 0~6(周日~周六); D: 间隔天数(如 7)
+    周_天设置: 6, // M: 1~31号; W: 0~6(周日~周六); D: 间隔天数(如 7)  //官方APP本来就是每周五晚上9点生成周报，全网可查。我个人一般会在0点左右再手动刷新。导出PDF或者(M)HTML+CSV双线也是自己的自由。
     基准日期: '2027-03-01', // 原点时间(仅 D 模式有效) 任意一个历史周期的零点
     
     报告时间: -720, // 提示时间：相对周期0点的偏移分钟数（如 -4320 代表提前 3 天）设置相对指定日期的下个周期起点的时间偏移量
@@ -122,8 +122,8 @@ const WAN_COMPAT = [
     { u: '/getpage.lua?pid=1005&nextpage=Basic_clients_lua.lua', n: 'OBJ_CLIENTS_ID' }
   ];
   let wanCompat = null; // 命中的 WAN 兼容条目；null 表示走标准接口
-  // 周期判断线：计算下一个“预警时间”和“强制导出清零时间”。
-  // 入参是已经叠加了时区补偿的“伪本地时间”；用 UTC 系列 API 取年月日，就等于取到了本地的年月日。
+  // 周期判断线：计算下一个“预警时间”和“强制导出清零时间”。虽然我的软件很讨厌防呆设计，但是很多注释真的是防呆乱审阅想不清且看不懂的AI的。
+  // 入参是已经叠加了时区补偿的“固定本地时间”（Home Server不会出国旅行）；用 UTC 系列 API 取年月日，就等于取到了本地的年月日。性能重于一切，节约性能优于功能实现考虑。这只是理念问题，但是开发方面我的个人项目本身没有待办的所谓优先级/P0之类。
   S.calcTime = (L) => {
     S.Force_MS = (CONFIG.周期类型 === 'M' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth() + (L >= Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), CONFIG.周_天设置) ? 1 : 0), CONFIG.周_天设置) : (CONFIG.周期类型 === 'W' ? Date.UTC(new Date(L).getUTCFullYear(), new Date(L).getUTCMonth(), new Date(L).getUTCDate()) + ((CONFIG.周_天设置 - new Date(L).getUTCDay() > 0 ? CONFIG.周_天设置 - new Date(L).getUTCDay() : CONFIG.周_天设置 - new Date(L).getUTCDay() + 7) * 86400000) : (CONFIG.周期类型 === 'D' ? L - (L - Date.parse(CONFIG.基准日期)) % (CONFIG.周_天设置 * 86400000) + CONFIG.周_天设置 * 86400000 : Infinity))) - CONFIG.时区补偿;//这玩意本来就是个基础设施和艺术品，它的功能是非常明确的，不存在说后期还有频繁的维护需求。完全没有必要为了所谓的可读性而乱写或妥协。
     S.Warn_MS = S.Force_MS + CONFIG.报告时间 * 60000;
@@ -204,7 +204,7 @@ const WAN_COMPAT = [
   let isF = !1, // rSD 防重入
     lCxt = null, lCxtT = null, lCxtProcessedT = null; // 最近一份 LAN 设备列表 XML / 它的到达时间（null 表示尚未标记）/ 已经积分过的那一份的到达时间
   // 劫持原版页面自己的 XHR：只要看到设备列表 / 首页基础信息的响应，就缓存设备列表并（在面板未激活时）启动引擎。这样官方页面每次刷新，我们都能零额外请求地拿到最新数据。
-  // 作者备注：原厂的逻辑是你停留在哪个页面才给哪个页面的数据，所以你必须停留在LAN或者主MAC页面，而不是停留在主页看路由器的大头照和信息量不够的单只有Wan口速率。
+  // 作者备注：原厂的逻辑是你停留在哪个页面才给哪个页面的数据，所以你必须停留在LAN或者主MAC页面，而不是停留在主页看路由器的大头照和信息量不够的单只有Wan口速率。不过目前该项几乎阵亡，当前主线严重依赖主动fetch和自建面板。
   const oOp = XMLHttpRequest.prototype.open;
   XMLHttpRequest.prototype.open = function () {
     this.
@@ -270,7 +270,7 @@ const WAN_COMPAT = [
         return `${Math.round(bits / 8)} B`;
     }
 
-  // “官方值 | 积分值”双轨文本，以积分值决定用哪个单位
+  // “官方值 | 积分值”双轨文本，以积分值决定用哪个单位，这样数值的微小变化容易看出来；而等到长期跑的时候，时间积累到了，大多数时候日用表现正常、不能让短期影响持续
   function fVD(bitsIntegral, bitsOfficial) {
         if (bitsIntegral > 8796093022208) return `${(bitsOfficial * 1.1368683772161603e-13).toFixed(4)} | ${(bitsIntegral * 1.1368683772161603e-13).toFixed(4)} TiB`;
         if (bitsIntegral > 83886080000) return `${(bitsOfficial * 1.1641532182693481e-10).toPrecision(5)} | ${(bitsIntegral * 1.1641532182693481e-10).toPrecision(5)} GiB`;
@@ -1894,7 +1894,7 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
 模式:
   readSaveData:
     title: "历史记录"
-    description: "脚本启动时积分从哪里来"
+    description: "脚本启动时积分来源"
     type: select
     default: "3：启动时用后台临时值充当积分"
     values: ["0：新局模式", "1：从路由器后台读档（继承基线）", "2：从本地长期历史读档（自动保存）", "3：启动时用后台临时值充当积分"]
@@ -2040,14 +2040,14 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
     values: ["auto：自动判断", "0：关闭", "1：开启"]
   宽带最大外网下行速率:
     title: "最大下行速率"
-    description: "略大于真实宽带下行带宽，支持小数（如千兆填 1000、2.5G 填 2400）"
+    description: "略大于真实宽带下行带宽，支持小数"
     type: number
     default: 2400
     min: 0
     unit: "Mbps"
   宽带最大外网上行速率:
     title: "最大上行速率"
-    description: "略大于真实宽带上行带宽，支持小数（如 300 兆填 300、50.5 兆填 50.5）"
+    description: "略大于真实宽带上行带宽（如50兆或许可填51.5）"
     type: number
     default: 300
     min: 0

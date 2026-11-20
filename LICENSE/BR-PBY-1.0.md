@@ -1,6 +1,6 @@
 # Broware PBY-Attribution License 1.0
 
-2026.11.17
+2026.11.18
 
 *This license is adapted from the PolyForm standardized License.<https://polyformproject.org/licenses>. This modified version is not affiliated with the PolyForm Project.*
 ## Copyright © 2026 哥哥科技
