@@ -1,6 +1,14 @@
 Required Notice: Copyright © 2026 哥哥科技 (BroTech)  <br>
 Required Notice: https://github.com/ucxn/ZTE-Stat_Max
 
+<div align="center">
+
+# **BY · 「哥哥科技」**
+### **无论何种授权路径，均必须保留 <kbd>哥哥科技</kbd> 的显著署名。**
+**Whatever the licensing path, the prominent attribution `"哥哥科技"` MUST be kept.**
+</div>
+
+---
 所有的“许可证”不以名称定义、请勿自行推断，法律效力以仓库中的实际 `License` 文件为准。<br>No "license" here is defined by its name; please do not infer its terms from the name. Legal effect is determined by the actual 'License' files in this repository.
 
 您可以收取通常范围内交易双方认为合理的、与本程序没有直接或间接关联的技术服务费，例如帮助用户上门安装路由器时附赠增值服务，但不得以哥哥科技的字号宣传；<br>服务原则上应当以含有明确物理成本的线下服务为主，但不得以附带安装调试该脚本为由收取任何附加费用；<br>切勿以该程序的取得、复制、下载方式、配置、调试、更新、维护为对价；<br>在线平台以辅助安装、调试、排错之类的收取维护费用若超合理限度，视为实质上为了掩盖倒卖该软件的本质。
@@ -72,11 +80,11 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 
 任何再分发、修改、移植、合并、集成、翻译、转换编程语言或形成更大作品的行为，均不得使“哥哥科技”的署名显著程度低于原作品中与作者身份相对应的署名程度。
 
-为明确起见，整个代码空间中任何形式或实质上包含和/或显示“哥哥”、“哥哥科技”以及实质用来显示开发者和/或其认同之名的，均严禁被篡改、弱化，或以非预期名称方式呈现。
+为明确起见，整个代码空间中任何形式或实质上包含和/或显示“哥哥”、“哥哥科技”以及实质用来显示开发者和/或其认可之名的，均严禁被篡改、弱化，或以非预期名称方式呈现。
 
 无论项目有何种规定，一旦违反该条，视为侵犯著作权，我任何明示、暗示、潜在、显式或任何其他方式的授权一律无效。
 
-保留“哥哥科技”的完整字面量和实质显示、可见性与显著性，是作者授予本软件任何许可权利所不可分割的条件。为免疑义，本款项下的任何终止均为立即、绝对且不可补救的，且严格不受任何宽限期、通知要求、时间流逝或任何其它条件的限制。
+保留“哥哥科技”的完整字面量和实质显示、可见性与显著性，是作者授予本软件任何许可权利所不可分割的条件。为免疑义，本款项下的任何终止均为立即、绝对且不可补救的，且严格不受任何宽限期、通知要求、时间流逝或任何其它条件的限制；***授权的终止仅剥夺您的各项许可权利，绝不免除或消灭任何既有副本、衍生作品或已分发物上继续保留显著署名的义务。***
 
 ### 哥哥的名字是最重要的
 对于所有、无论何种要求，唯独关于署名条款，需严格地按照有利于哥哥科技的方式来解释。基于本程序的实际源代码和技术条件，不存在一种软件正常功能能使用，而署名在技术上自动消失的方式。一旦程序的主要功能能正常使用，并且程序的主要功能能够正常的显示中文（源代码中功能描述中文被删除掉的作弊不算），则视为软件运行正常。软件运行正常的时候，没有任何合法理由可以不显示“哥哥科技”。
@@ -93,8 +101,19 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 3. 拆分后的每一个部分，都必须带有署名。
 
 #### 集成建议
+**[261121]**
 
 请注意：如果您无法理解以下条件，请咨询专业的技术顾问或律师；在理解之前，您只能原样传播官方链接。
+
+我们建议您像图吧工具箱那样集成本工具：完整收录，原样同步，并在您的软件中提供显著的入口，以提升用户的使用体验。
+
+本章节的推定不得被用于减少原作品已有的任何署名，也不影响前述任何署名义务。
+
+> 尽管看起来可能有难度，但通常情况下，只要原样集成，您无需担忧如何设计署名或者自己设计的署名在艺术和知识产权上是否合规。原作者已经设计了相当好的署名/签名，在任何情况下均不要手痒去删改，且调试完成以后应当使用实际的肉眼验证，或者使用 Agent 实际沙盒渲染验证，若因任何只采用看似有用实则漏油的单元测试或其它原因，导致在通用环境下署名无法显示的，您应当承担全部责任。
+>
+> 无论出于手痒、疏忽还是恶意，只要删改、遮蔽或掩饰使署名对最终用户弱化或隐没，上述许可授予的全部权利即刻终止；已经衍生或传播的作品同样适用，一律视为侵犯著作权。
+>
+> 本段是对上方许可的白话复述，以许可条款为准，署名义务只增不减。
 
 我们建议您像图吧工具箱那样集成本工具：完整收录，原样同步，并在您的软件中提供显著的入口，以提升用户的使用体验。
 
@@ -133,11 +152,11 @@ The characters “哥哥科技” must always be retained, without exception. Th
 
 No redistribution, modification, port, merger, integration, translation, conversion to another programming language, or incorporation into a larger work may make the prominence of the “哥哥科技” attribution lower than that of the attribution identifying the author in the original work.
 
-For the avoidance of doubt, anything anywhere in the entire code space that, in form or in substance, contains and/or displays "哥哥" or "哥哥科技", or that in substance serves to display the name of the developer and/or of those the developer identifies with, must never be altered, weakened, or presented under any name other than the one intended.
+For the avoidance of doubt, anything anywhere in the entire codebase / space that, in form or in substance, contains and/or displays "哥哥" or "哥哥科技", or that in substance serves to display the name of the developer and/or of those the developer identifies with, must never be altered, weakened, or presented under any name other than the one intended.
 
 Regardless of anything else the project provides, any breach of this clause is deemed copyright infringement, and every authorization I have granted, whether express, implied, potential, explicit, or in any other form, becomes void.
 
-Preserving the complete literal text “哥哥科技”, together with its actual display, visibility, and prominence, is an inseparable condition of every license right the author grants for this software. For the avoidance of doubt, any termination under this Section is immediate, absolute, and non-curable, and operates strictly without regard to any cure period, notice requirement, lapse of time, or any other condition whatsoever.
+Preserving the complete literal text “哥哥科技”, together with its actual display, visibility, and prominence, is an inseparable condition of every license right the author grants for this software. For the avoidance of doubt, any termination under this Section is immediate, absolute, and non-curable, and operates strictly without regard to any cure period, notice requirement, lapse of time, or any other condition whatsoever; ***Termination of the license strips you of your license rights only. It in no way releases or extinguishes the obligation to keep the prominent attribution on every existing copy, derivative work, and distributed item.***
 
 ### 哥哥's Name Matters Most
 
@@ -159,6 +178,12 @@ If you must modify the source code, for example by adding substantial features o
 If you cannot understand the conditions below, please consult a qualified technical adviser or lawyer. Until you do, you may only share the official link as it is.
 
 We recommend integrating this tool the way "Tualatin Toolbox" bundles the tools it collects: include it whole, keep it in sync with the original, and give it a prominent entry point in your software for a better user experience.
+
+> Notwithstanding how demanding the terms above may look, under normal circumstances, as long as you integrate this work as-is, you need not worry about how to design the attribution or whether a self-designed attribution is compliant in terms of art and intellectual property. The original author has already designed a well-crafted attribution/signature, so keep it exactly as it is and keep those itchy fingers away from it; moreover, once debugging is done, you must verify it with your own naked eyes, or have an Agent render and verify it in an actual sandbox. If the attribution fails to display in a general environment due to relying solely on seemingly useful yet leaky unit tests or any other reason, you carry the full responsibility.
+>
+> Whether it comes from itchy fingers, oversight, or malice, any deletion, tampering, obscuring, or concealment that weakens the attribution or hides it from end users terminates all rights granted under the license above, immediately. This applies whether or not derivative or distributed works already exist, and all such use is treated as copyright infringement.
+>
+> This paragraph is a plain-language restatement of the license above; the license governs, and the attribution obligations here can only grow.
 
 #### Attribution Count on a Single Page
 Where attribution appears 4~9 times on a single page, and there is no bad faith, it may ordinarily be presumed in good faith to satisfy the count requirement of this section. This presumption may not be used to reduce any attribution already present in the original work, and it does not affect any of the attribution obligations above.

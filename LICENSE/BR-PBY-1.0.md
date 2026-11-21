@@ -1,6 +1,6 @@
 # Broware PBY-Attribution License 1.0
 
-2026.11.18
+2026.11.21
 
 *This license is adapted from the PolyForm standardized License.<https://polyformproject.org/licenses>. This modified version is not affiliated with the PolyForm Project.*
 ## Copyright © 2026 哥哥科技
@@ -39,7 +39,9 @@ Under no circumstances may:
 
 as presented in any form in the end-user interface, be subjected to Removal, Alteration, Obscuration, Concealment, Replacement, Rewording, Abbreviation, Truncation, Attenuation, Reduction of Visibility, Reduction of Prominence, Misleading Presentation, Removal from the Visible Area, Deferred Loading, Default Collapse, Time-Limited or Conditional Display, or Degradation by any other means.
 
-The Chinese characters “哥哥科技” must, in all cases, be retained exactly as written. "BroTech", "Bro-Tech", the GitHub username, project name, repository link, or any other English or Latin-character representation may be used only as supplementary attribution and must not replace “哥哥科技”.
+The Chinese characters 『哥哥科技』 and/or 『长兄天工』 must, in all cases, be retained exactly as written. "BroTech", "Bro-Tech", the GitHub username, project name, repository link, or any other English or Latin-character representation may be used only as supplementary attribution and must not replace “哥哥科技”.
+
+**Any name include 「明明不远」 and/or 「鱼」,** *Any links include 『2216485229713』 must not be altered or tampered with in any manner.*
 
 Even if the target runtime environment, display device, programming language, or other technical environment cannot properly display Chinese, “哥哥科技” must still be retained exactly as written in all source code, license texts, metadata, or other media capable of preserving that literal text using Unicode, UTF-8, GB 18030, or any other suitable encoding.
 

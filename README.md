@@ -1,6 +1,6 @@
 # ZTE-Stat_Max by 哥哥科技
 
-[![Version](https://img.shields.io/badge/version-6.0-orange.svg?logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
+[![Version](https://img.shields.io/badge/version-6.1-orange.svg?logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
 [![Platform](https://img.shields.io/badge/platform-Web-green.svg?logo=javascript&logoColor=white)](https://scriptcat.org/zh-CN)&nbsp;&emsp;
 [![Integration](https://img.shields.io/badge/集成-Home_Assistant-41BDF5.svg?logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)&nbsp;&emsp;
 [![Reference:APL for Bro](https://img.shields.io/badge/Source-APL_Bro_0.1-3DA639?logo=opensourceinitiative&logoColor=white&labelColor=222222)](https://raw.githubusercontent.com/ucxn/ZTE-Stat_Max/refs/heads/main/LICENSE/license.txt)&nbsp;

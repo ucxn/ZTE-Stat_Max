@@ -18,7 +18,7 @@ Thank you for contributing to ZTE-Stat_Max.
 # 贡献者许可协议 / Contributor License Agreement (CLA)
 
 适用项目 / Project: ZTE-Stat_Max (https://github.com/ucxn/ZTE-Stat_Max)<br/>
-许可方 / Licensor: 哥哥科技 (Bro-Tech)
+许可方 / Licensor: 哥哥科技
 
 ## 1. 定义 / Definitions
 
@@ -92,7 +92,7 @@ This Agreement grants you no rights beyond the Project License and does not rele
 9.1 若任何条款被认定无法执行，则在法律允许的最大范围内执行，其余条款继续有效。署名相关义务适用项目许可中关于可分割性的特别规定。\
 If any provision is held unenforceable, it shall be enforced to the maximum extent permitted, and the remaining provisions remain in full effect. Attribution-related obligations are governed by the special severability rules of the Project License.
 
-9.2 本协议适用中华人民共和国法律（不含港澳台地区法律，且不适用其冲突法规则）。因本协议产生的争议，由武汉市有管辖权的人民法院管辖。\
+9.2 本协议适用中华人民共和国境内法律（不含港澳台地区法律，且不适用其冲突法规则）。因本协议产生的争议，由武汉市有管辖权的人民法院管辖。\
 This Agreement is governed by the laws of the People's Republic of China (excluding the laws of Hong Kong, Macao, and Taiwan, and without regard to its conflict-of-law rules). Any dispute arising from this Agreement shall be subject to the jurisdiction of the competent People's Courts located in Wuhan City.
 
 9.3 本协议中英文版本具有同等效力；两者出现差异时，以更有利于保护署名的解释为准。

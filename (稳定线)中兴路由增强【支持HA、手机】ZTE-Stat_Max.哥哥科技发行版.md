@@ -1,0 +1,1 @@
+## [点击这里安装 / Click to Install](https://github.com/ucxn/ZTE-Stat_Max/releases)
