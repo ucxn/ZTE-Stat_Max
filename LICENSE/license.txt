@@ -182,8 +182,8 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 		to provide for PROMINENT attribution.
 
     3.11. For greater certainty, 
-	    Any occurrence of 「哥哥科技」 or 「哥哥」 or 「明明不远」, and any occurrence matching the pattern /\bBro(?:ther)?(?:[-_ ]?Tech)?\b/i, whether literal or in any substantially
-		equivalent representation, incorporated into or already existing in the Source Code shall not be altered or tampered with in any manner.
+	    Any occurrence of 「哥哥科技」 or 「哥哥」 or 「明明不远」, and any occurrence matching the pattern /\bBro(?:ther)?(?:[\W_]*?Tech)?(?![A-Z0-9])/i
+		whether literal or in any substantially equivalent representation, incorporated into or already existing in the Source Code shall not be altered or tampered with in any manner.
 		Any links include 『2216485229713』 must not be altered or tampered with in any manner.
 
 4. COMMERCIAL USE AND INDEMNITY.
