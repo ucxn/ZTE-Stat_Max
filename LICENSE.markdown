@@ -4,7 +4,7 @@ Required Notice: https://github.com/ucxn/ZTE-Stat_Max
 <div align="center">
 
 # **BY · 「哥哥科技」**
-### **无论何种授权路径，均必须保留 <kbd>哥哥科技</kbd> 的显著署名。**
+### **无论何种授权路径，均必须保留 $\Large\boxed{\textbf{哥哥科技}}$ 的显著署名。**
 **Whatever the licensing path, the prominent attribution `"哥哥科技"` MUST be kept.**
 </div>
 
