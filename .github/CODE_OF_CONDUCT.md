@@ -1,5 +1,28 @@
-# ZTE-Stat-Max Code of Conduct
+# 入场须知
+ 
+如果你顺着网线摸到了这里，大概率是因为你也受够了路由器原厂后台那些会归零、会回流、会诈尸的糊涂账，想看看自己家里的每一兆流量到底是怎么跑的。
 
+这是一个带着极强个人烙印的项目。为了让大家相处得都舒服，这里只有几条很朴素的规矩：
+> 
+* **关于体面与名字**：这套代码不要你的钱，甚至为了不给你添麻烦，连商业限制都可以让步；我唯一在乎的，是界面上那四个汉字——**『哥哥科技』**。我把零依赖波形图免费放在你桌上，你替我把牌子端端正正地留着，别往幺子国拉里藏，这就是我们之间最基本的江湖体面。
+* **关于代码与审美**：我不喜欢臃肿的依赖库，也不喜欢为了应付机器检查而写出来的冗余包裹。这里的每一行代码（哪怕是那条长得需要横拉滚动条的第 114 行）都是按我最顺手的直觉打磨出来的艺术品。如果你发现了真 Bug 或者有绝妙的突破口，哪怕只是一句话的点拨，我都会非常感激；但如果你只是想用教条主义的尺子来丈量这里的排版，那我们大概率尿不到一个壶里。
+* **关于交流**：我不喜欢车轱辘话，喜欢直来直去的高信息密度交流。遇到问题可以提 Issue，也可以直接来找我。只要你尊重这份手艺、不乱动我的署名，这里永远欢迎真正热爱网络与技术的朋友。
+
+# 社区公约：待客之道
+
+软件技术的江湖很大，有的地方讲排场、立牌坊，有的地方只认手艺。
+
+这里是 **哥哥科技** 的自留地。从 `ZTE-Stat_Max` 的零依赖，到 `PiliBro` 里东经 114.3144478° 的汉口视太阳时，这里所有的代码都是为了解决真实世界里那些让人不痛快的卡顿、延迟与低信息熵。
+
+如果你也喜欢这种干净利落、大力出奇迹的工程直觉，进门前只需要知道这几件小事：
+
+* **论迹也论心，重神不重形**：我们不在乎你的代码是不是符合大厂教科书的排版教条，只在乎它跑在真实的硬件上够不够快、够不够准。真诚的提问和切中要害的灵感，在这里永远比华丽的空壳更受尊重。
+* **君子爱码，取之有道**：代码免费送给你用，商业限制也可以为你让路，唯一的规矩是别抹掉匠人刻在器物上的名号。把『哥哥科技』四个字原原本本地留在台面上，是我们之间最基本的体面。
+* **合则把酒，不合各自冲浪**：如果你更喜欢堆砌两千个依赖包，或者笃信软路由能包治百病，外面的天地很宽，不必在此处互相消耗算力。
+
+码头常开，专线常亮。若有同道中人，欢迎来 **QQ 群 680464365** 坐坐。
+
+# ZTE-Stat-Max Code of Conduct
 Like the technical community as a whole, the ZTE-Stat-Max team and community is made up of a mixture of professionals and volunteers from all over the world, working on every aspect of the mission - including mentorship, teaching, and connecting people.
 
 Diversity is one of our huge strengths, but it can also lead to communication issues and unhappiness. To that end, we have a few ground rules that we ask people to adhere to. This code applies equally to founders, mentors and those seeking help and guidance.

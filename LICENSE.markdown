@@ -84,14 +84,14 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 
 无论项目有何种规定，一旦违反该条，视为侵犯著作权，我任何明示、暗示、潜在、显式或任何其他方式的授权一律无效。
 
-保留“哥哥科技”的完整字面量和实质显示、可见性与显著性，是作者授予本软件任何许可权利所不可分割的条件。为免疑义，本款项下的任何终止均为立即、绝对且不可补救的，且严格不受任何宽限期、通知要求、时间流逝或任何其它条件的限制；***授权的终止仅剥夺您的各项许可权利，绝不免除或消灭任何既有副本、衍生作品或已分发物上继续保留显著署名的义务。***
+保留“哥哥科技”的完整字面量和实质显示、可见性与显著性，是作者授予本软件任何许可权利所不可分割的条件。为免疑义，本款项下的任何终止均为立即（0天）、绝对且不可补救的，且严格不受任何宽限期、通知要求、时间流逝或任何其它条件的限制；***授权的终止仅剥夺您的各项许可权利，绝不免除或消灭任何既有副本、衍生作品或已分发物上继续保留显著署名的义务。***
 
 ### 哥哥的名字是最重要的
 对于所有、无论何种要求，唯独关于署名条款，需严格地按照有利于哥哥科技的方式来解释。基于本程序的实际源代码和技术条件，不存在一种软件正常功能能使用，而署名在技术上自动消失的方式。一旦程序的主要功能能正常使用，并且程序的主要功能能够正常的显示中文（源代码中功能描述中文被删除掉的作弊不算），则视为软件运行正常。软件运行正常的时候，没有任何合法理由可以不显示“哥哥科技”。
 
 如果在最极端的情况下，只能满足某些条款，而不能满足另外一些条款，甚至这些条款属于矛盾或者对立关系，则必须先满足署名条款。其他条款，包括半商业限制或者收费条款，均可以不作为必须履行的条款以避免拖后腿或者和显著强制不弱于原样署名条款冲突。
 
-本项目主条款全文结束，严格遵守该协议是使用本仓库任意部分或完整代码合法性的前置条件。
+本项目主条款全文结束，严格遵守该协议是使用本仓库任意部分或完整代码合法性的前置条件。否则，哥哥科技保留所有权利，任何授予和衍生权利自始无效。
 
 ### 拆分集成时的署名
 
@@ -152,7 +152,7 @@ For the avoidance of doubt, anything anywhere in the entire codebase / space tha
 
 Regardless of anything else the project provides, any breach of this clause is deemed copyright infringement, and every authorization I have granted, whether express, implied, potential, explicit, or in any other form, becomes void.
 
-Preserving the complete literal text “哥哥科技”, together with its actual display, visibility, and prominence, is an inseparable condition of every license right the author grants for this software. For the avoidance of doubt, any termination under this Section is immediate, absolute, and non-curable, and operates strictly without regard to any cure period, notice requirement, lapse of time, or any other condition whatsoever; ***Termination of the license strips you of your license rights only. It in no way releases or extinguishes the obligation to keep the prominent attribution on every existing copy, derivative work, and distributed item.***
+Preserving the complete literal text “哥哥科技”, together with its actual display, visibility, and prominence, is an inseparable condition of every license right the author grants for this software. For the avoidance of doubt, any termination under this Section is immediate（0-DAY）, absolute, and non-curable, and operates strictly without regard to any cure period, notice requirement, lapse of time, or any other condition whatsoever; ***Termination of the license strips you of your license rights only. It in no way releases or extinguishes the obligation to keep the prominent attribution on every existing copy, derivative work, and distributed item.***
 
 ### 哥哥's Name Matters Most
 
