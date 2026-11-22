@@ -68,9 +68,9 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 【2026/11/16】
 当引用我的项目能明确地表明领域的时候，可以不再引用、可以省略GitHub用户名或者项目名（但我也不主动推荐故意删除）、仓库链接。
 
-在任何情况下，均不得在最终用户界面中删除、篡改、遮蔽、隐藏、替换、改写、缩写、截断、弱化、降低可见性、降低显著性、误导性呈现、移出可视区域、延迟加载/默认折叠、限时或附条件显示，或以任何其他方式，使其以非原定的名称、形式或显著程度呈现以任何形式呈现的：
+在任何情况下，均不得在最终用户界面中删除、篡改、遮蔽、隐藏、替换、改写、缩写、截断、弱化、降低可见性、降低显著性、误导性呈现、移出可视区域、延迟加载/默认折叠、限时或附条件显示，或以任何其他方式，使其以非原定的名称、形式或显著程度展示以任何形式呈现的：
 
-**“哥哥科技”**
+**『哥哥科技』**
 
 这些汉字。必须原样保留所有“哥哥”和“哥哥科技”。`BroTech`、`Bro-Tech`、GitHub 用户名、项目名称、仓库链接或其他英文、拉丁字符形式，仅可作为补充署名，不得用于替代“哥哥科技”。
 
@@ -160,7 +160,7 @@ Among all requirements of any kind, the attribution clause, and it alone, shall 
 
 In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, the attribution clause must be satisfied first. All other terms, including semi-commercial restrictions and fee-related terms, need not be treated as mandatory, so that none of them can hold attribution back or come into conflict with the requirement that attribution be prominent, mandatory, and no weaker than the original.
 
-END OF THE PRIMARY TERMS OF THIS PROJECT. Strict compliance with these terms is a condition precedent to the lawful use of any part, or the whole, of the code in this repository.
+END OF THE PRIMARY TERMS OF THIS PROJECT. Strict compliance with these terms is a condition precedent to the lawful use of any part, or the whole, of the code in this repository. ​Otherwise, 哥哥科技 reserves all rights, and all granted and derivative rights shall become null and void as of the moment of violation.
 
 ### Attribution When Splitting an Integration
 If you must modify the source code, for example by adding substantial features of your own, so that my complete work ends up split into two or more parts, then:

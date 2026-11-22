@@ -62,7 +62,7 @@ terms will cause your license to terminate automatically and permanently.
 
 > **BroTech Note** (set apart as its own paragraph; the Sustainable Use License text above is left as is)
 >
->The reinstatement above applies only to violations other than the Attribution Terms. A violation of the BroTech Prominent Attribution Terms renders your license **void ab initio**; the 30-day reinstatement above does not apply, and *a later correction does not restore does not restore your license. The [Attribution Terms](/LICENSE.markdown#brotech-prominent-attribution-terms) always come first: in any conflict between this section and the attribution terms, the attribution terms prevail.*
+>The reinstatement above applies only to violations other than the Attribution Terms. A violation of the BroTech Prominent Attribution Terms renders your license **void ab initio as to all non-complisnt copies and uses**; the 30-day reinstatement above does not apply, and *a later correction does not restore your license. The [Attribution Terms](/LICENSE.markdown#brotech-prominent-attribution-terms) always come first: in any conflict between this section and the attribution terms, the attribution terms prevail.*
 
 ### No Liability
 

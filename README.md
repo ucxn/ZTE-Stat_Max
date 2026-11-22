@@ -9,7 +9,9 @@
 
 [English](README_EN.md) | **简体中文**
 
-**ZTE-Stat_Max**是一款网速监控、流量多维分析查看工具，运用了专业的测控思想，融合 哥哥科技 的匠心精神；<br>专为中兴路由器 Web 管理后台设计的 “油猴” 增强脚本插件 + HA 全屋智能家居接入集成，作者：*哥哥科技* ！<br><br>
+**ZTE-Stat_Max**是一款网速监控、流量多维分析查看工具，运用了专业的测控思想，融合 哥哥科技 的匠心精神；<br>专为中兴路由器 Web 管理后台设计的 “油猴” 增强脚本插件 + HA 全屋智能家居接入集成，作者：*哥哥科技* ！
+
+*目前已经有集成入* **[手机APP（点我下载）](https://github.com/ucxn/Bro-Stat/blob/main/.github/Install.md#安卓客户端)，使用起来非常方便，无需配置复杂的脚本环境！**<br><br>
 **支持检测**：WAN口速率、每个物理端口：含LAN口速率（精度1s）、各设备速率（2/3/5s）、各设备官方流量小计。
 
 **超高精度**：WAN口累计字节计数器（大部分支持、32位），后台逐设备原版流量（累计，防清零回流、校正）；和各设备网卡残差比例相差无几。
@@ -34,9 +36,13 @@
 ![logo](./assets/中兴.png)
 
 ## [点击一键安装](https://github.com/ucxn/ZTE-Stat_Max#%E8%84%9A%E6%9C%AC%E5%AE%89%E8%A3%85)&emsp;&nbsp;&emsp;[![Bilibili](https://img.shields.io/badge/Bilibili-观看演示视频-FF8EB3?style=for-the-badge&logo=bilibili&logoColor=white)](https://www.bilibili.com/video/BV1PtR7B8ECC)
+**[脚本管理器](#环境要求)**&emsp;**[HA集成/米家 智能家居联动](https://github.com/ucxn/ZTE-Stat_HA)**
 
-[**国内用户**](https://scriptcat.org/zh-CN/script-show-page/6194)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[国际用户](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)**
+主程序本体：[**国内用户**](https://scriptcat.org/zh-CN/script-show-page/6194)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[国际用户](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)**
 
+客户端集成：[**手机APP**](https://github.com/ucxn/Bro-Stat/blob/main/.github/Install.md#安卓客户端)  ➡️ 在“我的”页选『网关诊断』。
+
+---
 官方 Web 后台虽然稳定，但在数据展示的交互设计上存在一些不便。例如，实时的网速数据和设备历史累积流量被隐藏在了二级菜单中，需要频繁点击具体设备才能查看，无法在全局列表形成直观的对比。本插件的核心目的就是“拍平”这些层级。将单台设备的上下行网速、本次在线期间的积分流量，以及底层的累积总吞吐量，全部提取并前置到主设备列表中，无需任何多余的操作，所有设备的网络吞吐状态一目了然。
 
 ## ✨ 功能特性 (Features)
@@ -80,6 +86,8 @@
 1.  点击此处安装全面版ZTE-Stat_Max：
 
     [从GitHub安装](https://github.com/ucxn/ZTE-Stat_Max/releases)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[从GreasyFork安装](https://greasyfork.org/zh-CN/scripts/576199)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[直接安装测试版](https://raw.githubusercontent.com/ucxn/ZTE-Stat_Max/refs/heads/main/new.user.js)
+
+    [**安装手机App/电脑客户端 集成版** 适合新手小白](https://github.com/ucxn/Bro-Stat/blob/main/.github/Install.md#安卓客户端)
 
     [通过 ScriptCat 脚本猫 安装（直连推荐：**无需科学上网**）](https://scriptcat.org/zh-CN/script-show-page/6194)更新推送
 
