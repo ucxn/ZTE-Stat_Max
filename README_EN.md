@@ -10,6 +10,8 @@
 **ZTE-Stat_Max** (Author:*Brother Tech*/*哥哥科技*) is monitoring internet speeds and viewing multidimensional data on data usage, incorporating professional Measurement and Control principles;
 <br>A Xmonkey enhancement script specifically designed for the ZTE router Web UI management dashboard, now coupled with a dedicated **Home Assistant integration** for smart home automation and embodying the spirit of craftsmanship from Bro-Tech.
 
+***Now it's also avaliable in a [Mobile Phone App](https://github.com/ucxn/Bro-Stat/blob/main/.github/Install.md#app)！***
+
 **Real-time Monitoring**: WAN port speed, individual physical ports (including LAN speeds at 1s precision), per-device speeds (2/3/5s intervals), and official per-device traffic subtotals.</br>
 **Ultra-high precision**: the WAN port's cumulative byte counter (available on most models, 32-bit), plus the router's own per-device traffic totals pulled from the backend (cumulative, with reset/backflow protection and correction). Checked against each device's own NIC counters, the residual error is next to nothing, so any offset is a single scale factor you can calibrate out.</br>
 **Dual-WAN Support**: Fully supported! Independently tracks WAN1/WAN2 speeds with calculus-based integration (∫Sum), automatically calculates the *Primary/Secondary Load Ratio*, and cross-references with high-precision LAN and device statistics.</br>
@@ -20,7 +22,14 @@
 
 ![Preview](./assets/new.png)
 
-### [Quick Install OnLine (Click)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/README_EN.md#-installation-guide)&nbsp;&emsp;&nbsp;[![Bilibili](https://img.shields.io/badge/Bilibili-VIDEO-FF8EB3?style=for-the-badge&logo=bilibili&logoColor=white)](https://www.bilibili.com/video/BV1PtR7B8ECC)
+### [Quick Install OnLine (Click)](#-installation-guide)&nbsp;&emsp;&nbsp;[![Bilibili](https://img.shields.io/badge/Bilibili-VIDEO-FF8EB3?style=for-the-badge&logo=bilibili&logoColor=white)](https://www.bilibili.com/video/BV1PtR7B8ECC)
+
+**[Userscript Manager](#requirements)**&emsp;**[HA / Mi Smart Home Integration](https://github.com/ucxn/ZTE-Stat_HA/blob/main/custom_components/gbnpa_router/Readme.md)**
+
+[**Develop Ver.(Latest)**](https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js)&emsp;
+[**Release Build (Stable)**](https://github.com/ucxn/ZTE-Stat_Max/releases)&nbsp;&emsp;**[Trouble?](#-installation-guide)**
+
+[**Mobile Phone APP**](https://github.com/ucxn/Bro-Stat/blob/main/.github/Install.md#app) ➡️ For Android. Please install Script directly on PC.
 
 ![logo](./assets/中兴.png)
 
@@ -85,6 +94,8 @@ Before using this script, ensure your browser has a user script manager extensio
 1.  Click here to install the full version of *ZTE-Stat_Max*：
    
     **[Install from GitHub](https://github.com/ucxn/ZTE-Stat_Max/releases/latest)**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**[Install via Greasy Fork](https://greasyfork.org/zh-CN/scripts/576199)**
+
+    **[Client Download：Easier for beginners](https://github.com/ucxn/Bro-Stat/blob/main/.github/Install.md#app)**
 
     [*Install from **ScriptCat*** (Popular in China)](https://scriptcat.org/zh-CN/script-show-page/6194)
  
