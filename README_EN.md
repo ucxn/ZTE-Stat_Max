@@ -29,7 +29,7 @@
 [**Develop Ver.(Latest)**](https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js)&emsp;
 [**Release Build (Stable)**](https://github.com/ucxn/ZTE-Stat_Max/releases)&nbsp;&emsp;**[Trouble?](#-installation-guide)**
 
-[**Mobile Phone APP**](https://github.com/ucxn/Bro-Stat/blob/main/.github/Install.md#app) ➡️ For Android. Please install Script directly on PC.
+[**Mobile Phone APP**](https://github.com/ucxn/Bro-Stat/blob/main/.github/Install.md#app) ➡️ For Android typically. Choose 『网关诊断』 in “我的” page, and select the brand and click the icon.
 
 ![logo](./assets/中兴.png)
 
