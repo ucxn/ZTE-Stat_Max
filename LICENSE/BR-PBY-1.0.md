@@ -1,6 +1,6 @@
 # Broware PBY-Attribution License 1.0
 
-2026.11.22
+2026.11.24
 
 *This license is adapted from the PolyForm standardized License.<https://polyformproject.org/licenses>. This modified version is not affiliated with the PolyForm Project.*
 ## Copyright © 2026 哥哥科技
@@ -18,7 +18,7 @@ You MUST strictly preserve the attribution to 『哥哥科技』(Bro-Tech), In a
 **NC（Noncompete / 非竞争）:**<br/>
 出于历史原因，将该许可证的根文件名进行更改，容易造成很多兼容性错乱，故缩写不变。但其中的NC并没有通常大家理解的纯粹非商业含义或简单法律意义。本授权条件只限制有竞争性的活动，无论是否属于同一业态。整个许可证中，永久不变且法律效力最高的永远是署名相关条款条例和规则。（我已下决心更改该名称，但是本声明暂且放此不变）
 
-*The rule of boundary*: You must not use it to build, market, or distribute any product or service that serves as a practical substitute for or competes with this software—regardless of technical platform, interface, programming language, or whether it is offered free of charge.  
+*The rule of boundary*: You must not use it to build, market, or distribute any product or service that serves as a practical substitute for or competes with this software or any product the licensor or any of its affiliates provides using the software — regardless of technical platform, interface, programming language, or whether it is offered free of charge.  
 
 **严禁**利用本软件开发、宣传或分发任何在功能或价值上构成其替代品的竞争性产品或服务（无论跨平台、接口形态、重写的编程语言为何，亦无论免费还是收费）。
 
@@ -103,7 +103,8 @@ to license, that you would infringe by using the software.
 
 You MUST ensure that anyone who gets a copy of any part of
 the software from you also gets a copy of these terms or the
-URL for them above, as well as copies of any plain-text lines
+URL for them: https://github.com/ucxn/ZTE-Stat_Max/blob/HEAD/LICENSE/BR-PBY-1.0.md,
+as well as copies of any plain-text lines
 beginning with `Required Legal Notice:` that the licensor provided
 with the software.
 
@@ -172,7 +173,7 @@ and take practical steps to correct past violations, within
 25 days of receiving notice.  Otherwise, all your licenses
 end immediately.
 
-**BUT**, Under all circumstances, you must comply with the [***Attribution Terms***](#attribution), particularly the provisions protecting attribution. You must not, by any means, reduce the prominence of the attribution to any degree whatsoever, however slight. Otherwise, such use shall not be regarded as fair use or as any other limitation or exception to copyright, and shall be regarded as a material breach and an act of infringement, and ***All* rights granted to you under this Agreement shall terminate immediately**. This provision shall take precedence over all other provisions of this Agreement. ➡️ For the avoidance of doubt, any termination under this paragraph is immediate, absolute, and non-curable, and **shall operate strictly without regard to any cure period** (including the aforementioned 25-day period), notice requirement, lapse of time, or any other condition whatsoever. ***It is by no means optional.***
+**BUT**, Under all circumstances, you must comply with the [***Attribution Terms***](#attribution), particularly the provisions protecting attribution. You must not, by any means, reduce the prominence of the attribution to any degree whatsoever, however slight. Otherwise, such use may not be regarded as fair use or as any other limitation or exception to copyright, and may constitute an act of infringement; it shall be regarded as a material breach of this Agreement, and ***All* rights granted to you under this Agreement shall terminate immediately**. This provision shall take precedence over all other provisions of this Agreement. ➡️ For the avoidance of doubt, any termination under this paragraph is immediate, absolute, and non-curable, and **shall operate strictly without regard to any cure period** (including the aforementioned 25-day period), notice requirement, lapse of time, or any other condition whatsoever. ***It is by no means optional.***
 
 ## Primary Obligation
 **Notwithstanding anything to the contrary in this License, the Attribution Requirements shall be interpreted strictly and exclusively in the manner most favorable to the Author.**  

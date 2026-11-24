@@ -74,7 +74,7 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 
 这些汉字。必须原样保留所有“哥哥”和“哥哥科技”。`BroTech`、`Bro-Tech`、GitHub 用户名、项目名称、仓库链接或其他英文、拉丁字符形式，仅可作为补充署名，不得用于替代“哥哥科技”。
 
-即使目标运行环境、显示设备、编程语言或其他技术环境无法正常显示中文，凡能够保存 Unicode、UTF-8、GB 18030 或其他能够表示该字面量的源码、许可证文本、元数据或其他载体中，仍必须原样保留“哥哥科技”。
+即使目标运行环境、显示设备、编程语言或其他技术环境无法正常显示中文，凡能够保存 Unicode、UTF-8、GB 18030 或其他能够表示该字面量的源码、许可证文本、元数据或其他载体中，仍必须原样保留“哥哥科技”。**源码、许可证文本、元数据中的保留，与最终用户界面中的署名，是两项各自独立的义务：前者照旧保留，但不能代替后者。** *仅在源码中署名而最终用户看不到的，不构成对本条署名义务的履行，**此类做法视为未署名。***
 
 如果用户可见界面因客观技术限制无法正常呈现“哥哥科技”，可以在不删除程序中实质性表达中文“哥哥科技”的前提下，追加 `BroTech`、`Bro-Tech`、作者用户名、项目链接或其他能够清楚识别作者身份的表示方式，并应通过 GitHub 或电子邮件及时告知作者。
 
@@ -88,6 +88,8 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 
 ### 哥哥的名字是最重要的
 对于所有、无论何种要求，唯独关于署名条款，需严格地按照有利于哥哥科技的方式来解释。基于本程序的实际源代码和技术条件，不存在一种软件正常功能能使用，而署名在技术上自动消失的方式。一旦程序的主要功能能正常使用，并且程序的主要功能能够正常的显示中文（源代码中功能描述中文被删除掉的作弊不算），则视为软件运行正常。软件运行正常的时候，没有任何合法理由可以不显示“哥哥科技”。
+
+**我最在意的只有一件事：市面上流通的每一个版本，都带着哥哥科技的名字。** 本许可证管辖的是项目本身，即源码、副本、可执行脚本及其运行时界面，以及基于它的修改、改写和翻译版本。软件运行后导出的数据，例如 CSV，属于使用者自己。
 
 如果在最极端的情况下，只能满足某些条款，而不能满足另外一些条款，甚至这些条款属于矛盾或者对立关系，则必须先满足署名条款。其他条款，包括半商业限制或者收费条款，均可以不作为必须履行的条款以避免拖后腿或者和显著强制不弱于原样署名条款冲突。
 
@@ -142,6 +144,8 @@ Under no circumstances may the following, presented in any form in the end-user 
 
 Even if the target runtime environment, display device, programming language, or other technical environment cannot display Chinese properly, “哥哥科技” must still be retained exactly as written in any source code, license text, metadata, or other medium capable of storing that literal text in Unicode, UTF-8, GB 18030, or any other encoding that can represent it.
 
+*Retention in source code, license text, and metadata, and attribution in the end-user interface, are two separate and independent obligations: the former must still be kept, but it cannot stand in for the latter. **Attribution that appears only in the source code, where end users cannot see it, does not satisfy the attribution obligation of this Section.***
+
 If objective technical limitations prevent a user-visible interface from properly displaying “哥哥科技”, you may add `BroTech`, `Bro-Tech`, the author's username, the project link, or another form that clearly identifies the author, provided that the substantive Chinese “哥哥科技” in the program is not deleted; you must also promptly notify the author via GitHub or email.
 
 The characters “哥哥科技” must always be retained, without exception. The prominence of the original form of attribution must not be reduced in any way; **this prohibits any reduction, not merely a significant reduction.**
@@ -157,6 +161,8 @@ Preserving the complete literal text “哥哥科技”, together with its actua
 ### 哥哥's Name Matters Most
 
 Among all requirements of any kind, the attribution clause, and it alone, shall be construed strictly in favor of 哥哥科技. Given this program's actual source code and technical conditions, there is no way for the software to function normally while the attribution drops out on its own for technical reasons. Once the program's main features work normally and can display Chinese text properly (deleting the Chinese feature descriptions from the source code is a cheat and does not get around this), the software is deemed to be running normally. While the software is running normally, there is no legitimate reason of any kind not to display "哥哥科技".
+
+**What I care about most is one thing: every version in circulation carries the name 哥哥科技.** This license governs the program itself: its source code, executable script, its copies, and runtime interface, and any version based on it, including modifications, rewrites, and translations. Data the software exports when run, such as CSV files, belongs to the user.
 
 In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, the attribution clause must be satisfied first. All other terms, including semi-commercial restrictions and fee-related terms, need not be treated as mandatory, so that none of them can hold attribution back or come into conflict with the requirement that attribution be prominent, mandatory, and no weaker than the original.
 
