@@ -53,8 +53,8 @@ Your Contributions are subject to the Project License, including its attribution
 5.2 你不得在贡献中，或通过贡献，移除、改写、遮蔽、缩小、折叠、延迟加载、替换或以任何方式削弱本项目中已有的「哥哥科技」署名及法律声明。此类改动不会被合并，许可方有权随时回退。
 You must not, in or through any Contribution, remove, alter, obscure, shrink, collapse, defer-load, replace, or otherwise diminish the existing "哥哥科技" attribution and legal notices in the Project. Such changes will not be merged, and the Licensor may revert them at any time.
 
-5.3 你的贡献署名以提交历史、贡献者名单等方式呈现。在法律允许的最大范围内，你同意不要求在用户界面中以与「哥哥科技」同等或更显著的方式署名，亦不行使与本条相抵触的人身权利。\
-Your credit is recorded through commit history, contributor lists, and the like. To the fullest extent permitted by law, you agree not to require attribution in the user interface at a level equal to or more prominent than "哥哥科技", and not to exercise any moral rights in a manner inconsistent with this Section.
+5.3 你的贡献署名以提交历史、贡献者名单等方式呈现。你同意，这就是你的贡献署名方式的约定：你不要求在用户界面中以与「哥哥科技」同等或更显著的方式署名。本条是对署名方式的约定，不是对依法不得放弃的权利的放弃。\
+Your credit is recorded through commit history, contributor lists, and the like. You agree that this is the agreed manner of crediting your Contributions, and that you will not require attribution in the user interface at a level equal to or more prominent than "哥哥科技". This is an agreement on the manner of attribution, not a waiver of any right that cannot lawfully be waived.
 
 5.4 如您确实对本项目有重大或较大的贡献，哥哥科技会在评估后，自愿以合适的方式（如 GUI）加上您的署名。您也可以申请，但我不对是否通过做任何担保。*重大贡献不孤立地以代码量为参考，无论是优雅的代码或算法，又或是哪怕未编写大量实质性的代码，但分析出了一个非常隐蔽的突破口、关键点等，都有可能作为评估依据。*
 

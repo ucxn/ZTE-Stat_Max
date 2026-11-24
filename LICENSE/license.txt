@@ -342,11 +342,9 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 		the terms of this License, and without further action by the parties hereto, such provision shall be reformed to the minimum extent necessary to make such provision valid and enforceable.
 
 		In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, the attribution clause must be satisfied
-		first. All other terms, including commercial and any other restrictive terms, need not be treated as binding obligations, so that none of them can hold attribution back or come into conflict
-		with the requirement that it be prominent, mandatory, and no weaker than the original.
-		
-		All other provisions, including without limitation any restrictions on commercial use or requirements concerning fees or charges, shall not be mandatory to the extent that compliance with them would prevent, conflict with, or take priority
-		over compliance with the Attribution Requirements.
+		first. All other provisions, including without limitation any restrictions on commercial use or requirements concerning fees or charges, shall not be mandatory only to the extent that compliance
+		with them would prevent, conflict with, or take priority over compliance with the Attribution Requirements, so that none of them can hold attribution back or come into conflict with the requirement
+		that it be prominent, mandatory, and no weaker than the original.
     10.6. The paragraph headings of this License are for reference and convenience only and are not a part of this License, and they shall have no effect upon the construction or interpretation 
 		of any part hereof.
     10.7. Each of the terms "including", "include" and "includes", when used in this License, is not limiting whether or not non-limiting language (such as "without limitation" or 
