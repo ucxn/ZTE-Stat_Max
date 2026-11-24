@@ -1,3 +1,4 @@
+#### [再分发 / ReDistribution Principles](/REDISTRIBUTION.md)
 # 总则
 您应当理解并明确同意，[《哥哥科技显著署名条款》](https://github.com/ucxn/ZTE-Stat_Max?tab=License-1-ov-file#哥哥科技显著署名附加条款)构成本授权协议的最高效力唯一主协议和最高效力的法律声明。
 
@@ -8,7 +9,6 @@
 “哥哥科技”的推荐英文名称为 BroTech。汉语拼音不能代替英文译名，请不要用 Gege Keji 这类拼音写法来指代哥哥科技；单独使用的 gege 不在此列。从审美上说，我也不希望程序里出现不必要的拼音地狱。
 
 无论是 BroTech 还是任何拉丁字母形式都只能作为“哥哥科技”的补充，不能替代任何署名要求。除主许可证中关于技术限制的规定所允许、并已按其要求履行相应义务的情形外，未以“哥哥科技”署名的，一律视为不符合署名要求。
-
 ### On the English Name and Pinyin
 The recommended English name for 哥哥科技 is BroTech. Pinyin is not a substitute for an English translation, so please don't refer to 哥哥科技 with a romanization such as "Gege Keji"; "gege" used on its own is not covered by this. On a matter of taste, I would also rather not see a program cluttered with needless pinyin.
 
@@ -62,7 +62,7 @@ For instance, when an end-user navigates into a module or feature primarily powe
 
 This is for reference only.
 
-0. Always retain the complete text “哥哥科技”, which must be retained at all times and prominently displayed in the end-user interface; an attribution in the source code does not constitute fulfillment of the valid attribution obligation.
+0. Always retain the complete text “哥哥科技”, which must be retained at all times and prominently displayed in the end-user interface; an attribution in the source code does not constitute fulfillment of the valid attribution obligation. A highly prominent attribution to “哥哥科技” must be visibly presented to the end user on the final rendered page.
 1. “哥哥科技” is the core author attribution of this project. BroTech, GitHub usernames, project names, or links may supplement it, but may not replace it.
 2. In source code, license files, metadata, and other media capable of preserving text, “哥哥科技” must not be removed, rewritten, or replaced.
 3. In the original project, the attribution must remain at the original interface position and depth designed by the Author. No derivative work may move it to a deeper functional level or in any way reduce its original degree of display, visibility, or prominence.

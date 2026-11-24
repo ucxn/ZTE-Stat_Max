@@ -1,14 +1,16 @@
+### [工程快速指南 / Quick Guide to Engineering](LICENSE/CopyRight.md)
 ## 适用范围与初衷（本节为说明，非许可证正文）
 
-本协议管的是本程序本身：它的副本、修改版，以及包含它的作品。
+本协议管的是本程序本身：副本、修改版，以及包含其的作品。
 
-我真正在意的只有一件事：市面上流通的每一个版本，都应当带着我的名字。我不允许公开世界里出现无名氏版本。署名条款就是为这件事设计的。
+我真正在意的只有一件事：市面上流通的每一个版本，都应当带着我的名字。必须要在最终页面上能够向用户呈现出极为显著的署名。
+
+我不允许公开世界里出现无名氏版本。署名条款就是为这件事设计的。
 
 ## 与 GPL 的兼容性说明
-
 > 本节是使用指南，不是许可证正文，不增加也不减少任何权利与义务，实际权利义务以仓库中的许可证文件为准。注意：我不是律师，写这些只是为了让使用者少碰麻烦。下面的结论并非我有意设下的限制，而是我基于许可证文本和实际实践得出的经验总结。
 
-**先说原因。** <br> GPL 要求把合并后的整个作品都按 GPL 发布，并且不得在 GPL 之外对使用者再加限制。本协议带有较强的署名要求，另有收费、竞争方面的条款，在 GPL 看来都属于"额外限制"（性质上类似带广告条款的旧版 BSD 许可证，FSF 也认为它与 GPL 不兼容）。两边的要求没法同时满足，下面三条都由此而来。
+**先说原因。** <br> GPL 要求把合并后的整个作品都按 GPL 发布，并且不得在 GPL 之外对使用者再加限制。本协议带有 **极其强的*署名* 要求** ，另有免费或竞争方面的条款，在 GPL 看来都属于"额外限制"（性质上类似带广告条款的旧版 BSD 许可证，FSF 也认为它与 GPL 不兼容）。两边的要求没法同时满足，下面三条都由此而来。
 
 **1. 如果您的程序是一个 GPL 程序，那么您可能不太方便对我的程序进行代码级别的融合（字面上难以两全）。**
 
@@ -40,16 +42,14 @@ GPL 把这种情形叫"聚合体"（aggregate，GPLv2 里叫 mere aggregation）
 **关于数据交换。** <br>本程序的导出物（如 CSV）可以交给您的程序读取。文件、管道、命令行参数是彼此独立的程序之间的通常交流方式，导出的数据属于使用者自己的数据，不含本程序的代码。文件级的数据交换属于保持距离的通信，这不构成 GPL 所说的"合并成一个更大的程序"（combined work，即衍生作品）。边界在于交流的深度：双方若交换复杂的内部数据结构，紧密到像一个程序的两个部分，就可能被视为一个更大的程序，那就回到第 1 条。
 
 ## Scope and Purpose (this section is explanatory, not part of the license text)
+This license governs the program itself: its copies, its modified versions, and works that contain it. 
 
-This license governs the program itself: its copies, its modified versions, and works that contain it.
-
-There is really only one thing I care about: every version in circulation should carry my name. I do not allow anonymous versions to exist in the public world. The attribution clause was designed for exactly this purpose.
+There is really only one thing I care about: every version in circulation should carry my name. I do not allow anonymous versions to exist in the public world. The attribution clause was designed for exactly this purpose. A highly prominent and conspicuous attribution must be displayed to the end user on the final rendered page.
 
 ## Note on Compatibility with the GPL
-
 > This section is a usage guide, not part of the license text. It neither adds nor removes any rights or obligations; the actual rights and obligations are governed by the license file in the repository. Note: I am not a lawyer, and I am writing this only to save users trouble. The conclusions below are not restrictions I deliberately impose, but rules of thumb I have drawn from the license text and from actual practice.
 
-**The reason first.** The GPL requires that the entire combined work be released under the GPL, and that no further restrictions be placed on recipients beyond those of the GPL. This license has a fairly strong attribution requirement, plus terms on charging fees and on competition. From the GPL's perspective, all of these count as "additional restrictions" (similar in nature to the old BSD license with the advertising clause, which the FSF also considers incompatible with the GPL). The two sets of requirements cannot be satisfied at the same time, and the three points below all follow from this.
+**The reason first.** The GPL requires that the entire combined work be released under the GPL, and that no further restrictions be placed on recipients beyond those of the GPL. This license has a ***extremely stringent attribution*** requirement, plus terms on charging fees or on competition. From the GPL's perspective, all of these count as "additional restrictions" (similar in nature to the old BSD license with the advertising clause, which the FSF also considers incompatible with the GPL). The two sets of requirements cannot be satisfied at the same time, and the three points below all follow from this.
 
 **1. If your program is a GPL program, it may be inconvenient for you to integrate my program at the code level (the two are literally hard to reconcile).**
 
