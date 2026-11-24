@@ -75,6 +75,6 @@ The GPL calls this situation an "aggregate" (in GPLv2, "mere aggregation"): inde
 
 Even with the seemingly strict AGPL, you can still build one yourself under your own license, or integrate a userscript manager that treats this program as a shortcut entry point for users.
 
-Just like the Tuba Toolbox (图吧工具箱) or various network diagnostic tool collections, I suggest integrating my program as-is, with no deep interaction with your program's main functionality.
+Just like the Tualatin-Bar (图拉丁吧) Toolbox or various network diagnostic tool collections, I suggest integrating my program as-is, with no deep interaction with your program's main functionality.
 
 **On data exchange.** This program's exports (such as CSV files) may be handed to your program to read. Files, pipes, and command-line arguments are the usual ways independent programs communicate with each other. The exported data belongs to the user and contains none of this program's code. File-level data exchange is communication at arm's length, and it does not amount to "merging into a larger program" (a "combined work", i.e., a derivative work) in the GPL's sense. The boundary is the depth of the exchange: if the two sides exchange complex internal data structures and are so tightly coupled that they look like two parts of one program, they may be treated as one larger program, and then we are back at Point 1.

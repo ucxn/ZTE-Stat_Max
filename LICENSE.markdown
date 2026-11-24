@@ -164,7 +164,7 @@ Among all requirements of any kind, the attribution clause, and it alone, shall 
 
 **What I care about most is one thing: every version in circulation carries the name 哥哥科技.** This license governs the program itself: its source code, executable script, its copies, and runtime interface, and any version based on it, including modifications, rewrites, and translations. Data the software exports when run, such as CSV files, belongs to the user.
 
-In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, the attribution clause must be satisfied first. All other terms, including semi-commercial restrictions and fee-related terms, need not be treated as mandatory, so that none of them can hold attribution back or come into conflict with the requirement that attribution be prominent, mandatory, and no weaker than the original.
+In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, the attribution clause must be satisfied first. All other terms, including semi-commercial restrictions and fee-related terms, need not be treated as mandatory only to the extent that compliance with them would prevent, conflict with, or take priority over the attribution clause; beyond that extent they remain in force. The aim is that none of them can hold attribution back or come into conflict with the requirement that attribution be prominent, mandatory, and no weaker than the original.
 
 END OF THE PRIMARY TERMS OF THIS PROJECT. Strict compliance with these terms is a condition precedent to the lawful use of any part, or the whole, of the code in this repository. ​Otherwise, 哥哥科技 reserves all rights, and all granted and derivative rights shall become null and void as of the moment of violation.
 
@@ -179,7 +179,7 @@ If you must modify the source code, for example by adding substantial features o
 
 If you cannot understand the conditions below, please consult a qualified technical adviser or lawyer. Until you do, you may only share the official link as it is.
 
-We recommend integrating this tool the way "Tualatin Toolbox" bundles the tools it collects: include it whole, keep it in sync with the original, and give it a prominent entry point in your software for a better user experience.
+We recommend integrating this tool the way "Tualatin (Tieba) Toolbox" bundles the tools it collects: include it whole, keep it in sync with the original, and give it a prominent entry point in your software for a better user experience.
 
 > Notwithstanding how demanding the terms above may look, under normal circumstances, as long as you integrate this work as-is, you need not worry about how to design the attribution or whether a self-designed attribution is compliant in terms of art and intellectual property. The original author has already designed a well-crafted attribution/signature, so keep it exactly as it is and keep those itchy fingers away from it; moreover, once debugging is done, you must verify it with your own naked eyes, or have an Agent render and verify it in an actual sandbox. If the attribution fails to display in a general environment due to relying solely on seemingly useful yet leaky unit tests or any other reason, you carry the full responsibility.
 >
