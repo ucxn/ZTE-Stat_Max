@@ -105,7 +105,7 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 	days after first distribution of that Subsequent Contributor's Subsequent Work.
         (b) All Distributors must distribute the Licensed Work in accordance with the terms of the License, and must include a copy of this License (including without limitation 
 	Exhibit A and the accompanying Supplement File) with each copy of the Licensed Work distributed. In particular, this License must be prominently distributed with the Licensed 
-	Work in a file called "license.txt." In addition, the License Notice in Part 5 of Exhibit A must be included at the beginning of all Source Code files, and viewable to a user 
+	Work in a file called "APL-Bro-0.1.txt." In addition, the License Notice in Part 5 of Exhibit A must be included at the beginning of all Source Code files, and viewable to a user 
 	in any executable such that the License Notice is reasonably brought to the attention of any party using the Licensed Work.
 
     3.2. EXECUTABLE DISTRIBUTIONS OF THE LICENSED WORK.
@@ -409,7 +409,7 @@ EXHIBIT A (to the Adaptive Public License of Bro-Tech)
  
 	ANY USE, PUBLIC DISPLAY, PUBLIC PERFORMANCE, REPRODUCTION OR DISTRIBUTION OF, OR PREPARATION OF DERIVATIVE WORKS BASED ON, THE LICENSED WORK CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS 
 	LICENSE AND ITS TERMS, WHETHER OR NOT SUCH RECIPIENT READS THE TERMS OF THE LICENSE. "LICENSED WORK" AND "RECIPIENT" ARE DEFINED IN THE LICENSE. A COPY OF THE LICENSE IS LOCATED IN THE 
-	TEXT FILE ENTITLED "LICENSE.TXT" ACCOMPANYING THE CONTENTS OF THIS FILE. IF A COPY OF THE LICENSE DOES NOT ACCOMPANY THIS FILE, A COPY OF THE LICENSE MAY ALSO BE OBTAINED AT THE DESIGNATED 
+	TEXT FILE ENTITLED "APL-Bro-0.1.txt" ACCOMPANYING THE CONTENTS OF THIS FILE. IF A COPY OF THE LICENSE DOES NOT ACCOMPANY THIS FILE, A COPY OF THE LICENSE MAY ALSO BE OBTAINED AT THE DESIGNATED 
 	WEB SITE.
     
 	Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for the specific language governing rights 

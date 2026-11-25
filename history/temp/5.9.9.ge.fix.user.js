@@ -19,7 +19,7 @@
 // @grant           unsafeWindow
 // @grant           GM_setValue
 // @storageName     GBNPA_Storage
-// @license         AGPL-3.0-or-later
+// @license         All right reserved.
 // @updateURL       https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 // @downloadURL     https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
 

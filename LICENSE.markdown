@@ -35,7 +35,7 @@ Copyright © 2026 哥哥科技<br>
 Regardless of the licensing path chosen, it is subject to the **BroTech Prominent Attribution Terms** set forth in this document. This is the primary licensing condition of this project. The rights to use, modify, integrate, or redistribute this project are conditioned upon continuous and complete compliance with the BroTech Prominent Attribution Terms.
 
 This project is available under either of the following licensing options:
-1. **Adaptive Public License - Bro 0.1**[（已经包含额外的署名要求条件）](/LICENSE/license.txt) ; or
+1. **Adaptive Public License - Bro 0.1**[（已经包含额外的署名要求条件）](/LICENSE/APL-Bro-0.1.txt) ; or
 2. Sustainable Use License 1.0 ([**SUL-1.0**](/LICENSE/SUL-1.0.md)) WITH [***BroTech-Prominent-Attribution-Terms***](#哥哥科技显著署名附加条款) AND Broware PBY-Attribution License（**[Bro-PBY](/LICENSE/BR-PBY-1.0.md)**）1.0（以每次提交时的版本或最新版为准）.
 
 可以根据自己的使用场景自行抉择，第二种看似更严格，但是针对个人、非竞争性使用，条款相对较简练通俗，方便非英语母语者理解。
@@ -48,7 +48,7 @@ In SPDX notation:
 
 许可证名称、SPDX 标识及其他简写仅用于识别。实际授权范围、条件及义务，以本仓库随软件发布的实际许可证文本、补充文件以及本文件中明确纳入的附加条款为准。&emsp;License names, SPDX identifiers, and other short forms are for identification only. The actual scope, conditions, and obligations of the license are determined by the actual license texts and supplement file released with the software in this repository, and by the additional terms expressly incorporated in this file.
 
-- Adaptive Public License for BroTech: [`license.txt`](./LICENSE/license.txt)
+- Adaptive Public License for BroTech: [`APL-Bro-0.1.txt`](./LICENSE/APL-Bro-0.1.txt)
 - Supplement File: [`suppfile.txt`](./LICENSE/suppfile.txt)<br><br>
 - Sustainable Use License 1.0: [`SUL-1.0.md`](./LICENSE/SUL-1.0.md)
 - 哥哥科技显著署名附加条款: [`BroTech Prominent Attribution Terms`](#brotech-prominent-attribution-terms)

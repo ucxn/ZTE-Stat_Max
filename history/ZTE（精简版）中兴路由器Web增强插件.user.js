@@ -287,8 +287,8 @@
                     “在一个文明社会，干净的、不被监视与吸血的网络，是我们每个人的基本权利。”
                 </div>
                 <div style="font-size:10.5px; color:#999; line-height:1.3; margin-bottom:8px;">
-                    本交互式程序基于 GNU GPL-3.0 协议开源，按“原样 (AS IS)”提供，不对其商业合规性、适用性或无错误性作任何明示或暗示的担保。<br>
-                    根据 GPL-3.0 第 5(d) 及 7(b) 条规定，基于本程序的任何修改均不得移除或篡改本界面的署名与法律声明。保留此界面是使用本软件代码的合法性的前置条件。
+                    本交互式程序按“原样 (AS IS)”提供，不对其商业合规性、适用性或无错误性作任何明示或暗示的担保。<br>
+                    根据规定，基于本程序的任何修改均不得移除或篡改本界面的署名与法律声明。保留此界面是使用本软件代码的合法性的前置条件。
                 </div>
                 <div style="font-size:12px; color:#555;">
                     <a href="https://github.com/ucxn/ZTE-Stat_Max" target="_blank" style="color:#0059fa; text-decoration:none; font-weight:bold;">ZTE-Stat_Max 增强组件</a>
