@@ -11,7 +11,6 @@
 // @match        http://192.168.*.*
 // @match        http://zte.home*
 // @grant        none
-// @license      GPL-3.0-or-later
 // @include      http://172.16.*
 // @updateURL    https://update.greasyfork.org/scripts/576199/%E4%B8%AD%E5%85%B4%E8%B7%AF%E7%94%B1%E5%99%A8%28ZTE%29%20%E5%A2%9E%E5%BC%BA.meta.js
 // @downloadURL  https://github.com/ucxn/ZTE-Stat_Max/raw/refs/heads/main/new.user.js
@@ -190,3 +189,4 @@
                   parseFloat(sD.BytesSend)||0)/1000).toFixed(4),dT=((parseFloat(sD.BytesReceived)||0)/1000).toFixed(4);iI+=`<Instance><ParaName>MACAddress</ParaName><ParaValue>${escapeHTML(m)}</ParaValue><ParaName>IPAddress</ParaName><ParaValue>${sD.IPAddress||""}</ParaValue><ParaName>AliasName</ParaName><ParaValue>${escapeHTML(mt.name)}</ParaValue><ParaName>HostName</ParaName><ParaValue>${escapeHTML(mt.name)}</ParaValue><ParaName>Interface</ParaName><ParaValue>${escapeHTML(mt.iface)}</ParaValue><ParaName>UpRate</ParaName><ParaValue>${uR}</ParaValue><ParaName>DownRate</ParaName><ParaValue>${dR}</ParaValue><ParaName>UpThroughput</ParaName><ParaValue>${uT}</ParaValue><ParaName>DownThroughput</ParaName><ParaValue>${dT}</ParaValue></Instance>`;}}catch(
                   e){}}if(iI!=="")lT=lT.replace('</OBJ_CLIENTS_ID>',`${iI}</OBJ_CLIENTS_ID>`);}if(lT.includes(
                       '<OBJ_CLIENTS_ID>'))lCxt=lT;await rSD(wT,wST);}catch(e){}finally{window.gegeEngineRunning=!1;}}const tKA=()=>{let i=document.createElement('iframe');i.id='gege-keepalive-iframe';i.style.display='none';const p=["/#/sys","/#/app","/#/wlan/"];i.src=`${window.location.origin}${p[Math.floor(Math.random()*p.length)]}`;let z=document.getElementById('gege-keepalive-iframe');if(z)z.remove();document.body.appendChild(i);setTimeout(()=>{if(i.parentNode){i.src='about:blank';i.remove();}},12000);};setTimeout(tKA,2000);setInterval(tKA,720000);window.addEventListener('load',()=>{setTimeout(()=>{if(!window.gegeTimerStarted&&window.startGegePrecisionEngine)window.startGegePrecisionEngine();},60000);if(CONFIG.injectMode===1||CONFIG.injectMode===2){if(window.createGegeFloatingBtn)window.createGegeFloatingBtn();}if(CONFIG.injectMode===2){setTimeout(()=>{if(window.gegeTogglePanel)window.gegeTogglePanel(!0);},30000);}if(CONFIG.injectMode===0||CONFIG.injectMode===1){let dC=0;const mO=setInterval(()=>{let mC=document.querySelector('.menu_items div');if(mC){clearInterval(mO);iGM();}else if(++dC>200){clearInterval(mO);}},300);}});})();
+// 测试版，请勿应用生产环境。
