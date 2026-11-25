@@ -1,6 +1,6 @@
 ADAPTIVE PUBLIC LICENSE for Bro 0.1
 ucxn@outlook.com
-2026-11-16
+2026-11-25
 
 THE LICENSED WORK IS PROVIDED UNDER THE TERMS OF THIS ADAPTIVE PUBLIC LICENSE ("LICENSE"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE LICENSED WORK CONSTITUTES RECIPIENT'S 
 ACCEPTANCE OF THIS LICENSE AND ITS TERMS, WHETHER OR NOT SUCH RECIPIENT READS THE TERMS OF THIS LICENSE. "LICENSED WORK" AND "RECIPIENT" ARE DEFINED BELOW.
@@ -184,7 +184,7 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
     3.11. For greater certainty, 
 	    Any occurrence of 「哥哥科技」 or 「哥哥」 or 「明明不远」, and any occurrence matching the pattern /\bBro(?:ther)?(?:[\W_]*?Tech)?(?![A-Z0-9])/i
 		whether literal or in any substantially equivalent representation, incorporated into or already existing in the Source Code shall not be altered or tampered with in any manner.
-		Any links include 『2216485229713』 must not be altered or tampered with in any manner.
+		Any links that include 『2216485229713』 must not be altered or tampered with in any manner.
 
 4. COMMERCIAL USE AND INDEMNITY.
     4.1. COMMERCIAL SERVICES.
@@ -215,7 +215,7 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 	terms of that version. However, if a Recipient chooses to use the Licensed Work under the terms of any subsequent version of the License published by the Initial Contributor, then from 
 	the date of making this choice, the Recipient must comply with the terms of that subsequent version with respect to all further reproduction, preparation of derivative works, public 
 	display of, public performance of, distribution and sublicensing by the Recipient in connection with the Licensed Work. No one other than the Initial Contributor has the right to modify 
-	the terms applicable to the Licensed Work
+	the terms applicable to the Licensed Work.
 
 6. DISCLAIMER OF WARRANTY.
     6.1. GENERAL DISCLAIMER.
@@ -281,7 +281,8 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
     10.1. The obligations imposed by this License are for the benefit of the Initial Contributor and any Recipient, and each Recipient acknowledges and agrees that the Initial Contributor and/or 
 		any other Recipient may enforce the terms and conditions of this License against any Recipient.
     10.2. 
-        (a) Where a reference to Bro-Tech's project already makes the relevant field or context unambiguous, the GitHub username or project name (although omission is not recommended), as well as the repository URL, may be omitted.
+        (a) Where a reference to Bro-Tech's project already makes the relevant field or context unambiguous, the GitHub username or project name (although omission is not recommended),
+		as well as the repository URL, may be omitted. 
 		However, under no circumstances may the following four Chinese characters:
 
 		『哥哥科技』
@@ -290,61 +291,71 @@ and (c) for selected patent licensing terms (if any) see Section 2.2 below and P
 		Presentation, Removal from the Visible Area, Deferred Loading, Default Collapse, Time-Limited or Conditional Display, or Presentation by any other means under a name, in a form, or at a
 		degree of prominence other than as originally provided.	
 
-		Technical difficulty may arise where the environment into which the work is integrated is technically incapable of supporting UTF-8, Unicode, GB 18030, or other suitable character encodings. In such a case,
-		"Bro-Tech" may be used as an auxiliary attribution, but not as a substitute for or modification of the existing literal 『哥哥科技』, provided that the GitHub username is also included.
+		Technical difficulty may arise where the environment into which the work is integrated is technically incapable of supporting UTF-8, Unicode, GB 18030, or other suitable
+		character encodings. In such a case, "Bro-Tech" may be used as an auxiliary attribution, but not as a substitute for or modification of the existing literal 『哥哥科技』,
+		provided that the GitHub username is also included.
 
-		The characters 哥哥科技 absolutely and unconditionally must be preserved in their existing literal form. Under no circumstances may the display or prominence of the original form of attribution
-		be reduced in any manner or to any degree. This prohibition applies to any reduction whatsoever, not merely to a substantial or significant reduction in prominence.
+		The characters 哥哥科技 absolutely and unconditionally must be preserved in their existing literal form. Under no circumstances may the display or prominence of the original form
+		of attribution be reduced in any manner or to any degree. This prohibition applies to any reduction whatsoever, not merely to a substantial or significant reduction in prominence.
 		Regardless of the reason, even where technical difficulties make it impossible to correctly display 哥哥科技 in its original form within a Larger Work, another programming	language,
-		or any other environment, you must additionally provide another form of attribution that prominently and unambiguously identifies 哥哥科技,	and you MUST
-		promptly notify Bro-Tech of the circumstances through GitHub or by email. The foregoing requirements constitute an inseparable and integral part of every right granted under this License.
+		or any other environment, you must additionally provide another form of attribution that prominently and unambiguously identifies 哥哥科技, and you MUST promptly notify Bro-Tech
+		of the circumstances through GitHub or by email. The foregoing requirements constitute an inseparable and integral part of every right granted under this License.
 
 		Any Recipient relying on such technical difficulty must objectively demonstrate that the inability to display Chinese results from genuine technical limitations.
 
-        (b) The rights to use this software are granted to you ONLY subject to the absolute condition precedent of your complete, continuous, and strict compliance with the prominent attribution requirements herein. If you are unable to
-		comprehend the legal implications of these terms, you are advised to consult independent legal counsel. Conversely, under no circumstances may you isolate, sever, or selectively apply the rights-granting clauses without
-		fulfilling the prominent attribution obligations. Should you fail to understand what constitutes "prominent attribution," you MUST elect NOT to use the source code of this software. In such an event, you are permitted solely
-		to share the official original link or download the software exclusively for personal, local use; any and all other operations or distributions are strictly prohibited.
+        (b) The rights to use this software are granted to you ONLY subject to the absolute condition precedent of your complete, continuous, and strict compliance with the prominent
+		attribution requirements herein. If you are unable to comprehend the legal implications of these terms, you are advised to consult independent legal counsel. Conversely,
+		under no circumstances may you isolate, sever, or selectively apply the rights-granting clauses without fulfilling the prominent attribution obligations. Should you fail to
+		understand what constitutes "prominent attribution," you MUST elect NOT to use the source code of this software. In such an event, you are permitted solely to share the
+		official original link or download the software exclusively for personal, local use; any and all other operations or distributions are strictly prohibited.
 
-		EXPRESS RESERVATION OF RIGHTS AND OBLIGATIONS: This guide is provided solely for instructional compliance purposes. It does NOT, under any circumstances, operate as an implicit or explicit grant of any additional
-		rights or licenses beyond the primary agreement. Furthermore, it does NOT waive, substitute, or dilute any of your strict obligations under the primary licenses and the BroTech Prominent Attribution Terms and 3.11.
-		Adherence to this guide is merely a compliant implementation method for integration scenarios, and shall by no means exempt you from the absolute and simultaneous satisfaction of all conditions precedent set forth above.
+		EXPRESS RESERVATION OF RIGHTS AND OBLIGATIONS: This guide is provided solely for instructional compliance purposes. It does NOT, under any circumstances, operate as an implicit
+		or explicit grant of any additional rights or licenses beyond the primary agreement. Furthermore, it does NOT waive, substitute, or dilute any of your strict obligations
+		under the primary licenses and the BroTech Prominent Attribution Terms and 3.11. Adherence to this guide is merely a compliant implementation method for integration scenarios,
+		and shall by no means exempt you from the absolute and simultaneous satisfaction of all conditions precedent set forth above.
 		
-		（begin）The following guidelines apply strictly and exclusively to the specific scenario where you integrate this software into a larger, overarching work, rendering it structurally or technically impossible to
-		preserve the original unmodified End User Interface (UI) and its attribution design in their exact original form.
+		（begin）The following guidelines apply strictly and exclusively to the specific scenario where you integrate this software into a larger, overarching work, rendering it
+		structurally or technically impossible to preserve the original unmodified End User Interface (UI) and its attribution design in their exact original form.
 		
-		Should you, as a developer, integrate this software into a larger work or project, you must strictly adhere to the following display protocols: The physical|logical prominence of the attribution (including but not limited to
-		layout style, font size, color, and contrast) shall absolutely NOT be altered or diminished in any manner. When developing based on this program, the absolute depth level of the attribution within the End User Interface 
-		(UI) hierarchy actually accessible to end users must remain unchanged; furthermore, upon integration into a larger work, its "relative depth level" within the navigation and interaction architecture shall suffer no degradation.
+		Should you, as a developer, integrate this software into a larger work or project, you must strictly adhere to the following display protocols: The physical|logical prominence
+		of the attribution (including but not limited to layout style, font size, color, and contrast) shall absolutely NOT be altered or diminished in any manner. When developing
+		based on this program, the absolute depth level of the attribution within the End User Interface (UI) hierarchy actually accessible to end users must remain unchanged;
+		furthermore, upon integration into a larger work, its "relative depth level" within the navigation and interaction architecture shall suffer no degradation.
 
 		The more practical guide is on [https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/CopyRight.md#the-simplified-summary-for-quick-read]
 
-		For instance, when an end-user navigates into a module or feature primarily powered by this software, the text "哥哥科技" (Brother Tech) MUST be displayed prominently and without alteration in the exact original position
-		designed by the Author on the GUI of that specific directory/module. Any attempt to fold, collapse, or relocate the attribution into secondary or hidden menus is strictly forbidden.（end）
+		For instance, when an end-user navigates into a module or feature primarily powered by this software, the text "哥哥科技" (Brother Tech) MUST be displayed prominently and
+		without alteration in the exact original position designed by the Author on the GUI of that specific directory/module. Any attempt to fold, collapse, or relocate the attribution
+		into secondary or hidden menus is strictly forbidden.（end）
 
-		Once my code is used, the number of appearances of “哥哥科技” in the end-user interface of your work must NOT be lower than the number of appearances in my original complete work. In all cases, at least one page of the resulting
-		work must contain the attribution. Attribution must not be hidden away solely in deep or secondary menus that users rarely visit. It must be placed near the relevant interface, framework, module, or area that primarily uses my code.
+		Once my code is used, the number of appearances of “哥哥科技” in the end-user interface of your work must NOT be lower than the number of appearances in my original complete
+		work. In all cases, at least one page of the resulting work must contain the attribution. Attribution must not be hidden away solely in deep or secondary menus that users
+		rarely visit. It must be placed near the relevant interface, framework, module, or area that primarily uses my code.
 
     10.3. The application of the United Nations Convention on Contracts for the International Sale of Goods is expressly excluded.
-    10.4. Except for the Attribution Requirements, which are governed by the next paragraph, the language in all parts of this License shall be construed simply according to its fair meaning, and not strictly for or against any of the parties
-		hereto. Any law or regulation which provides that the language of a contract shall be construed against the drafter shall not apply to this License.
+    10.4. Except for the Attribution Requirements, which are governed by the next paragraph, the language in all parts of this License shall be construed simply according to its
+		fair meaning, and not strictly for or against any of the parties hereto. Any law or regulation which provides that the language of a contract shall be construed against the
+		drafter shall not apply to this License to the extent that applicable law permits the parties to agree otherwise.
 
-        Notwithstanding anything to the contrary in this License, the attribution requirements in Sections 3.10, 3.11 and 10.2 (together, the "Attribution Requirements") shall be interpreted strictly and exclusively in the manner
-		most favorable to the Author.
+        Notwithstanding anything to the contrary in this License, the attribution requirements in Sections 3.10, 3.11 and 10.2 (together, the "Attribution Requirements") shall be
+		interpreted in accordance with their evident purpose, which is that the name 哥哥科技 of the Initial Contributor remain displayed prominently, unaltered, and no less visibly
+		than in the original. Where, after applying the foregoing, any Attribution Requirement remains reasonably capable of more than one meaning, the meaning that better preserves
+		that purpose shall be adopted, to the fullest extent permitted by applicable law.
 
-		Based on the actual source code of the Software and its technical characteristics, there is no technically possible mode of operation in which the Software’s ordinary functionality operates normally while the required attribution
-		automatically disappears. Once the Software's principal functionality operates normally, and the Software is capable of displaying Chinese text normally as part of that functionality, the Software shall be deemed to be operating
-		normally. Deleting the Chinese functional descriptions from the source code does not change this, and cannot be relied on to claim that the Software is not operating normally.
+		Based on the actual source code of the Software and its technical characteristics, there is no technically possible mode of operation in which the Software’s ordinary
+		functionality operates normally while the required attribution automatically disappears. Once the Software's principal functionality operates normally, and the Software is
+		capable of displaying Chinese text normally as part of that functionality, the Software shall be deemed to be operating normally. Deleting the Chinese functional descriptions
+		from the source code does not change this, and cannot be relied on to claim that the Software is not operating normally.
 
 		Whenever the Software is operating normally, there is no legitimate basis whatsoever for failing to display the name “哥哥科技” as required by the Attribution Requirements.
 
     10.5. If any provision of this License is invalid or unenforceable under the laws of the Governing Jurisdiction, it shall not affect the validity or enforceability of the remainder of 
 		the terms of this License, and without further action by the parties hereto, such provision shall be reformed to the minimum extent necessary to make such provision valid and enforceable.
 
-		In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, the attribution clause must be satisfied
-		first. All other provisions, including without limitation any restrictions on commercial use or requirements concerning fees or charges, shall not be mandatory only to the extent that compliance
-		with them would prevent, conflict with, or take priority over compliance with the Attribution Requirements, so that none of them can hold attribution back or come into conflict with the requirement
-		that it be prominent, mandatory, and no weaker than the original.
+		In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, the attribution clause
+		must be satisfied first. All other provisions, including without limitation any restrictions on commercial use or requirements concerning fees or charges,
+		shall not be mandatory only to the extent that compliance with them would prevent, conflict with, or take priority over compliance with the Attribution Requirements,
+		so that none of them can hold attribution back or come into conflict with the requirement that it be prominent, mandatory, and no weaker than the original.
     10.6. The paragraph headings of this License are for reference and convenience only and are not a part of this License, and they shall have no effect upon the construction or interpretation 
 		of any part hereof.
     10.7. Each of the terms "including", "include" and "includes", when used in this License, is not limiting whether or not non-limiting language (such as "without limitation" or 
@@ -404,9 +415,8 @@ EXHIBIT A (to the Adaptive Public License of Bro-Tech)
 	Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for the specific language governing rights 
 	and limitations under the License.
     
-	PART 6: PATENT LICENSING TERMS
-	For the purposes of this License, paragraphs A, B, C, D and E of this Part 6 of Exhibit A are only incorporated and form part of the terms of the License if the Initial Contributor 
-	places an "X" or "x" in the selection box alongside the YES answer to the question immediately below.
+	PART 6: PATENT LICENSING TERMS For the purposes of this License, paragraphs A, B, C, D and E of this Part 6 of Exhibit A are only incorporated and form part of the terms of the
+	License if the Initial Contributor places an "X" or "x" in the selection box alongside the YES answer to the question immediately below.
     
 	Is this a Patents-Included License pursuant to Section 2.2 of the License?
 

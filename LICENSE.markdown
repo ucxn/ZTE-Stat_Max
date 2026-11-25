@@ -83,7 +83,7 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 
 为明确起见，整个代码空间中任何形式或实质上包含和/或显示“哥哥”、“哥哥科技”以及实质用来显示开发者和/或其认可之名的，均严禁被篡改、弱化，或以非预期名称方式呈现。
 
-无论项目有何种规定，一旦违反该条，视为侵犯著作权，我任何明示、暗示、潜在、显式或任何其他方式的授权一律无效。
+无论项目有何种规定，一旦违反该条，视为侵犯著作权，我任何明示、暗示、潜在、显式或任何其他方式的授权，均不覆盖未按要求署名的副本、传播和使用。
 
 保留“哥哥科技”的完整字面量和实质显示、可见性与显著性，是作者授予本软件任何许可权利所不可分割的条件。为免疑义，本款项下的任何终止均为立即（0天）、绝对且不可补救的，且严格不受任何宽限期、通知要求、时间流逝或任何其它条件的限制；***授权的终止仅剥夺您的各项许可权利，绝不免除或消灭任何既有副本、衍生作品或已分发物上继续保留显著署名的义务。***
 
@@ -94,7 +94,7 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 
 如果在最极端的情况下，只能满足某些条款，而不能满足另外一些条款，甚至这些条款属于矛盾或者对立关系，则必须先满足署名条款。其他条款，包括半商业限制或者收费条款，均可以不作为必须履行的条款以避免拖后腿或者和显著强制不弱于原样署名条款冲突。
 
-本项目主条款全文结束，严格遵守该协议是使用本仓库任意部分或完整代码合法性的前置条件。否则，哥哥科技保留所有权利，任何授予和衍生权利自始无效。
+本项目主条款全文结束，严格遵守该协议是使用本仓库任意部分或完整代码合法性的前置条件。否则，哥哥科技保留所有权利：授权自违反之时起立即（0天）终止，不可补救；未按要求署名的副本、传播和使用，自始不在授权范围之内，一律视为侵犯著作权。
 
 ### 拆分集成时的署名
 
@@ -155,7 +155,7 @@ No redistribution, modification, port, merger, integration, translation, convers
 
 For the avoidance of doubt, anything anywhere in the entire codebase / space that, in form or in substance, contains and/or displays "哥哥" or "哥哥科技", or that in substance serves to display the name of the developer and/or of those the developer identifies with, must never be altered, weakened, or presented under any name other than the one intended.
 
-Regardless of anything else the project provides, any breach of this clause is deemed copyright infringement, and every authorization I have granted, whether express, implied, potential, explicit, or in any other form, becomes void.
+Regardless of anything else the project provides, any breach of this clause is deemed copyright infringement, and every authorization I have granted, whether express, implied, potential, explicit, or in any other form, does not cover any copy, distribution, or use that fails to carry the attribution as required.
 
 Preserving the complete literal text “哥哥科技”, together with its actual display, visibility, and prominence, is an inseparable condition of every license right the author grants for this software. For the avoidance of doubt, any termination under this Section is immediate（0-DAY）, absolute, and non-curable, and operates strictly without regard to any cure period, notice requirement, lapse of time, or any other condition whatsoever; ***Termination of the license strips you of your license rights only. It in no way releases or extinguishes the obligation to keep the prominent attribution on every existing copy, derivative work, and distributed item.***
 
@@ -167,7 +167,7 @@ Among all requirements of any kind, the attribution clause, and it alone, shall 
 
 In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, the attribution clause must be satisfied first. All other terms, including semi-commercial restrictions and fee-related terms, need not be treated as mandatory only to the extent that compliance with them would prevent, conflict with, or take priority over the attribution clause; beyond that extent they remain in force. The aim is that none of them can hold attribution back or come into conflict with the requirement that attribution be prominent, mandatory, and no weaker than the original.
 
-END OF THE PRIMARY TERMS OF THIS PROJECT. Strict compliance with these terms is a condition precedent to the lawful use of any part, or the whole, of the code in this repository. ​Otherwise, 哥哥科技 reserves all rights, and all granted and derivative rights shall become null and void as of the moment of violation.
+END OF THE PRIMARY TERMS OF THIS PROJECT. Strict compliance with these terms is a condition precedent to the lawful use of any part, or the whole, of the code in this repository. ​Otherwise, 哥哥科技 reserves all rights: the license terminates immediately (0-day) as of the moment of the violation, without cure; any copy, distribution, or use that does not carry the attribution as required never fell within the scope of the license and is treated as copyright infringement.
 
 ### Attribution When Splitting an Integration
 If you must modify the source code, for example by adding substantial features of your own, so that my complete work ends up split into two or more parts, then:
