@@ -3,7 +3,7 @@
 
 本协议管的是本程序本身：副本、修改版，以及包含其的作品。
 
-我真正在意的只有一件事：市面上流通的每一个版本，都应当带着我的名字。必须要在最终页面上能够向用户呈现出极为显著的署名。
+我真正在意的一件事：市面上流通的每一个版本，都应当带着我的名字。必须要在最终页面上能够向用户呈现出极为显著的署名。
 
 我不允许公开世界里出现无名氏版本。署名条款就是为这件事设计的。
 
@@ -44,7 +44,7 @@ GPL 把这种情形叫"聚合体"（aggregate，GPLv2 里叫 mere aggregation）
 ## Scope and Purpose (this section is explanatory, not part of the license text)
 This license governs the program itself: its copies, its modified versions, and works that contain it. 
 
-There is really only one thing I care about: every version in circulation should carry my name. I do not allow anonymous versions to exist in the public world. The attribution clause was designed for exactly this purpose. A highly prominent and conspicuous attribution must be displayed to the end user on the final rendered page.
+What I really care about is: every version in circulation should carry my name. I do not allow anonymous versions to exist in the public world. The attribution clause was designed for exactly this purpose. A highly prominent and conspicuous attribution must be displayed to the end user on the final rendered page.
 
 ## Note on Compatibility with the GPL
 > This section is a usage guide, not part of the license text. It neither adds nor removes any rights or obligations; the actual rights and obligations are governed by the license file in the repository. Note: I am not a lawyer, and I am writing this only to save users trouble. The conclusions below are not restrictions I deliberately impose, but rules of thumb I have drawn from the license text and from actual practice.

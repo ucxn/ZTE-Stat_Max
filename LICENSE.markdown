@@ -90,7 +90,7 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 ### 哥哥的名字是最重要的
 对于所有、无论何种要求，唯独关于署名条款，需严格地按照有利于哥哥科技的方式来解释。基于本程序的实际源代码和技术条件，不存在一种软件正常功能能使用，而署名在技术上自动消失的方式。一旦程序的主要功能能正常使用，并且程序的主要功能能够正常的显示中文（源代码中功能描述中文被删除掉的作弊不算），则视为软件运行正常。软件运行正常的时候，没有任何合法理由可以不显示“哥哥科技”。
 
-**我最在意的只有一件事：市面上流通的每一个版本，都带着哥哥科技的名字。** 本许可证管辖的是项目本身，即源码、副本、可执行脚本及其运行时界面，以及基于它的修改、改写和翻译版本。软件运行后导出的数据，例如 CSV，属于使用者自己。
+**我最在意的一件事：市面上流通的每一个版本，都带着哥哥科技的名字。** 本许可证管辖的是项目本身，即源码、副本、可执行脚本及其运行时界面，以及基于它的修改、改写和翻译版本。软件运行后导出的数据，例如 CSV，属于使用者自己。
 
 如果在最极端的情况下，只能满足某些条款，而不能满足另外一些条款，甚至这些条款属于矛盾或者对立关系，则必须先满足署名条款。其他条款，包括半商业限制或者收费条款，均可以不作为必须履行的条款以避免拖后腿或者和显著强制不弱于原样署名条款冲突。
 
@@ -133,7 +133,7 @@ Whatever the reason, even if technical difficulties make it impossible to displa
 署名的位置以通常惯例为准。如果您对位置设计没有把握，应将署名置于屏幕正中央，且不透明度不低于 50%。
 
 ## BroTech Prominent Attribution Terms
-Regardless of the license or licensing route used, the 哥哥科技's prominent attribution MUST be retained.
+Regardless of the license or licensing route used, 哥哥科技's prominent attribution MUST be retained.
 
 Where a reference to my project already makes the relevant field clear, you need not cite it further, and you may omit the GitHub username or project name and the repository link, although I do not actively recommend intentionally omitting them.
 
@@ -163,7 +163,7 @@ Preserving the complete literal text “哥哥科技”, together with its actua
 
 Among all requirements of any kind, the attribution clause, and it alone, shall be construed strictly in favor of 哥哥科技. Given this program's actual source code and technical conditions, there is no way for the software to function normally while the attribution drops out on its own for technical reasons. Once the program's main features work normally and can display Chinese text properly (deleting the Chinese feature descriptions from the source code is a cheat and does not get around this), the software is deemed to be running normally. While the software is running normally, there is no legitimate reason of any kind not to display "哥哥科技".
 
-**What I care about most is one thing: every version in circulation carries the name 哥哥科技.** This license governs the program itself: its source code, executable script, its copies, and runtime interface, and any version based on it, including modifications, rewrites, and translations. Data the software exports when run, such as CSV files, belongs to the user.
+**What I care about most is: every version in circulation carries the name 哥哥科技.** This license governs the program itself: its source code, executable script, its copies, and runtime interface, and any version based on it, including modifications, rewrites, and translations. Data the software exports when run, such as CSV files, belongs to the user.
 
 In the most extreme case, where only some of these terms can be honored and others cannot, or where certain terms even contradict or oppose one another, the attribution clause must be satisfied first. All other terms, including semi-commercial restrictions and fee-related terms, need not be treated as mandatory only to the extent that compliance with them would prevent, conflict with, or take priority over the attribution clause; beyond that extent they remain in force. The aim is that none of them can hold attribution back or come into conflict with the requirement that attribution be prominent, mandatory, and no weaker than the original.
 

@@ -35,7 +35,7 @@ Under no circumstances may:
 
 as presented in any form in the end-user interface, be subjected to Removal, Alteration, Obscuration, Concealment, Replacement, Rewording, Abbreviation, Truncation, Attenuation, Reduction of Visibility, Reduction of Prominence, Misleading Presentation, Removal from the Visible Area, Deferred Loading, Default Collapse, Time-Limited or Conditional Display, or Degradation by any other means.
 
-The Chinese characters 『哥哥科技』 and/or 『长兄天工』 must, in all cases, be retained exactly as written. "BroTech", "Bro-Tech", the GitHub username, project name, repository link, or any other English or Latin-character representation may be used only as supplementary attribution and must not replace “哥哥科技”.
+The Chinese characters 『哥哥科技』 and 『长兄天工』 must, in all cases, be retained exactly as written. "BroTech", "Bro-Tech", the GitHub username, project name, repository link, or any other English or Latin-character representation may be used only as supplementary attribution and must not replace “哥哥科技”.
 
 **Any name containing 「明明不远」 and/or 「鱼」, and any link including 『2216485229713』, as they appear in the software,** *must not be altered or tampered with in any manner.*
 
@@ -198,7 +198,7 @@ and take practical steps to correct past violations, within
 25 days of receiving notice.  Otherwise, all your licenses
 end immediately.
 
-**BUT**, Under all circumstances, you must comply with the [***Attribution Terms***](#attribution), particularly the provisions protecting attribution. You must not, by any means, reduce the prominence of the attribution to any degree whatsoever, however slight. Otherwise, such use may not be regarded as fair use or as any other limitation or exception to copyright, and may constitute an act of infringement; it shall be regarded as a material breach of this Agreement, and ***All* rights granted to you under this Agreement shall terminate immediately**. This provision shall take precedence over all other provisions of this Agreement. ➡️ For the avoidance of doubt, any termination under this paragraph is immediate, absolute, and non-curable, and **shall operate strictly without regard to any cure period** (including the aforementioned 25-day period), notice requirement, lapse of time, or any other condition whatsoever. ***It is by no means optional.***
+**BUT**, Under all circumstances, you must comply with the [***Attribution Terms***](#attribution), particularly the provisions protecting attribution. You must not, by any means, reduce the prominence of the attribution to any degree whatsoever, however slight. Otherwise, such use may not be regarded as fair use or as any other limitation or exception to copyright, and shall constitute an act of infringement; it shall be regarded as a material breach of this Agreement, and ***All* rights granted to you under this Agreement shall terminate immediately**. This provision shall take precedence over all other provisions of this Agreement. ➡️ For the avoidance of doubt, any termination under this paragraph is immediate, absolute, and non-curable, and **shall operate strictly without regard to any cure period** (including the aforementioned 25-day period), notice requirement, lapse of time, or any other condition whatsoever. ***It is by no means optional.***
 
 ## Definitions
 The **licensor** is the individual or entity offering these
