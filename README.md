@@ -3,9 +3,9 @@
 [![Version](https://img.shields.io/badge/version-6.1-orange.svg?logo=github&logoColor=white)](https://github.com/ucxn/ZTE-Stat_Max)&emsp;&nbsp;
 [![Platform](https://img.shields.io/badge/platform-Web-green.svg?logo=javascript&logoColor=white)](https://scriptcat.org/zh-CN)&nbsp;&emsp;
 [![Integration](https://img.shields.io/badge/集成-Home_Assistant-41BDF5.svg?logo=homeassistant&logoColor=white)](https://github.com/ucxn/ZTE-Stat_HA)&nbsp;&emsp;
-[![Reference:APL for Bro](https://img.shields.io/badge/Source-APL_Bro_0.1-3DA639?logo=opensourceinitiative&logoColor=white&labelColor=222222)](https://raw.githubusercontent.com/ucxn/ZTE-Stat_Max/refs/heads/main/LICENSE/APL-Bro-0.1.txt)&nbsp;
+[![Reference:APL for Bro](https://img.shields.io/badge/开源-APL_Bro_0.1-3DA639?logo=opensourceinitiative&logoColor=white&labelColor=222222)](https://raw.githubusercontent.com/ucxn/ZTE-Stat_Max/refs/heads/main/LICENSE/APL-Bro-0.1.txt)&nbsp;
 [![Reference:SUL-1.0](https://img.shields.io/badge/SUL-保留显著署名-EA4B71.svg?logo=n8n&logoColor=white&labelColor=040506)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/SUL-1.0.md)&nbsp;
-[![BroWare P-BY 1.0](./assets/nc_custom_noversion.svg)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/BR-PBY-1.0.md)
+[![BroWare P-BY 1.0](./assets/icon.svg)](https://github.com/ucxn/ZTE-Stat_Max/blob/main/LICENSE/BR-PBY-1.0.md)
 
 [English](README_EN.md) | **简体中文**
 
@@ -180,6 +180,10 @@ const CONFIG = {
 * 若您的路由器管理地址为非标准 IP，请在脚本的 `@match` 或 `@include` 头部规则中自行添加。
 * 本脚本属于纯前端 DOM 注入与数据重组工具，不涉及对中兴路由器底层固件的修改。
 脚本利用油猴环境，并发请求路由器的 `vue_home_device_data_no_update_sess` 和 `vue_client_data` 接口。为解决官方前端轮询刷新带来的滞后感，脚本内部通过 `performance.now()` 实现了独立的设定，从而推导出更为精准的瞬时流量数据。所有的 UI 修改均在原页面的 CSS 框架基础上通过Mutation完成，确保了界面的原生质感与兼容性。
+## 💎 为什么说是开源完整成品软件？
+* **何为“开源”**：本软件 100% 明文公开完整源代码，0 元免费提供，接受社区共建，且 APL for Bro 许可路径不设领域歧视。在中文语境下，“开源软件”与“自由软件”本就是近义词（英文因 `Free` 一词的双重含义才在欧美分裂出两套专有名词，中文词典无需为此浪费两个坑位）；凡源码公开透明、允许修改且不歧视使用领域的作品，即是堂堂正正的**开源软件**（若有领域限制则归入“源码可用/可读”，不许修改则退化为“源码可见”）。
+* **何为“完整成品软件（哥哥软件 / BroWare）”**：有别于躲在幕后充当零件的“底层基础设施”、“框架”或“函数库（Library）”，本程序从底层多源交叉采样、四态防回流状态机、事件驱动，到前端驾驶舱看板、极值保真折线图与报表导出，本身就是一个**开箱即用、逻辑自洽、拥有独立交互美学的前端、后端、UI、底层四位一体完整终端成品软件**。
+* **清晰的集成与署名边界**：正因其是界限分明的完整成品，在被更多项目📦收录或集成时（推荐完整收录并提供入口），显著署名保留在软件原有或更显著位置，在工程上最自然的选择就是自然原貌 —— 我不要求在更大作品的无关页面中喧宾夺主；*但在主要由本作品构成的界面上，我就是主，必须原样、显著保留所有“哥哥科技”名字，绝不允许将署名抹除、弱化或藏入深层二级菜单的版本在市面上流传*。
 ---
 *Authored by 哥哥科技*
 
