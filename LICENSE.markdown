@@ -5,8 +5,8 @@ Required Notice: https://github.com/ucxn/ZTE-Stat_Max
 <div align="center">
 
 # **BY · 「哥哥科技」**
-### **无论何种使用方式，均必须保留 $\Large\boxed{\textbf{哥哥科技}}$ 的显著署名。**
-**Whatever the use, the prominent attribution `"哥哥科技"` MUST be kept.**
+### **无论何种使用方式，均必须保留 $\Large{\textbf{哥哥科技}}$ 的显著署名。**
+**Whatever the use, the prominent attribution `哥哥科技` MUST be kept.**</div>
 
 ---
 所有的“许可证”不以名称定义、请勿自行推断，法律效力以仓库中的实际 `License` 文件为准。<br>No "license" here is defined by its name; please do not infer its terms from the name. Legal effect is determined by the actual 'License' files in this repository.
