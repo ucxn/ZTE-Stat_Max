@@ -22,7 +22,7 @@
 // @noframes
 // @tag             哥哥科技 路由器 中兴 网络 监控 统计 数据 可视化 极客 增强 UI HA 智能 定时 后台 Measurement M&C Bro 宽带 流量 网速 算法 JS C WebHook 网页 浏览器 微积分 公网 Brotech Bro-Tech 小说
 // @icon            https://scriptcat.org/api/v2/resource/image/PD6xhxddlUESIwAV
-// @include         *://10.*.*.1/
+// @include         *://10.*.*.1/*
 // @include         http://192.168.*.*
 // @include         https://192.168.*.*
 // @include         *://172.16.*
