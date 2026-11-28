@@ -126,7 +126,7 @@
     wMaxU: 0, wMaxD: 0, wMinU: Infinity, wMinD: Infinity, 拖动图表: null, 图表待画: 0, pL: [], pLC: null, 
     wLT: 0, wZEU: 0, wZED: 0, wZEUC: 0, wZEDC: 0, rTick: 0, haTick: 0, lTick: 0, bd: null, cRT: '', snap: undefined, snapLoaded: !1, calcTime: null
   };  // 上一行：原本运行中才陆续追加；一次写全，S 的形状从头到尾不变，读 S.xxx 的地方不会因为形状变来变去退化成超多态
-  let wu = '', wa, pU = CONFIG.物理WAN速率序列自动导出 ? new Float32Array(86400) : null, pD = pU && new Float32Array(86400), pI = 0;
+  let wu = '', wa, recPhys = null; // recPhys：物理WAN序列记录器，开关关闭时恒为 null
   // ---[2]------------------------ 数据获取层：WAN / LAN 文本拉取 + XHR 经典方案 ------------------------
 const WAN_COMPAT = [
     // 兼容层只在标准 WAN 首次失败时探测；社区可继续追加旧固件接口。
@@ -1295,6 +1295,18 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
       window.gegeMasterTimer = null;
       if (CONFIG.lanPortMode > 0 && !window.gegePortTimer) {
         if (CONFIG.lanPortMode === 2) { gWUp = () => Phys.wU || 0; gWDn = () => Phys.wD || 0; } // WAN 高速接管主线：WAN 速率改为直接读物理口
+        if (CONFIG.物理WAN速率序列自动导出) { // 线性缓冲：写满即导出、游标归零，无取模无掩码，容量不必是 2 的幂
+          const N = 86400, U = new Float64Array(N), D = new Float64Array(N);
+          let n = 0, t0 = Date.now(), url = '', a;
+          recPhys = (u, d) => {
+            U[n] = u; D[n] = d;
+            if (++n < N) return;
+            n = 0; const t = Date.now();
+            a ||= document.createElement('a'); url && URL.revokeObjectURL(url); // 独立的 a / url，不与逻辑 WAN 导出共用
+            a.href = url = URL.createObjectURL(new Blob([`\uFEFF起始时间戳毫秒,${t0}\n结束时间戳毫秒,${t}\n名义采样间隔秒,${CONFIG.portInterval}\n上行bit/s,${U.join()}\n下行bit/s,${D.join()}`], {type: 'text/csv;charset=utf-8;'}));
+            a.download = `哥哥科技_物理WAN速率序列_${t}.csv`; a.click(); t0 = t; // 口断开/请求失败的秒不产生点：有效间隔 = (结束-起始)/N
+          };
+        }
         window.gegePortTimer = setInterval(fPP, CONFIG.portInterval * 1000);
         fPP();
       }
@@ -1452,17 +1464,7 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
               Phys.lT = n;
             }
             Phys.wU = u; Phys.wD = dn;
-            if (pU) {
-              pU[pI] = u; pD[pI] = dn;
-              if (++pI === 86400) {
-                pI = 0;
-                const a = wa ||= document.createElement('a'), t = Date.now();
-                wu && URL.revokeObjectURL(wu);
-                a.href = wu = URL.createObjectURL(new Blob([`\uFEFF时间戳毫秒,${t}\n采样间隔秒,${CONFIG.portInterval}\n上行bit/s,${pU.join()}\n下行bit/s,${pD.join()}`], {type: 'text/csv;charset=utf-8;'}));
-                a.download = `哥哥科技_物理WAN速率序列_${t}.csv`;
-                a.click();
-              }
-            }
+            if (recPhys) recPhys(u, dn);
           } else {
             const nm = Phys._pM[d._InstID] || d._InstID;
             Phys.p[nm] ??= { u: u, dn: dn, tU: 0, tD: 0, lT: n };
