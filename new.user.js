@@ -12,7 +12,7 @@
 // @name            中兴路由器增强 ZTE-Stat_Max
 // @name:en         ZTE-Stat_Max
 // @namespace       ucxn
-// @version         6.2.0
+// @version         6.2.1
 // @website         https://github.com/ucxn/ZTE-Stat_Max
 // @supportURL      https://b23.tv/BV1PtR7B8ECC
 // @description     一款针对中兴官方计数器和UI不区分上下行、流量数据不可靠、网页隐藏API等问题而诞生的测控“引擎”，一个庞大的循环流程说明图；融合了哥哥的大量思想和算法，探索属于家庭网关的真相。
@@ -80,6 +80,7 @@
     时区补偿: 28800000, // 默认 UTC+8 时区补偿量。
 
     WAN速率序列自动导出: 0, // 0: 关闭 | 1: 每 8192 个采样点（约 6.8 小时）自动下载一份 WAN 上下行速率序列（bit/s）；需在浏览器里允许本站自动下载
+    物理WAN速率序列自动导出: 0, // 0: 关闭 | 1: 每 86400 个采样点（默认 1 秒间隔即整 24 小时）自动下载一份物理 WAN 上下行速率序列（bit/s）；需开启物理网口并允许本站自动下载
 
     // 接口名 → 面板上显示的名称
     portMap: {
@@ -125,7 +126,7 @@
     wMaxU: 0, wMaxD: 0, wMinU: Infinity, wMinD: Infinity, 拖动图表: null, 图表待画: 0, pL: [], pLC: null, 
     wLT: 0, wZEU: 0, wZED: 0, wZEUC: 0, wZEDC: 0, rTick: 0, haTick: 0, lTick: 0, bd: null, cRT: '', snap: undefined, snapLoaded: !1, calcTime: null
   };  // 上一行：原本运行中才陆续追加；一次写全，S 的形状从头到尾不变，读 S.xxx 的地方不会因为形状变来变去退化成超多态
-  let wu = '', wa;
+  let wu = '', wa, pU = CONFIG.物理WAN速率序列自动导出 ? new Float32Array(86400) : null, pD = pU && new Float32Array(86400), pI = 0;
   // ---[2]------------------------ 数据获取层：WAN / LAN 文本拉取 + XHR 经典方案 ------------------------
 const WAN_COMPAT = [
     // 兼容层只在标准 WAN 首次失败时探测；社区可继续追加旧固件接口。
@@ -1451,6 +1452,17 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
               Phys.lT = n;
             }
             Phys.wU = u; Phys.wD = dn;
+            if (pU) {
+              pU[pI] = u; pD[pI] = dn;
+              if (++pI === 86400) {
+                pI = 0;
+                const a = wa ||= document.createElement('a'), t = Date.now();
+                wu && URL.revokeObjectURL(wu);
+                a.href = wu = URL.createObjectURL(new Blob([`\uFEFF时间戳毫秒,${t}\n采样间隔秒,${CONFIG.portInterval}\n上行bit/s,${pU.join()}\n下行bit/s,${pD.join()}`], {type: 'text/csv;charset=utf-8;'}));
+                a.download = `哥哥科技_物理WAN速率序列_${t}.csv`;
+                a.click();
+              }
+            }
           } else {
             const nm = Phys._pM[d._InstID] || d._InstID;
             Phys.p[nm] ??= { u: u, dn: dn, tU: 0, tD: 0, lT: n };
@@ -2053,6 +2065,11 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
   WAN速率序列自动导出:
     title: "WAN 速率序列导出"
     description: "开启后每 8192 个采样点（约 6.8 小时）自动下载一份速率序列；需在浏览器里允许本站自动下载"
+    type: checkbox
+    default: false
+  物理WAN速率序列自动导出:
+    title: "物理 WAN 速率序列导出"
+    description: "开启后每 86400 个采样点（默认 1 秒间隔即整 24 小时）自动下载一份物理 WAN 速率序列；需开启物理网口并允许本站自动下载"
     type: checkbox
     default: false
 算法:
