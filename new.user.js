@@ -1,5 +1,5 @@
 /* 【作品定性与原稿完整权声明】本文件系一部由汉语言文学随笔与形式化数学/逻辑符号混排写就的 当代科技哲学文章暨批注体手稿，依法直接受《中华人民共和国著作权法》第3条第(一)项【文字作品】之顶格保护。其天然无法预编译，具有“言文合一、文学即最终交付体”的特征。GitHub上呈现的绝非我的原始底稿，事实上我在不同的平台发布时都会加上不同的文件头。
-事实上，在作者本人的本地磁盘中，本文章的历代创作底稿均以独立的逻辑文件区分版本演进，且常年直接以 .txt（纯文本文档）作为原生扩展名进行撰写与留存；公开发行时所附之 .user.js 后缀、篇首书目检索题记（UserScript 检索框）及卷末版式索引（UserConfig 索引框），仅系为适配现代电子阅读器（浏览器）加载所设的目录标签。
+事实上，在作者本人的本地磁盘中，本文章的历代创作底稿均以独立的逻辑文件区分版本演进，且常年直接以 .txt（纯文本文档）作为原生扩展名进行撰写与留存；公开发行时所附之 .user.js 后缀、篇首书目检索题记（==UserScript== 检索框）及卷末版式索引（UserConfig 索引框），仅系为适配现代电子阅读器（浏览器）加载所设的目录标签。
 上述标签绝不改变本文章自始至终无需编译、亦无法编译，纯以人类可读之明文手稿（Plain-Text Manuscript）直达读者的文字作品本质。切勿将本文章狭隘曲解为单纯的“计算机程序”：上述题记仅系现代电子阅读器（浏览器）加载并方便计算机解释器欣赏、阅读，并据此辅助呈现本文之动态排版与图表插画，绝不改变本文章的写作本质。
 本文章由三部分血肉相连的正文构成：其一为多达两百余段的中文杂文、工程寓言、社会宣言与眉批夹注；其二为以 ECMAScript 形式化符号撰写的数理逻辑与单态结构段落（犹如此类跨学科论著中之数学公式与形式逻辑推演）。其三为程序运行后向终端用户呈现的图形交互界面（GUI，即本作面向最终读者的【成书正文版面】），就像电子书阅读器也分为源码层和最终用户可见渲染一样。
 为免任何投机抗辩之疑义，“源数据文本”与“GUI 最终用户界面”须同时满足完整保留义务：文中所谓“不在乎可读性”，系指作者在符号造句上的极简修辞洁癖 —— 即拒绝为迎合庸俗八股而拆解算式、拒绝塞入冗长乏味的过渡废词（wasteful let），追求如诗歌般凝练、又带现代文风，一气呵成的美感，这恰恰彰显了本文章极高的文字与符号独创性。
@@ -23,6 +23,9 @@
 // @tag             哥哥科技 路由器 中兴 网络 监控 统计 数据 可视化 极客 增强 UI HA 智能 定时 后台 Measurement M&C Bro 宽带 流量 网速 算法 JS C WebHook 网页 浏览器 微积分 公网 Brotech Bro-Tech 小说
 // @icon            https://scriptcat.org/api/v2/resource/image/PD6xhxddlUESIwAV
 // @include         *://10.*.*.1/*
+// @include         *://10.*.*.2/*
+// @include         *://10.*.*.3/*
+// @include         *://10.*.*.254/*
 // @include         http://192.168.*.*
 // @include         https://192.168.*.*
 // @include         *://172.16.*
@@ -346,8 +349,7 @@ const WAN_COMPAT = [
     .gege-list-item:last-child{border-bottom:none!important;}#zte-geek-board{contain:layout;background-color:transparent!important;border-left:4px solid #0059fa!important;border-radius:0!important;padding:5px 0 5px 15px!important;margin:10px 0 15px 0!important;box-shadow:none!important;border-bottom:1px solid #f0f0f0!important;font-size:14px;display:flex;flex-direction:column;gap:6px;padding-bottom:15px!important;}#gege-global-overlay #zte-geek-board.geek-frozen-pane{position:sticky!important;top:0px!important;z-index:100!important;background-color:#f3f4f5!important;margin-top:0!important;padding-top:15px!important;box-shadow:0 10px 15px -3px rgba(0,0,0,0.05)!important;border-radius:0 0 8px 8px!important;}.gege-pin{cursor:pointer;font-size:11px;filter:grayscale(100%);opacity:0.5;transition:transform 0.2s;margin-left:2px;}
     .gege-pin.active{filter:none;opacity:1;transform:scale(1.1);}#gege-global-overlay{position:fixed;top:0;right:0;bottom:0;background:#f3f4f5;z-index:9999;overflow-y:auto;padding-bottom:50px;left:0;transition:left 0.3s ease;}@media (min-width: 1025px) and (orientation: landscape){#gege-global-overlay{left:max(15%, 240px);}}@media (max-width: 768px){.geek-right-box:has(#gb-wan-zero-up),.geek-right-box:has(#gb-cur-up-vol){display:none!important}.gege-list-item{padding:12px 10px!important}.config-item-box{position:relative!important;flex-direction:column!important;padding-bottom:0!important}.config-item .info,.config-item .logo,.config-item .speed{width:100%!important;border:none!important;padding:0!important;position:static!important}.config-item .dev-intro{min-height:auto!important;justify-content:center!important;padding-right:108px!important}.config-item .logo{padding-bottom:4px!important;position:relative!important}.gege-rssi{position:absolute!important;left:25px;top:calc(50% - 29px);transform:translate(-50%,-100%);font-size:11px!important;line-height:1.2;z-index:1}.gege-online-time{white-space:nowrap}.gege-online-time::before{content:none!important}.t-row{white-space:nowrap}.config-item .info{flex-direction:column!important;margin:0 0 6px 0!important;gap:2px!important}.dev-ip{position:absolute!important;top:0!important;right:0!important;font-size:11px!important;background:#e0e8f5;color:#0059fa!important;padding:2px 6px!important;border-radius:4px;font-weight:bold;line-height:1.2;z-index:20;width:auto!important;display:flex!important;flex-direction:column;align-items:flex-end}.dev-number{width:auto!important;margin:0!important;font-size:11px!important}.gege-via{display:block!important;font-size:10px!important;line-height:1.3!important;max-width:92px;overflow:hidden;text-overflow:ellipsis}.gege-ratio-box{width:100%!important;margin-top:2px!important;margin-bottom:0!important}.gege-down-box{width:100%!important;margin-top:2px!important}#zte-geek-board{padding:8px!important;gap:0!important;font-size:11.5px!important}.geek-row{height:auto!important;flex-wrap:wrap!important;margin-bottom:4px!important;justify-content:flex-start!important;gap:2px 6px!important;line-height:1.3!important}.geek-label{width:auto!important;min-width:60px!important;font-size:11.5px!important;flex:0 0 auto!important}.geek-val-box{width:auto!important;flex:1 1 0%!important;display:flex!important;flex-wrap:wrap!important;margin-left:0!important;gap:2px 6px!important}.geek-fixed-width{width:auto!important}.geek-right-box{width:100%!important;flex:0 0 100%!important;text-align:left!important;font-size:11.5px!important;margin-top:2px!important;margin-left:0!important}.gege-list-container{padding:8px!important}.zte-enhance-speed{gap:4px!important}}#zte-geek-board{position:relative!important;overflow:visible!important;}#gege-speed-chart{position:absolute;z-index:25;box-sizing:border-box;cursor:move;user-select:none;touch-action:none;container-type:inline-size;left:max(520px,52%);top:2px;width:clamp(320px,30%,650px);height:112px;}@media (max-width:768px){#gege-speed-chart{left:10px;width:clamp(180px,calc(100% - 20px),320px);height:96px}}#gege-speed-chart canvas{display:block;width:100%;height:100%;}.gege-chart-head,.gege-chart-foot{position:absolute;left:clamp(28px,8%,36px);right:8px;display:flex;align-items:center;pointer-events:none;font:bold clamp(9px,2.1cqw,11px) system-ui,sans-serif;white-space:nowrap;overflow:hidden;}.gege-chart-head{top:2px;color:#111;gap:8px;}.gege-chart-head [data-gc="range"]{color:#666;font-weight:normal;overflow:hidden;text-overflow:ellipsis;margin-left:auto;}.gege-chart-foot{bottom:4px;justify-content:flex-start;gap:clamp(3px,1.1cqw,12px);}.gege-chart-foot span{min-width:0;overflow:hidden;text-overflow:ellipsis;}.gc-up{color:#ff4c00;flex:0 1 auto;}.gc-down{color:#0b5;flex:0 1 auto;}.gc-extra{color:#666;text-align:right;margin-left:auto;flex:1 1 0;min-width:0;}#gege-speed-chart .gege-chart-resize{position:absolute;right:-4px;bottom:-4px;width:13px;height:13px;border-right:3px solid #0059fa;border-bottom:3px solid #0059fa;cursor:nwse-resize;border-radius:2px;}.gege-via{order:1;color:#9b72cf;font-size:12px;font-weight:bold;white-space:nowrap;}.gege-online-time:not(:empty)::before{content:'在线：'}@media (max-width:768px){.geek-val-box>span:has(#gb-wan-up-bps),.geek-right-box:has(#gb-wan-up-bps),#gb-pwan-bps-container,.geek-right-box:has(#gb-wc-pu){display:none!important}.geek-val-box>span:has(#gb-wan-up-vol),.geek-val-box>span:has(#gb-ratio-display){flex-basis:100%;margin-left:0!important}.geek-label{min-width:88px!important}.config-item .dev-intro .gege-up-box{width:auto!important;margin-right:-108px!important}.gege-up-box .t-row>span{white-space:nowrap}}
     `;
-  document.head.
-  appendChild(st);
+  (document.head || document.documentElement).appendChild(st);
   window.gegeRenderedMacs = new Set();
 
   // ---[5]------------------------ 核心采样引擎 refreshSpeedData ------------------------
@@ -1892,12 +1894,12 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
       }}, 12000);
   };
   setInterval(tKA, 720000); // 不在首帧触发，首次在 12 分钟后；对不兼容的设备，保活 URL 会直接显示 404/Forbidden，推迟后故障不再一开机就糊脸
-  window.addEventListener('load', () => {
+  const gegeBoot = () => {
     setTimeout(() => { // 兜底：加载一分钟后，若官方页面一次相关 XHR 都没触发过引擎，就主动启动
       if (!window.gegeTimerStarted && window.startGegePrecisionEngine) window.startGegePrecisionEngine();
     }, 60000);
-    // 悬浮按钮：强制模式；或 injectMode > 0 且访问的是常见网关地址（x.x.x.0~5 或 zte.home）
-    if (CONFIG.injectMode === 3 || CONFIG.injectMode > 0 && /\.[0-5]$|^zte\.home$/.test(location.hostname)) {
+    // 悬浮按钮：强制模式；或 injectMode > 0 且访问的是常见网关地址（x.x.x.0~5、x.x.x.254 或 zte.home）
+    if (CONFIG.injectMode === 3 || CONFIG.injectMode > 0 && /\.[0-5]$|\.254$|^zte\.home$/.test(location.hostname)) {
       if (window.createGegeFloatingBtn) window.createGegeFloatingBtn();
     }
     if (CONFIG.injectMode !== 3) {
@@ -1914,7 +1916,8 @@ async function fPP() {// 物理网口探针：读取每个网口的收发速率�
         }
       }, 300);
     }
-  });
+  };
+  document.readyState === 'complete' ? gegeBoot() : window.addEventListener('load', gegeBoot);
 })();
 
 /* ==UserConfig==
