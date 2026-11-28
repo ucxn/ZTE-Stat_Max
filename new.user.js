@@ -242,16 +242,12 @@ const WAN_COMPAT = [
   // 单位换算：全程以 bit 为基准 | 官方速率字符串（如 "12.3Kbps"）→ bit/s
  function s2b(speedStr) {
         if (!speedStr) return 0;
-        const val = parseFloat(speedStr), n = speedStr.length;
+        const val = parseFloat(speedStr);
         if (val !== val) return 0;
-        // 快速通道：原厂格式恒为“一位小数+单位”（如 "2131.7Mbps"）。按十分位取整再乘整数，结果是精确整数（直接乘会得到 2131699999.9999998）
-        if (speedStr.charCodeAt(n - 6) === 46) {
-          const c = speedStr.charCodeAt(n - 4);
-          if (c === 75) return (val * 10 | 0) * 100;
-          if (c === 77) return (val * 10 | 0) * 1e5;
-          if (c === 71) return (val * 10 | 0) * 1e8;
-        }
-        // 慢速通道：其余格式走子串搜索
+        const c = speedStr.charCodeAt(speedStr.length - 4); // 标准格式的单位字母固定在倒数第 4 位，先走快速通道；非标准格式退回到下面的子串搜索
+        if (c === 75) return val * 10 * 100;
+        if (c === 77) return val * 10 * 1e5;
+        if (c === 71) return val * 10 * 1e8;
         if (speedStr.includes('K')) return val * 1e3; if (speedStr.includes('M')) return val * 1e6; if (speedStr.includes('G')) return val * 1e9;
         if (speedStr.includes('k')) return val * 1e3; if (speedStr.includes('m')) return val * 1e6; if (speedStr.includes('g')) return val * 1e9;
         return val;
