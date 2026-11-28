@@ -242,12 +242,16 @@ const WAN_COMPAT = [
   // 单位换算：全程以 bit 为基准 | 官方速率字符串（如 "12.3Kbps"）→ bit/s
  function s2b(speedStr) {
         if (!speedStr) return 0;
-        const val = parseFloat(speedStr);
+        const val = parseFloat(speedStr), n = speedStr.length;
         if (val !== val) return 0;
-        const c = speedStr.charCodeAt(speedStr.length - 4); // 标准格式的单位字母固定在倒数第 4 位，先走快速通道；非标准格式退回到下面的子串搜索
-        if (c === 75) return val * 1e3;
-        if (c === 77) return val * 1e6;
-        if (c === 71) return val * 1e9;
+        // 快速通道：原厂格式恒为“一位小数+单位”（如 "2131.7Mbps"）。按十分位取整再乘整数，结果是精确整数（直接乘会得到 2131699999.9999998）
+        if (speedStr.charCodeAt(n - 6) === 46) {
+          const c = speedStr.charCodeAt(n - 4);
+          if (c === 75) return (val * 10 | 0) * 100;
+          if (c === 77) return (val * 10 | 0) * 1e5;
+          if (c === 71) return (val * 10 | 0) * 1e8;
+        }
+        // 慢速通道：其余格式走子串搜索
         if (speedStr.includes('K')) return val * 1e3; if (speedStr.includes('M')) return val * 1e6; if (speedStr.includes('G')) return val * 1e9;
         if (speedStr.includes('k')) return val * 1e3; if (speedStr.includes('m')) return val * 1e6; if (speedStr.includes('g')) return val * 1e9;
         return val;
@@ -1296,10 +1300,10 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
       if (CONFIG.lanPortMode > 0 && !window.gegePortTimer) {
         if (CONFIG.lanPortMode === 2) { gWUp = () => Phys.wU || 0; gWDn = () => Phys.wD || 0; } // WAN 高速接管主线：WAN 速率改为直接读物理口
         if (CONFIG.物理WAN速率序列自动导出) { // 线性缓冲：写满即导出、游标归零，无取模无掩码，容量不必是 2 的幂
-          const N = 86400, U = new Uint32Array(N), D = new Uint32Array(N); // 整数存：中兴原始分辨率 ≥100bit/s，s2b 的浮点噪声靠 +.5 取整抹掉
+          const N = 86400, U = new Uint32Array(N), D = new Uint32Array(N); // s2b 输出已是整数，直接存
           let n = 0, t0 = Date.now(), url = '', a;
           recPhys = (u, d) => {
-            U[n] = u + .5; D[n] = d + .5;
+            U[n] = u; D[n] = d;
             if (++n < N) return;
             n = 0; const t = Date.now();
             a ||= document.createElement('a'); url && URL.revokeObjectURL(url); // 独立的 a / url，不与逻辑 WAN 导出共用
