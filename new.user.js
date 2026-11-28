@@ -1296,10 +1296,10 @@ const GC = { bD: undefined, bDPct: undefined, bDSpk: undefined, bDVal: undefined
       if (CONFIG.lanPortMode > 0 && !window.gegePortTimer) {
         if (CONFIG.lanPortMode === 2) { gWUp = () => Phys.wU || 0; gWDn = () => Phys.wD || 0; } // WAN 高速接管主线：WAN 速率改为直接读物理口
         if (CONFIG.物理WAN速率序列自动导出) { // 线性缓冲：写满即导出、游标归零，无取模无掩码，容量不必是 2 的幂
-          const N = 86400, U = new Float64Array(N), D = new Float64Array(N);
+          const N = 86400, U = new Uint32Array(N), D = new Uint32Array(N); // 整数存：中兴原始分辨率 ≥100bit/s，s2b 的浮点噪声靠 +.5 取整抹掉
           let n = 0, t0 = Date.now(), url = '', a;
           recPhys = (u, d) => {
-            U[n] = u; D[n] = d;
+            U[n] = u + .5; D[n] = d + .5;
             if (++n < N) return;
             n = 0; const t = Date.now();
             a ||= document.createElement('a'); url && URL.revokeObjectURL(url); // 独立的 a / url，不与逻辑 WAN 导出共用
